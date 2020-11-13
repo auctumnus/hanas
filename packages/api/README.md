@@ -1,5 +1,5 @@
 # Hanas
-Hanas is a webapp and community built for conlanging. It is primarily inspired by the work of [ConWorkShop](conworkshop.com). The backend here is built using [NestJS](nestjs.com).
+Hanas is a webapp and community built for conlanging. It is primarily inspired by the work of [ConWorkShop](https://conworkshop.com). The backend here is built using [NestJS](https://nestjs.com).
 
 ## Installation
 
