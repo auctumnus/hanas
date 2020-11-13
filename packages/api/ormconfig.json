@@ -1,6 +1,0 @@
-{
-  "type": "better-sqlite3",
-  "database": "./hanas.db",
-  "entities": ["dist/**/*.entity{.ts,.js}"],
-  "synchronize": true
-}

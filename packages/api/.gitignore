@@ -119,7 +119,5 @@ typings/
 .vscode-test
 
 ### Hanas-specific ###
-*.db
-*.db-shm
-*.db-wal
+db
 dist
