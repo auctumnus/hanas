@@ -47,6 +47,7 @@ describe('LangController (e2e)', () => {
       .get('/lang/aaa')
       .expect(200)
       .expect((res) => expect(isAaa(res.body)).toBeTruthy)
+      .expect((res) => expect(res.body.internal_id).toBeUndefined())
   })
 
   it('/lang/:id (GET, 404)', async () => {

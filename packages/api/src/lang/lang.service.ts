@@ -7,11 +7,8 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Lang } from './entities/lang.entity'
 import { CreateLangDto } from './dto/create-lang.dto'
-import { removeProps } from '../removeProps'
 import { UpdateLangDto } from './dto/update-lang.dto'
-
-const toRemove = ['internal_id']
-const fix = (lang?: Lang) => (lang ? removeProps(lang, toRemove) : undefined)
+import { classToClass } from 'class-transformer'
 
 @Injectable()
 export class LangService {
@@ -24,20 +21,22 @@ export class LangService {
     if (await this.langRepository.findOne({ id: createLangDto.id })) {
       throw new ConflictException()
     }
-    return fix(
+    return classToClass(
       await this.langRepository.save({ ...new Lang(), ...createLangDto }),
     )
   }
 
   async findAll() {
     // .filter((l) => l) removes any possible undefined values
-    return (await this.langRepository.find()).map(fix).filter((l) => l)
+    return (await this.langRepository.find())
+      .filter((l) => l)
+      .map((l) => classToClass(l))
   }
 
   async findOne(id: string) {
     const lang = await this.langRepository.findOne({ id })
     if (!lang) throw new NotFoundException()
-    return fix(lang)
+    return classToClass(lang)
   }
 
   async update(id: string, updateLangDto: UpdateLangDto) {
