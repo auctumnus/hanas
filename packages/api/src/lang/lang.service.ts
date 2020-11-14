@@ -23,22 +23,17 @@ export class LangService {
     if (await this.langRepository.findOne({ id: createLangDto.id })) {
       throw idInUse
     }
-    return classToClass(
-      await this.langRepository.save({ ...new Lang(), ...createLangDto }),
-    )
+    return this.langRepository.save({ ...new Lang(), ...createLangDto })
   }
 
-  async findAll() {
-    // .filter((l) => l) removes any possible undefined values
-    return (await this.langRepository.find())
-      .filter((l) => l)
-      .map((l) => classToClass(l))
+  findAll() {
+    return this.langRepository.find()
   }
 
   async findOne(id: string) {
     const lang = await this.langRepository.findOne({ id })
     if (!lang) throw new NotFoundException()
-    return classToClass(lang)
+    return lang
   }
 
   async update(id: string, updateLangDto: UpdateLangDto) {

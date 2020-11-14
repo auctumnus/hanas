@@ -1,10 +1,13 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-import { getValidationPipe } from './validationPipe'
+import { ValidationPipe } from './validationPipe'
+import { TrimPipe } from './trimPipe'
+import { classTransformerInterceptor } from './classTransformerInterceptor'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  app.useGlobalPipes(getValidationPipe())
+  app.useGlobalPipes(new TrimPipe(), ValidationPipe)
+  app.useGlobalInterceptors(new classTransformerInterceptor())
   await app.listen(3000)
 }
 bootstrap()

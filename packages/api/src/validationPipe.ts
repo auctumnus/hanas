@@ -1,7 +1,6 @@
-import { ValidationPipe } from '@nestjs/common'
+import { ValidationPipe as vpipe } from '@nestjs/common'
 
-export const getValidationPipe = () =>
-  new ValidationPipe({
-    whitelist: true,
-    transform: true,
-  })
+export const ValidationPipe = new vpipe({
+  whitelist: true,
+  transform: true,
+})

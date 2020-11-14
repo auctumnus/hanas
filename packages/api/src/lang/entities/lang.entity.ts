@@ -16,10 +16,10 @@ export class Lang {
   @Column({ unique: true, length: 5 })
   id: string
 
-  @Column({ length: 32 })
+  @Column()
   name: string
 
-  @Column({ length: 1000, default: '' })
+  @Column({ default: '' })
   description: string
 
   @CreateDateColumn()

@@ -1,6 +1,8 @@
 import { Test } from '@nestjs/testing'
 import { AppModule } from '../src/app.module'
-import { getValidationPipe } from '../src/validationPipe'
+import { ValidationPipe } from '../src/validationPipe'
+import { TrimPipe } from '../src/trimPipe'
+import { classTransformerInterceptor } from '../src/classTransformerInterceptor'
 
 export const makeTestingApp = async () => {
   const moduleFixture = await Test.createTestingModule({
@@ -8,6 +10,7 @@ export const makeTestingApp = async () => {
   }).compile()
 
   const app = moduleFixture.createNestApplication()
-  app.useGlobalPipes(getValidationPipe())
+  app.useGlobalPipes(new TrimPipe(), ValidationPipe)
+  app.useGlobalInterceptors(new classTransformerInterceptor())
   return app
 }

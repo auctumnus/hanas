@@ -75,6 +75,46 @@ describe('LangController (e2e)', () => {
     return request(app.getHttpServer()).post('/lang').send(aaa).expect(409)
   })
 
+  it('/lang (POST, 400, empty name)', async () => {
+    return request(app.getHttpServer())
+      .post('/lang')
+      .send({ ...aaa, name: ' ' })
+      .expect(400)
+      .expect((res) =>
+        expect(res.body.message).toContain(
+          'name must be longer than or equal to 1 characters',
+        ),
+      )
+  })
+
+  it('/lang (POST, 400, invalid id)', async () => {
+    return request(app.getHttpServer())
+      .post('/lang')
+      .send({ ...aaa, id: '123' })
+      .expect(400)
+  })
+
+  it('/lang (POST, 400, id too short)', async () => {
+    return request(app.getHttpServer())
+      .post('/lang')
+      .send({ ...aaa, id: 'a' })
+      .expect(400)
+  })
+
+  it('/lang (POST, 400, id too long)', async () => {
+    return request(app.getHttpServer())
+      .post('/lang')
+      .send({ ...aaa, id: 'aaaaaaaaaaa' })
+      .expect(400)
+  })
+
+  it('/lang (POST, 400, name too long)', async () => {
+    return request(app.getHttpServer())
+      .post('/lang')
+      .send({ ...aaa, name: 'a'.repeat(100) })
+      .expect(400)
+  })
+
   it('/lang/:id (PATCH)', async () => {
     await request(app.getHttpServer())
       .post('/lang')
