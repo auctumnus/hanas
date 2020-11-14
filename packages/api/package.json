@@ -24,7 +24,7 @@
     "@nestjs/mapped-types": "0.1.1",
     "@nestjs/platform-express": "7.5.2",
     "@nestjs/typeorm": "7.1.4",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "5.0.0",
     "better-sqlite3": "7.1.1",
     "class-transformer": "0.3.1",
     "class-validator": "0.12.2",
