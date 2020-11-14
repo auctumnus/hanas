@@ -104,6 +104,18 @@ describe('LangController (e2e)', () => {
       )
   })
 
+  it('/lang/:id (PATCH, 409)', async () => {
+    await sendAaa(app)
+    await request(app.getHttpServer())
+      .post('/lang')
+      .send({ ...aaa, id: 'aab' })
+      .expect(201)
+    return request(app.getHttpServer())
+      .patch('/lang/aab')
+      .send({ id: 'aaa' })
+      .expect(409)
+  })
+
   it('/lang/:id (DELETE)', async () => {
     await sendAaa(app)
     return request(app.getHttpServer()).delete('/lang/aaa').expect(200)
