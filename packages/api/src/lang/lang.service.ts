@@ -8,7 +8,6 @@ import { QueryFailedError, Repository } from 'typeorm'
 import { Lang } from './entities/lang.entity'
 import { CreateLangDto } from './dto/create-lang.dto'
 import { UpdateLangDto } from './dto/update-lang.dto'
-import { classToClass } from 'class-transformer'
 
 const idInUse = new ConflictException('Language ID is already in use.')
 
