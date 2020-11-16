@@ -8,6 +8,7 @@ import { QueryFailedError, Repository } from 'typeorm'
 import { Lang } from './entities/lang.entity'
 import { CreateLangDto } from './dto/create-lang.dto'
 import { UpdateLangDto } from './dto/update-lang.dto'
+import { plainToClass } from 'class-transformer'
 
 const idInUse = new ConflictException('Language ID is already in use.')
 
@@ -22,7 +23,7 @@ export class LangService {
     if (await this.langRepository.findOne({ id: createLangDto.id })) {
       throw idInUse
     }
-    return this.langRepository.save({ ...new Lang(), ...createLangDto })
+    return plainToClass(Lang, await this.langRepository.save(createLangDto))
   }
 
   findAll() {
