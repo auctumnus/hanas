@@ -1,7 +1,6 @@
 import * as request from 'supertest'
 import { makeTestingApp } from './makeTestingApp'
 import { INestApplication } from '@nestjs/common'
-import { encode } from 'base-64'
 
 const aaa = {
   id: 'aaa',
