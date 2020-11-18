@@ -9,6 +9,7 @@ import { Lang } from './entities/lang.entity'
 import { CreateLangDto } from './dto/create-lang.dto'
 import { UpdateLangDto } from './dto/update-lang.dto'
 import { plainToClass } from 'class-transformer'
+import { paginator } from '../paginator'
 
 const idInUse = new ConflictException('Language ID is already in use.')
 
@@ -26,12 +27,12 @@ export class LangService {
     return plainToClass(Lang, await this.langRepository.save(createLangDto))
   }
 
-  findAll() {
-    return this.langRepository.find()
+  async findAll(limit: number, cursor?: string) {
+    return paginator(Lang, this.langRepository, 'internal_id', limit, cursor)
   }
 
   async findOne(id: string) {
-    const lang = await this.langRepository.findOne({ id })
+    const lang = await this.langRepository.findOne({ id: id.toLowerCase() })
     if (!lang) throw new NotFoundException()
     return lang
   }

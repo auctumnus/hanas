@@ -1,6 +1,7 @@
 import * as request from 'supertest'
 import { makeTestingApp } from './makeTestingApp'
 import { INestApplication } from '@nestjs/common'
+import { encode } from 'base-64'
 
 const aaa = {
   id: 'aaa',
@@ -17,6 +18,18 @@ const isAaa = (res: unknown) => {
   return true
 }
 
+const sendExampleLangs = async (app: INestApplication, number: number) => {
+  for (let i = 0; i < number; i++) {
+    await request(app.getHttpServer())
+      .post('/lang')
+      .send({
+        id: `aa${String.fromCharCode(97 + i)}`,
+        name: `aaa ${i}`,
+        description: `description ${i}`,
+      })
+  }
+}
+
 const sendAaa = (app: INestApplication) =>
   request(app.getHttpServer()).post('/lang').send(aaa).expect(201)
 
@@ -31,7 +44,7 @@ describe('LangController (e2e)', () => {
   beforeEach(async () => {
     const uncleared = await request(app.getHttpServer()).get('/lang')
     await Promise.all(
-      uncleared.body.map(async (lang) => {
+      uncleared.body.data.map(async (lang) => {
         return request(app.getHttpServer()).delete(`/lang/${lang.id}`)
       }),
     )
@@ -54,12 +67,40 @@ describe('LangController (e2e)', () => {
     return request(app.getHttpServer()).get('/lang/aaa').expect(404)
   })
 
-  it('/lang/ (GET)', async () => {
-    await sendAaa(app)
+  it('/lang/ (GET, all)', async () => {
+    await sendExampleLangs(app, 25)
     return request(app.getHttpServer())
-      .get('/lang/')
-      .expect(200)
-      .expect((res) => expect(isAaa(res.body[0])).toBeTruthy)
+      .get('/lang')
+      .expect((res) => expect(res.body.data.length).toBe(25))
+  })
+
+  it('/lang (GET, limit 2)', async () => {
+    await sendExampleLangs(app, 6)
+    const first = (
+      await request(app.getHttpServer())
+        .get('/lang?limit=2')
+        .expect((res) => expect(res.body.data.length).toBe(2))
+        .expect((res) =>
+          // since the example langs are 0-indexed and the first returned is
+          // the last added
+          expect(res.body.data[0].name.includes('5')).toBeTruthy(),
+        )
+    ).body
+
+    return request(app.getHttpServer())
+      .get(`/lang?limit=2&cursor=${first.cursor.afterCursor}`)
+      .expect((res) => expect(res.body.data.length).toBe(2))
+      .expect((res) => expect(res.body.data[0].name.includes('3')).toBeTruthy())
+  })
+
+  it('/lang (GET, invalid cursor)', async () => {
+    return request(app.getHttpServer()).get('/lang?cursor=jdfkdjfk').expect(400)
+  })
+
+  it('/lang (GET, wrong property in cursor)', async () => {
+    return request(app.getHttpServer())
+      .get('/lang?cursor=bmFtZTphYWE=')
+      .expect(400)
   })
 
   it('/lang (POST)', async () => {
