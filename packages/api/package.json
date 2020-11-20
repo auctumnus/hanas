@@ -31,6 +31,9 @@
     "better-sqlite3": "7.1.1",
     "class-transformer": "0.3.1",
     "class-validator": "0.12.2",
+    "dotenv-defaults": "^2.0.1",
+    "nanoid": "^3.1.17",
+    "nest-router": "^1.0.9",
     "passport": "0.4.1",
     "passport-jwt": "4.0.0",
     "passport-local": "1.0.0",
@@ -38,7 +41,8 @@
     "rimraf": "3.0.2",
     "rxjs": "6.6.3",
     "typeorm": "0.2.29",
-    "typeorm-cursor-pagination": "0.4.1"
+    "typeorm-cursor-pagination": "0.4.1",
+    "ua-parser-js": "^0.7.22"
   },
   "devDependencies": {
     "@nestjs/cli": "7.5.3",
