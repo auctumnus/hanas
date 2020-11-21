@@ -15,7 +15,7 @@ import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '../constants'
 
-@Controller('user')
+@Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

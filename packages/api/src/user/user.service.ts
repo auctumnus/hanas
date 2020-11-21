@@ -12,6 +12,7 @@ import * as bcrypt from 'bcrypt'
 import { plainToClass } from 'class-transformer'
 import { SALT_ROUNDS } from '../constants'
 import { paginator } from '../paginator'
+import { SessionService } from '../session/session.service'
 
 const usernameInUse = new ConflictException('Username is already in use.')
 
@@ -26,6 +27,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private sessionService: SessionService,
   ) {}
   async create(createUserDto: CreateUserDto) {
     // eslint-disable-next-line prefer-const
@@ -87,8 +89,10 @@ export class UserService {
   }
 
   async remove(username: string) {
-    if (await this.findOne(username)) {
-      await this.userRepository.delete({ username })
+    const user = await this.findOne(username)
+    if (user) {
+      this.userRepository.delete({ username })
+      this.sessionService.removeByUser(user)
     }
   }
 }

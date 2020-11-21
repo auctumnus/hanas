@@ -16,7 +16,7 @@ import { Lang } from './entities/lang.entity'
 import { LangService } from './lang.service'
 import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '../constants'
 
-@Controller('lang')
+@Controller()
 export class LangController {
   constructor(private readonly langService: LangService) {}
 
