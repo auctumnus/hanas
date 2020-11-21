@@ -31,9 +31,9 @@
     "better-sqlite3": "7.1.1",
     "class-transformer": "0.3.1",
     "class-validator": "0.12.2",
-    "dotenv-defaults": "^2.0.1",
-    "nanoid": "^3.1.17",
-    "nest-router": "^1.0.9",
+    "dotenv-defaults": "2.0.1",
+    "nanoid": "3.1.18",
+    "nest-router": "1.0.9",
     "passport": "0.4.1",
     "passport-jwt": "4.0.0",
     "passport-local": "1.0.0",
@@ -55,10 +55,10 @@
     "@types/passport-jwt": "3.0.3",
     "@types/passport-local": "1.0.33",
     "@types/supertest": "2.0.10",
-    "@types/ua-parser-js": "^0.7.33",
+    "@types/ua-parser-js": "0.7.33",
     "@typescript-eslint/eslint-plugin": "4.8.1",
     "@typescript-eslint/parser": "4.8.1",
-    "eslint": "7.13.0",
+    "eslint": "7.14.0",
     "eslint-config-prettier": "6.15.0",
     "eslint-plugin-prettier": "3.1.4",
     "jest": "26.6.3",
@@ -70,7 +70,7 @@
     "ts-node": "9.0.0",
     "tsconfig-paths": "3.9.0",
     "typescript": "4.1.2",
-    "ua-parser-js": "^0.7.22"
+    "ua-parser-js": "0.7.22"
   },
   "jest": {
     "moduleFileExtensions": [
