@@ -32,7 +32,7 @@
     "class-transformer": "0.3.1",
     "class-validator": "0.12.2",
     "dotenv-defaults": "2.0.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "8.5.1",
     "nanoid": "3.1.18",
     "nest-router": "1.0.9",
     "passport": "0.4.1",
@@ -43,7 +43,7 @@
     "rxjs": "6.6.3",
     "typeorm": "0.2.29",
     "typeorm-cursor-pagination": "0.4.1",
-    "ua-parser-js": "^0.7.22"
+    "ua-parser-js": "0.7.22"
   },
   "devDependencies": {
     "@nestjs/cli": "7.5.3",
@@ -52,7 +52,7 @@
     "@types/bcrypt": "3.0.0",
     "@types/express": "4.17.9",
     "@types/jest": "26.0.15",
-    "@types/jsonwebtoken": "^8.5.0",
+    "@types/jsonwebtoken": "8.5.0",
     "@types/node": "14.14.9",
     "@types/passport-jwt": "3.0.3",
     "@types/passport-local": "1.0.33",
