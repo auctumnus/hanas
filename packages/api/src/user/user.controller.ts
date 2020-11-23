@@ -7,13 +7,12 @@ import {
   Delete,
   Patch,
   Req,
-  BadRequestException,
 } from '@nestjs/common'
 import { Request } from 'express'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
-import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '../constants'
+import { getLimitAndCursor } from '../paginator'
 
 @Controller()
 export class UserController {
@@ -26,20 +25,7 @@ export class UserController {
 
   @Get()
   findAll(@Req() req: Request) {
-    const limit = +req.query.limit || DEFAULT_PAGE_SIZE
-    if (limit > MAX_PAGE_SIZE) {
-      throw new BadRequestException(
-        `Limit for returned number of objects is ${MAX_PAGE_SIZE}.`,
-      )
-    }
-
-    let cursor: string
-    if (req.query.cursor && typeof req.query.cursor === 'string') {
-      cursor = req.query.cursor
-    } else if (req.query.cursor) {
-      throw new BadRequestException('Cursor must be a string.')
-    }
-
+    const { limit, cursor } = getLimitAndCursor(req)
     return this.userService.findAll(limit, cursor)
   }
 
