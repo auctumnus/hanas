@@ -18,7 +18,6 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   async validateUser(username: string, password: string) {
-    console.log(username)
     const user = await this.userService.findOne(username)
     if (await compare(password, user.password_hash)) {
       return user

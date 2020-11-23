@@ -13,7 +13,7 @@ export class Session {
   @PrimaryColumn()
   id: string
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
   user: User
 
   @Exclude()

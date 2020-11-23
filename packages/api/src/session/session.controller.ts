@@ -16,6 +16,7 @@ import { Request } from 'express'
 import { RefreshSessionDto } from './dto/refresh-session.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { checkUser } from '../auth/checkUser'
+import { getLimitAndCursor } from '../paginator'
 
 @Controller()
 export class SessionController {
@@ -43,7 +44,8 @@ export class SessionController {
   async findAll(@Param('username') username: string, @Req() req: Request) {
     const user = await this.userService.findOne(username)
     checkUser(req, user)
-    return this.sessionService.findAll(user)
+    const { limit, cursor } = getLimitAndCursor(req)
+    return this.sessionService.findAll(user, limit, cursor)
   }
 
   @UseGuards(JwtAuthGuard)

@@ -19,8 +19,9 @@ import * as bcrypt from 'bcrypt'
 import { classToClass } from 'class-transformer'
 import { RefreshSessionDto } from './dto/refresh-session.dto'
 import { JwtService } from '@nestjs/jwt'
-import { UserService } from 'src/user/user.service'
+import { UserService } from '../user/user.service'
 import { TokenExpiredError, JsonWebTokenError } from 'jsonwebtoken'
+import { paginator } from '../paginator'
 
 const getBrowserIdentifier = (uaparser: UAParser) => {
   const parsedUA = uaparser.getResult()
@@ -40,7 +41,6 @@ export class SessionService {
   ) {}
   async create(createSessionDto: CreateSessionDto, uaparser: UAParser) {
     const { username, password } = createSessionDto
-    console.log(createSessionDto)
     const user = await this.authService.validateUser(username, password)
     if (user === null) {
       throw new UnauthorizedException('Password is incorrect.')
@@ -112,11 +112,11 @@ export class SessionService {
     return { accessToken: this.authService.makeAccessToken(user) }
   }
 
-  findAll(user: User) {
-    return this.sessionRepository
+  findAll(user: User, limit: number, cursor?: string) {
+    const qb = this.sessionRepository
       .createQueryBuilder('session')
       .where('session.userInternalId = :id', { id: user.internal_id })
-      .getMany()
+    return paginator(Session, qb, 'id', limit, cursor)
   }
 
   async remove(user: User, id: string) {
