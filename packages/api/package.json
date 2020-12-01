@@ -33,7 +33,7 @@
     "class-validator": "0.12.2",
     "dotenv-defaults": "2.0.1",
     "jsonwebtoken": "8.5.1",
-    "nanoid": "3.1.19",
+    "nanoid": "3.1.20",
     "nest-router": "1.0.9",
     "passport": "0.4.1",
     "passport-jwt": "4.0.0",
