@@ -7,12 +7,15 @@ import {
   Delete,
   Patch,
   Req,
+  UseGuards,
 } from '@nestjs/common'
 import { Request } from 'express'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { getLimitAndCursor } from '../paginator'
+import { checkUser } from '../auth/checkUser'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 
 @Controller()
 export class UserController {
@@ -34,16 +37,23 @@ export class UserController {
     return this.userService.findOne(username)
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':username')
-  update(
+  async update(
     @Param('username') username: string,
     @Body() updateUserDto: UpdateUserDto,
+    @Req() req: Request,
   ) {
+    const user = await this.userService.findOne(username)
+    checkUser(req, user)
     return this.userService.update(username, updateUserDto)
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':username')
-  remove(@Param('username') username: string) {
+  async remove(@Param('username') username: string, @Req() req: Request) {
+    const user = await this.userService.findOne(username)
+    checkUser(req, user)
     return this.userService.remove(username)
   }
 }

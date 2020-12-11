@@ -31,7 +31,7 @@ describe('Authentication (e2e)', () => {
         password: 'ep1cpassword!!!!!!!!!!!',
       })
       .expect(201)
-    return request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/user/aaa/session')
       .send({
         username: 'aaa',
@@ -43,6 +43,16 @@ describe('Authentication (e2e)', () => {
       .expect((res) => expect(res.body).toHaveProperty('refresh'))
       .expect((res) => expect(res.body).toHaveProperty('refresh.refreshToken'))
       .expect((res) => expect(res.body).toHaveProperty('refresh.id'))
+    const { accessToken } = (
+      await request(app.getHttpServer()).post('/user/aaa/session').send({
+        username: 'aaa',
+        password: 'ep1cpassword!!!!!!!!!!!',
+      })
+    ).body
+    await request(app.getHttpServer())
+      .delete('/user/aaa')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .send()
   })
 
   it('/user/:username/session (GET)', async () => {
@@ -59,7 +69,7 @@ describe('Authentication (e2e)', () => {
         password: 'ep1cpassword!!!!!!!!!!!',
       })
     ).body
-    return request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/user/aaa/session')
       .set('Authorization', 'Bearer ' + accessToken)
       .expect(200)
@@ -69,5 +79,9 @@ describe('Authentication (e2e)', () => {
       .expect((res) => expect(res.body.data[0]).toHaveProperty('os'))
       .expect((res) => expect(res.body.data[0]).toHaveProperty('browser'))
       .expect((res) => expect(res.body.data[0]).toHaveProperty('created'))
+    await request(app.getHttpServer())
+      .delete('/user/aaa')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .send()
   })
 })

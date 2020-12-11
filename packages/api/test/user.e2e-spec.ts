@@ -10,21 +10,12 @@ describe('UserController (e2e)', () => {
     await app.init()
   })
 
-  beforeEach(async () => {
-    const uncleared = await request(app.getHttpServer()).get('/user')
-    await Promise.all(
-      uncleared.body.data.map(async (user) => {
-        return request(app.getHttpServer()).delete(`/user/${user.username}`)
-      }),
-    )
-  })
-
   afterAll(async () => {
     await app.close()
   })
 
   it('/user (POST)', async () => {
-    return request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/user')
       .send({
         username: 'user',
@@ -34,6 +25,16 @@ describe('UserController (e2e)', () => {
       .expect((res) =>
         expect(res.body.hasOwnProperty('password_hash')).toBeFalsy(),
       )
+    const { accessToken } = (
+      await request(app.getHttpServer()).post('/user/user/session').send({
+        username: 'user',
+        password: 'ep1cpassword!!!!!!!!!!!',
+      })
+    ).body
+    await request(app.getHttpServer())
+      .delete('/user/user')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .send()
   })
 
   it('/user (PATCH)', async () => {
@@ -44,8 +45,15 @@ describe('UserController (e2e)', () => {
         password: 'ep1cpassword!!!!!!!!!!!',
       })
       .expect(201)
-    return request(app.getHttpServer())
+    const { accessToken } = (
+      await request(app.getHttpServer()).post('/user/user/session').send({
+        username: 'user',
+        password: 'ep1cpassword!!!!!!!!!!!',
+      })
+    ).body
+    await request(app.getHttpServer())
       .patch('/user/user')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({
         password: 'ep2cpassword!!!!!!!!!!!!!!!',
       })
@@ -53,5 +61,9 @@ describe('UserController (e2e)', () => {
       .expect((res) =>
         expect(res.body.hasOwnProperty('password_hash')).toBeFalsy(),
       )
+    await request(app.getHttpServer())
+      .delete('/user/user')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .send()
   })
 })
