@@ -3,7 +3,7 @@
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/auctumnus/hanas-server/Node.js%20CI?style=flat-square)](https://github.com/auctumnus/hanas-server/actions?query=workflow%3A"Node.js+CI")
 [![better than cws](https://img.shields.io/badge/better%20than-cws-blue?style=flat-square)](https://www.youtube.com/watch?v=xmkifWcTXiI)
 
-Hanas is a webapp and community built for conlanging. It is primarily inspired by the work of [ConWorkShop](conworkshop.com). The backend here is built using [NestJS](nestjs.com).
+Hanas is a webapp and community built for conlanging. It is primarily inspired by the work of [ConWorkShop](https://conworkshop.com). The backend here is built using [NestJS](https://nestjs.com).
 
 ## Installation
 
