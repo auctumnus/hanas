@@ -50,7 +50,10 @@ export class UserService {
   }
 
   async findOne(username: string) {
-    const user = await this.userRepository.findOne({ username })
+    const user = await this.userRepository.findOne(
+      { username },
+      { relations: ['langPermissions'] },
+    )
     if (!user) throw new NotFoundException()
     return user
   }

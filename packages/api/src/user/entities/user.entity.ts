@@ -1,10 +1,12 @@
 import { Exclude } from 'class-transformer'
+import { LangPermissions } from '../../lang-permissions/entities/lang-permissions.entity'
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm'
 
 @Entity()
@@ -28,4 +30,7 @@ export class User {
 
   @UpdateDateColumn()
   updated: Date
+
+  @OneToMany(() => LangPermissions, (langPermissions) => langPermissions.user)
+  langPermissions: LangPermissions[]
 }

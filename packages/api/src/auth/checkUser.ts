@@ -2,7 +2,7 @@ import { UnauthorizedException } from '@nestjs/common'
 import { Request } from 'express'
 import { User } from '../user/entities/user.entity'
 
-interface HanasRequest extends Request {
+export interface HanasRequest extends Request {
   user: {
     internal_id: number
     username: string

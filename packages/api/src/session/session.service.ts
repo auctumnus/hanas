@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   forwardRef,
   Inject,
   Injectable,
@@ -43,7 +44,7 @@ export class SessionService {
     const { username, password } = createSessionDto
     const user = await this.authService.validateUser(username, password)
     if (user === null) {
-      throw new UnauthorizedException('Password is incorrect.')
+      throw new ForbiddenException('Password is incorrect.')
     }
     const { accessToken, refreshToken } = await this.authService.login(user)
     const parsedUA = uaparser.getResult()

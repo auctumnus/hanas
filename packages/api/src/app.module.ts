@@ -11,11 +11,18 @@ import { User } from './user/entities/user.entity'
 import { Session } from './session/entities/session.entity'
 import { databaseConfig } from './constants'
 import { RouterModule, Routes } from 'nest-router'
+import { LangPermissionsModule } from './lang-permissions/lang-permissions.module'
 
 const routes: Routes = [
   {
     path: '/lang',
     module: LangModule,
+    children: [
+      {
+        path: '/:lang_id/permissions',
+        module: LangPermissionsModule,
+      },
+    ],
   },
   {
     path: '/user',
@@ -42,6 +49,7 @@ const routes: Routes = [
     UserModule,
     AuthModule,
     SessionModule,
+    LangPermissionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

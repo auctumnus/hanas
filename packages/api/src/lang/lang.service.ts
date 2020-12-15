@@ -4,12 +4,14 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { QueryFailedError, Repository } from 'typeorm'
+import { createQueryBuilder, QueryFailedError, Repository } from 'typeorm'
 import { Lang } from './entities/lang.entity'
 import { CreateLangDto } from './dto/create-lang.dto'
 import { UpdateLangDto } from './dto/update-lang.dto'
 import { plainToClass } from 'class-transformer'
 import { paginator } from '../paginator'
+import { User } from '../user/entities/user.entity'
+import { LangPermissions } from '../lang-permissions/entities/lang-permissions.entity'
 
 const idInUse = new ConflictException('Language ID is already in use.')
 
@@ -18,21 +20,49 @@ export class LangService {
   constructor(
     @InjectRepository(Lang)
     private langRepository: Repository<Lang>,
+
+    @InjectRepository(LangPermissions)
+    private permsRepository: Repository<LangPermissions>,
   ) {}
 
-  async create(createLangDto: CreateLangDto): Promise<Lang> {
+  async create(createLangDto: CreateLangDto, user: User): Promise<Lang> {
     if (await this.langRepository.findOne({ id: createLangDto.id })) {
       throw idInUse
     }
-    return plainToClass(Lang, await this.langRepository.save(createLangDto))
+
+    const lang = await this.langRepository.save({
+      ...createLangDto,
+      owners: [user],
+    })
+
+    await this.permsRepository.save({
+      user,
+      lang,
+      owner: true,
+      changePermissions: true,
+      changeId: true,
+      changeInfo: true,
+      changeWords: true,
+    })
+
+    return this.findOne(lang.id)
   }
 
   async findAll(limit: number, cursor?: string) {
-    return paginator(Lang, this.langRepository, 'internal_id', limit, cursor)
+    const qb = this.langRepository
+      .createQueryBuilder('lang')
+      .leftJoinAndSelect('lang.permissions', 'permissions')
+      .leftJoinAndSelect('permissions.user', 'user')
+    return paginator(Lang, qb, 'internal_id', limit, cursor)
   }
 
   async findOne(id: string) {
-    const lang = await this.langRepository.findOne({ id: id.toLowerCase() })
+    const lang = await this.langRepository
+      .createQueryBuilder('lang')
+      .leftJoinAndSelect('lang.permissions', 'permissions')
+      .leftJoinAndSelect('permissions.user', 'user')
+      .where('lang.id = :id', { id: id.toLowerCase() })
+      .getOne()
     if (!lang) throw new NotFoundException()
     return lang
   }
@@ -55,6 +85,7 @@ export class LangService {
 
   async remove(id: string) {
     if (await this.findOne(id)) {
+      await this.permsRepository.createQueryBuilder('perms')
       await this.langRepository.delete({ id })
     }
   }

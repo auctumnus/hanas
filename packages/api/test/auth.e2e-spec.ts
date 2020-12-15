@@ -27,14 +27,14 @@ describe('Authentication (e2e)', () => {
     await request(app.getHttpServer())
       .post('/user')
       .send({
-        username: 'aaa',
+        username: 'aba',
         password: 'ep1cpassword!!!!!!!!!!!',
       })
       .expect(201)
     await request(app.getHttpServer())
-      .post('/user/aaa/session')
+      .post('/user/aba/session')
       .send({
-        username: 'aaa',
+        username: 'aba',
         password: 'ep1cpassword!!!!!!!!!!!',
       })
       .expect(201)
@@ -44,13 +44,13 @@ describe('Authentication (e2e)', () => {
       .expect((res) => expect(res.body).toHaveProperty('refresh.refreshToken'))
       .expect((res) => expect(res.body).toHaveProperty('refresh.id'))
     const { accessToken } = (
-      await request(app.getHttpServer()).post('/user/aaa/session').send({
+      await request(app.getHttpServer()).post('/user/aba/session').send({
         username: 'aaa',
         password: 'ep1cpassword!!!!!!!!!!!',
       })
     ).body
     await request(app.getHttpServer())
-      .delete('/user/aaa')
+      .delete('/user/aba')
       .set('Authorization', 'Bearer ' + accessToken)
       .send()
   })

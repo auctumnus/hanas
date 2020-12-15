@@ -17,39 +17,62 @@ const isAaa = (res: unknown) => {
   return true
 }
 
-const sendExampleLangs = async (app: INestApplication, number: number) => {
-  for (let i = 0; i < number; i++) {
-    await request(app.getHttpServer())
-      .post('/lang')
-      .send({
-        id: `aa${String.fromCharCode(97 + i)}`,
-        name: `aaa ${i}`,
-        description: `description ${i}`,
-      })
-  }
-}
-
-const sendAaa = (app: INestApplication) =>
-  request(app.getHttpServer()).post('/lang').send(aaa).expect(201)
-
 describe('LangController (e2e)', () => {
   let app: INestApplication
+  let accessToken: string
+
+  const sendExampleLangs = async (app: INestApplication, number: number) => {
+    for (let i = 0; i < number; i++) {
+      await request(app.getHttpServer())
+        .post('/lang')
+        .set('Authorization', 'Bearer ' + accessToken)
+        .send({
+          id: `aa${String.fromCharCode(97 + i)}`,
+          name: `aaa ${i}`,
+          description: `description ${i}`,
+        })
+    }
+  }
+
+  const sendAaa = (app: INestApplication) =>
+    request(app.getHttpServer())
+      .post('/lang')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .send(aaa)
+      .expect(201)
 
   beforeAll(async () => {
     app = await makeTestingApp()
     await app.init()
+    await request(app.getHttpServer()).post('/user').send({
+      username: 'aaa',
+      password: 'ep1cpassword!!!!!!!!!!!',
+    })
+    const session = (
+      await request(app.getHttpServer()).post('/user/aaa/session').send({
+        username: 'aaa',
+        password: 'ep1cpassword!!!!!!!!!!!',
+      })
+    ).body
+    accessToken = session.accessToken
   })
 
   beforeEach(async () => {
     const uncleared = await request(app.getHttpServer()).get('/lang')
     await Promise.all(
       uncleared.body.data.map(async (lang) => {
-        return request(app.getHttpServer()).delete(`/lang/${lang.id}`)
+        return request(app.getHttpServer())
+          .delete(`/lang/${lang.id}`)
+          .set('Authorization', 'Bearer ' + accessToken)
       }),
     )
   })
 
   afterAll(async () => {
+    await request(app.getHttpServer())
+      .delete('/user/aaa')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .send()
     await app.close()
   })
 
@@ -105,6 +128,7 @@ describe('LangController (e2e)', () => {
   it('/lang (POST)', async () => {
     return request(app.getHttpServer())
       .post('/lang')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send(aaa)
       .expect(201)
       .expect((res) => expect(isAaa(res.body)).toBeTruthy)
@@ -112,12 +136,17 @@ describe('LangController (e2e)', () => {
 
   it('/lang (POST, 409)', async () => {
     await sendAaa(app)
-    return request(app.getHttpServer()).post('/lang').send(aaa).expect(409)
+    return request(app.getHttpServer())
+      .post('/lang')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .send(aaa)
+      .expect(409)
   })
 
   it('/lang (POST, 400, empty name)', async () => {
     return request(app.getHttpServer())
       .post('/lang')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, name: ' ' })
       .expect(400)
       .expect((res) =>
@@ -130,6 +159,7 @@ describe('LangController (e2e)', () => {
   it('/lang (POST, 400, invalid id)', async () => {
     return request(app.getHttpServer())
       .post('/lang')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, id: '123' })
       .expect(400)
   })
@@ -137,6 +167,7 @@ describe('LangController (e2e)', () => {
   it('/lang (POST, 400, id too short)', async () => {
     return request(app.getHttpServer())
       .post('/lang')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, id: 'a' })
       .expect(400)
   })
@@ -144,6 +175,7 @@ describe('LangController (e2e)', () => {
   it('/lang (POST, 400, id too long)', async () => {
     return request(app.getHttpServer())
       .post('/lang')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, id: 'aaaaaaaaaaa' })
       .expect(400)
   })
@@ -151,6 +183,7 @@ describe('LangController (e2e)', () => {
   it('/lang (POST, 400, name too long)', async () => {
     return request(app.getHttpServer())
       .post('/lang')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, name: 'a'.repeat(100) })
       .expect(400)
   })
@@ -158,10 +191,12 @@ describe('LangController (e2e)', () => {
   it('/lang/:id (PATCH)', async () => {
     await request(app.getHttpServer())
       .post('/lang')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, name: 'b' })
       .expect(201)
     return request(app.getHttpServer())
       .patch('/lang/aaa')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ name: 'aaa' })
       .expect(200)
       .expect((res) => expect(isAaa(res.body)).toBeTruthy)
@@ -170,6 +205,7 @@ describe('LangController (e2e)', () => {
   it('/lang/:id (PATCH, 404)', async () => {
     return request(app.getHttpServer())
       .patch('/lang/aaa')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ name: 'aaa' })
       .expect(404)
   })
@@ -178,6 +214,7 @@ describe('LangController (e2e)', () => {
     await sendAaa(app)
     return request(app.getHttpServer())
       .patch('/lang/aaa')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ asdfgh: 'jkl' })
       .expect((res) =>
         expect(res.body.message).toBe('No valid parameters were provided.'),
@@ -188,20 +225,28 @@ describe('LangController (e2e)', () => {
     await sendAaa(app)
     await request(app.getHttpServer())
       .post('/lang')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, id: 'aab' })
       .expect(201)
     return request(app.getHttpServer())
       .patch('/lang/aab')
+      .set('Authorization', 'Bearer ' + accessToken)
       .send({ id: 'aaa' })
       .expect(409)
   })
 
   it('/lang/:id (DELETE)', async () => {
     await sendAaa(app)
-    return request(app.getHttpServer()).delete('/lang/aaa').expect(200)
+    return request(app.getHttpServer())
+      .delete('/lang/aaa')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .expect(200)
   })
 
   it('/lang/:id (DELETE, 404)', async () => {
-    return request(app.getHttpServer()).delete('/lang/aaa').expect(404)
+    return request(app.getHttpServer())
+      .delete('/lang/aaa')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .expect(404)
   })
 })
