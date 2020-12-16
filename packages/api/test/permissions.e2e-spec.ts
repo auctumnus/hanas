@@ -85,11 +85,35 @@ describe('LangPermissionsController (e2e)', () => {
   it(`${baseTestName} (POST, 405)`, () =>
     server().post(base).send({ changeWords: true }).expect(405))
 
-  it(`${userTestName} (GET, 200)`, () =>
+  it(`${userTestName} (GET, 401)`, () =>
+    server().get(aaaPermissions).expect(401))
+
+  it(`${userTestName} (GET, 403)`, () =>
+    server()
+      .get(aaaPermissions)
+      .set('Authorization', 'Bearer ' + accessTokenBbb)
+      .expect(403))
+
+  it(`${userTestName} (GET, 200 w/ changePermissions)`, () =>
     server()
       .get(aaaPermissions)
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .expect(200))
+
+  it(`${userTestName} (GET, 200, own perms)`, async () => {
+    await server()
+      .post(bbbPermissions)
+      .set('Authorization', 'Bearer ' + accessTokenAaa)
+      .send({ changeWords: true })
+    await server()
+      .get(bbbPermissions)
+      .set('Authorization', 'Bearer ' + accessTokenBbb)
+      .expect(200)
+    await server()
+      .delete(bbbPermissions)
+      .set('Authorization', 'Bearer ' + accessTokenAaa)
+      .send()
+  })
 
   it(`${userTestName} (POST, 401)`, () =>
     server().post(aaaPermissions).send({ changeWords: true }).expect(401))

@@ -85,7 +85,9 @@ export class LangPermissionsController {
   ) {
     const lang = await this.langService.findOne(langId)
     const requestorUsername = ((req as unknown) as HanasRequest).user.username
-    this.checkPermission(requestorUsername, lang)
+    if (requestorUsername !== username) {
+      this.checkPermission(requestorUsername, lang)
+    }
     return this.langPermissionsService.findOne(lang, username)
   }
 
