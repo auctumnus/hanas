@@ -132,6 +132,7 @@ export class LangPermissionsService {
       // transfer ownership
       requestorPermissions.owner = false
       newPermissions.changeInfo = true
+      newPermissions.changeId = true
       newPermissions.changePermissions = true
       newPermissions.changeWords = true
       await this.permsRepository.update(

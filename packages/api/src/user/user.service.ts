@@ -46,14 +46,20 @@ export class UserService {
   }
 
   findAll(limit: number, cursor?: string) {
-    return paginator(User, this.userRepository, 'username', limit, cursor)
+    const qb = this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.langPermissions', 'permissions')
+      .leftJoinAndSelect('permissions.lang', 'lang')
+    return paginator(User, qb, 'username', limit, cursor)
   }
 
   async findOne(username: string) {
-    const user = await this.userRepository.findOne(
-      { username },
-      { relations: ['langPermissions'] },
-    )
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.username = :username', { username })
+      .leftJoinAndSelect('user.langPermissions', 'permissions')
+      .leftJoinAndSelect('permissions.lang', 'lang')
+      .getOne()
     if (!user) throw new NotFoundException()
     return user
   }

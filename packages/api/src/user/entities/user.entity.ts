@@ -7,7 +7,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  AfterLoad,
 } from 'typeorm'
+import { Lang } from '../../lang/entities/lang.entity'
 
 @Entity()
 export class User {
@@ -31,6 +33,21 @@ export class User {
   @UpdateDateColumn()
   updated: Date
 
+  @Exclude()
   @OneToMany(() => LangPermissions, (langPermissions) => langPermissions.user)
   langPermissions: LangPermissions[]
+
+  ownedLangs: Lang[]
+  contributedLangs: Lang[]
+
+  @AfterLoad()
+  updateLangs() {
+    if (!this.langPermissions) return undefined
+    this.ownedLangs = this.langPermissions
+      .filter((perm) => perm.owner)
+      .map((perm) => perm.lang)
+    this.contributedLangs = this.langPermissions
+      .filter((perm) => !perm.owner)
+      .map((perm) => perm.lang)
+  }
 }

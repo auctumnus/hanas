@@ -14,8 +14,8 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "rimraf db && jest --config ./test/jest-e2e.json --runInBand",
-    "test:watch": "jest --watch --config ./test/jest-e2e.json --runInBand",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --config ./test/jest-e2e.json",
+    "test:watch": "rimraf db && jest --watch --config ./test/jest-e2e.json --runInBand",
+    "test:debug": "rimraf db && node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --config ./test/jest-e2e.json",
     "delete_db": "rimraf db"
   },
   "dependencies": {

@@ -9,6 +9,7 @@ import {
   UseGuards,
   Req,
   ForbiddenException,
+  MethodNotAllowedException,
 } from '@nestjs/common'
 import { Request } from 'express'
 import { LangPermissionsService } from './lang-permissions.service'
@@ -37,6 +38,13 @@ export class LangPermissionsController {
         "User does not have permission to access or change the requested language's permissions.",
       )
     }
+  }
+
+  @Post()
+  methodNotAllowed() {
+    throw new MethodNotAllowedException(
+      'Use /lang/:id/permissions/:username instead.',
+    )
   }
 
   @UseGuards(JwtAuthGuard)
