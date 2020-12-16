@@ -13,6 +13,7 @@ import { plainToClass } from 'class-transformer'
 import { SALT_ROUNDS } from '../constants'
 import { paginator } from '../paginator'
 import { SessionService } from '../session/session.service'
+import { LangService } from '../lang/lang.service'
 
 const usernameInUse = new ConflictException('Username is already in use.')
 
@@ -28,6 +29,7 @@ export class UserService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private sessionService: SessionService,
+    private langService: LangService,
   ) {}
   async create(createUserDto: CreateUserDto) {
     // eslint-disable-next-line prefer-const
@@ -100,6 +102,7 @@ export class UserService {
   async remove(username: string) {
     const user = await this.findOne(username)
     if (user) {
+      user.ownedLangs.forEach(({ id }) => this.langService.remove(id))
       this.userRepository.delete({ username })
       this.sessionService.removeByUser(user)
     }

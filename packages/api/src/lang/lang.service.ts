@@ -4,11 +4,10 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { createQueryBuilder, QueryFailedError, Repository } from 'typeorm'
+import { QueryFailedError, Repository } from 'typeorm'
 import { Lang } from './entities/lang.entity'
 import { CreateLangDto } from './dto/create-lang.dto'
 import { UpdateLangDto } from './dto/update-lang.dto'
-import { plainToClass } from 'class-transformer'
 import { paginator } from '../paginator'
 import { User } from '../user/entities/user.entity'
 import { LangPermissions } from '../lang-permissions/entities/lang-permissions.entity'
@@ -71,22 +70,17 @@ export class LangService {
     if (Object.keys(updateLangDto).length === 0) {
       return { message: 'No valid parameters were provided.' }
     }
-    if (await this.findOne(id)) {
-      try {
-        await this.langRepository.update({ id }, updateLangDto)
-      } catch (err) {
-        if (err instanceof QueryFailedError && err.message.includes('UNIQUE')) {
-          throw idInUse
-        }
+    try {
+      await this.langRepository.update({ id }, updateLangDto)
+    } catch (err) {
+      if (err instanceof QueryFailedError && err.message.includes('UNIQUE')) {
+        throw idInUse
       }
-      return this.findOne(id)
     }
+    return this.findOne(id)
   }
 
   async remove(id: string) {
-    if (await this.findOne(id)) {
-      await this.permsRepository.createQueryBuilder('perms')
-      await this.langRepository.delete({ id })
-    }
+    this.langRepository.delete({ id })
   }
 }

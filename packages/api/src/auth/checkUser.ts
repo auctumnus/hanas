@@ -19,3 +19,5 @@ export const checkUser = (req: Request, user: User) => {
     )
   }
 }
+
+export const getReqUser = (req: Request) => (req as HanasRequest).user

@@ -6,11 +6,13 @@ import { User } from './entities/user.entity'
 import { SessionModule } from '../session/session.module'
 import { JwtModule } from '@nestjs/jwt'
 import { JwtStrategy } from '../auth/jwt.strategy'
+import { LangModule } from '../lang/lang.module'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
     forwardRef(() => SessionModule),
+    forwardRef(() => LangModule),
     JwtModule.register({}),
   ],
   controllers: [UserController],
