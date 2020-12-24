@@ -10,6 +10,7 @@ on:
       - '**.js'
       - '**.ts'
       - '**.json'
+      - '**.yml'
   pull_request:
     branches: [main]
 
