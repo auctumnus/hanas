@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer'
-import { User } from 'src/user/entities/user.entity'
+import { User } from '../../user/entities/user.entity'
 import {
   Entity,
   Column,
@@ -10,6 +10,7 @@ import {
   AfterLoad,
 } from 'typeorm'
 import { LangPermissions } from '../../lang-permissions/entities/lang-permissions.entity'
+import { PartOfSpeech } from 'src/part-of-speech/entities/part-of-speech.entity'
 
 @Entity()
 export class Lang {
@@ -35,6 +36,9 @@ export class Lang {
   @Exclude()
   @OneToMany(() => LangPermissions, (langPermissions) => langPermissions.lang)
   permissions: LangPermissions[]
+
+  @OneToMany(() => PartOfSpeech, (partOfSpeech) => partOfSpeech.lang)
+  partsOfSpeech: PartOfSpeech[]
 
   owner: User
   contributors: User[]
