@@ -1,4 +1,4 @@
-import { Lang } from 'src/lang/entities/lang.entity'
+import { Lang } from '../../lang/entities/lang.entity'
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()

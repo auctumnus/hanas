@@ -10,7 +10,7 @@ import {
   AfterLoad,
 } from 'typeorm'
 import { LangPermissions } from '../../lang-permissions/entities/lang-permissions.entity'
-import { PartOfSpeech } from 'src/part-of-speech/entities/part-of-speech.entity'
+import { PartOfSpeech } from '../../part-of-speech/entities/part-of-speech.entity'
 
 @Entity()
 export class Lang {
