@@ -5,6 +5,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToOne,
@@ -27,22 +28,23 @@ export class Word {
   @ManyToOne(() => User)
   creator: User
 
-  @OneToOne(() => PartOfSpeech, { onDelete: 'CASCADE' })
+  @ManyToOne(() => PartOfSpeech, { onDelete: 'CASCADE' })
   partOfSpeech: PartOfSpeech
 
   @ManyToMany(() => WordClass, { onDelete: 'CASCADE' })
+  @JoinTable()
   wordClasses: WordClass[]
 
   @Column()
   word: string
 
-  @Column()
+  @Column({default: ''})
   ipa: string
 
-  @Column()
+  @Column({default: ''})
   definition: string
 
-  @Column()
+  @Column({default: ''})
   notes: string
 
   @CreateDateColumn()

@@ -3,7 +3,7 @@ import { Lang } from 'src/lang/entities/lang.entity'
 import { CreateWordDto } from './dto/create-word.dto'
 import { UpdateWordDto } from './dto/update-word.dto'
 import { User } from '../user/entities/user.entity'
-import { WordClass } from '../word-class/entities/word-class.entity'
+import { WordClass } from 'src/word-class/entities/word-class.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { paginator } from '../paginator'
@@ -52,7 +52,11 @@ export class WordService {
         'No part of speech with that abbreviation was found for this language.',
       )
     }
-    const wordClasses = getWordClasses(createWordDto.wordClasses, lang)
+    let wordClasses = []
+    if(createWordDto.wordClasses) {
+    
+    wordClasses = getWordClasses(createWordDto.wordClasses, lang)
+    }
 
     await this.wordRepository.save({
       ...createWordDto,

@@ -12,7 +12,7 @@ import { CreateLangDto } from './dto/create-lang.dto'
 import { UpdateLangDto } from './dto/update-lang.dto'
 import { paginator } from '../paginator'
 import { LangPermissions } from '../lang-permissions/entities/lang-permissions.entity'
-import { UserService } from 'src/user/user.service'
+import { UserService } from '../user/user.service'
 
 const idInUse = new ConflictException('Language ID is already in use.')
 
