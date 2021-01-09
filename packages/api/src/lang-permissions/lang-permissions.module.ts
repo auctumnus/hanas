@@ -11,7 +11,7 @@ import { Lang } from '../lang/entities/lang.entity'
   imports: [
     TypeOrmModule.forFeature([LangPermissions, Lang]),
     LangModule,
-    forwardRef(() => UserModule),
+    UserModule,
   ],
   controllers: [LangPermissionsController],
   providers: [LangPermissionsService],

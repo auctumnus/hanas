@@ -5,13 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { WordClass } from './entities/word-class.entity'
 import { Lang } from '../lang/entities/lang.entity'
 import { LangModule } from '../lang/lang.module'
-import { UserModule } from '../user/user.module'
+// import { UserModule } from '../user/user.module'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([WordClass, Lang]),
     LangModule,
-    forwardRef(() => UserModule),
+    // forwardRef(() => UserModule),
   ],
   controllers: [WordClassController],
   providers: [WordClassService],

@@ -1,5 +1,7 @@
 import {
   ConflictException,
+  forwardRef,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
@@ -28,7 +30,9 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @Inject(forwardRef(() => SessionService))
     private sessionService: SessionService,
+    @Inject(forwardRef(() => LangService))
     private langService: LangService,
   ) {}
   async create(createUserDto: CreateUserDto) {

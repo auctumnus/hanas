@@ -11,7 +11,7 @@ import { JwtStrategy } from '../auth/jwt.strategy'
 @Module({
   imports: [
     forwardRef(() => UserModule),
-    AuthModule,
+    forwardRef(() => AuthModule),
     JwtModule.register({}),
     TypeOrmModule.forFeature([Session]),
   ],

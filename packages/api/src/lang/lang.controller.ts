@@ -16,23 +16,18 @@ import { UpdateLangDto } from './dto/update-lang.dto'
 import { LangService } from './lang.service'
 import { getLimitAndCursor } from '../paginator'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
-import { UserService } from '../user/user.service'
 import { getReqUser } from '../auth/checkUser'
 import { getUserPermissions } from '../lang-permissions/lang-permissions.service'
 
 @Controller()
 export class LangController {
-  constructor(
-    private readonly langService: LangService,
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly langService: LangService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createLangDto: CreateLangDto, @Req() req: Request) {
     const { username } = getReqUser(req)
-    const user = await this.userService.findOne(username)
-    return this.langService.create(createLangDto, user)
+    return this.langService.create(createLangDto, username)
   }
 
   @Get()

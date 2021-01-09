@@ -1,5 +1,7 @@
 import {
   ConflictException,
+  forwardRef,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
@@ -9,8 +11,8 @@ import { Lang } from './entities/lang.entity'
 import { CreateLangDto } from './dto/create-lang.dto'
 import { UpdateLangDto } from './dto/update-lang.dto'
 import { paginator } from '../paginator'
-import { User } from '../user/entities/user.entity'
 import { LangPermissions } from '../lang-permissions/entities/lang-permissions.entity'
+import { UserService } from 'src/user/user.service'
 
 const idInUse = new ConflictException('Language ID is already in use.')
 
@@ -22,12 +24,15 @@ export class LangService {
 
     @InjectRepository(LangPermissions)
     private permsRepository: Repository<LangPermissions>,
+    @Inject(forwardRef(() => UserService))
+    private readonly userService: UserService,
   ) {}
 
-  async create(createLangDto: CreateLangDto, user: User): Promise<Lang> {
+  async create(createLangDto: CreateLangDto, username: string): Promise<Lang> {
     if (await this.langRepository.findOne({ id: createLangDto.id })) {
       throw idInUse
     }
+    const user = await this.userService.findOne(username)
     const lang = await this.langRepository.save({
       ...createLangDto,
       owners: [user],
