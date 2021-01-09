@@ -3,12 +3,16 @@ import { Lang } from '../../lang/entities/lang.entity'
 import { User } from '../../user/entities/user.entity'
 import {
   Column,
+  CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm'
-import { PartOfSpeech } from 'src/part-of-speech/entities/part-of-speech.entity'
+import { PartOfSpeech } from '../../part-of-speech/entities/part-of-speech.entity'
+import { WordClass } from '../../word-class/entities/word-class.entity'
 
 @Entity()
 export class Word {
@@ -16,14 +20,18 @@ export class Word {
   @PrimaryGeneratedColumn()
   internal_id: number
 
-  @ManyToOne(() => Lang)
+  @Exclude()
+  @ManyToOne(() => Lang, { onDelete: 'CASCADE'})
   lang: Lang
 
   @ManyToOne(() => User)
   creator: User
 
-  @OneToOne(() => PartOfSpeech)
+  @OneToOne(() => PartOfSpeech, { onDelete: 'CASCADE' })
   partOfSpeech: PartOfSpeech
+
+  @ManyToMany(() => WordClass, { onDelete: 'CASCADE' })
+  wordClasses: WordClass[]
 
   @Column()
   word: string
@@ -36,4 +44,10 @@ export class Word {
 
   @Column()
   notes: string
+
+  @CreateDateColumn()
+  created: Date
+
+  @UpdateDateColumn()
+  updated: Date
 }

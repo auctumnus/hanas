@@ -10,10 +10,10 @@ import { LangModule } from '../lang/lang.module'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
     forwardRef(() => SessionModule),
     forwardRef(() => LangModule),
     JwtModule.register({}),
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [UserController],
   providers: [UserService, JwtStrategy],

@@ -11,6 +11,7 @@ import {
 } from 'typeorm'
 import { LangPermissions } from '../../lang-permissions/entities/lang-permissions.entity'
 import { PartOfSpeech } from '../../part-of-speech/entities/part-of-speech.entity'
+import { WordClass } from '../../word-class/entities/word-class.entity'
 
 @Entity()
 export class Lang {
@@ -39,6 +40,9 @@ export class Lang {
 
   @OneToMany(() => PartOfSpeech, (partOfSpeech) => partOfSpeech.lang)
   partsOfSpeech: PartOfSpeech[]
+
+  @OneToMany(() => WordClass, (wordClass) => wordClass.lang)
+  wordClasses: WordClass[]
 
   owner: User
   contributors: User[]

@@ -1,6 +1,7 @@
 import * as request from 'supertest'
 import { makeTestingApp } from './makeTestingApp'
 import { INestApplication } from '@nestjs/common'
+import {Lang} from '../src/lang/entities/lang.entity'
 
 const aaa = {
   id: 'aaa',
@@ -62,7 +63,7 @@ describe('LangController (e2e)', () => {
   beforeEach(async () => {
     const uncleared = await server().get('/lang')
     await Promise.all(
-      uncleared.body.data.map(async (lang) => {
+      uncleared.body.data.map(async (lang: Lang) => {
         return server()
           .delete(`/lang/${lang.id}`)
           .set('Authorization', 'Bearer ' + accessToken)

@@ -2,7 +2,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common'
 import { UserService } from '../user/user.service'
 import { compare } from 'bcrypt'
 import { JwtService } from '@nestjs/jwt'
-import { User } from 'src/user/entities/user.entity'
+import { User } from '../user/entities/user.entity'
 import {
   ACCESS_JWT_SECRET,
   REFRESH_JWT_SECRET,

@@ -28,12 +28,10 @@ export class LangService {
     if (await this.langRepository.findOne({ id: createLangDto.id })) {
       throw idInUse
     }
-
     const lang = await this.langRepository.save({
       ...createLangDto,
       owners: [user],
     })
-
     await this.permsRepository.save({
       user,
       lang,
@@ -51,6 +49,8 @@ export class LangService {
     const qb = this.langRepository
       .createQueryBuilder('lang')
       .leftJoinAndSelect('lang.permissions', 'permissions')
+      .leftJoinAndSelect('lang.partsOfSpeech', 'partsOfSpeech')
+      .leftJoinAndSelect('lang.wordClasses', 'wordClasses')
       .leftJoinAndSelect('permissions.user', 'user')
     return paginator(Lang, qb, 'internal_id', limit, cursor)
   }
@@ -59,6 +59,8 @@ export class LangService {
     const lang = await this.langRepository
       .createQueryBuilder('lang')
       .leftJoinAndSelect('lang.permissions', 'permissions')
+      .leftJoinAndSelect('lang.partsOfSpeech', 'partsOfSpeech')
+      .leftJoinAndSelect('lang.wordClasses', 'wordClasses')
       .leftJoinAndSelect('permissions.user', 'user')
       .where('lang.id = :id', { id: id.toLowerCase() })
       .getOne()

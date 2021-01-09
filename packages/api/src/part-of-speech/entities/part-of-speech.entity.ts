@@ -1,12 +1,21 @@
 import { Lang } from '../../lang/entities/lang.entity'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm'
+import { Exclude } from 'class-transformer'
 
 @Entity()
 export class PartOfSpeech {
+  @Exclude()
   @PrimaryGeneratedColumn()
   internal_id: number
 
-  @ManyToOne(() => Lang, (lang) => lang.partsOfSpeech)
+  @ManyToOne(() => Lang, (lang) => lang.partsOfSpeech, { onDelete: 'CASCADE' })
   lang: Lang
 
   @Column()
@@ -14,4 +23,10 @@ export class PartOfSpeech {
 
   @Column()
   abbreviation: string
+
+  @CreateDateColumn()
+  created: Date
+
+  @UpdateDateColumn()
+  updated: Date
 }
