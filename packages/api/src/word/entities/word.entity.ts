@@ -22,7 +22,7 @@ export class Word {
   internal_id: number
 
   @Exclude()
-  @ManyToOne(() => Lang, { onDelete: 'CASCADE'})
+  @ManyToOne(() => Lang, { onDelete: 'CASCADE' })
   lang: Lang
 
   @ManyToOne(() => User)
@@ -38,13 +38,13 @@ export class Word {
   @Column()
   word: string
 
-  @Column({default: ''})
+  @Column({ default: '' })
   ipa: string
 
-  @Column({default: ''})
+  @Column({ default: '' })
   definition: string
 
-  @Column({default: ''})
+  @Column({ default: '' })
   notes: string
 
   @CreateDateColumn()

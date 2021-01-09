@@ -21,7 +21,7 @@ const feminine = {
 
 const noun = {
   name: 'Noun',
-  abbreviation: 'n'
+  abbreviation: 'n',
 }
 
 describe('WordClassController (e2e)', () => {
@@ -99,7 +99,7 @@ describe('WordClassController (e2e)', () => {
   const abbrTestName = '/lang/:id/word/:word'
 
   const base = '/lang/aaa/word'
-  
+
   it(`${baseTestName} (GET, 200)`, () =>
     server()
       .get(base + '/aaa')

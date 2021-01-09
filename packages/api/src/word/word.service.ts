@@ -53,9 +53,8 @@ export class WordService {
       )
     }
     let wordClasses = []
-    if(createWordDto.wordClasses) {
-    
-    wordClasses = getWordClasses(createWordDto.wordClasses, lang)
+    if (createWordDto.wordClasses) {
+      wordClasses = getWordClasses(createWordDto.wordClasses, lang)
     }
 
     await this.wordRepository.save({
@@ -96,10 +95,15 @@ export class WordService {
     return (await this.findOne(langId, word))[num]
   }
 
-  async update(lang: Lang, word: string, num: number, updateWordDto: UpdateWordDto) {
+  async update(
+    lang: Lang,
+    word: string,
+    num: number,
+    updateWordDto: UpdateWordDto,
+  ) {
     const fullWord = await this.findOneByNumber(lang.id, word, num)
     let partOfSpeech = fullWord.partOfSpeech
-    if(updateWordDto.partOfSpeech) {
+    if (updateWordDto.partOfSpeech) {
       partOfSpeech = getPartOfSpeech(updateWordDto.partOfSpeech, lang)
     }
     if (!partOfSpeech) {
@@ -107,14 +111,21 @@ export class WordService {
         'No part of speech with that abbreviation was found for this language.',
       )
     }
-    
+
     let wordClasses = fullWord.wordClasses
-    if(updateWordDto.wordClasses) {
+    if (updateWordDto.wordClasses) {
       wordClasses = getWordClasses(updateWordDto.wordClasses, lang)
     }
-    
-    await this.wordRepository.update({internal_id: fullWord.internal_id}, {...updateWordDto, partOfSpeech, wordClasses})
-    return this.findOneByNumber(lang.id, fullWord.word || updateWordDto.word, num)
+
+    await this.wordRepository.update(
+      { internal_id: fullWord.internal_id },
+      { ...updateWordDto, partOfSpeech, wordClasses },
+    )
+    return this.findOneByNumber(
+      lang.id,
+      fullWord.word || updateWordDto.word,
+      num,
+    )
   }
 
   async remove(lang: Lang, word: string, num: number) {

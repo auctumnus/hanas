@@ -1,7 +1,7 @@
 import * as request from 'supertest'
 import { makeTestingApp } from './makeTestingApp'
 import { INestApplication } from '@nestjs/common'
-import {Lang} from '../src/lang/entities/lang.entity'
+import { Lang } from '../src/lang/entities/lang.entity'
 
 const aaa = {
   id: 'aaa',
