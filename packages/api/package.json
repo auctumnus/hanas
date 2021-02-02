@@ -43,7 +43,7 @@
     "rimraf": "3.0.2",
     "rxjs": "6.6.3",
     "typeorm": "0.2.30",
-    "typeorm-cursor-pagination": "0.5.0",
+    "typeorm-cursor-pagination": "0.6.0",
     "ua-parser-js": "0.7.23"
   },
   "devDependencies": {
