@@ -22,7 +22,7 @@ import { Lang } from '../lang/entities/lang.entity'
 import { UserService } from '../user/user.service'
 
 const checkPermission = (req: Request, lang: Lang) => {
-  if (!getPermission(req, lang).changeWords) {
+  if (!getPermission(req, lang)?.changeWords) {
     throw new ForbiddenException(
       'User does not have permission to change words for this language.',
     )
@@ -68,7 +68,7 @@ export class WordController {
     @Param('word') word: string,
     @Param('num') num: number,
   ) {
-    return this.wordService.findOne(langId, word)[num]
+    return this.wordService.findOneByNumber(langId, word, num)
   }
 
   @UseGuards(JwtAuthGuard)

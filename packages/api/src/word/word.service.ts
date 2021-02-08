@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { Lang } from 'src/lang/entities/lang.entity'
 import { CreateWordDto } from './dto/create-word.dto'
 import { UpdateWordDto } from './dto/update-word.dto'
@@ -56,7 +56,6 @@ export class WordService {
     if (createWordDto.wordClasses) {
       wordClasses = getWordClasses(createWordDto.wordClasses, lang)
     }
-
     await this.wordRepository.save({
       ...createWordDto,
       lang,
@@ -78,21 +77,30 @@ export class WordService {
     return paginator(Word, qb, 'internal_id', limit, cursor)
   }
 
-  findOne(langId: string, word: string) {
-    return this.wordRepository.find({
-      relations: ['creator', 'lang', 'wordClasses', 'partOfSpeech'],
-      order: { internal_id: 'ASC' },
-      where: {
-        lang: {
-          id: langId,
-        },
-        word,
-      },
-    })
+  async findOne(langId: string, word: string) {
+    const words = await this.wordRepository
+      .createQueryBuilder('word')
+      .leftJoinAndSelect('word.lang', 'lang')
+      .leftJoinAndSelect('word.creator', 'creator')
+      .leftJoinAndSelect('word.partOfSpeech', 'partOfSpeech')
+      .leftJoinAndSelect('word.wordClasses', 'wordClasses')
+      .where('word.word = :word', { word })
+      .andWhere('lang.id = :langId', { langId })
+      .getMany()
+    if(!words.length) {
+      throw new NotFoundException()
+    } else {
+      return words
+    }
   }
 
   async findOneByNumber(langId: string, word: string, num: number) {
-    return (await this.findOne(langId, word))[num]
+    const words = await this.findOne(langId, word)
+    if(!words[num]) {
+      throw new NotFoundException()
+    } else {
+      return words[num]
+    }
   }
 
   async update(

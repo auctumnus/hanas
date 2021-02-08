@@ -1,0 +1,5 @@
+name: "Hanas"
+tasks:
+  start:
+    command: npm run start
+    inboundUrl: http://localhost:4000
