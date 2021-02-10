@@ -1,16 +1,27 @@
-import { Test } from '@nestjs/testing'
-import { AppModule } from '../src/app.module'
+import {NestFactory} from '@nestjs/core'
+import {AppModule} from '../src/app.module'
 import { ValidationPipe } from '../src/validationPipe'
 import { TrimPipe } from '../src/trimPipe'
 import { classTransformerInterceptor } from '../src/classTransformerInterceptor'
+import { clacks } from '../src/clacks.middleware'
+import waitOn from 'wait-on'
 
-export const makeTestingApp = async () => {
-  const moduleFixture = await Test.createTestingModule({
-    imports: [AppModule],
-  }).compile()
+export const getRequestUrl = () => {
+  return `localhost:${process.env.OPTIC_PORT || process.env.PORT}`
+}
 
-  const app = moduleFixture.createNestApplication()
+export const makeTestingApp = async () => {  
+  const app = await NestFactory.create(AppModule, {logger: false})
   app.useGlobalPipes(new TrimPipe(), ValidationPipe)
   app.useGlobalInterceptors(new classTransformerInterceptor())
+  app.use(clacks)
+  
+  let port = process.env.PORT
+  await waitOn({
+    resources: [`localhost:${port}`],
+    reverse: true
+  })
+  await app.listen(port)
   return app
 }
+

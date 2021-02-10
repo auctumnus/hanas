@@ -14,7 +14,7 @@
     "start:prod": "node dist/main",
     "lint": "prettier --check --ignore-unknown .",
     "lint:fix": "prettier --write --ignore-unknown .",
-    "test": "rimraf db && jest --config ./test/jest-e2e.json --runInBand",
+    "test": "rimraf db && cross-env DATABASE_CONFIG_JSON=\"{\\\"type\\\":\\\"better-sqlite3\\\",\\\"database\\\":\\\":memory:\\\"}\" jest --config ./test/jest-e2e.json --runInBand",
     "test:watch": "rimraf db && jest --watch --config ./test/jest-e2e.json --runInBand",
     "test:debug": "rimraf db && node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --config ./test/jest-e2e.json",
     "delete_db": "rimraf db"
@@ -34,6 +34,7 @@
     "bytes": "^3.1.0",
     "class-transformer": "0.3.2",
     "class-validator": "0.13.1",
+    "cross-env": "^7.0.3",
     "dotenv-defaults": "2.0.1",
     "jsonwebtoken": "8.5.1",
     "multer": "^1.4.2",
@@ -43,12 +44,14 @@
     "passport": "0.4.1",
     "passport-jwt": "4.0.0",
     "passport-local": "1.0.0",
+    "portfinder": "^1.0.28",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "6.6.3",
     "typeorm": "0.2.31",
     "typeorm-cursor-pagination": "0.6.0",
-    "ua-parser-js": "0.7.23"
+    "ua-parser-js": "0.7.23",
+    "wait-on": "^5.2.1"
   },
   "devDependencies": {
     "@nestjs/cli": "7.5.4",
@@ -64,7 +67,9 @@
     "@types/passport-jwt": "3.0.4",
     "@types/passport-local": "1.0.33",
     "@types/supertest": "2.0.10",
+    "@types/tcp-port-used": "^1.0.0",
     "@types/ua-parser-js": "0.7.35",
+    "@types/wait-on": "^5.2.0",
     "@typescript-eslint/eslint-plugin": "4.15.0",
     "@typescript-eslint/parser": "4.15.0",
     "eslint": "7.19.0",

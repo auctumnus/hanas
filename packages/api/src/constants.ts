@@ -13,7 +13,7 @@ for (const variable of [DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, SALT_ROUNDS]) {
   if (Number.isNaN(variable)) throw new Error(`Invalid number for ${variable}!`)
 }
 // load db settings
-let dbconfig
+let dbconfig: any
 try {
   dbconfig = JSON.parse(process.env.DATABASE_CONFIG_JSON)
 } catch (err) {

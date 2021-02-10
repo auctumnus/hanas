@@ -89,7 +89,8 @@ export class LangPermissionsService {
     })
     delete result.lang
     delete result.internal_id
-    return result
+    const langAfter = await this.langService.findOne(lang.id)
+    return this.findOne(langAfter, user.username)
   }
 
   findAll(lang: Lang) {

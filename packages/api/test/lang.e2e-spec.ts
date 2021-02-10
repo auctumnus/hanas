@@ -1,5 +1,5 @@
-import * as request from 'supertest'
-import { makeTestingApp } from './makeTestingApp'
+import request from 'supertest'
+import { makeTestingApp, getRequestUrl } from './makeTestingApp'
 import { INestApplication } from '@nestjs/common'
 import { Lang } from '../src/lang/entities/lang.entity'
 
@@ -22,11 +22,11 @@ describe('LangController (e2e)', () => {
   let app: INestApplication
   let accessToken: string
 
-  const server = () => request(app.getHttpServer())
+  const server = request(getRequestUrl())
 
   const sendExampleLangs = async (number: number) => {
     for (let i = 0; i < number; i++) {
-      await server()
+      await server
         .post('/lang')
         .set('Authorization', 'Bearer ' + accessToken)
         .send({
@@ -38,7 +38,7 @@ describe('LangController (e2e)', () => {
   }
 
   const sendAaa = () =>
-    server()
+    server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessToken)
       .send(aaa)
@@ -46,13 +46,12 @@ describe('LangController (e2e)', () => {
 
   beforeAll(async () => {
     app = await makeTestingApp()
-    await app.init()
-    await server().post('/user').send({
+    await server.post('/user').send({
       username: 'aaa',
       password: 'ep1cpassword!!!!!!!!!!!',
     })
     const session = (
-      await server().post('/user/aaa/session').send({
+      await server.post('/user/aaa/session').send({
         username: 'aaa',
         password: 'ep1cpassword!!!!!!!!!!!',
       })
@@ -61,10 +60,10 @@ describe('LangController (e2e)', () => {
   })
 
   beforeEach(async () => {
-    const uncleared = await server().get('/lang')
+    const uncleared = await server.get('/lang')
     await Promise.all(
       uncleared.body.data.map(async (lang: Lang) => {
-        return server()
+        return server
           .delete(`/lang/${lang.id}`)
           .set('Authorization', 'Bearer ' + accessToken)
       }),
@@ -72,27 +71,23 @@ describe('LangController (e2e)', () => {
   })
 
   afterAll(async () => {
-    await server()
-      .delete('/user/aaa')
-      .set('Authorization', 'Bearer ' + accessToken)
-      .send()
     await app.close()
   })
 
   it('/lang/:id (GET)', async () => {
     await sendAaa()
-    return server()
+    return server
       .get('/lang/aaa')
       .expect(200)
       .expect((res) => expect(isAaa(res.body)).toBeTruthy)
       .expect((res) => expect(res.body.internal_id).toBeUndefined())
   })
 
-  it('/lang/:id (GET, 404)', () => server().get('/lang/aaa').expect(404))
+  it('/lang/:id (GET, 404)', () => server.get('/lang/aaa').expect(404))
 
   it('/lang/ (GET, all)', async () => {
     await sendExampleLangs(25)
-    return server()
+    return server
       .get('/lang')
       .expect((res) => expect(res.body.data.length).toBe(25))
   })
@@ -100,7 +95,7 @@ describe('LangController (e2e)', () => {
   it('/lang (GET, limit 2)', async () => {
     await sendExampleLangs(6)
     const first = (
-      await server()
+      await server
         .get('/lang?limit=2')
         .expect((res) => expect(res.body.data.length).toBe(2))
         .expect((res) =>
@@ -110,20 +105,20 @@ describe('LangController (e2e)', () => {
         )
     ).body
 
-    return server()
+    return server
       .get(`/lang?limit=2&cursor=${first.cursor.afterCursor}`)
       .expect((res) => expect(res.body.data.length).toBe(2))
       .expect((res) => expect(res.body.data[0].name.includes('3')).toBeTruthy())
   })
 
   it('/lang (GET, invalid cursor)', () =>
-    server().get('/lang?cursor=jdfkdjfk').expect(400))
+    server.get('/lang?cursor=jdfkdjfk').expect(400))
 
   it('/lang (GET, wrong property in cursor)', () =>
-    server().get('/lang?cursor=bmFtZTphYWE=').expect(400))
+    server.get('/lang?cursor=bmFtZTphYWE=').expect(400))
 
   it('/lang (POST)', () =>
-    server()
+    server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessToken)
       .send(aaa)
@@ -132,7 +127,7 @@ describe('LangController (e2e)', () => {
 
   it('/lang (POST, 409)', async () => {
     await sendAaa()
-    return server()
+    return server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessToken)
       .send(aaa)
@@ -140,7 +135,7 @@ describe('LangController (e2e)', () => {
   })
 
   it('/lang (POST, 400, empty name)', () =>
-    server()
+    server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, name: ' ' })
@@ -152,40 +147,40 @@ describe('LangController (e2e)', () => {
       ))
 
   it('/lang (POST, 400, invalid id)', () =>
-    server()
+    server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, id: '123' })
       .expect(400))
 
   it('/lang (POST, 400, id too short)', () =>
-    server()
+    server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, id: 'a' })
       .expect(400))
 
   it('/lang (POST, 400, id too long)', () =>
-    server()
+    server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, id: 'aaaaaaaaaaa' })
       .expect(400))
 
   it('/lang (POST, 400, name too long)', () =>
-    server()
+    server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, name: 'a'.repeat(100) })
       .expect(400))
 
   it('/lang/:id (PATCH)', async () => {
-    await server()
+    await server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, name: 'b' })
       .expect(201)
-    return server()
+    return server
       .patch('/lang/aaa')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ name: 'aaa' })
@@ -198,27 +193,27 @@ describe('LangController (e2e)', () => {
       username: 'bbb',
       password: 'dfjkhdfhd!1kjhhg',
     }
-    await server().post('/user').send(bbb)
-    const bbbAccessToken = (await server().post('/user/bbb/session').send(bbb))
+    await server.post('/user').send(bbb)
+    const bbbAccessToken = (await server.post('/user/bbb/session').send(bbb))
       .body.accessToken
     await sendAaa()
-    await server()
+    await server
       .post('/lang/aaa/permissions/bbb')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ changeInfo: true })
-    await server()
+    await server
       .patch('/lang/aaa')
       .set('Authorization', 'Bearer ' + bbbAccessToken)
       .send({ id: 'bbb' })
       .expect(401)
-    await server()
+    await server
       .delete('/user/bbb')
       .set('Authorization', 'Bearer ' + bbbAccessToken)
       .send()
   })
 
   it('/lang/:id (PATCH, 404)', () =>
-    server()
+    server
       .patch('/lang/aaa')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ name: 'aaa' })
@@ -226,7 +221,7 @@ describe('LangController (e2e)', () => {
 
   it('/lang/:id (PATCH, 204)', async () => {
     await sendAaa()
-    return server()
+    return server
       .patch('/lang/aaa')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ asdfgh: 'jkl' })
@@ -237,12 +232,12 @@ describe('LangController (e2e)', () => {
 
   it('/lang/:id (PATCH, 409)', async () => {
     await sendAaa()
-    await server()
+    await server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ ...aaa, id: 'aab' })
       .expect(201)
-    return server()
+    return server
       .patch('/lang/aab')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({ id: 'aaa' })
@@ -251,14 +246,14 @@ describe('LangController (e2e)', () => {
 
   it('/lang/:id (DELETE)', async () => {
     await sendAaa()
-    return server()
+    return server
       .delete('/lang/aaa')
       .set('Authorization', 'Bearer ' + accessToken)
       .expect(200)
   })
 
   it('/lang/:id (DELETE, 404)', () =>
-    server()
+    server
       .delete('/lang/aaa')
       .set('Authorization', 'Bearer ' + accessToken)
       .expect(404))

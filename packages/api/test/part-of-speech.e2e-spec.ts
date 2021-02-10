@@ -1,6 +1,6 @@
-import * as request from 'supertest'
+import request from 'supertest'
 import { INestApplication } from '@nestjs/common'
-import { makeTestingApp } from './makeTestingApp'
+import { makeTestingApp, getRequestUrl } from './makeTestingApp'
 
 const aaaLang = {
   id: 'aaa',
@@ -17,12 +17,11 @@ describe('PartOfSpeechController (e2e)', () => {
   let app: INestApplication
   let accessTokenAaa: string
   let accessTokenBbb: string
-
-  const server = () => request(app.getHttpServer())
+  
+  const server = request(getRequestUrl())
 
   beforeAll(async () => {
     app = await makeTestingApp()
-    await app.init()
 
     // test user login details
     const aaa = {
@@ -34,41 +33,29 @@ describe('PartOfSpeechController (e2e)', () => {
       password: 'ep2cpassword!!!!!!!!!!!',
     }
     // make user aaa
-    await server().post('/user').send(aaa)
-    accessTokenAaa = (await server().post('/user/aaa/session').send(aaa)).body
+    await server.post('/user').send(aaa)
+    accessTokenAaa = (await server.post('/user/aaa/session').send(aaa)).body
       .accessToken
 
     // make user bbb
-    await server().post('/user').send(bbb)
-    accessTokenBbb = (await server().post('/user/bbb/session').send(bbb)).body
+    await server.post('/user').send(bbb)
+    accessTokenBbb = (await server.post('/user/bbb/session').send(bbb)).body
       .accessToken
 
     // make lang aaa
-    await server()
+    await server
       .post('/lang')
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .send(aaaLang)
 
     // make noun pos
-    await server()
+    await server
       .post('/lang/aaa/part-of-speech')
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .send(noun)
   })
 
   afterAll(async () => {
-    await server()
-      .delete('/lang/aaa')
-      .set('Authorization', 'Bearer ' + accessTokenAaa)
-      .send()
-    await server()
-      .delete('/user/aaa')
-      .set('Authorization', 'Bearer ' + accessTokenAaa)
-      .send()
-    await server()
-      .delete('/user/bbb')
-      .set('Authorization', 'Bearer ' + accessTokenBbb)
-      .send()
     await app.close()
   })
 
@@ -78,7 +65,7 @@ describe('PartOfSpeechController (e2e)', () => {
   const base = '/lang/aaa/part-of-speech'
 
   it(`${baseTestName} (GET, 200)`, () =>
-    server()
+    server
       .get(base)
       .send()
       .expect(200)
@@ -87,17 +74,17 @@ describe('PartOfSpeechController (e2e)', () => {
       .expect(({ body }) => expect(body[0].abbreviation).toBe('n')))
 
   it(`${baseTestName} (POST, 401)`, () =>
-    server().post(base).send().expect(401))
+    server.post(base).send().expect(401))
 
   it(`${baseTestName} (POST, 409)`, () =>
-    server()
+    server
       .post(base)
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .send(noun)
       .expect(409))
 
   it(`${baseTestName} (POST, 201)`, () =>
-    server()
+    server
       .post(base)
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .send({
@@ -107,13 +94,13 @@ describe('PartOfSpeechController (e2e)', () => {
       .expect(201))
 
   it(`${abbrTestName} (GET, 404)`, () =>
-    server()
+    server
       .get(base + '/qwew')
       .send()
       .expect(404))
 
   it(`${abbrTestName} (GET, 200)`, () =>
-    server()
+    server
       .get(base + '/n')
       .send()
       .expect(200)
@@ -123,44 +110,44 @@ describe('PartOfSpeechController (e2e)', () => {
 
   const patchContent = { name: 'Nominal' }
   it(`${abbrTestName} (PATCH, 401)`, () =>
-    server()
+    server
       .patch(base + '/n')
       .send(patchContent)
       .expect(401))
   it(`${abbrTestName} (PATCH, 404)`, () =>
-    server()
+    server
       .patch(base + '/qwew')
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .send(patchContent)
       .expect(404))
   it(`${abbrTestName} (PATCH, 409)`, () =>
-    server()
+    server
       .patch(base + '/n')
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .send({ abbreviation: 'v' })
       .expect(409))
   it(`${abbrTestName} (PATCH, 200)`, () =>
-    server()
+    server
       .patch(base + '/n')
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .send(patchContent)
       .expect(200)
       .expect(({ body }) => expect(body.name).toBe(patchContent.name)))
   it(`${abbrTestName} (DELETE, 401)`, () =>
-    server()
+    server
       .delete(base + '/n')
       .send()
       .expect(401))
 
   it(`${abbrTestName} (DELETE, 404)`, () =>
-    server()
+    server
       .delete(base + '/rhej')
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .send()
       .expect(404))
 
   it(`${abbrTestName} (DELETE, 200)`, () =>
-    server()
+    server
       .delete(base + '/v')
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .send()

@@ -1,19 +1,19 @@
-import * as request from 'supertest'
-import { makeTestingApp } from './makeTestingApp'
+import request from 'supertest'
+import { makeTestingApp, getRequestUrl } from './makeTestingApp'
 import { INestApplication } from '@nestjs/common'
 
 describe('Authentication (e2e)', () => {
   let app: INestApplication
+  const server = request(getRequestUrl())
 
   beforeAll(async () => {
     app = await makeTestingApp()
-    await app.init()
   })
 
   beforeEach(async () => {
     const uncleared = await request(app.getHttpServer()).get('/user')
     await Promise.all(
-      uncleared.body.data.map(async (user) => {
+      uncleared.body.data.map(async (user: any) => {
         return request(app.getHttpServer()).delete(`/user/${user.username}`)
       }),
     )
@@ -24,14 +24,14 @@ describe('Authentication (e2e)', () => {
   })
 
   it('/user/:username/session (POST)', async () => {
-    await request(app.getHttpServer())
+    await server
       .post('/user')
       .send({
         username: 'aba',
         password: 'ep1cpassword!!!!!!!!!!!',
       })
       .expect(201)
-    await request(app.getHttpServer())
+    await server
       .post('/user/aba/session')
       .send({
         username: 'aba',
@@ -44,19 +44,19 @@ describe('Authentication (e2e)', () => {
       .expect((res) => expect(res.body).toHaveProperty('refresh.refreshToken'))
       .expect((res) => expect(res.body).toHaveProperty('refresh.id'))
     const { accessToken } = (
-      await request(app.getHttpServer()).post('/user/aba/session').send({
+      await server.post('/user/aba/session').send({
         username: 'aaa',
         password: 'ep1cpassword!!!!!!!!!!!',
       })
     ).body
-    await request(app.getHttpServer())
+    await server
       .delete('/user/aba')
       .set('Authorization', 'Bearer ' + accessToken)
       .send()
   })
 
   it('/user/:username/session (GET)', async () => {
-    await request(app.getHttpServer())
+    await server
       .post('/user')
       .send({
         username: 'aaa',
@@ -64,12 +64,12 @@ describe('Authentication (e2e)', () => {
       })
       .expect(201)
     const { accessToken } = (
-      await request(app.getHttpServer()).post('/user/aaa/session').send({
+      await server.post('/user/aaa/session').send({
         username: 'aaa',
         password: 'ep1cpassword!!!!!!!!!!!',
       })
     ).body
-    await request(app.getHttpServer())
+    await server 
       .get('/user/aaa/session')
       .set('Authorization', 'Bearer ' + accessToken)
       .expect(200)
@@ -79,7 +79,7 @@ describe('Authentication (e2e)', () => {
       .expect((res) => expect(res.body.data[0]).toHaveProperty('os'))
       .expect((res) => expect(res.body.data[0]).toHaveProperty('browser'))
       .expect((res) => expect(res.body.data[0]).toHaveProperty('created'))
-    await request(app.getHttpServer())
+    await server 
       .delete('/user/aaa')
       .set('Authorization', 'Bearer ' + accessToken)
       .send()

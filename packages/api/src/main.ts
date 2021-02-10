@@ -6,11 +6,12 @@ import { classTransformerInterceptor } from './classTransformerInterceptor'
 import { clacks } from './clacks.middleware'
 import { PORT } from './constants'
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+export async function bootstrap(port: number, logger: boolean) {
+  const app = await NestFactory.create(AppModule, { logger })
   app.useGlobalPipes(new TrimPipe(), ValidationPipe)
   app.useGlobalInterceptors(new classTransformerInterceptor())
   app.use(clacks)
-  await app.listen(PORT)
+  await app.listen(port)
+  return app
 }
-bootstrap()
+bootstrap(PORT, true)

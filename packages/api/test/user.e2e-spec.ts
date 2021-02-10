@@ -1,13 +1,14 @@
-import * as request from 'supertest'
-import { makeTestingApp } from './makeTestingApp'
+import request from 'supertest'
+import { getRequestUrl, makeTestingApp } from './makeTestingApp'
 import { INestApplication } from '@nestjs/common'
 
 describe('UserController (e2e)', () => {
   let app: INestApplication
 
+  const server = request(getRequestUrl())
+
   beforeAll(async () => {
     app = await makeTestingApp()
-    await app.init()
   })
 
   afterAll(async () => {
@@ -15,7 +16,7 @@ describe('UserController (e2e)', () => {
   })
 
   it('/user (POST)', async () => {
-    await request(app.getHttpServer())
+    await server
       .post('/user')
       .send({
         username: 'user',
@@ -26,19 +27,19 @@ describe('UserController (e2e)', () => {
         expect(res.body.hasOwnProperty('password_hash')).toBeFalsy(),
       )
     const { accessToken } = (
-      await request(app.getHttpServer()).post('/user/user/session').send({
+      await server.post('/user/user/session').send({
         username: 'user',
         password: 'ep1cpassword!!!!!!!!!!!',
       })
     ).body
-    await request(app.getHttpServer())
+    await server
       .delete('/user/user')
       .set('Authorization', 'Bearer ' + accessToken)
       .send()
   })
 
   it('/user (PATCH)', async () => {
-    await request(app.getHttpServer())
+    await server
       .post('/user')
       .send({
         username: 'user',
@@ -46,12 +47,12 @@ describe('UserController (e2e)', () => {
       })
       .expect(201)
     const { accessToken } = (
-      await request(app.getHttpServer()).post('/user/user/session').send({
+      await server.post('/user/user/session').send({
         username: 'user',
         password: 'ep1cpassword!!!!!!!!!!!',
       })
     ).body
-    await request(app.getHttpServer())
+    await server
       .patch('/user/user')
       .set('Authorization', 'Bearer ' + accessToken)
       .send({
@@ -61,7 +62,7 @@ describe('UserController (e2e)', () => {
       .expect((res) =>
         expect(res.body.hasOwnProperty('password_hash')).toBeFalsy(),
       )
-    await request(app.getHttpServer())
+    await server
       .delete('/user/user')
       .set('Authorization', 'Bearer ' + accessToken)
       .send()
