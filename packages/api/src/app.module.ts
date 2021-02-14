@@ -15,7 +15,7 @@ import { LangPermissionsModule } from './lang-permissions/lang-permissions.modul
 import { WordModule } from './word/word.module'
 import { PartOfSpeechModule } from './part-of-speech/part-of-speech.module'
 import { WordClassModule } from './word-class/word-class.module'
-import { MediaModule } from './media/media.module';
+import { MediaModule } from './media/media.module'
 
 const routes: Routes = [
   {

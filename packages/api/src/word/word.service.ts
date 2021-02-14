@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { Lang } from 'src/lang/entities/lang.entity'
 import { CreateWordDto } from './dto/create-word.dto'
 import { UpdateWordDto } from './dto/update-word.dto'
@@ -87,7 +91,7 @@ export class WordService {
       .where('word.word = :word', { word })
       .andWhere('lang.id = :langId', { langId })
       .getMany()
-    if(!words.length) {
+    if (!words.length) {
       throw new NotFoundException()
     } else {
       return words
@@ -96,7 +100,7 @@ export class WordService {
 
   async findOneByNumber(langId: string, word: string, num: number) {
     const words = await this.findOne(langId, word)
-    if(!words[num]) {
+    if (!words[num]) {
       throw new NotFoundException()
     } else {
       return words[num]

@@ -14,10 +14,11 @@ describe('AppController (e2e)', () => {
     await app.close()
   })
 
-  it('/ (GET)', () => server
-    .get('/')
-    .expect(200)
-    .expect((res) => {
-      expect(res.body.version).toBe(version)
-    }))
+  it('/ (GET)', () =>
+    server
+      .get('/')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.version).toBe(version)
+      }))
 })

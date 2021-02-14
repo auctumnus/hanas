@@ -29,17 +29,11 @@ export const REFRESH_JWT_SECRET = String(process.env.REFRESH_JWT_DURATION)
 export const ACCESS_JWT_DURATION = String(process.env.ACCESS_JWT_DURATION)
 export const REFRESH_JWT_DURATION = String(process.env.REFRESH_JWT_DURATION)
 
-export const AWS_ACCESS_ID = String(process.env.AWS_ACCESS_ID)
-export const AWS_SECRET_ACCESS_KEY = String(process.env.AWS_SECRET_ACCESS_KEY)
-export const AWS_BUCKET = String(process.env.AWS_BUCKET)
+// aws settings
 export const AWS_REGION = String(process.env.AWS_REGION)
-
-for (const variable of [AWS_ACCESS_ID, AWS_SECRET_ACCESS_KEY, AWS_BUCKET, AWS_REGION]) {
-  //if(!variable) throw new Error(`${variable} missing from config!`)
-}
+export const AWS_BUCKET = String(process.env.AWS_BUCKET)
 
 // file settings
 export const MAX_FILE_SIZE = parse(String(process.env.MAX_FILE_SIZE))
 export const ALLOWED_TYPES = String(process.env.ALLOWED_TYPES).split(',')
 // export const ENABLE_GIF_PFP = String(process.env.ENABLE_GIF_PFP)
-

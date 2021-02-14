@@ -73,8 +73,7 @@ describe('WordClassController (e2e)', () => {
       .expect(({ body }) => expect(body[0].name).toBe('Feminine'))
       .expect(({ body }) => expect(body[0].abbreviation).toBe('f')))
 
-  it(`${baseTestName} (POST, 401)`, () =>
-    server.post(base).send().expect(401))
+  it(`${baseTestName} (POST, 401)`, () => server.post(base).send().expect(401))
 
   it(`${baseTestName} (POST, 409)`, () =>
     server

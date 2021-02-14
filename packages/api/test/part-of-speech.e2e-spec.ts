@@ -17,7 +17,7 @@ describe('PartOfSpeechController (e2e)', () => {
   let app: INestApplication
   let accessTokenAaa: string
   let accessTokenBbb: string
-  
+
   const server = request(getRequestUrl())
 
   beforeAll(async () => {
@@ -73,8 +73,7 @@ describe('PartOfSpeechController (e2e)', () => {
       .expect(({ body }) => expect(body[0].name).toBe('Noun'))
       .expect(({ body }) => expect(body[0].abbreviation).toBe('n')))
 
-  it(`${baseTestName} (POST, 401)`, () =>
-    server.post(base).send().expect(401))
+  it(`${baseTestName} (POST, 401)`, () => server.post(base).send().expect(401))
 
   it(`${baseTestName} (POST, 409)`, () =>
     server

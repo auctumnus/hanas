@@ -93,48 +93,44 @@ describe('WordClassController (e2e)', () => {
       .get(base)
       .send()
       .expect(200)
-      .expect(({ body }) => 
-        expect(Array.isArray(body.data)).toBeTruthy()))
+      .expect(({ body }) => expect(Array.isArray(body.data)).toBeTruthy()))
 
-  it(`${baseTestName} (GET, 404)`, () => 
+  it(`${baseTestName} (GET, 404)`, () =>
     server
       .get(base + '/dnsamnd')
       .send()
       .expect(404))
-  
+
   const bbbWord = {
     word: 'bbb',
     partOfSpeech: 'n',
-    definition: 'bbb'
+    definition: 'bbb',
   }
 
-  it(`${baseTestName} (POST, 401)`, () => 
-    server
-      .post(base)
-      .send(bbbWord)
-      .expect(401))
+  it(`${baseTestName} (POST, 401)`, () =>
+    server.post(base).send(bbbWord).expect(401))
 
-  it(`${baseTestName} (POST, 403)`, () => 
+  it(`${baseTestName} (POST, 403)`, () =>
     server
       .post(base)
       .set('Authorization', 'Bearer ' + accessTokenBbb)
       .send(bbbWord)
       .expect(403))
-  
-  it(`${baseTestName} (POST, 400, bad part of speech)`, () =>
-    server
-    .post(base)
-    .set('Authorization', 'Bearer ' + accessTokenAaa)
-    .send({...bbbWord, partOfSpeech: 'j'})
-    .expect(400))
 
-  it(`${baseTestName} (POST, 400, bad word class)`, () => 
+  it(`${baseTestName} (POST, 400, bad part of speech)`, () =>
     server
       .post(base)
       .set('Authorization', 'Bearer ' + accessTokenAaa)
-      .send({...bbbWord, wordClasses: ['fdj']})
+      .send({ ...bbbWord, partOfSpeech: 'j' })
       .expect(400))
-  
+
+  it(`${baseTestName} (POST, 400, bad word class)`, () =>
+    server
+      .post(base)
+      .set('Authorization', 'Bearer ' + accessTokenAaa)
+      .send({ ...bbbWord, wordClasses: ['fdj'] })
+      .expect(400))
+
   it(`${baseTestName} (POST, 201)`, () =>
     server
       .post(base)

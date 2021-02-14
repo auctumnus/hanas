@@ -1,4 +1,4 @@
-name: "Hanas"
+name: 'Hanas'
 tasks:
   start:
     command: npm start

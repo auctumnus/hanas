@@ -69,7 +69,7 @@ describe('Authentication (e2e)', () => {
         password: 'ep1cpassword!!!!!!!!!!!',
       })
     ).body
-    await server 
+    await server
       .get('/user/aaa/session')
       .set('Authorization', 'Bearer ' + accessToken)
       .expect(200)
@@ -79,7 +79,7 @@ describe('Authentication (e2e)', () => {
       .expect((res) => expect(res.body.data[0]).toHaveProperty('os'))
       .expect((res) => expect(res.body.data[0]).toHaveProperty('browser'))
       .expect((res) => expect(res.body.data[0]).toHaveProperty('created'))
-    await server 
+    await server
       .delete('/user/aaa')
       .set('Authorization', 'Bearer ' + accessToken)
       .send()
