@@ -118,8 +118,7 @@ describe('LangPermissionsController (e2e)', () => {
       .send({ changeWords: true })
       .expect(201)
       .expect(({ body }) => expect(body.changeWords).toBeTruthy())
-      .expect(({ body }) => expect(body.user.username).toBe('bbb'))
-      .expect(({ body }) => console.log(body.user)))
+      .expect(({ body }) => expect(body.user.username).toBe('bbb')))
 
   it(`${userTestName} (PATCH, 401)`, () =>
     server.patch(bbbPermissions).send({ changeInfo: true }).expect(401))

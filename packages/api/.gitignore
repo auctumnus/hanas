@@ -121,3 +121,4 @@ typings/
 ### Hanas-specific ###
 db
 dist
+s3

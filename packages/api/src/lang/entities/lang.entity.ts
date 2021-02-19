@@ -28,6 +28,9 @@ export class Lang {
   @Column({ default: '' })
   description: string
 
+  @Column({ default: '' })
+  flag: string
+
   @CreateDateColumn()
   created: Date
 

@@ -16,6 +16,7 @@ import { SALT_ROUNDS } from '../constants'
 import { paginator } from '../paginator'
 import { SessionService } from '../session/session.service'
 import { LangService } from '../lang/lang.service'
+import { deleteObject, getUrl, S3File } from '../s3'
 
 const usernameInUse = new ConflictException('Username is already in use.')
 
@@ -110,5 +111,43 @@ export class UserService {
       this.userRepository.delete({ username })
       this.sessionService.removeByUser(user)
     }
+  }
+
+  async createProfilePicture(user: User, file: S3File) {
+    if (user.profile_picture) {
+      deleteObject(user.profile_picture)
+    }
+    const { username } = user
+    const profile_picture = getUrl(file)
+    await this.userRepository.update({ username }, { profile_picture })
+    return this.findOne(username)
+  }
+
+  removeProfilePicture(user: User) {
+    if (!user.profile_picture) {
+      throw new NotFoundException('No profile picture for this user exists.')
+    }
+    deleteObject(user.profile_picture)
+    const { username } = user
+    return this.userRepository.update({ username }, { profile_picture: '' })
+  }
+
+  async createBanner(user: User, file: S3File) {
+    if (user.banner) {
+      deleteObject(user.banner)
+    }
+    const { username } = user
+    const banner = getUrl(file)
+    await this.userRepository.update({ username }, { banner })
+    return this.findOne(username)
+  }
+
+  removeBanner(user: User) {
+    if (!user.banner) {
+      throw new NotFoundException('No banner for this user exists.')
+    }
+    deleteObject(user.banner)
+    const { username } = user
+    return this.userRepository.update({ username }, { banner: '' })
   }
 }

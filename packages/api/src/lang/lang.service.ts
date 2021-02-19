@@ -13,6 +13,7 @@ import { UpdateLangDto } from './dto/update-lang.dto'
 import { paginator } from '../paginator'
 import { LangPermissions } from '../lang-permissions/entities/lang-permissions.entity'
 import { UserService } from '../user/user.service'
+import { deleteObject, getUrl, S3File } from '../s3'
 
 const idInUse = new ConflictException('Language ID is already in use.')
 
@@ -89,5 +90,23 @@ export class LangService {
 
   async remove(id: string) {
     this.langRepository.delete({ id })
+  }
+
+  async createFlag(lang: Lang, file: S3File) {
+    if (lang.flag) {
+      deleteObject(lang.flag)
+    }
+    const { id } = lang
+    const flag = getUrl(file)
+    await this.langRepository.update({ id }, { flag })
+    return this.findOne(id)
+  }
+  async removeFlag(lang: Lang) {
+    if (!lang.flag) {
+      throw new NotFoundException('No flag exists for this language.')
+    }
+    deleteObject(lang.flag)
+    const { id } = lang
+    await this.langRepository.update({ id }, { flag: '' })
   }
 }

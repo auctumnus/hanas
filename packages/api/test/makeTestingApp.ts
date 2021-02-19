@@ -5,13 +5,15 @@ import { TrimPipe } from '../src/trimPipe'
 import { classTransformerInterceptor } from '../src/classTransformerInterceptor'
 import { clacks } from '../src/clacks.middleware'
 import waitOn from 'wait-on'
+import {setupBuckets} from '../src/s3'
 
 export const getRequestUrl = () => {
   return `localhost:${process.env.OPTIC_PORT || process.env.PORT}`
 }
 
 export const makeTestingApp = async () => {
-  const app = await NestFactory.create(AppModule, { logger: false })
+  await setupBuckets()
+  const app = await NestFactory.create(AppModule, { logger: ['error'] })
   app.useGlobalPipes(new TrimPipe(), ValidationPipe)
   app.useGlobalInterceptors(new classTransformerInterceptor())
   app.use(clacks)

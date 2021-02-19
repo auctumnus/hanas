@@ -188,7 +188,7 @@ describe('LangController (e2e)', () => {
       .expect((res) => expect(isAaa(res.body)).toBeTruthy)
   })
 
-  it('/lang/:id (PATCH, 401)', async () => {
+  it('/lang/:id (PATCH, 403)', async () => {
     const bbb = {
       username: 'bbb',
       password: 'dfjkhdfhd!1kjhhg',
@@ -205,7 +205,7 @@ describe('LangController (e2e)', () => {
       .patch('/lang/aaa')
       .set('Authorization', 'Bearer ' + bbbAccessToken)
       .send({ id: 'bbb' })
-      .expect(401)
+      .expect(403)
     await server
       .delete('/user/bbb')
       .set('Authorization', 'Bearer ' + bbbAccessToken)

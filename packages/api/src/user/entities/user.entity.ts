@@ -23,6 +23,12 @@ export class User {
   @Column()
   display_name: string
 
+  @Column({ default: '' })
+  profile_picture: string
+
+  @Column({ default: '' })
+  banner: string
+
   @Exclude()
   @Column()
   password_hash: string
