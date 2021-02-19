@@ -2,3 +2,4 @@ dist
 db
 node_modules
 .optic
+s3

@@ -34,14 +34,16 @@ export interface S3File extends Express.Multer.File {
 
 export const setupBuckets = async () => {
   const { Buckets } = await s3Connection.listBuckets().promise()
-  if(!Buckets.some(b => b.Name === AWS_BUCKET)) {
-    await s3Connection.createBucket({
-      Bucket: AWS_BUCKET,
-      ACL: 'public-read',
-      CreateBucketConfiguration: {
-        LocationConstraint: AWS_REGION
-      }
-    }).promise()
+  if (!Buckets.some((b) => b.Name === AWS_BUCKET)) {
+    await s3Connection
+      .createBucket({
+        Bucket: AWS_BUCKET,
+        ACL: 'public-read',
+        CreateBucketConfiguration: {
+          LocationConstraint: AWS_REGION,
+        },
+      })
+      .promise()
   }
 }
 
@@ -61,9 +63,9 @@ export const validateFile = (file: S3File, allowedTypes: string[]) => {
 }
 
 const transforms = (maxWidth?: number, maxHeight?: number) => {
-  if(maxWidth || maxHeight) {
+  if (maxWidth || maxHeight) {
     return sharp().resize(maxWidth, maxHeight, {
-      fit: sharp.fit.cover
+      fit: sharp.fit.cover,
     })
   } else {
     return () => {}
@@ -77,7 +79,7 @@ export const multerSettings = (opts?: opts) => ({
     contentType: imager.AUTO_CONTENT_TYPE,
     acl: opts?.hidden ? 'private' : 'public-read',
     key: (_req, _file, cb) => cb(null, nanoid()),
-    transforms: () => transforms(opts?.maxWidth, opts?.maxHeight)
+    transforms: () => transforms(opts?.maxWidth, opts?.maxHeight),
   }),
   limits: {
     fileSize: MAX_FILE_SIZE,

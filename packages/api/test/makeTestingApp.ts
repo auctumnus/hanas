@@ -5,7 +5,7 @@ import { TrimPipe } from '../src/trimPipe'
 import { classTransformerInterceptor } from '../src/classTransformerInterceptor'
 import { clacks } from '../src/clacks.middleware'
 import waitOn from 'wait-on'
-import {setupBuckets} from '../src/s3'
+import { setupBuckets } from '../src/s3'
 
 export const getRequestUrl = () => {
   return `localhost:${process.env.OPTIC_PORT || process.env.PORT}`

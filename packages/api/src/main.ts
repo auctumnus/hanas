@@ -5,7 +5,7 @@ import { TrimPipe } from './trimPipe'
 import { classTransformerInterceptor } from './classTransformerInterceptor'
 import { clacks } from './clacks.middleware'
 import { PORT } from './constants'
-import {setupBuckets} from './s3'
+import { setupBuckets } from './s3'
 
 export async function bootstrap(port: number, logger: boolean) {
   await setupBuckets()

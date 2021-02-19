@@ -27,7 +27,6 @@ import {
   PFP_MAX_LENGTH,
 } from '../constants'
 
-
 const pfpSettings = {
   maxWidth: PFP_MAX_LENGTH,
   maxHeight: PFP_MAX_LENGTH,
@@ -81,8 +80,8 @@ export class UserController {
   // profile picture endpoints
   @Get(':username/profile-picture')
   async getProfilePicture(@Param('username') username: string) {
-    const {profile_picture} = await this.userService.findOne(username)
-    return {profile_picture}
+    const { profile_picture } = await this.userService.findOne(username)
+    return { profile_picture }
   }
 
   @UseGuards(JwtAuthGuard)
