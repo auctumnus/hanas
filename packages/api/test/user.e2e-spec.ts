@@ -1,7 +1,6 @@
 import request from 'supertest'
 import { getRequestUrl, makeTestingApp } from './makeTestingApp'
 import { INestApplication } from '@nestjs/common'
-import { readFile } from 'fs/promises'
 import fetch from 'node-fetch'
 import { imageSize } from 'image-size'
 
@@ -13,7 +12,6 @@ describe('UserController (e2e)', () => {
     password: 'ep7cpahsgpasd@#!@#@#$',
   }
   const server = request(getRequestUrl())
-  let pfp400px: Buffer
 
   beforeAll(async () => {
     app = await makeTestingApp()
@@ -21,7 +19,6 @@ describe('UserController (e2e)', () => {
     await server.post('/user').send(aaa).expect(201)
     aaaAccessToken = (await server.post('/user/aaa/session').send(aaa)).body
       .accessToken
-    pfp400px = await readFile('test/media/pfp-400px.png')
   })
 
   afterAll(async () => {
@@ -93,7 +90,7 @@ describe('UserController (e2e)', () => {
     server
       .post('/user/aaa/profile-picture')
       .set('Authorization', 'Bearer ' + aaaAccessToken)
-      .attach('profile-picture', pfp400px, 'pfp400px.png')
+      .attach('profile-picture', 'test/media/pfp-400px.png')
       .expect(201)
       .expect(async ({ body }) => {
         const { profile_picture } = body
