@@ -10,7 +10,7 @@ import { Request } from 'express'
 import { FileFilterCallback } from 'multer'
 import imager from 'multer-s3-v3'
 import { nanoid } from 'nanoid'
-import { UnsupportedMediaTypeException } from '@nestjs/common'
+import { BadRequestException, UnsupportedMediaTypeException } from '@nestjs/common'
 import sharp from 'sharp'
 
 interface opts {
@@ -48,6 +48,9 @@ export const setupBuckets = async () => {
 }
 
 export const validateFile = (file: S3File, allowedTypes: string[]) => {
+  if(!file) {
+    throw new BadRequestException('Must upload a file to this endpoint.')
+  }
   if (
     !allowedTypes.includes(file.mimetype) ||
     !allowedTypes.includes(file.contentType)

@@ -1,4 +1,4 @@
-import { UnauthorizedException } from '@nestjs/common'
+import { ForbiddenException, UnauthorizedException } from '@nestjs/common'
 import { Request } from 'express'
 import { Lang } from '../lang/entities/lang.entity'
 import { User } from '../user/entities/user.entity'
@@ -15,7 +15,7 @@ export const checkUser = (req: Request, user: User) => {
     throw new UnauthorizedException()
   }
   if ((req as HanasRequest).user.internal_id !== user.internal_id) {
-    throw new UnauthorizedException(
+    throw new ForbiddenException(
       'User does not have access to requested resource.',
     )
   }

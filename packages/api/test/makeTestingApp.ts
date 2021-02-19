@@ -8,7 +8,7 @@ import waitOn from 'wait-on'
 import { setupBuckets } from '../src/s3'
 
 export const getRequestUrl = () => {
-  return `localhost:${process.env.OPTIC_PORT || process.env.PORT}`
+  return `localhost:${process.env.OPTIC_PROXY_PORT || process.env.PORT}`
 }
 
 export const makeTestingApp = async () => {
