@@ -133,9 +133,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Post(':username/banner')
-  @UseInterceptors(
-    FileInterceptor('banner', multerSettings(bannerSettings)),
-  )
+  @UseInterceptors(FileInterceptor('banner', multerSettings(bannerSettings)))
   async createBanner(
     @Param('username') username: string,
     @Req() req: Request,
@@ -149,9 +147,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':username/banner')
-  @UseInterceptors(
-    FileInterceptor('banner', multerSettings(bannerSettings)),
-  )
+  @UseInterceptors(FileInterceptor('banner', multerSettings(bannerSettings)))
   updateBanner(
     @Param('username') username: string,
     @Req() req: Request,
