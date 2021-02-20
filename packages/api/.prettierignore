@@ -3,3 +3,5 @@ db
 node_modules
 .optic
 s3
+docs
+.github
