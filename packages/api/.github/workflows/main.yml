@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v2
-      - uses: actions-js/push@main
+      - uses: actions-js/push@master
 
       # Runs a set of commands using the runners shell
       - name: Make docs with Optic and Redoc
