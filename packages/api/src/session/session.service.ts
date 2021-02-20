@@ -123,6 +123,8 @@ export class SessionService {
   async remove(user: User, id: string) {
     if (await this.findOne(id, user)) {
       this.sessionRepository.delete({ id })
+    } else {
+      throw new NotFoundException()
     }
   }
 

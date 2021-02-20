@@ -7,6 +7,7 @@ import {
   Delete,
   Req,
   UseGuards,
+  ForbiddenException,
 } from '@nestjs/common'
 import { SessionService } from './session.service'
 import { CreateSessionDto } from './dto/create-session.dto'
@@ -29,7 +30,11 @@ export class SessionController {
   async create(
     @Body() createSessionDto: CreateSessionDto,
     @Req() req: Request,
+    @Param('username') username: string,
   ) {
+    if (username !== createSessionDto.username) {
+      throw new ForbiddenException('Cannot make a session for another user!')
+    }
     const ua = req.header('User-Agent')
     const uaparser = new UAParser(ua)
     return this.sessionService.create(createSessionDto, uaparser)
