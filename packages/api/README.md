@@ -44,4 +44,4 @@ Running tests shouldn't delete the database, but be wary about it.
 
 ## API Description
 
-Work in progress. Hanas is likely going to use [Optic](https://github.com/opticdev/optic) for the API spec, but coverage is still far from perfect. See the Optic link for more about how to get the current API spec. Reading the dto folders in each model's folder will give you a good idea of the shape of requests.
+Work in progress. Hanas is likely going to use [Optic](https://github.com/opticdev/optic) for the API spec, but coverage is still far from perfect. See the Optic link for more about how to get the current API spec. Reading the dto folders in each model's folder will give you a good idea of the shape of requests. Some additional information exists at the [wiki](https://github.com/auctumnus/hanas-server/wiki).
