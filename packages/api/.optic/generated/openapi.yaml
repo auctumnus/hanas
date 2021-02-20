@@ -1,0 +1,2960 @@
+openapi: 3.0.1
+info:
+ title: untitled API
+ version: '2078'
+paths:
+ '/user/{username}/session':
+  get:
+   operationId: request_JgVlHmRSE8
+   summary: Get information about a user's sessions
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - cursor
+         - data
+        properties:
+         cursor:
+          type: object
+          required:
+           - afterCursor
+           - beforeCursor
+          properties:
+           afterCursor: {}
+           beforeCursor: {}
+         data:
+          type: array
+          items:
+           type: object
+           required:
+            - browser
+            - created
+            - id
+            - os
+           properties:
+            browser:
+             type: string
+            created:
+             type: string
+            id:
+             type: string
+            os:
+             type: string
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  post:
+   operationId: request_jCYNuYVDhq
+   summary: Create a new session
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       required:
+        - password
+        - username
+       properties:
+        password:
+         type: string
+        username:
+         type: string
+   responses:
+    '201':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - accessToken
+         - refresh
+         - user
+        properties:
+         accessToken:
+          type: string
+         refresh:
+          type: object
+          required:
+           - id
+           - refreshToken
+          properties:
+           id:
+            type: string
+           refreshToken:
+            type: string
+         user:
+          type: object
+          required:
+           - banner
+           - contributedLangs
+           - created
+           - display_name
+           - ownedLangs
+           - profile_picture
+           - updated
+           - username
+          properties:
+           profile_picture:
+            type: string
+           username:
+            type: string
+           display_name:
+            type: string
+           contributedLangs:
+            type: array
+            items: {}
+           banner:
+            type: string
+           updated:
+            type: string
+           ownedLangs:
+            type: array
+            items: {}
+           created:
+            type: string
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: username
+    required: true
+    schema:
+     type: string
+ '/user/{username}/session/refresh':
+  post:
+   operationId: request_2xQAdD4WsL
+   summary: Get a new access token using a refresh token
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       required:
+        - id
+        - refreshToken
+       properties:
+        id:
+         type: string
+        refreshToken:
+         type: string
+   responses:
+    '201':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - accessToken
+        properties:
+         accessToken:
+          type: string
+     description: ''
+    '400':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: username
+    required: true
+    schema:
+     type: string
+ '/lang/{lang_code}/part-of-speech':
+  get:
+   operationId: request_wJOo1nd23O
+   summary: Get parts of speech for a language
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: array
+        items:
+         type: object
+         required:
+          - abbreviation
+          - created
+          - name
+          - updated
+         properties:
+          abbreviation:
+           type: string
+          created:
+           type: string
+          name:
+           type: string
+          updated:
+           type: string
+     description: ''
+  post:
+   operationId: request_SL73K8CLmT
+   summary: Create a new part of speech
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       required:
+        - abbreviation
+        - name
+       properties:
+        abbreviation:
+         type: string
+        name:
+         type: string
+   responses:
+    '201':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - abbreviation
+         - created
+         - name
+         - updated
+        properties:
+         abbreviation:
+          type: string
+         created:
+          type: string
+         name:
+          type: string
+         updated:
+          type: string
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '409':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: lang_code
+    required: true
+    schema:
+     type: string
+ '/user/{username}/banner':
+  post:
+   operationId: request_aN7tPMApVw
+   summary: Add the banner for a user
+   responses:
+    '201':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - banner
+         - contributedLangs
+         - created
+         - display_name
+         - ownedLangs
+         - profile_picture
+         - updated
+         - username
+        properties:
+         profile_picture:
+          type: string
+         username:
+          type: string
+         display_name:
+          type: string
+         contributedLangs:
+          type: array
+          items: {}
+         banner:
+          type: string
+         updated:
+          type: string
+         ownedLangs:
+          type: array
+          items: {}
+         created:
+          type: string
+     description: ''
+    '400':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  delete:
+   operationId: request_bUeKhLernb
+   summary: Remove the banner for a user
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - affected
+         - generatedMaps
+         - raw
+        properties:
+         affected:
+          type: number
+         generatedMaps:
+          type: array
+          items: {}
+         raw:
+          type: object
+          required:
+           - changes
+           - lastInsertRowid
+          properties:
+           changes:
+            type: number
+           lastInsertRowid:
+            type: number
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  get:
+   operationId: request_qni9VmRuD1
+   summary: Get the banner for a user
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - banner
+        properties:
+         banner:
+          type: string
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  patch:
+   operationId: request_Ee6JmGHlAP
+   summary: Change the banner for a user
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - banner
+         - contributedLangs
+         - created
+         - display_name
+         - ownedLangs
+         - profile_picture
+         - updated
+         - username
+        properties:
+         profile_picture:
+          type: string
+         username:
+          type: string
+         display_name:
+          type: string
+         contributedLangs:
+          type: array
+          items: {}
+         banner:
+          type: string
+         updated:
+          type: string
+         ownedLangs:
+          type: array
+          items: {}
+         created:
+          type: string
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: username
+    required: true
+    schema:
+     type: string
+ '/user/{username}/session/{session_id}':
+  delete:
+   operationId: request_QOP9reonEa
+   summary: Delete a session
+   responses:
+    '200':
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: username
+    required: true
+    schema:
+     type: string
+   -
+    in: path
+    name: session_id
+    required: true
+    schema:
+     type: string
+ '/lang/{lang_code}/part-of-speech/{part_of_speech_abbreviation}':
+  delete:
+   operationId: request_sTEAW452V3
+   summary: Delete a part of speech
+   responses:
+    '200':
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  get:
+   operationId: request_eSPiGwFjTU
+   summary: Get a part of speech
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - abbreviation
+         - created
+         - name
+         - updated
+        properties:
+         abbreviation:
+          type: string
+         created:
+          type: string
+         name:
+          type: string
+         updated:
+          type: string
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  patch:
+   operationId: request_q2tifXIqYz
+   summary: Edit a part of speech
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       properties:
+        abbreviation:
+         type: string
+        name:
+         type: string
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - abbreviation
+         - created
+         - name
+         - updated
+        properties:
+         abbreviation:
+          type: string
+         created:
+          type: string
+         name:
+          type: string
+         updated:
+          type: string
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '409':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: lang_code
+    required: true
+    schema:
+     type: string
+   -
+    in: path
+    name: part_of_speech_abbreviation
+    required: true
+    schema:
+     type: string
+ '/user/{username}':
+  delete:
+   operationId: request_igHQCIWLJy
+   summary: Delete a user
+   responses:
+    '200':
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  get:
+   operationId: request_nowb1LWRs0
+   summary: Get a user
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - banner
+         - contributedLangs
+         - created
+         - display_name
+         - ownedLangs
+         - profile_picture
+         - updated
+         - username
+        properties:
+         profile_picture:
+          type: string
+         username:
+          type: string
+         display_name:
+          type: string
+         contributedLangs:
+          type: array
+          items: {}
+         banner:
+          type: string
+         updated:
+          type: string
+         ownedLangs:
+          type: array
+          items: {}
+         created:
+          type: string
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  patch:
+   operationId: request_i04ociIWrJ
+   summary: Change a user
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       required:
+        - password
+       properties:
+        password:
+         type: string
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - banner
+         - contributedLangs
+         - created
+         - display_name
+         - ownedLangs
+         - profile_picture
+         - updated
+         - username
+        properties:
+         profile_picture:
+          type: string
+         username:
+          type: string
+         display_name:
+          type: string
+         contributedLangs:
+          type: array
+          items: {}
+         banner:
+          type: string
+         updated:
+          type: string
+         ownedLangs:
+          type: array
+          items: {}
+         created:
+          type: string
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: username
+    required: true
+    schema:
+     type: string
+ '/lang/{lang_code}/permissions/{username}':
+  post:
+   operationId: request_6IwKRqdlNL
+   summary: Add permissions for a user for a language
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       properties:
+        changeId:
+         type: boolean
+        changeInfo:
+         type: boolean
+        changePermissions:
+         type: boolean
+        changeWords:
+         type: boolean
+   responses:
+    '201':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - changeId
+         - changeInfo
+         - changePermissions
+         - changeWords
+         - created
+         - owner
+         - updated
+         - user
+        properties:
+         changeId:
+          type: boolean
+         changeWords:
+          type: boolean
+         changeInfo:
+          type: boolean
+         updated:
+          type: string
+         changePermissions:
+          type: boolean
+         owner:
+          type: boolean
+         user:
+          type: object
+          required:
+           - banner
+           - created
+           - display_name
+           - profile_picture
+           - updated
+           - username
+          properties:
+           profile_picture:
+            type: string
+           username:
+            type: string
+           display_name:
+            type: string
+           banner:
+            type: string
+           updated:
+            type: string
+           created:
+            type: string
+         created:
+          type: string
+     description: ''
+    '400':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  delete:
+   operationId: request_cKpmlXIKzj
+   summary: Remove a user's permissions for a language
+   responses:
+    '200':
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  get:
+   operationId: request_J5gqVHXy3N
+   summary: Get a user's permissions for a language
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - changeId
+         - changeInfo
+         - changePermissions
+         - changeWords
+         - created
+         - owner
+         - updated
+         - user
+        properties:
+         changeId:
+          type: boolean
+         changeWords:
+          type: boolean
+         changeInfo:
+          type: boolean
+         updated:
+          type: string
+         changePermissions:
+          type: boolean
+         owner:
+          type: boolean
+         user:
+          type: object
+          required:
+           - banner
+           - created
+           - display_name
+           - profile_picture
+           - updated
+           - username
+          properties:
+           profile_picture:
+            type: string
+           username:
+            type: string
+           display_name:
+            type: string
+           banner:
+            type: string
+           updated:
+            type: string
+           created:
+            type: string
+         created:
+          type: string
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  patch:
+   operationId: request_wJzA0J4Qa7
+   summary: Change a user's permissions for a language
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       properties:
+        changeInfo:
+         type: boolean
+        changeWords:
+         type: boolean
+        owner:
+         type: boolean
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - changeId
+         - changeInfo
+         - changePermissions
+         - changeWords
+         - created
+         - owner
+         - updated
+         - user
+        properties:
+         changeId:
+          type: boolean
+         changeWords:
+          type: boolean
+         changeInfo:
+          type: boolean
+         updated:
+          type: string
+         changePermissions:
+          type: boolean
+         owner:
+          type: boolean
+         user:
+          type: object
+          required:
+           - banner
+           - created
+           - display_name
+           - profile_picture
+           - updated
+           - username
+          properties:
+           profile_picture:
+            type: string
+           username:
+            type: string
+           display_name:
+            type: string
+           banner:
+            type: string
+           updated:
+            type: string
+           created:
+            type: string
+         created:
+          type: string
+     description: ''
+    '400':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: lang_code
+    required: true
+    schema:
+     type: string
+   -
+    in: path
+    name: username
+    required: true
+    schema:
+     type: string
+ '/lang/{lang_code}/word-class/{word_class_abbreviation}':
+  delete:
+   operationId: request_5bzBo3O35U
+   summary: Delete a word class
+   responses:
+    '200':
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  get:
+   operationId: request_KiLmjMZdZ2
+   summary: Get a word class
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - abbreviation
+         - created
+         - name
+         - updated
+        properties:
+         abbreviation:
+          type: string
+         created:
+          type: string
+         name:
+          type: string
+         updated:
+          type: string
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  patch:
+   operationId: request_9S7NTYPMhE
+   summary: Change a word class
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       properties:
+        abbreviation:
+         type: string
+        name:
+         type: string
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - abbreviation
+         - created
+         - name
+         - updated
+        properties:
+         abbreviation:
+          type: string
+         created:
+          type: string
+         name:
+          type: string
+         updated:
+          type: string
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '409':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: lang_code
+    required: true
+    schema:
+     type: string
+   -
+    in: path
+    name: word_class_abbreviation
+    required: true
+    schema:
+     type: string
+ '/lang/{lang_code}/permissions':
+  get:
+   operationId: request_78ieFdWTHr
+   summary: Get all permissions for a language
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: array
+        items:
+         type: object
+         required:
+          - changeId
+          - changeInfo
+          - changePermissions
+          - changeWords
+          - created
+          - owner
+          - updated
+          - user
+         properties:
+          changeId:
+           type: boolean
+          changeWords:
+           type: boolean
+          changeInfo:
+           type: boolean
+          updated:
+           type: string
+          changePermissions:
+           type: boolean
+          owner:
+           type: boolean
+          user:
+           type: object
+           required:
+            - banner
+            - created
+            - display_name
+            - profile_picture
+            - updated
+            - username
+           properties:
+            profile_picture:
+             type: string
+            username:
+             type: string
+            display_name:
+             type: string
+            banner:
+             type: string
+            updated:
+             type: string
+            created:
+             type: string
+          created:
+           type: string
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  post:
+   operationId: request_pKkHhooNNR
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       required:
+        - changeWords
+       properties:
+        changeWords:
+         type: boolean
+   responses:
+    '405':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: lang_code
+    required: true
+    schema:
+     type: string
+ '/lang/{lang_code}/word-class':
+  get:
+   operationId: request_i4ltw2aSBB
+   summary: Get a word class
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: array
+        items:
+         type: object
+         required:
+          - abbreviation
+          - created
+          - name
+          - updated
+         properties:
+          abbreviation:
+           type: string
+          created:
+           type: string
+          name:
+           type: string
+          updated:
+           type: string
+     description: ''
+  post:
+   operationId: request_5ESo0rxo1m
+   summary: Create a word class
+   responses:
+    '201':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - abbreviation
+         - created
+         - name
+         - updated
+        properties:
+         abbreviation:
+          type: string
+         created:
+          type: string
+         name:
+          type: string
+         updated:
+          type: string
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '409':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: lang_code
+    required: true
+    schema:
+     type: string
+ /user:
+  get:
+   operationId: request_TkQOe75fvE
+   summary: Get all users
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - cursor
+         - data
+        properties:
+         cursor:
+          type: object
+          required:
+           - afterCursor
+           - beforeCursor
+          properties:
+           afterCursor: {}
+           beforeCursor: {}
+         data:
+          type: array
+          items:
+           type: object
+           required:
+            - banner
+            - contributedLangs
+            - created
+            - display_name
+            - ownedLangs
+            - profile_picture
+            - updated
+            - username
+           properties:
+            profile_picture:
+             type: string
+            username:
+             type: string
+            display_name:
+             type: string
+            contributedLangs:
+             type: array
+             items: {}
+            banner:
+             type: string
+            updated:
+             type: string
+            ownedLangs:
+             type: array
+             items: {}
+            created:
+             type: string
+     description: ''
+  post:
+   operationId: request_olcZkhlwkQ
+   summary: Create a new user
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       required:
+        - username
+       properties:
+        password:
+         type: string
+        username:
+         type: string
+   responses:
+    '201':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - banner
+         - created
+         - display_name
+         - profile_picture
+         - updated
+         - username
+        properties:
+         profile_picture:
+          type: string
+         username:
+          type: string
+         display_name:
+          type: string
+         banner:
+          type: string
+         updated:
+          type: string
+         created:
+          type: string
+     description: ''
+    '400':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: array
+          items:
+           type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters: []
+ '/lang/{lang_code}':
+  delete:
+   operationId: request_ol2TvX4bjf
+   summary: Delete a language
+   responses:
+    '200':
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  get:
+   operationId: request_VXAGcVR1ye
+   summary: Get a language
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - contributors
+         - created
+         - description
+         - flag
+         - id
+         - name
+         - owner
+         - partsOfSpeech
+         - updated
+         - wordClasses
+        properties:
+         name:
+          type: string
+         description:
+          type: string
+         id:
+          type: string
+         updated:
+          type: string
+         wordClasses:
+          type: array
+          items: {}
+         flag:
+          type: string
+         owner:
+          type: object
+          required:
+           - banner
+           - created
+           - display_name
+           - profile_picture
+           - updated
+           - username
+          properties:
+           profile_picture:
+            type: string
+           username:
+            type: string
+           display_name:
+            type: string
+           banner:
+            type: string
+           updated:
+            type: string
+           created:
+            type: string
+         contributors:
+          type: array
+          items: {}
+         partsOfSpeech:
+          type: array
+          items: {}
+         created:
+          type: string
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  patch:
+   operationId: request_Z81BBFOIGD
+   summary: Change information for a language
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       properties:
+        asdfgh:
+         type: string
+        id:
+         type: string
+        name:
+         type: string
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - flag
+        properties:
+         name:
+          type: string
+         description:
+          type: string
+         id:
+          type: string
+         updated:
+          type: string
+         wordClasses:
+          type: array
+          items: {}
+         flag:
+          type: string
+         message:
+          type: string
+         owner:
+          type: object
+          required:
+           - banner
+           - created
+           - display_name
+           - profile_picture
+           - updated
+           - username
+          properties:
+           profile_picture:
+            type: string
+           username:
+            type: string
+           display_name:
+            type: string
+           banner:
+            type: string
+           updated:
+            type: string
+           created:
+            type: string
+         contributors:
+          type: array
+          items: {}
+         partsOfSpeech:
+          type: array
+          items: {}
+         created:
+          type: string
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '409':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: lang_code
+    required: true
+    schema:
+     type: string
+ '/lang/{lang_code}/word/{word}':
+  get:
+   operationId: request_MQhqjlj5oz
+   summary: Get a word
+   responses:
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: lang_code
+    required: true
+    schema:
+     type: string
+   -
+    in: path
+    name: word
+    required: true
+    schema:
+     type: string
+ '/user/{username}/profile-picture':
+  post:
+   operationId: request_Ny7HgMP89o
+   summary: Add a profile picture
+   requestBody:
+    content:
+     multipart/form-data:
+      schema:
+       type: string
+   responses:
+    '201':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - banner
+         - contributedLangs
+         - created
+         - display_name
+         - ownedLangs
+         - profile_picture
+         - updated
+         - username
+        properties:
+         profile_picture:
+          type: string
+         username:
+          type: string
+         display_name:
+          type: string
+         contributedLangs:
+          type: array
+          items: {}
+         banner:
+          type: string
+         updated:
+          type: string
+         ownedLangs:
+          type: array
+          items: {}
+         created:
+          type: string
+     description: ''
+    '400':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  delete:
+   operationId: request_E5AcpMTLUA
+   summary: Remove a profile picture
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - affected
+         - generatedMaps
+         - raw
+        properties:
+         affected:
+          type: number
+         generatedMaps:
+          type: array
+          items: {}
+         raw:
+          type: object
+          required:
+           - changes
+           - lastInsertRowid
+          properties:
+           changes:
+            type: number
+           lastInsertRowid:
+            type: number
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  get:
+   operationId: request_22eIMjZo0E
+   summary: Get a profile picture
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - profile_picture
+        properties:
+         profile_picture:
+          type: string
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  patch:
+   operationId: request_Gu5k8V70it
+   summary: Change a profile picture
+   requestBody:
+    content:
+     multipart/form-data:
+      schema:
+       type: string
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - banner
+         - contributedLangs
+         - created
+         - display_name
+         - ownedLangs
+         - profile_picture
+         - updated
+         - username
+        properties:
+         profile_picture:
+          type: string
+         username:
+          type: string
+         display_name:
+          type: string
+         contributedLangs:
+          type: array
+          items: {}
+         banner:
+          type: string
+         updated:
+          type: string
+         ownedLangs:
+          type: array
+          items: {}
+         created:
+          type: string
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '404':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: username
+    required: true
+    schema:
+     type: string
+ /:
+  get:
+   operationId: request_Hsa7B9m3tr
+   summary: Get the version and current time from the API
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - timestamp
+         - version
+        properties:
+         timestamp:
+          type: string
+         version:
+          type: string
+     description: ''
+  parameters: []
+ '/lang/{lang_code}/word':
+  get:
+   operationId: request_DajEYIzxmB
+   summary: Get all words for a language
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - cursor
+         - data
+        properties:
+         cursor:
+          type: object
+          required:
+           - afterCursor
+           - beforeCursor
+          properties:
+           afterCursor: {}
+           beforeCursor: {}
+         data:
+          type: array
+          items:
+           type: object
+           required:
+            - created
+            - creator
+            - definition
+            - ipa
+            - notes
+            - partOfSpeech
+            - updated
+            - word
+            - wordClasses
+           properties:
+            creator:
+             type: object
+             required:
+              - created
+              - display_name
+              - updated
+              - username
+             properties:
+              created:
+               type: string
+              display_name:
+               type: string
+              updated:
+               type: string
+              username:
+               type: string
+            updated:
+             type: string
+            wordClasses:
+             type: array
+             items: {}
+            definition:
+             type: string
+            notes:
+             type: string
+            word:
+             type: string
+            partOfSpeech:
+             type: object
+             required:
+              - abbreviation
+              - created
+              - name
+              - updated
+             properties:
+              abbreviation:
+               type: string
+              created:
+               type: string
+              name:
+               type: string
+              updated:
+               type: string
+            created:
+             type: string
+            ipa:
+             type: string
+     description: ''
+  post:
+   operationId: request_O55DnUZA7D
+   summary: Create a new word
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       required:
+        - definition
+        - partOfSpeech
+        - word
+       properties:
+        definition:
+         type: string
+        partOfSpeech:
+         type: string
+        word:
+         type: string
+        wordClasses:
+         type: array
+         items:
+          type: string
+   responses:
+    '201':
+     content:
+      application/json:
+       schema:
+        type: array
+        items:
+         type: object
+         required:
+          - created
+          - creator
+          - definition
+          - ipa
+          - notes
+          - partOfSpeech
+          - updated
+          - word
+          - wordClasses
+         properties:
+          creator:
+           type: object
+           required:
+            - created
+            - display_name
+            - updated
+            - username
+           properties:
+            created:
+             type: string
+            display_name:
+             type: string
+            updated:
+             type: string
+            username:
+             type: string
+          updated:
+           type: string
+          wordClasses:
+           type: array
+           items: {}
+          definition:
+           type: string
+          notes:
+           type: string
+          word:
+           type: string
+          partOfSpeech:
+           type: object
+           required:
+            - abbreviation
+            - created
+            - name
+            - updated
+           properties:
+            abbreviation:
+             type: string
+            created:
+             type: string
+            name:
+             type: string
+            updated:
+             type: string
+          created:
+           type: string
+          ipa:
+           type: string
+     description: ''
+    '400':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '401':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - message
+         - statusCode
+        properties:
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+    '403':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters:
+   -
+    in: path
+    name: lang_code
+    required: true
+    schema:
+     type: string
+ /lang:
+  get:
+   operationId: request_WjFH4kPxCX
+   summary: Get all languages
+   responses:
+    '200':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - cursor
+         - data
+        properties:
+         cursor:
+          type: object
+          required:
+           - afterCursor
+           - beforeCursor
+          properties:
+           afterCursor: {}
+           beforeCursor: {}
+         data:
+          type: array
+          items:
+           type: object
+           required:
+            - contributors
+            - created
+            - description
+            - flag
+            - id
+            - name
+            - owner
+            - partsOfSpeech
+            - updated
+            - wordClasses
+           properties:
+            name:
+             type: string
+            description:
+             type: string
+            id:
+             type: string
+            updated:
+             type: string
+            wordClasses:
+             type: array
+             items: {}
+            flag:
+             type: string
+            owner:
+             type: object
+             required:
+              - banner
+              - created
+              - display_name
+              - profile_picture
+              - updated
+              - username
+             properties:
+              profile_picture:
+               type: string
+              username:
+               type: string
+              display_name:
+               type: string
+              banner:
+               type: string
+              updated:
+               type: string
+              created:
+               type: string
+            contributors:
+             type: array
+             items: {}
+            partsOfSpeech:
+             type: array
+             items: {}
+            created:
+             type: string
+     description: ''
+    '400':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  post:
+   operationId: request_vd5bPzDnoc
+   summary: Create a new language
+   requestBody:
+    content:
+     application/json:
+      schema:
+       type: object
+       required:
+        - description
+        - id
+        - name
+       properties:
+        description:
+         type: string
+        id:
+         type: string
+        name:
+         type: string
+   responses:
+    '201':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - contributors
+         - created
+         - description
+         - flag
+         - id
+         - name
+         - owner
+         - partsOfSpeech
+         - updated
+         - wordClasses
+        properties:
+         name:
+          type: string
+         description:
+          type: string
+         id:
+          type: string
+         updated:
+          type: string
+         wordClasses:
+          type: array
+          items: {}
+         flag:
+          type: string
+         owner:
+          type: object
+          required:
+           - banner
+           - created
+           - display_name
+           - profile_picture
+           - updated
+           - username
+          properties:
+           profile_picture:
+            type: string
+           username:
+            type: string
+           display_name:
+            type: string
+           banner:
+            type: string
+           updated:
+            type: string
+           created:
+            type: string
+         contributors:
+          type: array
+          items: {}
+         partsOfSpeech:
+          type: array
+          items: {}
+         created:
+          type: string
+     description: ''
+    '400':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: array
+          items:
+           type: string
+         statusCode:
+          type: number
+     description: ''
+    '409':
+     content:
+      application/json:
+       schema:
+        type: object
+        required:
+         - error
+         - message
+         - statusCode
+        properties:
+         error:
+          type: string
+         message:
+          type: string
+         statusCode:
+          type: number
+     description: ''
+  parameters: []
+components:
+ schemas: {}
