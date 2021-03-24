@@ -55,7 +55,7 @@
     "sharp": "0.27.2",
     "typeorm": "0.2.31",
     "typeorm-cursor-pagination": "0.6.0",
-    "ua-parser-js": "0.7.24",
+    "ua-parser-js": "0.7.25",
     "wait-on": "5.3.0"
   },
   "devDependencies": {
