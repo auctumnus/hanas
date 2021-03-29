@@ -51,7 +51,7 @@
     "passport-local": "1.0.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rxjs": "6.6.6",
+    "rxjs": "6.6.7",
     "sharp": "0.27.2",
     "typeorm": "0.2.31",
     "typeorm-cursor-pagination": "0.6.0",
