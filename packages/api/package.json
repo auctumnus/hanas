@@ -33,7 +33,7 @@
     "aws-sdk": "2.906.0",
     "base-64": "1.0.0",
     "bcrypt": "5.0.1",
-    "better-sqlite3": "7.3.1",
+    "better-sqlite3": "7.4.0",
     "bytes": "3.1.0",
     "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
