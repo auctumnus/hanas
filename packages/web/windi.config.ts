@@ -1,7 +1,7 @@
 import { defineConfig } from 'windicss/helpers'
 
 export default defineConfig({
-  darkMode: "class",
+  darkMode: 'class',
   theme: {
     colors: {
       dark0: '#2e3440',
@@ -14,7 +14,7 @@ export default defineConfig({
       light2: '#eceff4',
 
       accent: '#88c0d0',
-      'accent-light': '#81a1c1'
-    }
-  }
+      'accent-light': '#81a1c1',
+    },
+  },
 })

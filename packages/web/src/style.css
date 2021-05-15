@@ -1,17 +1,19 @@
 html {
   box-sizing: border-box;
 }
- 
-*, *:before, *:after {
+
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
 .icon-btn {
   display: flex;
   font-size: 1.05rem;
-  opacity: .8;
+  opacity: 0.8;
   cursor: pointer;
-  transition: opacity, color .15s ease-in-out;
+  transition: opacity, color 0.15s ease-in-out;
   margin: 0 0.5rem;
 }
 
@@ -26,7 +28,7 @@ html {
 
 body a {
   color: #81a1c1;
-  transition: background-color .15s ease-in-out;
+  transition: background-color 0.15s ease-in-out;
 }
 
 .dark a {
@@ -42,4 +44,3 @@ a:hover {
 .dark a:hover {
   background-color: #4c566acc;
 }
-

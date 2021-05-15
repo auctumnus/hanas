@@ -6,7 +6,8 @@
     "build": "vue-tsc --noEmit && vite-ssg build",
     "serve": "vite preview",
     "lint": "prettier --write .",
-    "lint:check": "prettier --check ."
+    "lint:check": "prettier --check .",
+    "commit": "git-cz"
   },
   "dependencies": {
     "@vueuse/core": "^4.11.0",

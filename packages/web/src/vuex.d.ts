@@ -1,4 +1,4 @@
-import {Store} from 'vuex'
+import { Store } from 'vuex'
 import { State } from './store'
 
 declare module '@vue/runtime-core' {
@@ -6,4 +6,3 @@ declare module '@vue/runtime-core' {
     $store: Store<State>
   }
 }
-

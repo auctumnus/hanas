@@ -1,7 +1,7 @@
-import { defineConfig } from "vite"
-import Pages from "vite-plugin-pages"
-import Vue from "@vitejs/plugin-vue"
-import WindiCSS from "vite-plugin-windicss"
+import { defineConfig } from 'vite'
+import Pages from 'vite-plugin-pages'
+import Vue from '@vitejs/plugin-vue'
+import WindiCSS from 'vite-plugin-windicss'
 import Icons, { ViteIconsResolver } from 'vite-plugin-icons'
 import Components from 'vite-plugin-components'
 /* import Favicons from 'vite-plugin-favicon' */
@@ -13,9 +13,9 @@ export default defineConfig({
     Pages(),
     WindiCSS(),
     Components({
-      customComponentResolvers: ViteIconsResolver()
+      customComponentResolvers: ViteIconsResolver(),
     }),
-    Icons()
+    Icons(),
     /* Favicons({
       favicons: {
         appName: 'Hanas',
@@ -23,5 +23,5 @@ export default defineConfig({
       },
       logo: './src/assets/logo.svg'
     }) */
-  ], 
+  ],
 })
