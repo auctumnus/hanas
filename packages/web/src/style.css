@@ -1,5 +1,9 @@
 html {
   box-sizing: border-box;
+  --shadow: #0f0f0f1a;
+}
+html.dark {
+  --shadow: #0000002a;
 }
 
 *,
@@ -9,12 +13,15 @@ html {
 }
 
 .icon-btn {
-  display: flex;
-  font-size: 1.05rem;
+  display: inline-flex;
+  font-size: 1.25rem;
   opacity: 0.8;
   cursor: pointer;
   transition: opacity, color 0.15s ease-in-out;
   margin: 0 0.5rem;
+  align-self: center;
+  top: -0.125rem;
+  position: relative;
 }
 
 .dark .icon-btn:hover {
@@ -26,12 +33,12 @@ html {
   color: #81a1c1;
 }
 
-body a {
+body a:not(.icon-btn) {
   color: #81a1c1;
   transition: background-color 0.15s ease-in-out;
 }
 
-.dark a {
+.dark a:not(.icon-btn) {
   color: #88c0d0;
 }
 

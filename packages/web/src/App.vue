@@ -8,7 +8,9 @@
       dark:text-light0
       flex flex-col
     "
+    id="app-container"
   >
+    <Header />
     <main class="flex-grow">
       <router-view />
     </main>

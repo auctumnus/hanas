@@ -3,6 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { useHead } from '@vueuse/head'
-useHead({ title: 'hi' })
+import { useTitle } from '@vueuse/core'
+useTitle('hi')
 </script>

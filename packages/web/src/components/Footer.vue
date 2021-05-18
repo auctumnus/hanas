@@ -1,15 +1,33 @@
 <template>
-  <footer class="w-screen h-10 flex p-2 items-center flex-row justify-between">
+  <footer
+    class="
+      bg-light1
+      dark:bg-dark1
+      w-screen
+      h-10
+      py-2
+      px-4
+      flex flex-row
+      items-center
+      justify-between
+    "
+  >
     <div class="flex flex-row">
       <DarkLightSwitch />
-      <a href="https://github.com/auctumnus/hanas-frontend" class="icon-btn">
+      <a
+        href="https://github.com/auctumnus/hanas-frontend"
+        class="icon-btn"
+        aria-label="Github repository"
+      >
         <i-carbon-logo-github />
       </a>
     </div>
     <div>
       <span>
         Hanas {{ v }}, made with
-        <span class="text-accent-light dark:text-accent">❤</span>
+        <span class="text-accent-light dark:text-accent" aria-label="love">
+          ❤
+        </span>
         by
         <a
           href="https://github.com/auctumnus/hanas-frontend/graphs/contributors"
@@ -28,6 +46,6 @@ const v = `v${version}`
 
 <style scoped>
 footer {
-  box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -3px 5px var(--shadow);
 }
 </style>

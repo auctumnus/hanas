@@ -1,5 +1,5 @@
 <template>
-  <button @click="toggleDark" class="icon-btn">
+  <button @click="toggleDark" class="icon-btn" aria-label="Toggle dark mode">
     <i-carbon-moon v-if="isDark" />
     <i-carbon-sun v-else />
   </button>
