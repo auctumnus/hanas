@@ -30,7 +30,7 @@
     "@nestjs/passport": "7.1.5",
     "@nestjs/platform-express": "7.6.17",
     "@nestjs/typeorm": "7.1.5",
-    "aws-sdk": "2.908.0",
+    "aws-sdk": "2.909.0",
     "base-64": "1.0.0",
     "bcrypt": "5.0.1",
     "better-sqlite3": "7.4.0",
