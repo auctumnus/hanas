@@ -23,12 +23,12 @@
     "test:s3": "s3rver -s -p 1337 -d s3 --configure-bucket hanas"
   },
   "dependencies": {
-    "@nestjs/common": "7.6.16",
-    "@nestjs/core": "7.6.16",
+    "@nestjs/common": "7.6.17",
+    "@nestjs/core": "7.6.17",
     "@nestjs/jwt": "7.2.0",
     "@nestjs/mapped-types": "0.4.1",
     "@nestjs/passport": "7.1.5",
-    "@nestjs/platform-express": "7.6.16",
+    "@nestjs/platform-express": "7.6.17",
     "@nestjs/typeorm": "7.1.5",
     "aws-sdk": "2.908.0",
     "base-64": "1.0.0",
@@ -61,7 +61,7 @@
   "devDependencies": {
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",
-    "@nestjs/testing": "7.6.16",
+    "@nestjs/testing": "7.6.17",
     "@types/bcrypt": "3.0.1",
     "@types/bytes": "3.1.0",
     "@types/express": "4.17.11",
