@@ -37,6 +37,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: cd packages/api
+    - run: echo $PWD
     - run: yarn install --frozen-lockfile
     - run: yarn run build
     - run: yarn test
@@ -48,5 +49,6 @@ jobs:
         with:
           node-version: 15.x
       - run: cd packages/api
+      - run: echo $PWD
       - run: yarn install --frozen-lockfile
       - run: yarn run lint
