@@ -11532,10 +11532,10 @@ vite-plugin-icons@0.5.1:
     "@iconify/json-tools" "^1.0.10"
     vue-template-es2015-compiler "^1.9.1"
 
-vite-plugin-pages@0.11.4:
-  version "0.11.4"
-  resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.11.4.tgz#dbedc1903f74f6cbc5e5dc26b3d91eb56e002805"
-  integrity sha512-E/n+HaPeYzCqVEYFC2iNTKCJrQ6aoBhOrawVcVY4jPojfwDDpghV2uak9lGVjT+QhlC12shfgOtHTVSD7SHRCA==
+vite-plugin-pages@0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.12.1.tgz#7450ac806974c941ef4505fce7359c3f94dadd01"
+  integrity sha512-JG7RURsLqVX7F1HPMD9kOXnY9Xn3bA5D6lXIRdFd2eYMHU8S4oRcrQFjQXAbonyOJB5qD3UxBb93uNQpKu6cUQ==
   dependencies:
     "@vue/compiler-sfc" "^3.0.11"
     chalk "^4.1.1"
