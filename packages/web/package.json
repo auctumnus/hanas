@@ -33,7 +33,7 @@
     "vite-plugin-icons": "0.5.1",
     "vite-plugin-pages": "0.12.1",
     "vite-plugin-windicss": "0.15.10",
-    "vite-ssg": "0.10.1",
+    "vite-ssg": "0.11.0",
     "vue-router": "4.0.8",
     "vue-tsc": "0.0.24"
   },
