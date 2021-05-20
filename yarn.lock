@@ -457,10 +457,10 @@
   resolved "https://registry.yarnpkg.com/@iconify/json-tools/-/json-tools-1.0.10.tgz#d9a7050dbbe8bb29d684d4b3f9446ed2d0bea3cc"
   integrity sha512-LFelJDOLZ6JHlmlAkgrvmcu4hpNPB91KYcr4f60D/exzU1eNOb4/KCVHIydGHIQFaOacIOD+Xy+B7P1z812cZg==
 
-"@iconify/json@1.1.345":
-  version "1.1.345"
-  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-1.1.345.tgz#98f5139cf6fd146b45d38fce267b031d1e1f0e7d"
-  integrity sha512-boO7ZtdoTzIlotTG9FFqSi/SvFS8YsmRV/JXZVaDL/C5CZQxSwNld6ZQ2GuLDbXtoXF3UPo2n5eH7gb4GqBlCw==
+"@iconify/json@1.1.346":
+  version "1.1.346"
+  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-1.1.346.tgz#a62aa530e24e0d1443c50c1f6b14900f93d1c413"
+  integrity sha512-RFYxTAnXW7W/QJrFCrqBPzX6MgYNa+xNxUv62jXdbOn0f81ZQGep3UZtduv+IQSrl2tl3a88mjkyK6sMQKe+Xw==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -12784,10 +12784,10 @@ vite-plugin-windicss@0.15.10:
     debug "^4.3.2"
     windicss "^2.5.14"
 
-vite-ssg@0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/vite-ssg/-/vite-ssg-0.11.0.tgz#2fd62641788fd55c09de35c2830bc919c453e808"
-  integrity sha512-wfkIjT3w8B/gjzcO76H4ztWTw0rkQYIO2TVb1xk0SBptxuQuxbUrPbjjyzMkCHPCzD4bt1DliAlWLms63PqpMw==
+vite-ssg@0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/vite-ssg/-/vite-ssg-0.11.1.tgz#59279e263c07ec56517a77cbe22b666a0e6e7db3"
+  integrity sha512-vx1YFGgDiOKxQ1S063RExUjDvDBgqibbIIVgQ5PAK34sZIywVfsfAAZEO8mXsODq2eKu9ehntU8eVjN4XVIKdw==
   dependencies:
     chalk "^4.1.1"
     fs-extra "^10.0.0"
