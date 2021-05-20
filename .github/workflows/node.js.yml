@@ -36,11 +36,9 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: cd packages/api
-    - run: echo $PWD
-    - run: yarn install --frozen-lockfile
-    - run: yarn run build
-    - run: yarn test
+    - run: cd packages/api && yarn install --frozen-lockfile
+    - run: cd packages/api && yarn run build
+    - run: cd packages/api && yarn test
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +46,5 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 15.x
-      - run: cd packages/api
-      - run: echo $PWD
-      - run: yarn install --frozen-lockfile
-      - run: yarn run lint
+      - run: cd packages/api && yarn install --frozen-lockfile
+      - run: cd packages/api && yarn run lint
