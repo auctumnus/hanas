@@ -6,5 +6,6 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "license": "MIT"
 }
