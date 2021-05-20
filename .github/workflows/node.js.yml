@@ -11,6 +11,7 @@ on:
       - 'packages/api/**.js'
       - 'packages/api/**.json'
       - 'packages/api/**.yml'
+      - 'yarn.lock'
   pull_request:
     branches: [ main ]
     paths:
@@ -18,9 +19,18 @@ on:
       - 'packages/api/**.js'
       - 'packages/api/**.json'
       - 'packages/api/**.yml'
+      - 'yarn.lock'
   workflow_dispatch:
 
 jobs:
+  skip_ci:
+    runs-on: ubuntu-latest
+    # Map the output to the job's outputs
+    outputs:
+      canSkip: ${{ steps.check.outputs.canSkip }}
+    steps:
+      - id: check
+        uses: Legorooj/skip-ci@main
   build:
 
     runs-on: ubuntu-latest
