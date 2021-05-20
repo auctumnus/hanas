@@ -56,7 +56,7 @@ export class LangPermissionsController {
     @Req() req: Request,
   ) {
     const lang = await this.langService.findOne(langId)
-    const requestorUsername = ((req as unknown) as HanasRequest).user.username
+    const requestorUsername = (req as unknown as HanasRequest).user.username
     this.checkPermission(requestorUsername, lang)
     const user = await this.userService.findOne(username)
     return this.langPermissionsService.create(
@@ -71,7 +71,7 @@ export class LangPermissionsController {
   @Get()
   async findAll(@Param('lang_id') langId: string, @Req() req: Request) {
     const lang = await this.langService.findOne(langId)
-    const username = ((req as unknown) as HanasRequest).user.username
+    const username = (req as unknown as HanasRequest).user.username
     this.checkPermission(username, lang)
     return this.langPermissionsService.findAll(lang)
   }
@@ -84,7 +84,7 @@ export class LangPermissionsController {
     @Req() req: Request,
   ) {
     const lang = await this.langService.findOne(langId)
-    const requestorUsername = ((req as unknown) as HanasRequest).user.username
+    const requestorUsername = (req as unknown as HanasRequest).user.username
     if (requestorUsername !== username) {
       this.checkPermission(requestorUsername, lang)
     }
@@ -100,7 +100,7 @@ export class LangPermissionsController {
     @Req() req: Request,
   ) {
     const lang = await this.langService.findOne(langId)
-    const requestorUsername = ((req as unknown) as HanasRequest).user.username
+    const requestorUsername = (req as unknown as HanasRequest).user.username
     this.checkPermission(requestorUsername, lang)
     return this.langPermissionsService.update(
       updateLangPermissionDto,
@@ -118,7 +118,7 @@ export class LangPermissionsController {
     @Req() req: Request,
   ) {
     const lang = await this.langService.findOne(langId)
-    const requestorUsername = ((req as unknown) as HanasRequest).user.username
+    const requestorUsername = (req as unknown as HanasRequest).user.username
     this.checkPermission(requestorUsername, lang)
     return this.langPermissionsService.remove(lang, username, requestorUsername)
   }
