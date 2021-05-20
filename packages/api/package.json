@@ -1,5 +1,5 @@
 {
-  "name": "hanas",
+  "name": "api",
   "private": true,
   "version": "0.1.0",
   "description": "Conlanging community",
@@ -29,6 +29,7 @@
     "@nestjs/mapped-types": "0.4.1",
     "@nestjs/passport": "7.1.5",
     "@nestjs/platform-express": "7.6.17",
+    "@nestjs/swagger": "^4.8.0",
     "@nestjs/typeorm": "7.1.5",
     "aws-sdk": "2.910.0",
     "base-64": "1.0.0",
@@ -53,6 +54,7 @@
     "rimraf": "3.0.2",
     "rxjs": "6.6.7",
     "sharp": "0.28.2",
+    "swagger-ui-express": "^4.1.6",
     "typeorm": "0.2.32",
     "typeorm-cursor-pagination": "0.6.1",
     "ua-parser-js": "0.7.28",

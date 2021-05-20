@@ -1,7 +1,7 @@
 import { Matches, Length, IsOptional } from 'class-validator'
 
 export class CreateUserDto {
-  @Matches(/^[a-z0-9-_]+$/)
+  @Matches(/^[A-Za-z0-9-_]+$/)
   @Length(2, 32)
   username: string
 
