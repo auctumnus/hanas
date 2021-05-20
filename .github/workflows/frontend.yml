@@ -1,0 +1,38 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: frontend-ci
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'packages/web/**'
+      - 'yarn.lock'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'packages/web/**'
+      - 'yarn.lock'
+  workflow_dispatch:
+
+jobs:
+  skip_ci:
+    runs-on: ubuntu-latest
+    # Map the output to the job's outputs
+    outputs:
+      canSkip: ${{ steps.check.outputs.canSkip }}
+    steps:
+      - id: check
+        uses: Legorooj/skip-ci@main
+  lint:
+    runs-on: ubuntu-latest
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 15.x
+    - run: cd packages/web && yarn install --frozen-lockfile
+    - run: cd packages/web && yarn run lint:check
+  
