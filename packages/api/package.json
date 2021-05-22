@@ -53,7 +53,7 @@
     "rimraf": "3.0.2",
     "rxjs": "6.6.7",
     "sharp": "0.28.2",
-    "swagger-ui-express": "^4.1.6",
+    "swagger-ui-express": "4.1.6",
     "typeorm": "0.2.32",
     "typeorm-cursor-pagination": "0.6.1",
     "ua-parser-js": "0.7.28",
