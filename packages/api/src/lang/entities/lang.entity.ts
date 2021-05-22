@@ -48,6 +48,7 @@ export class Lang {
   wordClasses: WordClass[]
 
   owner: User
+
   contributors: User[]
 
   @AfterLoad()

@@ -1,7 +1,1 @@
-{
-  "compilerOptions": {
-    "plugins": [
-      "@nestjs/swagger/plugin"
-    ]
-  }
-}
+{}

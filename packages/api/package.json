@@ -29,7 +29,6 @@
     "@nestjs/mapped-types": "0.4.1",
     "@nestjs/passport": "7.1.5",
     "@nestjs/platform-express": "7.6.17",
-    "@nestjs/swagger": "^4.8.0",
     "@nestjs/typeorm": "7.1.5",
     "aws-sdk": "2.910.0",
     "base-64": "1.0.0",

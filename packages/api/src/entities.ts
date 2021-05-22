@@ -7,6 +7,11 @@ import { PartOfSpeech } from './part-of-speech/entities/part-of-speech.entity'
 import { WordClass } from './word-class/entities/word-class.entity'
 
 export default {
-  User, Lang, Word, Session, LangPermissions, PartOfSpeech, WordClass
+  User,
+  Lang,
+  Word,
+  Session,
+  LangPermissions,
+  PartOfSpeech,
+  WordClass,
 }
-

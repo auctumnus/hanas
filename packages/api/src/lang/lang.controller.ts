@@ -8,7 +8,6 @@ import {
   Patch,
   Req,
   UseGuards,
-  UnauthorizedException,
   UseInterceptors,
   UploadedFile,
   ForbiddenException,
@@ -28,6 +27,10 @@ import { ALLOWED_TYPES, FLAG_MAX_HEIGHT, FLAG_MAX_WIDTH } from '../constants'
 const flagSettings = {
   maxWidth: FLAG_MAX_WIDTH,
   maxHeight: FLAG_MAX_HEIGHT,
+}
+
+class FlagUploadDto {
+  flag: any
 }
 
 @Controller()
