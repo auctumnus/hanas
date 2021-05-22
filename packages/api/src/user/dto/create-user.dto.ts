@@ -5,13 +5,7 @@ export class CreateUserDto {
   @Length(2, 32)
   username: string
 
-  @Length(15, 100)
-  @Matches(/[$-/:-?{-~!"^_`\[\]\(\)]/, {
-    message: 'password must include a symbol (any of $-/:-?{-~!"^_`[]())',
-  })
-  @Matches(/[0-9]/, {
-    message: 'password must include a number (any of 0123456789)',
-  })
+  @Length(15, 64)
   password: string
 
   @IsOptional()
