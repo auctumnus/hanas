@@ -13,7 +13,7 @@ At the moment, Hanas uses [SQLite3](https://sqlite.org/index.html), so by defaul
 Install the Node dependencies by running:
 
 ```bash
-$ npm install
+$ yarn
 ```
 
 You will also need to supply [AWS S3](https://aws.amazon.com/s3/) credentials, and optionally a [Cloudfront](https://aws.amazon.com/cloudfront/) domain to use. Hanas will likely fit in the free tier, so you shouldn't need to worry about it.
@@ -28,16 +28,16 @@ You may wish to edit the `ormconfig.json` to fit your particular database needs.
 
 ```bash
 # development
-$ npm run start
+$ yarn start
 
 # watch mode
-$ npm run start:dev
+$ yarn start:dev
 
 # production mode
-$ npm run start:prod
+$ yarn start:prod
 
 # run e2e tests
-$ npm run test
+$ yarn test
 ```
 
 Running tests shouldn't delete the database, but be wary about it.
