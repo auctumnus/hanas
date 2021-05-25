@@ -12770,10 +12770,10 @@ vinyl@^2.2.1:
     remove-trailing-separator "^1.0.1"
     replace-ext "^1.0.0"
 
-vite-plugin-components@0.9.2:
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/vite-plugin-components/-/vite-plugin-components-0.9.2.tgz#6ff00e5e2a9355372d56af5c8be3bafdf3c5bfce"
-  integrity sha512-DCl6GboJN0CJWjPiGrj6wbUV4m983lqwKpleS4IZwztK+BYKZ+e5m8Ph58RyVq/yDv0w8OOdWrmycshagR+DEQ==
+vite-plugin-components@0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-components/-/vite-plugin-components-0.10.2.tgz#1c2dab1a6018f53a507e34498bf0017027fc344e"
+  integrity sha512-W9DVF8ylbycSX2Bb8bklz50JLfE+3Yu9BLsXxM3TwuoP2gmfWz7djoIjo5uE397BYbkYZpICKH7fv7aReGB7aw==
   dependencies:
     chokidar "^3.5.1"
     debug "^4.3.2"
