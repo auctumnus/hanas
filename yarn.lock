@@ -12832,10 +12832,10 @@ vite-plugin-windicss@0.16.5:
     debug "^4.3.2"
     windicss "^3.0.12"
 
-vite-ssg@0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/vite-ssg/-/vite-ssg-0.11.1.tgz#59279e263c07ec56517a77cbe22b666a0e6e7db3"
-  integrity sha512-vx1YFGgDiOKxQ1S063RExUjDvDBgqibbIIVgQ5PAK34sZIywVfsfAAZEO8mXsODq2eKu9ehntU8eVjN4XVIKdw==
+vite-ssg@0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/vite-ssg/-/vite-ssg-0.11.2.tgz#d422ed7ce51a9239d5b6d058824e348ebb47d5e7"
+  integrity sha512-OQk950M8RQCxBdm1IRO75keAf/Dkv9OmqnK6ZtwXxaNgr9qnKK0A8H9pybrhp5CNDnndyBUZ2ll3QNb/KuGzcQ==
   dependencies:
     chalk "^4.1.1"
     fs-extra "^10.0.0"
