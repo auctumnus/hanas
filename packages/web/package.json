@@ -30,7 +30,7 @@
     "vite": "2.3.4",
     "vite-plugin-components": "0.10.3",
     "vite-plugin-favicon": "1.0.8",
-    "vite-plugin-icons": "0.5.1",
+    "vite-plugin-icons": "0.6.0",
     "vite-plugin-pages": "0.12.1",
     "vite-plugin-windicss": "0.16.7",
     "vite-ssg": "0.11.2",
