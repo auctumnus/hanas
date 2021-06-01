@@ -18,7 +18,9 @@ import { RefreshSessionDto } from './dto/refresh-session.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { checkUser } from '../auth/checkUser'
 import { getLimitAndCursor } from '../paginator'
+import {ApiTags} from '@nestjs/swagger'
 
+@ApiTags('Sessions')
 @Controller()
 export class SessionController {
   constructor(

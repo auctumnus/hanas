@@ -18,7 +18,9 @@ import { Request } from 'express'
 import { getPermission } from '../auth/checkUser'
 import { LangPermissions } from '../lang-permissions/entities/lang-permissions.entity'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import {ApiTags} from '@nestjs/swagger'
 
+@ApiTags('Parts of Speech')
 @Controller()
 export class PartOfSpeechController {
   constructor(

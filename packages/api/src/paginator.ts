@@ -5,6 +5,50 @@ import { buildPaginator } from 'typeorm-cursor-pagination'
 import { classToClass } from 'class-transformer'
 import { Request } from 'express'
 import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from './constants'
+import {ApiBadRequestResponse, ApiOkResponse, ApiProperty, ApiResponseOptions, getSchemaPath} from '@nestjs/swagger'
+
+export class Cursor {
+  /**
+   * The cursor for the previous page of results.
+   * @example aW50ZXJuYWxfaWQ6OA==
+   */ 
+  @ApiProperty()
+  beforeCursor: string | null
+  /**
+   * The cursor for the next page of results.
+   * @example aW50ZXJuYWxfaWQ6Nw==
+   */
+  @ApiProperty()
+  afterCursor: string | null
+}
+
+export class Paginated<E> {
+  /**
+   * Cursor information for this request.
+   */
+  @ApiProperty()
+  cursor: Cursor
+  /**
+   * Array of results.
+   */
+  data: E[]
+}
+
+export const pagedSchema = (e: string | Function): ApiResponseOptions => ({
+  schema: {
+    allOf: [
+      { $ref: getSchemaPath(Paginated) },
+      {
+        properties: {
+          data: {
+            type: 'array',
+            items: { $ref: getSchemaPath(e) }
+          }
+        }
+      }
+    ]
+  }
+})
 
 export async function paginator<T extends ObjectType<T>>(
   entity: T,

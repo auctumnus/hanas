@@ -6,7 +6,9 @@ import { classTransformerInterceptor } from './classTransformerInterceptor'
 import { clacks } from './clacks.middleware'
 import { PORT } from './constants'
 import { setupBuckets } from './s3'
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import { SwaggerModule, DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger'
+import { Paginated } from './paginator' 
+import { ApiError } from './errors'
 
 export async function bootstrap(port: number, logger: boolean) {
   await setupBuckets()
@@ -21,9 +23,16 @@ export async function bootstrap(port: number, logger: boolean) {
     .setVersion('0.1.0')
     .build()
 
-  const document = SwaggerModule.createDocument(app, config)
+  const document = SwaggerModule.createDocument(app, config, {
+    extraModels: [ Paginated, ApiError ]
+  })
 
-  SwaggerModule.setup('api', app, document)
+  const documentOptions: SwaggerCustomOptions = {
+    customSiteTitle: 'Hanas API Docs',
+
+  }
+
+  SwaggerModule.setup('api', app, document, documentOptions)
 
   await app.listen(port)
   return app
