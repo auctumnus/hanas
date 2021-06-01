@@ -35,7 +35,7 @@
     "vite-plugin-windicss": "0.16.7",
     "vite-ssg": "0.11.2",
     "vue-router": "4.0.8",
-    "vue-tsc": "0.1.6"
+    "vue-tsc": "0.1.7"
   },
   "license": "MIT",
   "config": {
