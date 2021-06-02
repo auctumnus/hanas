@@ -20,7 +20,7 @@ import { LangService } from '../lang/lang.service'
 import { UserService } from '../user/user.service'
 import { HanasRequest } from '../auth/checkUser'
 import { Lang } from '../lang/entities/lang.entity'
-import {ApiTags} from '@nestjs/swagger'
+import { ApiTags } from '@nestjs/swagger'
 
 @ApiTags('Language Permissions')
 @Controller()

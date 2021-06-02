@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import {ApiOperation, ApiTags} from '@nestjs/swagger'
+import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { version } from '../package.json'
 
 @Injectable()

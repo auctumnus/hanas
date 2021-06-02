@@ -1,8 +1,6 @@
-import {ApiProperty} from "@nestjs/swagger"
+import { ApiProperty } from '@nestjs/swagger'
 
-export const makeErrors = {
-  
-}
+export const makeErrors = {}
 
 export class ApiError {
   /**
@@ -18,7 +16,7 @@ export class ApiError {
    */
   @ApiProperty()
   message: string | string[]
-  
+
   /**
    * The name of the HTTP error.
    * @example Bad Request
@@ -26,4 +24,3 @@ export class ApiError {
   @ApiProperty()
   error: string
 }
-

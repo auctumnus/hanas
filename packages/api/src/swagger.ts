@@ -1,7 +1,11 @@
-import {INestApplication} from "@nestjs/common"
-import {DocumentBuilder, SwaggerCustomOptions, SwaggerModule} from "@nestjs/swagger"
-import {ApiError} from "./errors"
-import {Paginated} from "./paginator"
+import { INestApplication } from '@nestjs/common'
+import {
+  DocumentBuilder,
+  SwaggerCustomOptions,
+  SwaggerModule,
+} from '@nestjs/swagger'
+import { ApiError } from './errors'
+import { Paginated } from './paginator'
 
 export const getDocument = (app: INestApplication) => {
   const config = new DocumentBuilder()
@@ -11,11 +15,11 @@ export const getDocument = (app: INestApplication) => {
     .build()
 
   const document = SwaggerModule.createDocument(app, config, {
-    extraModels: [ Paginated, ApiError ]
+    extraModels: [Paginated, ApiError],
   })
 
   const documentOptions: SwaggerCustomOptions = {
-    customSiteTitle: 'Hanas API Docs'
+    customSiteTitle: 'Hanas API Docs',
   }
   return { document, documentOptions }
 }

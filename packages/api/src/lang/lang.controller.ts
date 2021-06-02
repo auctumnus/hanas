@@ -23,7 +23,7 @@ import { getUserPermissions } from '../lang-permissions/lang-permissions.service
 import { FileInterceptor } from '@nestjs/platform-express'
 import { multerSettings, S3File, validateFile } from '../s3'
 import { ALLOWED_TYPES, FLAG_MAX_HEIGHT, FLAG_MAX_WIDTH } from '../constants'
-import {ApiTags} from '@nestjs/swagger'
+import { ApiTags } from '@nestjs/swagger'
 
 const flagSettings = {
   maxWidth: FLAG_MAX_WIDTH,

@@ -26,8 +26,14 @@ import {
   BANNER_MAX_WIDTH,
   PFP_MAX_LENGTH,
 } from '../constants'
-import {ApiBadRequestResponse, ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags} from '@nestjs/swagger'
-import {User} from './entities/user.entity'
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger'
+import { User } from './entities/user.entity'
 
 const pfpSettings = {
   maxWidth: PFP_MAX_LENGTH,
@@ -46,7 +52,7 @@ export class UserController {
 
   @ApiOperation({
     description: 'Creates a user.',
-    summary: 'Create a user'
+    summary: 'Create a user',
   })
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -55,7 +61,7 @@ export class UserController {
 
   @ApiOperation({
     description: 'Gets all users, with pagination.',
-    summary: 'Get all users'
+    summary: 'Get all users',
   })
   @Get()
   findAll(@Req() req: Request) {
@@ -65,7 +71,7 @@ export class UserController {
 
   @ApiOperation({
     description: 'Finds a user by their username.',
-    summary: 'Find a user'
+    summary: 'Find a user',
   })
   @Get(':username')
   findOne(@Param('username') username: string) {
@@ -74,7 +80,7 @@ export class UserController {
 
   @ApiOperation({
     description: 'Updates a user.',
-    summary: 'Update a user'
+    summary: 'Update a user',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -91,7 +97,7 @@ export class UserController {
 
   @ApiOperation({
     description: 'Deletes a user forever.',
-    summary: 'Delete a user'
+    summary: 'Delete a user',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -104,8 +110,8 @@ export class UserController {
 
   // profile picture endpoints
   @ApiOperation({
-    description: 'Get a user\'s profile picture.',
-    summary: 'Get a profile picture'
+    description: "Get a user's profile picture.",
+    summary: 'Get a profile picture',
   })
   @Get(':username/profile-picture')
   async getProfilePicture(@Param('username') username: string) {
@@ -115,7 +121,7 @@ export class UserController {
 
   @ApiOperation({
     description: 'Set a profile picture for a user.',
-    summary: 'Create a profile picture'
+    summary: 'Create a profile picture',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -135,8 +141,8 @@ export class UserController {
   }
 
   @ApiOperation({
-    description: 'Update a user\'s profile picture.',
-    summary: 'Update a profile picture'
+    description: "Update a user's profile picture.",
+    summary: 'Update a profile picture',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -154,7 +160,7 @@ export class UserController {
 
   @ApiOperation({
     description: 'Remove the profile picture for a user',
-    summary: 'Delete a profile picture'
+    summary: 'Delete a profile picture',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -171,7 +177,7 @@ export class UserController {
   // profile picture endpoints
   @ApiOperation({
     description: 'Get the banner for a user',
-    summary: 'Get a banner'
+    summary: 'Get a banner',
   })
   @Get(':username/banner')
   async getBanner(@Param('username') username: string) {
@@ -181,7 +187,7 @@ export class UserController {
 
   @ApiOperation({
     description: 'Set the banner for a user',
-    summary: 'Create a banner'
+    summary: 'Create a banner',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -200,7 +206,7 @@ export class UserController {
 
   @ApiOperation({
     description: 'Update the banner for a user',
-    summary: 'Update a banner'
+    summary: 'Update a banner',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -216,7 +222,7 @@ export class UserController {
 
   @ApiOperation({
     description: 'Remove the banner for a user',
-    summary: 'Delete a banner'
+    summary: 'Delete a banner',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)

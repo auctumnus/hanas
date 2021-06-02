@@ -1,5 +1,10 @@
 import { Controller, Get } from '@nestjs/common'
-import {ApiExtraModels, ApiOperation, ApiProperty, ApiTags} from '@nestjs/swagger'
+import {
+  ApiExtraModels,
+  ApiOperation,
+  ApiProperty,
+  ApiTags,
+} from '@nestjs/swagger'
 import { AppService } from './app.service'
 
 class APIInfo {
@@ -18,7 +23,7 @@ export class AppController {
   @Get()
   @ApiOperation({
     description: 'its a description',
-    summary: 'its a summary'
+    summary: 'its a summary',
   })
   get(): APIInfo {
     return this.appService.get()

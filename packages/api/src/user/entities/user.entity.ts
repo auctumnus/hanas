@@ -10,7 +10,7 @@ import {
   AfterLoad,
 } from 'typeorm'
 import { Lang } from '../../lang/entities/lang.entity'
-import {ApiHideProperty} from '@nestjs/swagger'
+import { ApiHideProperty } from '@nestjs/swagger'
 
 @Entity()
 export class User {
@@ -18,7 +18,7 @@ export class User {
   @Exclude()
   @PrimaryGeneratedColumn()
   internal_id: number
-  
+
   /**
    * The username of the user, which is the primary key for finding them.
    * @example alice

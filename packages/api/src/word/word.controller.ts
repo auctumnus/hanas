@@ -20,7 +20,7 @@ import { LangService } from '../lang/lang.service'
 import { getLimitAndCursor } from '../paginator'
 import { Lang } from '../lang/entities/lang.entity'
 import { UserService } from '../user/user.service'
-import {ApiTags} from '@nestjs/swagger'
+import { ApiTags } from '@nestjs/swagger'
 
 const checkPermission = (req: Request, lang: Lang) => {
   if (!getPermission(req, lang)?.changeWords) {

@@ -12,7 +12,7 @@ import {
 import { LangPermissions } from '../../lang-permissions/entities/lang-permissions.entity'
 import { PartOfSpeech } from '../../part-of-speech/entities/part-of-speech.entity'
 import { WordClass } from '../../word-class/entities/word-class.entity'
-import {ApiHideProperty} from '@nestjs/swagger'
+import { ApiHideProperty } from '@nestjs/swagger'
 
 @Entity()
 export class Lang {

@@ -1,4 +1,10 @@
-import { Matches, Length, IsOptional, MaxLength, MinLength } from 'class-validator'
+import {
+  Matches,
+  Length,
+  IsOptional,
+  MaxLength,
+  MinLength,
+} from 'class-validator'
 
 export class CreateUserDto {
   /**
@@ -25,7 +31,7 @@ export class CreateUserDto {
    * The name that the user would prefer to be displayed. If blank, defaults
    * to the username.
    * @example AliceSmith
-   */ 
+   */
   @IsOptional()
   @MaxLength(32)
   @MinLength(2)
