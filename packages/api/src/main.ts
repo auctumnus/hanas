@@ -6,9 +6,8 @@ import { classTransformerInterceptor } from './classTransformerInterceptor'
 import { clacks } from './clacks.middleware'
 import { PORT } from './constants'
 import { setupBuckets } from './s3'
-import { SwaggerModule, DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger'
-import { Paginated } from './paginator' 
-import { ApiError } from './errors'
+import { SwaggerModule } from '@nestjs/swagger'
+import { getDocument } from './swagger'
 
 export async function bootstrap(port: number, logger: boolean) {
   await setupBuckets()
@@ -17,20 +16,7 @@ export async function bootstrap(port: number, logger: boolean) {
   app.useGlobalInterceptors(new classTransformerInterceptor())
   app.use(clacks)
 
-  const config = new DocumentBuilder()
-    .setTitle('Hanas')
-    .setDescription('Conlanging tool and community')
-    .setVersion('0.1.0')
-    .build()
-
-  const document = SwaggerModule.createDocument(app, config, {
-    extraModels: [ Paginated, ApiError ]
-  })
-
-  const documentOptions: SwaggerCustomOptions = {
-    customSiteTitle: 'Hanas API Docs',
-
-  }
+  const { document, documentOptions } = getDocument(app)
 
   SwaggerModule.setup('api', app, document, documentOptions)
 
