@@ -6,12 +6,14 @@
 	<br>
 	<br>
 	<br>
-</div>
 
+[![Hanas docs][docs-badge]][docs]
 [![Snyk Vulnerabilities for GitHub Repo][snyk]](https://snyk.io)
 [![Github Workflow Status for Backend][gh-badge-backend]][gh-workflow-backend]
 [![Github Workflow Status for Frontend][gh-badge-frontend]][gh-workflow-frontend]
 [![Better than CWS][better-than-cws-badge]][better-than-cws-link]
+
+</div>
 
 Hanas is a conlanging tool and community, primarily inspired by the work of
 [Conworkshop][cws]. The backend is built with [Nest.js][nest], and the frontend
@@ -63,6 +65,8 @@ See the respective folders for the frontend and backend for how to configure the
 ## License
 [MIT][MIT].
 
+[docs]: https://auctumnus.github.io/hanas
+[docs-badge]: https://img.shields.io/badge/docs-redoc-informational?style=flat-square
 [snyk]: https://img.shields.io/snyk/vulnerabilities/github/auctumnus/hanas?style=flat-square
 [gh-badge-frontend]: https://img.shields.io/github/workflow/status/auctumnus/hanas/frontend-ci?label=web%20build&style=flat-square
 [gh-workflow-frontend]: https://github.com/auctumnus/hanas/actions/workflows/frontend.yml
