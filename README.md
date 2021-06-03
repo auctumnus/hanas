@@ -1,4 +1,13 @@
-# Hanas
+<div align="center">
+	<br>
+	<div>
+		<img height="136" src="media/logo.svg" alt="hanas">
+	</div>
+	<br>
+	<br>
+	<br>
+</div>
+
 [![Snyk Vulnerabilities for GitHub Repo][snyk]](https://snyk.io)
 [![Github Workflow Status for Backend][gh-badge-backend]][gh-workflow-backend]
 [![Github Workflow Status for Frontend][gh-badge-frontend]][gh-workflow-frontend]
