@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite-ssg build",
+    "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "lint": "prettier --write .",
     "lint:check": "prettier --check .",
@@ -33,7 +33,6 @@
     "vite-plugin-icons": "0.6.1",
     "vite-plugin-pages": "0.12.2",
     "vite-plugin-windicss": "1.0.1",
-    "vite-ssg": "0.11.2",
     "vue-router": "4.0.8",
     "vue-tsc": "0.1.7"
   },
