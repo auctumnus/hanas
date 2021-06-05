@@ -1,6 +1,6 @@
 # Hanas
 
-[![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/auctumnus/hanas/packages/api/package.json?style=flat-square)](https://snyk.io)
+[![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/auctumnus/hanas?style=flat-square)](https://snyk.io)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/auctumnus/hanas/backend-ci?style=flat-square)](https://github.com/auctumnus/hanas/actions/workflows/node.js.yml)
 
 This is the Hanas backend, built using [NestJS](https://nestjs.com).
