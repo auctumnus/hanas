@@ -1,10 +1,9 @@
 # Hanas
 
-[![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/auctumnus/hanas-server?style=flat-square)](https://snyk.io)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/auctumnus/hanas-server/Node.js%20CI?style=flat-square)](https://github.com/auctumnus/hanas-server/actions?query=workflow%3A"Node.js+CI")
-[![better than cws](https://img.shields.io/badge/better%20than-cws-blue?style=flat-square)](https://www.youtube.com/watch?v=xmkifWcTXiI)
+[![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/auctumnus/hanas/packages/api/package.json?style=flat-square)](https://snyk.io)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/auctumnus/hanas/backend-ci?style=flat-square)](https://github.com/auctumnus/hanas/actions/workflows/node.js.yml)
 
-Hanas is a webapp and community built for conlanging. It is primarily inspired by the work of [ConWorkShop](https://conworkshop.com). The backend here is built using [NestJS](https://nestjs.com).
+This is the Hanas backend, built using [NestJS](https://nestjs.com).
 
 ## Installation
 
@@ -44,4 +43,4 @@ Running tests shouldn't delete the database, but be wary about it.
 
 ## API Description
 
-A preliminary description can be found at the [Github Pages site](https://auctumnus.github.io/hanas-server/index.html). This is based off [Optic](https://useoptic.com/), which requires test coverage to learn about new endpoints, but test coverage is not yet perfect. The Github Pages version may also end up slightly out of date - clone the repo and use Optic for the most up-to-date description. Additional information on more complex topics can be found in the [wiki](https://github.com/auctumnus/hanas-server/wiki).
+A preliminary description can be found at the [Github Pages site](https://auctumnus.github.io/hanas). Additional information on more complex topics can be found in the [wiki](https://github.com/auctumnus/hanas/wiki).
