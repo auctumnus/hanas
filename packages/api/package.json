@@ -21,7 +21,7 @@
     "test:debug": "rimraf db && node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --config ./test/jest-e2e.json",
     "delete_db": "rimraf db",
     "test:s3": "s3rver -s -p 1337 -d s3 --configure-bucket hanas",
-    "docs": "concurrently -k -s first npm:start \"wait-on http://localhost:3000 && curl http://localhost:3000/api-json -o ../../docs/swagger.json\""
+    "docs": "concurrently -k -s first npm:start \"wait-on http://localhost:3000 && curl http://localhost:3000/docs-json -o ../../docs/swagger.json\""
   },
   "dependencies": {
     "@nestjs/common": "7.6.17",

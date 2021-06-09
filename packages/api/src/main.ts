@@ -18,7 +18,7 @@ export async function bootstrap(port: number, logger: boolean) {
 
   const { document, documentOptions } = getDocument(app)
 
-  SwaggerModule.setup('api', app, document, documentOptions)
+  SwaggerModule.setup('docs', app, document, documentOptions)
 
   await app.listen(port)
   return app
