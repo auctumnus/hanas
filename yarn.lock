@@ -2765,7 +2765,7 @@
     "@vue/compiler-core" "3.1.1"
     "@vue/shared" "3.1.1"
 
-"@vue/compiler-sfc@3.1.1":
+"@vue/compiler-sfc@3.1.1", "@vue/compiler-sfc@^3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.1.1.tgz#d4e4507c013d0b219f0b106b317ec5bb1cde3398"
   integrity sha512-lSgMsZaYHF+bAgryq5aUqpvyfhu52GJI2/4LoiJCE5uaxc6FCZfxfgqgw/d9ltiZghv+HiISFtmQVAVvlsk+/w==
@@ -13834,12 +13834,12 @@ vite-plugin-icons@0.6.1:
     "@iconify/json-tools" "^1.0.10"
     vue-template-es2015-compiler "^1.9.1"
 
-vite-plugin-pages@0.12.2:
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.12.2.tgz#81c0c5e7a4223c65ecdfabe46e5bf079ecc28898"
-  integrity sha512-snyTRXPo3I8vgi7E+O0QzADsFARpWx59Vb0n4PhI5ml4qUd3dcFnJTRvrstaMAl9H0j8OlcligsrHobsSD+1og==
+vite-plugin-pages@0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.13.1.tgz#1d22953a9961c14cc58a3c5264ca3794a9a94902"
+  integrity sha512-kQoVuzFhEDhJ1b7nv95vBr/M0FOGqaO4NY/uvh+9DRUAZ/Sv3pim7RbPao0L4XEqtBdxqD8Xckyk59acd6nX5w==
   dependencies:
-    "@vue/compiler-sfc" "^3.0.11"
+    "@vue/compiler-sfc" "^3.1.1"
     chalk "^4.1.1"
     debug "^4.3.2"
     deep-equal "^2.0.5"
