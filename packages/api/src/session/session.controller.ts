@@ -83,7 +83,7 @@ export class SessionController {
     description: 'Creates a session for a user.',
     summary: 'Create a session'
   })
-  @ApiOkResponse({ type: SessionCreated })
+  @ApiCreatedResponse({ type: SessionCreated })
   @ApiNotFoundResponse({ type: NotFoundError })
   @ApiForbiddenResponse({ type: ForbiddenError })
   @Post()

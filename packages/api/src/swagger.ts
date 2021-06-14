@@ -7,6 +7,7 @@ import {
 import { ApiError } from './errors'
 import { Paginated } from './paginator'
 import { DeleteSuccess } from './deleteSuccess'
+import {Session} from './session/entities/session.entity'
 
 export const getDocument = (app: INestApplication) => {
   const config = new DocumentBuilder()
@@ -17,7 +18,7 @@ export const getDocument = (app: INestApplication) => {
     .build()
 
   const document = SwaggerModule.createDocument(app, config, {
-    extraModels: [Paginated, ApiError, DeleteSuccess],
+    extraModels: [Paginated, ApiError, DeleteSuccess, Session],
   })
 
   const documentOptions: SwaggerCustomOptions = {
