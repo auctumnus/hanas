@@ -6,9 +6,8 @@ import { classToClass } from 'class-transformer'
 import { Request } from 'express'
 import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from './constants'
 import {
-  ApiBadRequestResponse,
-  ApiOkResponse,
   ApiProperty,
+  ApiQuery,
   ApiResponseOptions,
   getSchemaPath,
 } from '@nestjs/swagger'
@@ -39,6 +38,25 @@ export class Paginated<E> {
    */
   data: E[]
 }
+
+export const ApiPaginated = 
+  () => (target: object, key: string | symbol, descriptor: TypedPropertyDescriptor<any>) => {
+    ApiQuery({
+      name: 'limit', 
+      type: Number,
+      description: `Number of records to return, up to ${MAX_PAGE_SIZE}. ` + 
+                   `Default is ${DEFAULT_PAGE_SIZE}.`,
+      required: false
+    })(target, key, descriptor)
+    ApiQuery({
+      name: 'cursor',
+      type: String,
+      description: 'The cursor from which to search. Paginated requests will ' +
+                   'return a beforeCursor and afterCursor, to allow you to move ' +
+                   'forward and backward in the pages.',
+      required: false
+    })(target, key, descriptor)
+  }
 
 export const pagedSchema = (e: string | Function): ApiResponseOptions => ({
   schema: {

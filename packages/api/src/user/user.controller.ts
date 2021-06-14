@@ -15,7 +15,7 @@ import { Request } from 'express'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
-import { getLimitAndCursor, pagedSchema } from '../paginator'
+import { ApiPaginated, getLimitAndCursor, pagedSchema } from '../paginator'
 import { checkUser } from '../auth/checkUser'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { FileInterceptor } from '@nestjs/platform-express'
@@ -29,11 +29,44 @@ import {
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiBody,
+  ApiConflictResponse,
+  ApiConsumes,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiProperty,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 import { User } from './entities/user.entity'
+import {BadRequestError, ConflictError, ForbiddenError, NotFoundError, UnauthorizedError} from '../errors'
+import { DeleteSuccess } from 'src/deleteSuccess'
+
+class PfpUploadDto {
+  @ApiProperty({ type: 'string', format: 'binary' })
+  'profile-picture': any
+}
+
+class BannerUploadDto {
+  @ApiProperty({ type: 'string', format: 'binary' })
+  banner: any
+}
+
+class Pfp {
+  @ApiProperty({ 
+    example: 'https://my-bucket.s3.us-west-2.amazonaws.com/YhEcI1URMGimpoyAav9Zp' })
+  profile_picture: string
+}
+
+class Banner {
+  @ApiProperty({
+    example: 'https://my-bucket.s3.us-west-2.amazonaws.com/2F-oOC5ejzZuCZdp01OWS'
+  })
+  banner: string
+}
 
 const pfpSettings = {
   maxWidth: PFP_MAX_LENGTH,
@@ -54,6 +87,9 @@ export class UserController {
     description: 'Creates a user.',
     summary: 'Create a user',
   })
+  @ApiCreatedResponse({ type: User })
+  @ApiBadRequestResponse({ type: BadRequestError })
+  @ApiConflictResponse({ type: ConflictError })
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto)
@@ -63,6 +99,8 @@ export class UserController {
     description: 'Gets all users, with pagination.',
     summary: 'Get all users',
   })
+  @ApiPaginated()
+  @ApiOkResponse(pagedSchema(User))
   @Get()
   findAll(@Req() req: Request) {
     const { limit, cursor } = getLimitAndCursor(req)
@@ -73,11 +111,19 @@ export class UserController {
     description: 'Finds a user by their username.',
     summary: 'Find a user',
   })
+  @ApiOkResponse({ type: User })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @Get(':username')
   findOne(@Param('username') username: string) {
     return this.userService.findOne(username)
   }
 
+  @ApiOkResponse({ type: User })
+  @ApiBadRequestResponse({ type: BadRequestError })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiNotFoundResponse({ type: NotFoundError })
+  @ApiConflictResponse({ type: ConflictError })
   @ApiOperation({
     description: 'Updates a user.',
     summary: 'Update a user',
@@ -101,6 +147,10 @@ export class UserController {
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: DeleteSuccess })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @Delete(':username')
   async remove(@Param('username') username: string, @Req() req: Request) {
     const user = await this.userService.findOne(username)
@@ -110,22 +160,32 @@ export class UserController {
 
   // profile picture endpoints
   @ApiOperation({
-    description: "Get a user's profile picture.",
+    description: "Gets a user's profile picture.",
     summary: 'Get a profile picture',
   })
   @Get(':username/profile-picture')
+  @ApiOkResponse({ type: Pfp })
+  @ApiNotFoundResponse({ type: NotFoundError })
   async getProfilePicture(@Param('username') username: string) {
     const { profile_picture } = await this.userService.findOne(username)
     return { profile_picture }
   }
 
   @ApiOperation({
-    description: 'Set a profile picture for a user.',
+    description: 'Sets a profile picture for a user.',
     summary: 'Create a profile picture',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'The profile picture to be used',
+    type: PfpUploadDto
+  })
   @Post(':username/profile-picture')
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @UseInterceptors(
     FileInterceptor('profile-picture', multerSettings(pfpSettings)),
   )
@@ -141,11 +201,19 @@ export class UserController {
   }
 
   @ApiOperation({
-    description: "Update a user's profile picture.",
+    description: "Updates a user's profile picture.",
     summary: 'Update a profile picture',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'The profile picture to be used',
+    type: PfpUploadDto
+  })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @Patch(':username/profile-picture')
   @UseInterceptors(
     FileInterceptor('profile-picture', multerSettings(pfpSettings)),
@@ -159,9 +227,13 @@ export class UserController {
   }
 
   @ApiOperation({
-    description: 'Remove the profile picture for a user',
+    description: 'Removes the profile picture for a user.',
     summary: 'Delete a profile picture',
   })
+  @ApiOkResponse({ type: DeleteSuccess })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':username/profile-picture')
@@ -176,9 +248,11 @@ export class UserController {
 
   // profile picture endpoints
   @ApiOperation({
-    description: 'Get the banner for a user',
+    description: 'Gets the banner for a user.',
     summary: 'Get a banner',
   })
+  @ApiOkResponse({ type: Banner })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @Get(':username/banner')
   async getBanner(@Param('username') username: string) {
     const { banner } = await this.userService.findOne(username)
@@ -186,11 +260,22 @@ export class UserController {
   }
 
   @ApiOperation({
-    description: 'Set the banner for a user',
+    description: 'Sets the banner for a user.',
     summary: 'Create a banner',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'The banner to be used',
+    type: BannerUploadDto
+  })
+  @ApiCreatedResponse({
+    type: User
+  })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @Post(':username/banner')
   @UseInterceptors(FileInterceptor('banner', multerSettings(bannerSettings)))
   async createBanner(
@@ -205,11 +290,20 @@ export class UserController {
   }
 
   @ApiOperation({
-    description: 'Update the banner for a user',
+    description: 'Updates the banner for a user.',
     summary: 'Update a banner',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'The banner to be used',
+    type: BannerUploadDto
+  })
+  @ApiOkResponse({ type: User })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @Patch(':username/banner')
   @UseInterceptors(FileInterceptor('banner', multerSettings(bannerSettings)))
   updateBanner(
@@ -221,9 +315,13 @@ export class UserController {
   }
 
   @ApiOperation({
-    description: 'Remove the banner for a user',
+    description: 'Removes the banner for a user.',
     summary: 'Delete a banner',
   })
+  @ApiOkResponse({ type: DeleteSuccess })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':username/banner')

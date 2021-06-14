@@ -70,7 +70,7 @@ export class LangService {
       .leftJoinAndSelect('permissions.user', 'user')
       .where('lang.id = :id', { id: id.toLowerCase() })
       .getOne()
-    if (!lang) throw new NotFoundException()
+    if (!lang) throw new NotFoundException(`No language was found with id "${id}"`)
     return lang
   }
 
@@ -89,7 +89,8 @@ export class LangService {
   }
 
   async remove(id: string) {
-    this.langRepository.delete({ id })
+    await this.langRepository.delete({ id })
+    return { success: true }
   }
 
   async createFlag(lang: Lang, file: S3File) {

@@ -69,9 +69,6 @@ describe('LangPermissionsController (e2e)', () => {
       .set('Authorization', 'Bearer ' + accessTokenAaa)
       .expect(200))
 
-  it(`${baseTestName} (POST, 405)`, () =>
-    server.post(base).send({ changeWords: true }).expect(405))
-
   it(`${userTestName} (GET, 401)`, () => server.get(aaaPermissions).expect(401))
 
   it(`${userTestName} (GET, 403)`, () =>

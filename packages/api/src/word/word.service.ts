@@ -53,7 +53,8 @@ export class WordService {
     const partOfSpeech = getPartOfSpeech(createWordDto.partOfSpeech, lang)
     if (!partOfSpeech) {
       throw new BadRequestException(
-        'No part of speech with that abbreviation was found for this language.',
+        'No part of speech with that abbreviation was found for this ' +
+        'language.',
       )
     }
     let wordClasses = []
@@ -64,6 +65,7 @@ export class WordService {
       ...createWordDto,
       lang,
       creator,
+      lastUpdatedBy: creator,
       partOfSpeech,
       wordClasses,
     })
@@ -77,6 +79,7 @@ export class WordService {
       .leftJoinAndSelect('word.partOfSpeech', 'partOfSpeech')
       .leftJoinAndSelect('word.wordClasses', 'wordClasses')
       .leftJoinAndSelect('word.creator', 'creator')
+      .leftJoinAndSelect('word.lastUpdatedBy', 'lastUpdatedBy')
       .where('lang.id = :langId', { langId })
     return paginator(Word, qb, 'internal_id', limit, cursor)
   }
@@ -88,6 +91,7 @@ export class WordService {
       .leftJoinAndSelect('word.creator', 'creator')
       .leftJoinAndSelect('word.partOfSpeech', 'partOfSpeech')
       .leftJoinAndSelect('word.wordClasses', 'wordClasses')
+      .leftJoinAndSelect('word.lastUpdatedBy', 'lastUpdatedBy')
       .where('word.word = :word', { word })
       .andWhere('lang.id = :langId', { langId })
       .getMany()
@@ -109,6 +113,7 @@ export class WordService {
 
   async update(
     lang: Lang,
+    updater: User,
     word: string,
     num: number,
     updateWordDto: UpdateWordDto,
@@ -120,7 +125,8 @@ export class WordService {
     }
     if (!partOfSpeech) {
       throw new BadRequestException(
-        'No part of speech with that abbreviation was found for this language.',
+        'No part of speech with that abbreviation was found for this ' +
+        'language.',
       )
     }
 
@@ -128,10 +134,9 @@ export class WordService {
     if (updateWordDto.wordClasses) {
       wordClasses = getWordClasses(updateWordDto.wordClasses, lang)
     }
-
     await this.wordRepository.update(
       { internal_id: fullWord.internal_id },
-      { ...updateWordDto, partOfSpeech, wordClasses },
+      { ...updateWordDto, partOfSpeech, wordClasses, lastUpdatedBy: updater },
     )
     return this.findOneByNumber(
       lang.id,

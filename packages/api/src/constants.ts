@@ -5,6 +5,11 @@ config()
 // port
 export const PORT = Number(process.env.PORT)
 
+// redis settings
+export const ENABLE_REDIS = Boolean(process.env.ENABLE_REDIS)
+export const REDIS_PORT = Number(process.env.REDIS_PORT)
+export const REDIS_HOST = String(process.env.REDIS_HOST)
+
 // database settings
 export const DEFAULT_PAGE_SIZE = Number(process.env.DEFAULT_PAGE_SIZE)
 export const MAX_PAGE_SIZE = Number(process.env.MAX_PAGE_SIZE)

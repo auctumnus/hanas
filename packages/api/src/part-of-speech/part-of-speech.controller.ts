@@ -18,7 +18,10 @@ import { Request } from 'express'
 import { getPermission } from '../auth/checkUser'
 import { LangPermissions } from '../lang-permissions/entities/lang-permissions.entity'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
+import {PartOfSpeech} from './entities/part-of-speech.entity'
+import {BadRequestError, ForbiddenError, NotFoundError, UnauthorizedError} from 'src/errors'
+import {DeleteSuccess} from 'src/deleteSuccess'
 
 @ApiTags('Parts of Speech')
 @Controller()
@@ -36,6 +39,16 @@ export class PartOfSpeechController {
     }
   }
 
+  @ApiOperation({
+    description: 'Creates a part of speech.',
+    summary: 'Create a part of speech'
+  })
+  @ApiBearerAuth()
+  @ApiCreatedResponse({type: PartOfSpeech})
+  @ApiNotFoundResponse({type: NotFoundError})
+  @ApiForbiddenResponse({type: ForbiddenError})
+  @ApiBadRequestResponse({type: BadRequestError})
+  @ApiUnauthorizedResponse({type: UnauthorizedError})
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(
@@ -48,11 +61,23 @@ export class PartOfSpeechController {
     return this.partOfSpeechService.create(lang, createPartOfSpeechDto)
   }
 
+  @ApiOperation({
+    description: 'Gets all of a language\'s parts of speech.',
+    summary: 'Get all parts of speech'
+  })
+  @ApiOkResponse({type: [PartOfSpeech]})
+  @ApiNotFoundResponse({ type: NotFoundError})
   @Get()
   async findAll(@Param('lang_id') langId: string) {
     return this.partOfSpeechService.findAll(langId)
   }
 
+  @ApiOperation({
+    description: 'Get a specific part of speech from a language.',
+    summary: 'Get a part of speech'
+  })
+  @ApiOkResponse({type: PartOfSpeech})
+  @ApiNotFoundResponse({ type: NotFoundError})
   @Get(':abbreviation')
   async findOne(
     @Param('abbreviation') abbreviation: string,
@@ -61,6 +86,16 @@ export class PartOfSpeechController {
     return this.partOfSpeechService.findOne(langId, abbreviation)
   }
 
+  @ApiOperation({
+    description: 'Updates a part of speech.',
+    summary: 'Update a part of speech'
+  })
+  @ApiBearerAuth()
+  @ApiOkResponse({type: PartOfSpeech})
+  @ApiNotFoundResponse({type: NotFoundError})
+  @ApiForbiddenResponse({type: ForbiddenError})
+  @ApiBadRequestResponse({type: BadRequestError})
+  @ApiUnauthorizedResponse({type: UnauthorizedError})
   @UseGuards(JwtAuthGuard)
   @Patch(':abbreviation')
   async update(
@@ -78,6 +113,16 @@ export class PartOfSpeechController {
     )
   }
 
+  @ApiOperation({
+    description: 'Deletes a part of speech.',
+    summary: 'Delete a part of speech'
+  })
+  @ApiBearerAuth()
+  @ApiOkResponse({type: DeleteSuccess})
+  @ApiNotFoundResponse({type: NotFoundError})
+  @ApiForbiddenResponse({type: ForbiddenError})
+  @ApiBadRequestResponse({type: BadRequestError})
+  @ApiUnauthorizedResponse({type: UnauthorizedError})
   @UseGuards(JwtAuthGuard)
   @Delete(':abbreviation')
   async remove(

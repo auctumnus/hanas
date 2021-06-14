@@ -12,7 +12,7 @@ export interface HanasRequest extends Request {
 
 export const checkUser = (req: Request, user: User) => {
   if (!req.user) {
-    throw new UnauthorizedException()
+    throw new UnauthorizedException('No authentication provided.')
   }
   if ((req as HanasRequest).user.internal_id !== user.internal_id) {
     throw new ForbiddenException(

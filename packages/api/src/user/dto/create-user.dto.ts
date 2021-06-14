@@ -21,7 +21,7 @@ export class CreateUserDto {
    * The password to use for the user. I've been informed that fifteen characters
    * may be a bit much, but I figure it's better to be safe than sorry. Max is 64
    * since bcrypt truncates anything afterward anyway.
-   * @example hunter222
+   * @example correcthorsebatterystaple
    */
   @MaxLength(64)
   @MinLength(15)

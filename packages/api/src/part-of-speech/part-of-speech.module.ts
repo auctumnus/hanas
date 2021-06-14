@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 import { PartOfSpeechService } from './part-of-speech.service'
 import { PartOfSpeechController } from './part-of-speech.controller'
 import { TypeOrmModule } from '@nestjs/typeorm'

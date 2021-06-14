@@ -157,5 +157,6 @@ export class LangPermissionsService {
       )
     }
     await this.permsRepository.delete({ internal_id: permissions.internal_id })
+    return { success: true }
   }
 }

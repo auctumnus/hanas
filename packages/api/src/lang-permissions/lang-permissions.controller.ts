@@ -20,7 +20,10 @@ import { LangService } from '../lang/lang.service'
 import { UserService } from '../user/user.service'
 import { HanasRequest } from '../auth/checkUser'
 import { Lang } from '../lang/entities/lang.entity'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
+import {ForbiddenError, NotFoundError, UnauthorizedError} from 'src/errors'
+import {LangPermissions} from './entities/lang-permissions.entity'
+import {DeleteSuccess} from 'src/deleteSuccess'
 
 @ApiTags('Language Permissions')
 @Controller()
@@ -42,13 +45,15 @@ export class LangPermissionsController {
     }
   }
 
-  @Post()
-  methodNotAllowed() {
-    throw new MethodNotAllowedException(
-      'Use /lang/:id/permissions/:username instead.',
-    )
-  }
-
+  @ApiOperation({
+    description: 'Grants permissions to a user.',
+    summary: 'Create permissions'
+  })
+  @ApiCreatedResponse({ type: LangPermissions })
+  @ApiNotFoundResponse({ type: NotFoundError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post(':username')
   async create(
@@ -69,6 +74,14 @@ export class LangPermissionsController {
     )
   }
 
+  @ApiOperation({
+    description: 'Finds all permissions for a language.',
+    summary: 'Get all permissions'
+  })
+  @ApiNotFoundResponse({ type: NotFoundError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Param('lang_id') langId: string, @Req() req: Request) {
@@ -78,6 +91,15 @@ export class LangPermissionsController {
     return this.langPermissionsService.findAll(lang)
   }
 
+  @ApiOperation({
+    description: 'Gets a user\'s permissions.',
+    summary: 'Get permissions'
+  })
+  @ApiOkResponse({ type: LangPermissions })
+  @ApiNotFoundResponse({ type: NotFoundError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get(':username')
   async findOne(
@@ -93,6 +115,15 @@ export class LangPermissionsController {
     return this.langPermissionsService.findOne(lang, username)
   }
 
+  @ApiOperation({
+    description: 'Updates a user\'s permissions.',
+    summary: 'Update permissions'
+  })
+  @ApiOkResponse({ type: LangPermissions })
+  @ApiNotFoundResponse({ type: NotFoundError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Patch(':username')
   async update(
@@ -112,6 +143,15 @@ export class LangPermissionsController {
     )
   }
 
+  @ApiOperation({
+    description: 'Revoke all permissions from a user.',
+    summary: 'Remove permissions'
+  })
+  @ApiOkResponse({ type: DeleteSuccess })
+  @ApiNotFoundResponse({ type: NotFoundError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':username')
   async remove(

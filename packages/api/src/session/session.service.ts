@@ -106,7 +106,7 @@ export class SessionService {
     // ensure token matches session token hash
     const { hash } = session
     if (!(await bcrypt.compare(refreshToken, hash))) {
-      throw new UnauthorizedException('Invalid token.')
+      throw new BadRequestException('Invalid token.')
     }
 
     // send a new access token to the user

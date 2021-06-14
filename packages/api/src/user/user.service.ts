@@ -67,7 +67,7 @@ export class UserService {
       .leftJoinAndSelect('user.langPermissions', 'permissions')
       .leftJoinAndSelect('permissions.lang', 'lang')
       .getOne()
-    if (!user) throw new NotFoundException()
+    if (!user) throw new NotFoundException(`No user with the username "${username}" was found.`)
     return user
   }
 
@@ -107,10 +107,13 @@ export class UserService {
   async remove(username: string) {
     const user = await this.findOne(username)
     if (user) {
-      user.ownedLangs.forEach(({ id }) => this.langService.remove(id))
-      this.userRepository.delete({ username })
-      this.sessionService.removeByUser(user)
+      await Promise.all([
+        user.ownedLangs.forEach(({ id }) => this.langService.remove(id)),
+        this.userRepository.delete({ username }),
+        this.sessionService.removeByUser(user)
+      ])
     }
+    return { success: true }
   }
 
   async createProfilePicture(user: User, file: S3File) {
@@ -123,13 +126,14 @@ export class UserService {
     return this.findOne(username)
   }
 
-  removeProfilePicture(user: User) {
+  async removeProfilePicture(user: User) {
     if (!user.profile_picture) {
       throw new NotFoundException('No profile picture for this user exists.')
     }
     deleteObject(user.profile_picture)
     const { username } = user
-    return this.userRepository.update({ username }, { profile_picture: '' })
+    await this.userRepository.update({ username }, { profile_picture: '' })
+    return { success: true }
   }
 
   async createBanner(user: User, file: S3File) {
@@ -142,12 +146,13 @@ export class UserService {
     return this.findOne(username)
   }
 
-  removeBanner(user: User) {
+  async removeBanner(user: User) {
     if (!user.banner) {
       throw new NotFoundException('No banner for this user exists.')
     }
     deleteObject(user.banner)
     const { username } = user
-    return this.userRepository.update({ username }, { banner: '' })
+    await this.userRepository.update({ username }, { banner: '' })
+    return { success: true }
   }
 }

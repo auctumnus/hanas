@@ -15,6 +15,8 @@ export class classTransformerInterceptor<T> implements NestInterceptor<T, T> {
       map((data) => {
         if (data instanceof Error) {
           return data
+        } else if (data === undefined) {
+          return { success: true }
         }
         return classToClass(data)
       }),
