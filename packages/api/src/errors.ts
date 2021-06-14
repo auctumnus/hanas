@@ -1,4 +1,4 @@
-import {HttpStatus} from '@nestjs/common'
+import { HttpStatus } from '@nestjs/common'
 import { ApiProperty, ApiResponseOptions } from '@nestjs/swagger'
 
 export const makeErrors = {}
@@ -10,7 +10,7 @@ export class ApiError {
    */
   @ApiProperty({
     description: 'The HTTP status code of the error.',
-    example: 400
+    example: 400,
   })
   statusCode: number
 
@@ -19,12 +19,9 @@ export class ApiError {
    * @example An error of some sort occurred.
    */
   @ApiProperty({
-    oneOf: [
-      { type: 'string' },
-      { type: 'array', items: { type: 'string' } }
-    ],
+    oneOf: [{ type: 'string' }, { type: 'array', items: { type: 'string' } }],
     description: 'The message(s) describing the error, or just the HTTP error.',
-    example: 'An error of some sort occurred.'
+    example: 'An error of some sort occurred.',
   })
   message: string | string[]
 
@@ -33,99 +30,96 @@ export class ApiError {
    * @example Bad Request
    */
   @ApiProperty({
-    description: 'The name of the HTTP error, if `message` has more specific information.',
-    example: 'Bad Request'
+    description:
+      'The name of the HTTP error, if `message` has more specific information.',
+    example: 'Bad Request',
   })
   error?: string
 }
 
 export class BadRequestError extends ApiError {
   @ApiProperty({
-    example: 400
+    example: 400,
   })
   statusCode: number
 
   @ApiProperty({
-    example: [
-      'description must be shorter than 5000 characters'
-    ]
+    example: ['description must be shorter than 5000 characters'],
   })
   message: string | string[]
 
   @ApiProperty({
-    example: 'Bad Request'
+    example: 'Bad Request',
   })
   error?: string
 }
 
 export class UnauthorizedError extends ApiError {
   @ApiProperty({
-    example: 401
+    example: 401,
   })
   statusCode: number
 
   @ApiProperty({
-    example: 'No suitable authentication was provided.'
+    example: 'No suitable authentication was provided.',
   })
   message: string | string[]
 
   @ApiProperty({
-    example: 'Unauthorized'
+    example: 'Unauthorized',
   })
   error?: string
 }
 
 export class ForbiddenError extends ApiError {
   @ApiProperty({
-    example: 403
+    example: 403,
   })
   statusCode: number
 
   @ApiProperty({
-    example: 'User does not have permission to change this resource.'
+    example: 'User does not have permission to change this resource.',
   })
   message: string | string[]
 
   @ApiProperty({
-    example: 'Forbidden'
+    example: 'Forbidden',
   })
   error?: string
 }
 
 export class NotFoundError extends ApiError {
   @ApiProperty({
-    example: 404
+    example: 404,
   })
   statusCode: number
 
   @ApiProperty({
-    example: 'No user by this username was found.'
+    example: 'No user by this username was found.',
   })
   message: string | string[]
 
   @ApiProperty({
-    example: 'Not Found'
+    example: 'Not Found',
   })
   error?: string
 }
 
 export class ConflictError extends ApiError {
   @ApiProperty({
-    example: 409
+    example: 409,
   })
   statusCode: number
 
   @ApiProperty({
-    example: 'ID already in use'
+    example: 'ID already in use',
   })
   message: string | string[]
 
   @ApiProperty({
-    example: 'Conflict'
+    example: 'Conflict',
   })
   error?: string
 }
 
 export const apiError: ApiResponseOptions = { type: ApiError }
-
-

@@ -40,10 +40,17 @@ import {
   ApiProperty,
   ApiTags,
   ApiUnauthorizedResponse,
+  PartialType,
 } from '@nestjs/swagger'
 import { User } from './entities/user.entity'
-import {BadRequestError, ConflictError, ForbiddenError, NotFoundError, UnauthorizedError} from '../errors'
-import { DeleteSuccess } from 'src/deleteSuccess'
+import {
+  BadRequestError,
+  ConflictError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+} from '../errors'
+import { DeleteSuccess } from '../deleteSuccess'
 
 class PfpUploadDto {
   @ApiProperty({ type: 'string', format: 'binary' })
@@ -56,14 +63,17 @@ class BannerUploadDto {
 }
 
 class Pfp {
-  @ApiProperty({ 
-    example: 'https://my-bucket.s3.us-west-2.amazonaws.com/YhEcI1URMGimpoyAav9Zp' })
+  @ApiProperty({
+    example:
+      'https://my-bucket.s3.us-west-2.amazonaws.com/YhEcI1URMGimpoyAav9Zp',
+  })
   profile_picture: string
 }
 
 class Banner {
   @ApiProperty({
-    example: 'https://my-bucket.s3.us-west-2.amazonaws.com/2F-oOC5ejzZuCZdp01OWS'
+    example:
+      'https://my-bucket.s3.us-west-2.amazonaws.com/2F-oOC5ejzZuCZdp01OWS',
   })
   banner: string
 }
@@ -77,6 +87,8 @@ const bannerSettings = {
   maxWidth: BANNER_MAX_WIDTH,
   maxHeight: BANNER_MAX_HEIGHT,
 }
+
+class UpdateUserSwaggerDto extends PartialType(CreateUserDto) {}
 
 @ApiTags('Users')
 @Controller()
@@ -118,6 +130,7 @@ export class UserController {
     return this.userService.findOne(username)
   }
 
+  @ApiBody({ type: UpdateUserSwaggerDto })
   @ApiOkResponse({ type: User })
   @ApiBadRequestResponse({ type: BadRequestError })
   @ApiUnauthorizedResponse({ type: UnauthorizedError })
@@ -180,7 +193,7 @@ export class UserController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'The profile picture to be used',
-    type: PfpUploadDto
+    type: PfpUploadDto,
   })
   @Post(':username/profile-picture')
   @ApiUnauthorizedResponse({ type: UnauthorizedError })
@@ -209,7 +222,7 @@ export class UserController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'The profile picture to be used',
-    type: PfpUploadDto
+    type: PfpUploadDto,
   })
   @ApiUnauthorizedResponse({ type: UnauthorizedError })
   @ApiForbiddenResponse({ type: ForbiddenError })
@@ -268,10 +281,10 @@ export class UserController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'The banner to be used',
-    type: BannerUploadDto
+    type: BannerUploadDto,
   })
   @ApiCreatedResponse({
-    type: User
+    type: User,
   })
   @ApiUnauthorizedResponse({ type: UnauthorizedError })
   @ApiForbiddenResponse({ type: ForbiddenError })
@@ -298,7 +311,7 @@ export class UserController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'The banner to be used',
-    type: BannerUploadDto
+    type: BannerUploadDto,
   })
   @ApiOkResponse({ type: User })
   @ApiUnauthorizedResponse({ type: UnauthorizedError })

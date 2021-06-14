@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { Exclude } from 'class-transformer'
-import {ApiHideProperty, ApiProperty} from '@nestjs/swagger'
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger'
 
 @Entity()
 export class PartOfSpeech {

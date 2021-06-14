@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { Lang } from '../../lang/entities/lang.entity'
-import {ApiHideProperty, ApiProperty} from '@nestjs/swagger'
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger'
 
 @Entity()
 export class LangPermissions {

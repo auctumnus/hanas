@@ -9,7 +9,6 @@ import {
   UseGuards,
   Req,
   ForbiddenException,
-  MethodNotAllowedException,
 } from '@nestjs/common'
 import { Request } from 'express'
 import { LangPermissionsService } from './lang-permissions.service'
@@ -20,10 +19,25 @@ import { LangService } from '../lang/lang.service'
 import { UserService } from '../user/user.service'
 import { HanasRequest } from '../auth/checkUser'
 import { Lang } from '../lang/entities/lang.entity'
-import { ApiBearerAuth, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
-import {ForbiddenError, NotFoundError, UnauthorizedError} from 'src/errors'
-import {LangPermissions} from './entities/lang-permissions.entity'
-import {DeleteSuccess} from 'src/deleteSuccess'
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+  PartialType,
+} from '@nestjs/swagger'
+import { ForbiddenError, NotFoundError, UnauthorizedError } from '../errors'
+import { LangPermissions } from './entities/lang-permissions.entity'
+import { DeleteSuccess } from '../deleteSuccess'
+
+class UpdateLangPermissionSwaggerDto extends PartialType(
+  CreateLangPermissionDto,
+) {}
 
 @ApiTags('Language Permissions')
 @Controller()
@@ -47,7 +61,7 @@ export class LangPermissionsController {
 
   @ApiOperation({
     description: 'Grants permissions to a user.',
-    summary: 'Create permissions'
+    summary: 'Create permissions',
   })
   @ApiCreatedResponse({ type: LangPermissions })
   @ApiNotFoundResponse({ type: NotFoundError })
@@ -76,7 +90,7 @@ export class LangPermissionsController {
 
   @ApiOperation({
     description: 'Finds all permissions for a language.',
-    summary: 'Get all permissions'
+    summary: 'Get all permissions',
   })
   @ApiNotFoundResponse({ type: NotFoundError })
   @ApiForbiddenResponse({ type: ForbiddenError })
@@ -92,8 +106,8 @@ export class LangPermissionsController {
   }
 
   @ApiOperation({
-    description: 'Gets a user\'s permissions.',
-    summary: 'Get permissions'
+    description: "Gets a user's permissions.",
+    summary: 'Get permissions',
   })
   @ApiOkResponse({ type: LangPermissions })
   @ApiNotFoundResponse({ type: NotFoundError })
@@ -116,9 +130,10 @@ export class LangPermissionsController {
   }
 
   @ApiOperation({
-    description: 'Updates a user\'s permissions.',
-    summary: 'Update permissions'
+    description: "Updates a user's permissions.",
+    summary: 'Update permissions',
   })
+  @ApiBody({ type: UpdateLangPermissionSwaggerDto })
   @ApiOkResponse({ type: LangPermissions })
   @ApiNotFoundResponse({ type: NotFoundError })
   @ApiForbiddenResponse({ type: ForbiddenError })
@@ -145,7 +160,7 @@ export class LangPermissionsController {
 
   @ApiOperation({
     description: 'Revoke all permissions from a user.',
-    summary: 'Remove permissions'
+    summary: 'Remove permissions',
   })
   @ApiOkResponse({ type: DeleteSuccess })
   @ApiNotFoundResponse({ type: NotFoundError })

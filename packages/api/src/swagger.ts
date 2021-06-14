@@ -7,7 +7,7 @@ import {
 import { ApiError } from './errors'
 import { Paginated } from './paginator'
 import { DeleteSuccess } from './deleteSuccess'
-import {Session} from './session/entities/session.entity'
+import { Session } from './session/entities/session.entity'
 
 export const getDocument = (app: INestApplication) => {
   const config = new DocumentBuilder()

@@ -18,45 +18,63 @@ import { RefreshSessionDto } from './dto/refresh-session.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { checkUser } from '../auth/checkUser'
 import { ApiPaginated, getLimitAndCursor, pagedSchema } from '../paginator'
-import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiProperty, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
-import {BadRequestError, ForbiddenError, NotFoundError, UnauthorizedError} from 'src/errors'
-import {User} from 'src/user/entities/user.entity'
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiProperty,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger'
+import {
+  BadRequestError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+} from '../errors'
+import { User } from '../user/entities/user.entity'
 import { Session } from './entities/session.entity'
-import { DeleteSuccess } from 'src/deleteSuccess'
+import { DeleteSuccess } from '../deleteSuccess'
 
 class SessionCreated {
   /**
    * The user who is logged in through this session.
    */
   @ApiProperty({
-    description: 'The user who is logged in through this session.'
+    description: 'The user who is logged in through this session.',
   })
   user: User
 
   /**
    * The access token to use for authenticating.
-   * @example 
+   * @example
    */
   @ApiProperty({
-    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
-             'eyJ1c2VybmFtZSI6ImFsaWNlIiwic3ViIjoxLCJpYXQiOjE2MjMyNzIyNjUsImV4cCI6MTYyMzI3MjU2NX0.' +
-             'NrJ_JY28CleFi_9BrWJ07-aMk9G12kWypQWnCJrUO1Y',
-    description: 'The access token to use for authentication.'
+    example:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+      'eyJ1c2VybmFtZSI6ImFsaWNlIiwic3ViIjoxLCJpYXQiOjE2MjMyNzIyNjUsImV4cCI6MTYyMzI3MjU2NX0.' +
+      'NrJ_JY28CleFi_9BrWJ07-aMk9G12kWypQWnCJrUO1Y',
+    description: 'The access token to use for authentication.',
   })
   accessToken: string
 
   @ApiProperty({
-    description: 'Session information.'
+    description: 'Session information.',
   })
   refreshToken: RefreshSessionDto
 }
 
 class RefreshSuccess {
   @ApiProperty({
-    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' + 
-    'eyJ1c2VybmFtZSI6ImFsaWNlIiwic3ViIjoyLCJpYXQiOjE2MjMyNzYyNTIsImV4cCI6MTYyMzI3NjU1Mn0.' + 
-    'dTg58lku-kYMKADXQzena_FJZpDLK2icQ_oN22HO76c',
-    description: 'The new access token.'
+    example:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+      'eyJ1c2VybmFtZSI6ImFsaWNlIiwic3ViIjoyLCJpYXQiOjE2MjMyNzYyNTIsImV4cCI6MTYyMzI3NjU1Mn0.' +
+      'dTg58lku-kYMKADXQzena_FJZpDLK2icQ_oN22HO76c',
+    description: 'The new access token.',
   })
   accessToken: string
 }
@@ -78,10 +96,10 @@ export class SessionController {
     private sessionService: SessionService,
     private userService: UserService,
   ) {}
-  
+
   @ApiOperation({
     description: 'Creates a session for a user.',
-    summary: 'Create a session'
+    summary: 'Create a session',
   })
   @ApiCreatedResponse({ type: SessionCreated })
   @ApiNotFoundResponse({ type: NotFoundError })
@@ -102,9 +120,9 @@ export class SessionController {
 
   @ApiOperation({
     description: 'Refresh a session, getting a new access token to use.',
-    summary: 'Refresh a session'
+    summary: 'Refresh a session',
   })
-  @ApiCreatedResponse({ type: RefreshSuccess})
+  @ApiCreatedResponse({ type: RefreshSuccess })
   @ApiNotFoundResponse({ type: NotFoundError })
   @ApiUnauthorizedResponse({ type: RefreshExpired })
   @ApiBadRequestResponse({ type: RefreshRancid })
@@ -114,11 +132,12 @@ export class SessionController {
   }
 
   @ApiOperation({
-    description: 'Gets all sessions by a user, with pagination. ' +
-                 'Note that expired sessions will not be removed - ' +
-                 'you can check the refresh JWT to see which ones are ' +
-                 'actually active.',
-    summary: 'Get all sessions'
+    description:
+      'Gets all sessions by a user, with pagination. ' +
+      'Note that expired sessions will not be removed - ' +
+      'you can check the refresh JWT to see which ones are ' +
+      'actually active.',
+    summary: 'Get all sessions',
   })
   @ApiOkResponse(pagedSchema(Session))
   @ApiNotFoundResponse({ type: NotFoundError })
@@ -136,9 +155,10 @@ export class SessionController {
   }
 
   @ApiOperation({
-    description: 'Delete a session. Note that if you delete a session before the refresh token is expired,' +
-                 'the refresh token will still be valid.',
-    summary: 'Delete a session'
+    description:
+      'Delete a session. Note that if you delete a session before the refresh token is expired,' +
+      'the refresh token will still be valid.',
+    summary: 'Delete a session',
   })
   @ApiOkResponse({ type: DeleteSuccess })
   @ApiNotFoundResponse({ type: NotFoundError })

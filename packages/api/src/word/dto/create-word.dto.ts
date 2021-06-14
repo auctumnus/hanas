@@ -1,4 +1,4 @@
-import {ApiProperty} from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger'
 import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class CreateWordDto {
@@ -28,7 +28,7 @@ export class CreateWordDto {
   /**
    * Any notes about the word, e.g. usage or such.
    */
-  @ApiProperty({ example: 'when the impostor is sus or something'})
+  @ApiProperty({ example: 'when the impostor is sus or something' })
   @IsOptional()
   @IsString()
   notes: string
@@ -43,7 +43,7 @@ export class CreateWordDto {
   /**
    * The word classes for this word, specified by their abbreviations.
    */
-  @ApiProperty({ type: [String], example: [ 'str' ] })
+  @ApiProperty({ type: [String], example: ['str'] })
   @IsOptional()
   @IsArray()
   @IsString({ each: true })

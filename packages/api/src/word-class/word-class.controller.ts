@@ -18,10 +18,29 @@ import { Request } from 'express'
 import { getPermission } from '../auth/checkUser'
 import { LangPermissions } from '../lang-permissions/entities/lang-permissions.entity'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
-import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
-import {WordClass} from './entities/word-class.entity'
-import {BadRequestError, ForbiddenError, NotFoundError, UnauthorizedError} from 'src/errors'
-import {DeleteSuccess} from 'src/deleteSuccess'
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger'
+import { WordClass } from './entities/word-class.entity'
+import {
+  BadRequestError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+} from '../errors'
+import { DeleteSuccess } from '../deleteSuccess'
+import { PartialType } from '@nestjs/mapped-types'
+
+class UpdateWordClassSwaggerDto extends PartialType(UpdateWordClassDto) {}
 
 @ApiTags('Word classes')
 @Controller()
@@ -40,13 +59,13 @@ export class WordClassController {
   }
   @ApiOperation({
     description: 'Creates a word class.',
-    summary: 'Create a word class'
+    summary: 'Create a word class',
   })
-  @ApiCreatedResponse({type: WordClass})
-  @ApiNotFoundResponse({type: NotFoundError})
-  @ApiForbiddenResponse({type: ForbiddenError})
-  @ApiBadRequestResponse({type: BadRequestError})
-  @ApiUnauthorizedResponse({type: UnauthorizedError})
+  @ApiCreatedResponse({ type: WordClass })
+  @ApiNotFoundResponse({ type: NotFoundError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiBadRequestResponse({ type: BadRequestError })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -62,10 +81,10 @@ export class WordClassController {
 
   @ApiOperation({
     description: 'Gets all the word classes in a language.',
-    summary: 'Get all word classes'
+    summary: 'Get all word classes',
   })
-  @ApiOkResponse({type: [WordClass]})
-  @ApiNotFoundResponse({type: NotFoundError})
+  @ApiOkResponse({ type: [WordClass] })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @Get()
   async findAll(@Param('lang_id') langId: string) {
     return this.wordClassService.findAll(langId)
@@ -73,10 +92,10 @@ export class WordClassController {
 
   @ApiOperation({
     description: 'Gets a specific word class by its abbreviation.',
-    summary: 'Get a word class'
+    summary: 'Get a word class',
   })
-  @ApiOkResponse({type: WordClass})
-  @ApiNotFoundResponse({type: NotFoundError})
+  @ApiOkResponse({ type: WordClass })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @Get(':abbreviation')
   async findOne(
     @Param('abbreviation') abbreviation: string,
@@ -87,12 +106,13 @@ export class WordClassController {
 
   @ApiOperation({
     description: 'Updates a word class.',
-    summary: 'Update a word class'
+    summary: 'Update a word class',
   })
-  @ApiOkResponse({type: WordClass})
-  @ApiNotFoundResponse({type: NotFoundError})
-  @ApiForbiddenResponse({type: ForbiddenError})
-  @ApiUnauthorizedResponse({type: UnauthorizedError})
+  @ApiBody({ type: UpdateWordClassSwaggerDto })
+  @ApiOkResponse({ type: WordClass })
+  @ApiNotFoundResponse({ type: NotFoundError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Patch(':abbreviation')
@@ -109,12 +129,12 @@ export class WordClassController {
 
   @ApiOperation({
     description: 'Deletes a word class.',
-    summary: 'Delete a word class'
+    summary: 'Delete a word class',
   })
-  @ApiOkResponse({type: DeleteSuccess})
-  @ApiNotFoundResponse({type: NotFoundError})
-  @ApiForbiddenResponse({type: ForbiddenError})
-  @ApiUnauthorizedResponse({type: UnauthorizedError})
+  @ApiOkResponse({ type: DeleteSuccess })
+  @ApiNotFoundResponse({ type: NotFoundError })
+  @ApiForbiddenResponse({ type: ForbiddenError })
+  @ApiUnauthorizedResponse({ type: UnauthorizedError })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':abbreviation')

@@ -70,7 +70,8 @@ export class LangService {
       .leftJoinAndSelect('permissions.user', 'user')
       .where('lang.id = :id', { id: id.toLowerCase() })
       .getOne()
-    if (!lang) throw new NotFoundException(`No language was found with id "${id}"`)
+    if (!lang)
+      throw new NotFoundException(`No language was found with id "${id}"`)
     return lang
   }
 

@@ -39,22 +39,29 @@ export class Paginated<E> {
   data: E[]
 }
 
-export const ApiPaginated = 
-  () => (target: object, key: string | symbol, descriptor: TypedPropertyDescriptor<any>) => {
+export const ApiPaginated =
+  () =>
+  (
+    target: object,
+    key: string | symbol,
+    descriptor: TypedPropertyDescriptor<any>,
+  ) => {
     ApiQuery({
-      name: 'limit', 
+      name: 'limit',
       type: Number,
-      description: `Number of records to return, up to ${MAX_PAGE_SIZE}. ` + 
-                   `Default is ${DEFAULT_PAGE_SIZE}.`,
-      required: false
+      description:
+        `Number of records to return, up to ${MAX_PAGE_SIZE}. ` +
+        `Default is ${DEFAULT_PAGE_SIZE}.`,
+      required: false,
     })(target, key, descriptor)
     ApiQuery({
       name: 'cursor',
       type: String,
-      description: 'The cursor from which to search. Paginated requests will ' +
-                   'return a beforeCursor and afterCursor, to allow you to move ' +
-                   'forward and backward in the pages.',
-      required: false
+      description:
+        'The cursor from which to search. Paginated requests will ' +
+        'return a beforeCursor and afterCursor, to allow you to move ' +
+        'forward and backward in the pages.',
+      required: false,
     })(target, key, descriptor)
   }
 

@@ -20,10 +20,29 @@ import { LangService } from '../lang/lang.service'
 import { ApiPaginated, getLimitAndCursor, pagedSchema } from '../paginator'
 import { Lang } from '../lang/entities/lang.entity'
 import { UserService } from '../user/user.service'
-import { ApiBadRequestResponse, ApiBearerAuth, ApiConflictResponse, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
-import {BadRequestError, ConflictError, ForbiddenError, NotFoundError, UnauthorizedError} from 'src/errors'
-import {Word} from './entities/word.entity'
-import {DeleteSuccess} from 'src/deleteSuccess'
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiBody,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+  PartialType,
+} from '@nestjs/swagger'
+import {
+  BadRequestError,
+  ConflictError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+} from '../errors'
+import { Word } from './entities/word.entity'
+import { DeleteSuccess } from '../deleteSuccess'
 
 const checkPermission = (req: Request, lang: Lang) => {
   if (!getPermission(req, lang)?.changeWords) {
@@ -32,6 +51,8 @@ const checkPermission = (req: Request, lang: Lang) => {
     )
   }
 }
+
+class UpdateWordSwaggerDto extends PartialType(CreateWordDto) {}
 
 @ApiTags('Words')
 @Controller()
@@ -44,7 +65,7 @@ export class WordController {
 
   @ApiOperation({
     description: 'Creates a word.',
-    summary: 'Create a word'
+    summary: 'Create a word',
   })
   @ApiCreatedResponse({ type: Lang })
   @ApiUnauthorizedResponse({ type: UnauthorizedError })
@@ -68,7 +89,7 @@ export class WordController {
 
   @ApiOperation({
     description: 'Finds all words in a language.',
-    summary: 'Get all words'
+    summary: 'Get all words',
   })
   @ApiNotFoundResponse({ type: NotFoundError })
   @ApiOkResponse(pagedSchema(Word))
@@ -80,13 +101,14 @@ export class WordController {
   }
 
   @ApiOperation({
-    description: 'Finds words by their orthographic representation. You should ' +
-                 'encode any value here to be value-safe; otherwise parts may ' +
-                 'be interpreted as other things than a parameter. Note that' + 
-                 'this will return an array, since multiple words can have the' + 
-                 'same representation / pronunciation. Use the :word/:num ' +
-                 'endpoint to get one specific word.',
-    summary: 'Get words'
+    description:
+      'Finds words by their orthographic representation. You should ' +
+      'encode any value here to be value-safe; otherwise parts may ' +
+      'be interpreted as other things than a parameter. Note that' +
+      'this will return an array, since multiple words can have the' +
+      'same representation / pronunciation. Use the :word/:num ' +
+      'endpoint to get one specific word.',
+    summary: 'Get words',
   })
   @ApiOkResponse({ type: [Word] })
   @ApiNotFoundResponse({ type: NotFoundError })
@@ -96,12 +118,13 @@ export class WordController {
   }
 
   @ApiOperation({
-    description: 'Finds a word by its orthographic representation and order of ' +
-                 'addition. The index will be the same as its index in the value ' +
-                 'returned by the :word endpoint. Again, ensure this is URL-safe.',
-    summary: 'Get a specific word'
+    description:
+      'Finds a word by its orthographic representation and order of ' +
+      'addition. The index will be the same as its index in the value ' +
+      'returned by the :word endpoint. Again, ensure this is URL-safe.',
+    summary: 'Get a specific word',
   })
-  @ApiOkResponse({type: Word})
+  @ApiOkResponse({ type: Word })
   @ApiNotFoundResponse({ type: NotFoundError })
   @Get(':word/:num')
   findOneByNumber(
@@ -114,8 +137,9 @@ export class WordController {
 
   @ApiOperation({
     description: 'Updates a word.',
-    summary: 'Update a word'
+    summary: 'Update a word',
   })
+  @ApiBody({ type: UpdateWordSwaggerDto })
   @ApiBearerAuth()
   @ApiOkResponse({ type: Word })
   @ApiNotFoundResponse({ type: NotFoundError })
@@ -139,7 +163,7 @@ export class WordController {
 
   @ApiOperation({
     description: 'Deletes a word.',
-    summary: 'Delete a word'
+    summary: 'Delete a word',
   })
   @ApiBearerAuth()
   @ApiOkResponse({ type: DeleteSuccess })

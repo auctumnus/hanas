@@ -14,7 +14,6 @@ import { CreateSessionDto } from './dto/create-session.dto'
 import { Session } from './entities/session.entity'
 import { nanoid } from 'nanoid'
 import { AuthService } from '../auth/auth.service'
-import { UAParser } from 'ua-parser-js'
 import { REFRESH_JWT_SECRET, SALT_ROUNDS } from '../constants'
 import * as bcrypt from 'bcrypt'
 import { classToClass } from 'class-transformer'
@@ -75,7 +74,7 @@ export class SessionService {
   async refresh(refreshSessionDto: RefreshSessionDto) {
     const { id, refreshToken } = refreshSessionDto
     // verify token
-    let decoded
+    let decoded: any
     try {
       decoded = this.jwtService.verify(refreshToken, {
         secret: REFRESH_JWT_SECRET,

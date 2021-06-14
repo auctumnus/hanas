@@ -13,7 +13,7 @@ import {
 } from 'typeorm'
 import { PartOfSpeech } from '../../part-of-speech/entities/part-of-speech.entity'
 import { WordClass } from '../../word-class/entities/word-class.entity'
-import {ApiHideProperty, ApiProperty} from '@nestjs/swagger'
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger'
 
 @Entity()
 export class Word {

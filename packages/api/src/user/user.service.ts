@@ -67,7 +67,10 @@ export class UserService {
       .leftJoinAndSelect('user.langPermissions', 'permissions')
       .leftJoinAndSelect('permissions.lang', 'lang')
       .getOne()
-    if (!user) throw new NotFoundException(`No user with the username "${username}" was found.`)
+    if (!user)
+      throw new NotFoundException(
+        `No user with the username "${username}" was found.`,
+      )
     return user
   }
 
@@ -110,7 +113,7 @@ export class UserService {
       await Promise.all([
         user.ownedLangs.forEach(({ id }) => this.langService.remove(id)),
         this.userRepository.delete({ username }),
-        this.sessionService.removeByUser(user)
+        this.sessionService.removeByUser(user),
       ])
     }
     return { success: true }

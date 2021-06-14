@@ -23,10 +23,31 @@ import { getUserPermissions } from '../lang-permissions/lang-permissions.service
 import { FileInterceptor } from '@nestjs/platform-express'
 import { multerSettings, S3File, validateFile } from '../s3'
 import { ALLOWED_TYPES, FLAG_MAX_HEIGHT, FLAG_MAX_WIDTH } from '../constants'
-import { ApiBadRequestResponse, ApiBearerAuth, ApiBody, ApiConflictResponse, ApiConsumes, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiProperty, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
-import {Lang} from './entities/lang.entity'
-import {BadRequestError, ConflictError, ForbiddenError, NotFoundError, UnauthorizedError} from 'src/errors'
-import {DeleteSuccess} from 'src/deleteSuccess'
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiBody,
+  ApiConflictResponse,
+  ApiConsumes,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiProperty,
+  ApiTags,
+  ApiUnauthorizedResponse,
+  PartialType,
+} from '@nestjs/swagger'
+import { Lang } from './entities/lang.entity'
+import {
+  BadRequestError,
+  ConflictError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+} from '../errors'
+import { DeleteSuccess } from '../deleteSuccess'
 
 const flagSettings = {
   maxWidth: FLAG_MAX_WIDTH,
@@ -35,7 +56,8 @@ const flagSettings = {
 
 class Flag {
   @ApiProperty({
-    example: 'https://my-bucket.s3.us-west-2.amazonaws.com/0UfVPsLpvMaaJMg11o8GR'
+    example:
+      'https://my-bucket.s3.us-west-2.amazonaws.com/0UfVPsLpvMaaJMg11o8GR',
   })
   flag: string
 }
@@ -45,11 +67,13 @@ class FlagUploadDto {
   flag: any
 }
 
+class UpdateLangSwaggerDto extends PartialType(CreateLangDto) {}
+
 @ApiTags('Languages')
 @Controller()
 export class LangController {
   constructor(private readonly langService: LangService) {}
-  
+
   @ApiOperation({
     description: 'Creates a language.',
     summary: 'Create a language',
@@ -69,7 +93,7 @@ export class LangController {
 
   @ApiOperation({
     description: 'Gets all languages, with pagination.',
-    summary: 'Get all languages'
+    summary: 'Get all languages',
   })
   @ApiOkResponse(pagedSchema(Lang))
   @Get()
@@ -80,11 +104,11 @@ export class LangController {
 
   @ApiOperation({
     description: 'Finds a language by its id.',
-    summary: 'Find a language'
+    summary: 'Find a language',
   })
   @ApiPaginated()
   @ApiOkResponse({ type: Lang })
-  @ApiNotFoundResponse({type: NotFoundError })
+  @ApiNotFoundResponse({ type: NotFoundError })
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.langService.findOne(id)
@@ -92,8 +116,9 @@ export class LangController {
 
   @ApiOperation({
     description: 'Updates a language.',
-    summary: 'Update a language'
+    summary: 'Update a language',
   })
+  @ApiBody({ type: UpdateLangSwaggerDto })
   @ApiBadRequestResponse({ type: BadRequestError })
   @ApiUnauthorizedResponse({ type: UnauthorizedError })
   @ApiForbiddenResponse({ type: ForbiddenError })
@@ -122,7 +147,7 @@ export class LangController {
 
   @ApiOperation({
     description: 'Deletes a language forever.',
-    summary: 'Delete a language'
+    summary: 'Delete a language',
   })
   @ApiOkResponse({ type: DeleteSuccess })
   @ApiUnauthorizedResponse({ type: UnauthorizedError })
@@ -145,7 +170,7 @@ export class LangController {
   // flag endpoints
   @ApiOperation({
     description: 'Gets the flag for a language.',
-    summary: 'Get a flag'
+    summary: 'Get a flag',
   })
   @ApiOkResponse({ type: Flag })
   @ApiNotFoundResponse({ type: NotFoundError })
@@ -157,7 +182,7 @@ export class LangController {
 
   @ApiOperation({
     description: 'Adds a flag for a language.',
-    summary: 'Create a flag'
+    summary: 'Create a flag',
   })
   @ApiUnauthorizedResponse({ type: UnauthorizedError })
   @ApiForbiddenResponse({ type: ForbiddenError })
@@ -165,7 +190,7 @@ export class LangController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'The flag to be used',
-    type: FlagUploadDto
+    type: FlagUploadDto,
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -190,7 +215,7 @@ export class LangController {
 
   @ApiOperation({
     description: 'Updates a flag for a language.',
-    summary: 'Update a flag'
+    summary: 'Update a flag',
   })
   @ApiUnauthorizedResponse({ type: UnauthorizedError })
   @ApiForbiddenResponse({ type: ForbiddenError })
@@ -198,7 +223,7 @@ export class LangController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'The flag to be used',
-    type: FlagUploadDto
+    type: FlagUploadDto,
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -214,7 +239,7 @@ export class LangController {
 
   @ApiOperation({
     description: 'Removes a flag from a language.',
-    summary: 'Remove a flag'
+    summary: 'Remove a flag',
   })
   @ApiOkResponse({ type: DeleteSuccess })
   @ApiUnauthorizedResponse({ type: UnauthorizedError })

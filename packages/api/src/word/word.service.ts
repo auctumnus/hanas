@@ -54,7 +54,7 @@ export class WordService {
     if (!partOfSpeech) {
       throw new BadRequestException(
         'No part of speech with that abbreviation was found for this ' +
-        'language.',
+          'language.',
       )
     }
     let wordClasses = []
@@ -126,7 +126,7 @@ export class WordService {
     if (!partOfSpeech) {
       throw new BadRequestException(
         'No part of speech with that abbreviation was found for this ' +
-        'language.',
+          'language.',
       )
     }
 

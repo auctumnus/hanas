@@ -240,7 +240,7 @@ describe('LangController (e2e)', () => {
     return server
       .patch('/lang/aab')
       .set('Authorization', 'Bearer ' + accessToken)
-      .send({ id: 'aaa' })
+      .send({ ...aaa, id: 'aaa' })
       .expect(409)
   })
 

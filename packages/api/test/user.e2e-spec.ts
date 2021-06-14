@@ -1,6 +1,7 @@
 import request from 'supertest'
 import { getRequestUrl, makeTestingApp } from './makeTestingApp'
 import { INestApplication } from '@nestjs/common'
+import { get } from 'http'
 import fetch from 'node-fetch'
 import { imageSize } from 'image-size'
 
@@ -99,17 +100,18 @@ describe('UserController (e2e)', () => {
 
   it('/user/:id (PATCH, 401)', async () =>
     server.patch('/user/aaa').send().expect(401))
+
   it('/user/:id (PATCH, 403)', async () =>
     server
       .patch('/user/aaa')
       .set('Authorization', 'Bearer ' + otherAccessToken)
-      .send()
+      .send({})
       .expect(403))
   it('/user/:id (PATCH, 404)', async () =>
     server
       .patch('/user/sdfkj')
       .set('Authorization', 'Bearer ' + otherAccessToken)
-      .send()
+      .send({})
       .expect(404))
 
   it('/user/:id/profile-picture (GET)', () =>
@@ -182,7 +184,7 @@ describe('UserController (e2e)', () => {
 
   it('/user/:id/profile-picture (PATCH, 404)', () =>
     server
-      .patch('/user/bbb/profile-picture')
+      .patch('/user/cdc/profile-picture')
       .set('Authorization', 'Bearer ' + aaaAccessToken)
       .send()
       .expect(404))
@@ -308,10 +310,21 @@ describe('UserController (e2e)', () => {
       .expect(200)
       .expect(async ({ body }) => {
         const { banner } = body
-        const bannerBuffer = await (await fetch(banner)).buffer()
+        get(banner, (res) => {
+          const chunks = []
+          res
+            .on('data', (chunk) => chunks.push(chunk))
+            .on('end', () => {
+              const buffer = Buffer.concat(chunks)
+              const { width, height } = imageSize(buffer)
+              expect(width).toBe(1500)
+              expect(height).toBe(500)
+            })
+        })
+        /*const bannerBuffer = await (await fetch(banner)).buffer()
         const { width, height } = imageSize(bannerBuffer)
         expect(width).toBe(1500)
-        expect(height).toBe(500)
+        expect(height).toBe(500)*/
       }))
 
   it('/user/:id/banner (DELETE)', () =>

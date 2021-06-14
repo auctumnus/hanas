@@ -10,7 +10,6 @@ import { Repository } from 'typeorm'
 import { CreatePartOfSpeechDto } from './dto/create-part-of-speech.dto'
 import { UpdatePartOfSpeechDto } from './dto/update-part-of-speech.dto'
 import { PartOfSpeech } from './entities/part-of-speech.entity'
-import {WordClass} from 'src/word-class/entities/word-class.entity'
 
 const getPos = (lang: Lang, abbreviation: string) =>
   lang.partsOfSpeech.filter((p) => p.abbreviation === abbreviation)[0]
