@@ -496,10 +496,10 @@
   resolved "https://registry.yarnpkg.com/@iconify/json-tools/-/json-tools-1.0.10.tgz#d9a7050dbbe8bb29d684d4b3f9446ed2d0bea3cc"
   integrity sha512-LFelJDOLZ6JHlmlAkgrvmcu4hpNPB91KYcr4f60D/exzU1eNOb4/KCVHIydGHIQFaOacIOD+Xy+B7P1z812cZg==
 
-"@iconify/json@1.1.356":
-  version "1.1.356"
-  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-1.1.356.tgz#248b25843cf91618dff7ef4494a1b331efd1eb82"
-  integrity sha512-HeG9neoS5oatUTF6zlAAyDNPxbj0NvGDFqzd4wBtqu5mE4/xjhDO+S1obkgqpBrDedgoXDwIFkGx9Mx1HJCnaw==
+"@iconify/json@1.1.357":
+  version "1.1.357"
+  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-1.1.357.tgz#63dd3b358b80a3774e24ce0a136488b819a20dbd"
+  integrity sha512-X4tXnyCKCAKRopGtvQjp3LmPX3TaUUfi2DwD41SQItBp9PbsZXg9+tYJbWjl0+gFFv7ikdzAp+yGIaXuZT/k5g==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
