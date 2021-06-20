@@ -2802,7 +2802,7 @@
     "@vue/compiler-core" "3.1.1"
     "@vue/shared" "3.1.1"
 
-"@vue/compiler-sfc@3.1.1", "@vue/compiler-sfc@^3.1.1":
+"@vue/compiler-sfc@3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.1.1.tgz#d4e4507c013d0b219f0b106b317ec5bb1cde3398"
   integrity sha512-lSgMsZaYHF+bAgryq5aUqpvyfhu52GJI2/4LoiJCE5uaxc6FCZfxfgqgw/d9ltiZghv+HiISFtmQVAVvlsk+/w==
@@ -13974,18 +13974,16 @@ vite-plugin-icons@0.6.3:
     "@iconify/json-tools" "^1.0.10"
     vue-template-es2015-compiler "^1.9.1"
 
-vite-plugin-pages@0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.13.1.tgz#1d22953a9961c14cc58a3c5264ca3794a9a94902"
-  integrity sha512-kQoVuzFhEDhJ1b7nv95vBr/M0FOGqaO4NY/uvh+9DRUAZ/Sv3pim7RbPao0L4XEqtBdxqD8Xckyk59acd6nX5w==
+vite-plugin-pages@0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.13.2.tgz#96a1915572a361d1ac72b971d6a70980ad4abb59"
+  integrity sha512-29UqxaahZu8RNCfCmoJJBL5nSx5iYoI+yesjyEqtqeqiUFJh8Z/cHeFCj9m66gmCDTQoaXCI+impvoSeS56usw==
   dependencies:
-    "@vue/compiler-sfc" "^3.1.1"
-    chalk "^4.1.1"
     debug "^4.3.2"
     deep-equal "^2.0.5"
     fast-glob "^3.2.5"
     json5 "^2.2.0"
-    yaml "^2.0.0-5"
+    yaml "^2.0.0-6"
 
 vite-plugin-windicss@1.0.4:
   version "1.0.4"
@@ -14641,10 +14639,10 @@ yaml@^1.10.0, yaml@^1.7.2:
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
-yaml@^2.0.0-5:
-  version "2.0.0-5"
-  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.0.0-5.tgz#00906046dc119427b2b4f7cf9041d34682d1480b"
-  integrity sha512-qH5L5eqW8cyv/N1U6rkK/O0M7kOK3BSo48d05Ptm03ITNsVFwg6TQ47wR72Db/ULWH5RfNJv+CqnG17Pyn8eqQ==
+yaml@^2.0.0-6:
+  version "2.0.0-6"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.0.0-6.tgz#3d858d656b9ef13a95c77d083b816e6a8d16caa0"
+  integrity sha512-YPUm0Z0sei53zauT7HWkkxyIBJhb9Gnf5jv4w4ahw5/v3PjFGhZOt4paXH6g9hzcMJqmNxZwoGfF1JzE2jvSgg==
 
 yargonaut@^1.1.4:
   version "1.1.4"
