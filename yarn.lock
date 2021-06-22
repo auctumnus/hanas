@@ -55,10 +55,10 @@
     ora "5.3.0"
     rxjs "6.6.3"
 
-"@antfu/utils@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@antfu/utils/-/utils-0.1.6.tgz#a9e801f103fd14a59785dd0485fec06b6dc34d94"
-  integrity sha512-1lcCCEOv4gYlYa/OCjM2JA5nbNll04mNMhSXYu4QetbG14m3LdCvkyDAPlc2AmqRQEqkKpJldRL++9sPpOIydw==
+"@antfu/utils@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@antfu/utils/-/utils-0.2.2.tgz#b74c5b6f6de64f7e47a669deba054790b26f85d8"
+  integrity sha512-8GwVE0j48SpZaLxsHO0BSO0sEpkb+EhFQcABFBFomH4O8AwNVVvGQNRCBKOPUwU4Vxj3ZSVz8PDjUrPGwaYP9A==
 
 "@babel/code-frame@7.12.11":
   version "7.12.11"
@@ -3061,12 +3061,12 @@
     "@webassemblyjs/ast" "1.11.0"
     "@xtuc/long" "4.2.2"
 
-"@windicss/plugin-utils@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-1.0.4.tgz#dd375789d610a8700d540bb09d296a163d7588b3"
-  integrity sha512-1Eqw+/lhk3vqW8vgttmLDbzE6YIFL047Kuy/v6jhQd3w7RG+fPbQE6YwnqJerPYvCcRwujQ9ABrLr0+cS+i0tQ==
+"@windicss/plugin-utils@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-1.1.0.tgz#c0834165f40142bf52f24eced1bbf68cbf8bd506"
+  integrity sha512-v9WhtcGKRehsbY2Omd9m+Jd0IsjbKJmRSa712BuPLZ+fZuCSomne9twjqtPn29IGqS6T/9lM8aOjW7mRMU1x/g==
   dependencies:
-    "@antfu/utils" "^0.1.6"
+    "@antfu/utils" "^0.2.2"
     debug "^4.3.2"
     fast-glob "^3.2.5"
     jiti "^1.10.1"
@@ -14028,12 +14028,12 @@ vite-plugin-pages@0.13.2:
     json5 "^2.2.0"
     yaml "^2.0.0-6"
 
-vite-plugin-windicss@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/vite-plugin-windicss/-/vite-plugin-windicss-1.0.4.tgz#8515822266efcd359ea506c280b00397954f5fc6"
-  integrity sha512-3foNePu1+DHBrCMZhKf84rNH7pgWUoN53h1cKrnLBI4UruCCBmVvZ8W2Kr5cNGgh/ME/nslON2RQPoHxE+F0gA==
+vite-plugin-windicss@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-windicss/-/vite-plugin-windicss-1.1.0.tgz#b02bd0d835cddd05b8e1eb45448809771fa12973"
+  integrity sha512-vb8jwOlLGCzHcAfh7gtBa/+gioTXmcJYqACoHhaDD1MEwMB55qTODJckvi1eeQ74yV4uBTizOCRrucY+gI2xAg==
   dependencies:
-    "@windicss/plugin-utils" "1.0.4"
+    "@windicss/plugin-utils" "1.1.0"
     chalk "^4.1.1"
     debug "^4.3.2"
     windicss "^3.1.3"
