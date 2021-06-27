@@ -14030,10 +14030,10 @@ vite-plugin-icons@0.6.3:
     "@iconify/json-tools" "^1.0.10"
     vue-template-es2015-compiler "^1.9.1"
 
-vite-plugin-pages@0.14.1:
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.14.1.tgz#3d0392dd3cfab71c1c827e1cf20d8a07469771e0"
-  integrity sha512-9kH7uArY98djylOZTCyhUE5U8Q9R+hIuvs0hpHRuhn861FutbiTLNbUhN/R3DUyrL1OhLxShnj3dE1+Ck9j8sA==
+vite-plugin-pages@0.14.2:
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.14.2.tgz#761d2569c549cf6a69a7245dc219ce8d389cfbb9"
+  integrity sha512-cSq3HPQWQoTy/MeKWfS9Cz9sWL58oOpOdJQ77BmxsmYO6l7JazEYACrnwQlLp735Lk2VAWiIZ6t/AMbPWwTBiA==
   dependencies:
     "@antfu/utils" "^0.2.4"
     debug "^4.3.2"
