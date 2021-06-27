@@ -55,7 +55,7 @@
     ora "5.3.0"
     rxjs "6.6.3"
 
-"@antfu/utils@^0.2.3":
+"@antfu/utils@^0.2.3", "@antfu/utils@^0.2.4":
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/@antfu/utils/-/utils-0.2.4.tgz#c7d33fc6faa0d3a6fcc2555673f5e9b19c0fbc15"
   integrity sha512-2bZNkVfL9IZESmvE26UKi8SzyvSoaIsGXDcnbHFMtmGMqUiB1fXpAJ1ijGf+tSqKRQ5yagck2U1Qk0p+705/kw==
@@ -14030,11 +14030,12 @@ vite-plugin-icons@0.6.3:
     "@iconify/json-tools" "^1.0.10"
     vue-template-es2015-compiler "^1.9.1"
 
-vite-plugin-pages@0.13.4:
-  version "0.13.4"
-  resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.13.4.tgz#bf6faac4103ea6af74ceb9c2349cd781193deb1e"
-  integrity sha512-jv48ln5uhV6f6P56UMJZo5wm1h8J7sD2t/y/bTw0+/BbAbNPZ3u1rR8mu0OVePvpp1lYgwEuooi2yRrAMqEzhA==
+vite-plugin-pages@0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.14.1.tgz#3d0392dd3cfab71c1c827e1cf20d8a07469771e0"
+  integrity sha512-9kH7uArY98djylOZTCyhUE5U8Q9R+hIuvs0hpHRuhn861FutbiTLNbUhN/R3DUyrL1OhLxShnj3dE1+Ck9j8sA==
   dependencies:
+    "@antfu/utils" "^0.2.4"
     debug "^4.3.2"
     deep-equal "^2.0.5"
     fast-glob "^3.2.5"
