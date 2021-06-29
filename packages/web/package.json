@@ -17,7 +17,7 @@
     "vuex-persist": "3.1.3"
   },
   "devDependencies": {
-    "@iconify/json": "1.1.363",
+    "@iconify/json": "1.1.364",
     "@vitejs/plugin-vue": "1.2.4",
     "@vue/compiler-sfc": "3.1.2",
     "@vue/server-renderer": "3.1.2",
