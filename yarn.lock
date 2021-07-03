@@ -14059,10 +14059,10 @@ vite-plugin-favicon@1.0.8:
     parse-author "^2.0.0"
     parse5 "^6.0.1"
 
-vite-plugin-icons@0.6.3:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/vite-plugin-icons/-/vite-plugin-icons-0.6.3.tgz#b60ee401e4f15187758de583de7a94f44c323701"
-  integrity sha512-h+DNh9xMBhISNBZ/broslVRk/DbgDXV71u2Ienoz8G0W81+tzbtPHsE6imnwqW93h0qtS1VnVyOQlqsKcheLtw==
+vite-plugin-icons@0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/vite-plugin-icons/-/vite-plugin-icons-0.6.4.tgz#1e9e9a5b310f6b596e6c564a8367735e9a65de02"
+  integrity sha512-NLIUZNpeJV4fH314fn+iI5wxvKOgx2yDzVz6jqaKUyNIi41cv+Ud8J+dueCHVZSxepCIQmMYeCayaPEuhhetbg==
   dependencies:
     "@iconify/json-tools" "^1.0.10"
     vue-template-es2015-compiler "^1.9.1"

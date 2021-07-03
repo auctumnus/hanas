@@ -30,7 +30,7 @@
     "vite": "2.3.8",
     "vite-plugin-components": "0.12.0",
     "vite-plugin-favicon": "1.0.8",
-    "vite-plugin-icons": "0.6.3",
+    "vite-plugin-icons": "0.6.4",
     "vite-plugin-pages": "0.14.8",
     "vite-plugin-windicss": "1.2.0",
     "vue-router": "4.0.10",
