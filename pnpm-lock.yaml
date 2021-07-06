@@ -24,7 +24,7 @@ importers:
       '@nestjs/testing': 7.6.18
       '@nestjs/typeorm': 7.1.5
       '@types/bcrypt': 5.0.0
-      '@types/bull': 3.15.1
+      '@types/bull': 3.15.2
       '@types/bytes': 3.1.0
       '@types/cron': 1.7.2
       '@types/express': 4.17.12
@@ -130,7 +130,7 @@ importers:
       '@nestjs/schematics': 7.3.1_typescript@4.3.5
       '@nestjs/testing': 7.6.18_9cd0f963ae6f35bf288217e4f1c45cb4
       '@types/bcrypt': 5.0.0
-      '@types/bull': 3.15.1
+      '@types/bull': 3.15.2
       '@types/bytes': 3.1.0
       '@types/cron': 1.7.2
       '@types/express': 4.17.12
@@ -2776,8 +2776,8 @@ packages:
       '@types/node': 14.17.4
     dev: true
 
-  /@types/bull/3.15.1:
-    resolution: {integrity: sha512-thZyjxikoyuDa/ptZEqtTEPUjwlDenkpPigpIyad1X5UMp7U0fXTLiDHJjZ/5yXmVPuWx0cXFXj3drmva/UJRA==}
+  /@types/bull/3.15.2:
+    resolution: {integrity: sha512-uMQ7u/4GxY2bSTMd4P2yLkyqu3GoKbwTCDkMHJJ2g9OkiMq0Vxw+C7lF4w+oNkwZzZ2k4Kw76Ncxjd6GMnc+CA==}
     dependencies:
       '@types/ioredis': 4.26.4
     dev: true
@@ -2855,7 +2855,7 @@ packages:
   /@types/ioredis/4.26.4:
     resolution: {integrity: sha512-QFbjNq7EnOGw6d1gZZt2h26OFXjx7z+eqEnbCHSrDI1OOLEgOHMKdtIajJbuCr9uO+X9kQQRe7Lz6uxqxl5XKg==}
     dependencies:
-      '@types/node': 14.17.4
+      '@types/node': 16.0.0
     dev: true
 
   /@types/istanbul-lib-coverage/2.0.3:
