@@ -62,7 +62,7 @@ jobs:
           run_install: |
             args: [--frozen-lockfile]
 
-      - run: cd packages/api && pnpm i
+      #- run: cd packages/api && pnpm i
       - run: cd packages/api && pnpm run build
       - run: cd packages/api && pnpm test
   lint:
@@ -89,5 +89,5 @@ jobs:
           run_install: |
             args: [--frozen-lockfile]
 
-      - run: cd packages/api && pnpm i
+      #- run: cd packages/api && pnpm i
       - run: cd packages/api && pnpm run lint
