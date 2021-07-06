@@ -28,7 +28,7 @@ importers:
       '@types/bytes': 3.1.1
       '@types/cron': 1.7.3
       '@types/express': 4.17.13
-      '@types/jest': 26.0.23
+      '@types/jest': 26.0.24
       '@types/jsonwebtoken': 8.5.3
       '@types/multer': 1.4.6
       '@types/node': 14.17.4
@@ -134,7 +134,7 @@ importers:
       '@types/bytes': 3.1.1
       '@types/cron': 1.7.3
       '@types/express': 4.17.13
-      '@types/jest': 26.0.23
+      '@types/jest': 26.0.24
       '@types/jsonwebtoken': 8.5.3
       '@types/multer': 1.4.6
       '@types/node': 14.17.4
@@ -2883,8 +2883,8 @@ packages:
       '@types/istanbul-lib-report': 3.0.0
     dev: true
 
-  /@types/jest/26.0.23:
-    resolution: {integrity: sha512-ZHLmWMJ9jJ9PTiT58juykZpL7KjwJywFN3Rr2pTSkyQfydf/rk22yS7W8p5DaVUMQ2BQC7oYiU3FjbTM/mYrOA==}
+  /@types/jest/26.0.24:
+    resolution: {integrity: sha512-E/X5Vib8BWqZNRlDxj9vYXhsDwPYbPINqKF9BsnSoon4RQ0D9moEuLD8txgyypFLH7J4+Lho9Nr/c8H0Fi+17w==}
     dependencies:
       jest-diff: 26.6.2
       pretty-format: 26.6.2
