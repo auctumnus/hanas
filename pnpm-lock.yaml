@@ -29,7 +29,7 @@ importers:
       '@types/cron': 1.7.3
       '@types/express': 4.17.13
       '@types/jest': 26.0.24
-      '@types/jsonwebtoken': 8.5.3
+      '@types/jsonwebtoken': 8.5.4
       '@types/multer': 1.4.6
       '@types/node': 14.17.4
       '@types/node-fetch': 2.5.10
@@ -135,7 +135,7 @@ importers:
       '@types/cron': 1.7.3
       '@types/express': 4.17.13
       '@types/jest': 26.0.24
-      '@types/jsonwebtoken': 8.5.3
+      '@types/jsonwebtoken': 8.5.4
       '@types/multer': 1.4.6
       '@types/node': 14.17.4
       '@types/node-fetch': 2.5.10
@@ -2906,6 +2906,12 @@ packages:
 
   /@types/jsonwebtoken/8.5.3:
     resolution: {integrity: sha512-uhZGbMfpIC/sI7ujnNdsPFMzqCYMwTBUvVsbJ6yJ+FakM7uTJKyiKaG2HXwOgy7gL+fRqnqxV82bLGmSWDxxGg==}
+    dependencies:
+      '@types/node': 16.0.0
+    dev: true
+
+  /@types/jsonwebtoken/8.5.4:
+    resolution: {integrity: sha512-4L8msWK31oXwdtC81RmRBAULd0ShnAHjBuKT9MRQpjP0piNrZdXyTRcKY9/UIfhGeKIT4PvF5amOOUbbT/9Wpg==}
     dependencies:
       '@types/node': 16.0.0
     dev: true
