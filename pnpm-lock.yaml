@@ -30,7 +30,7 @@ importers:
       '@types/express': 4.17.13
       '@types/jest': 26.0.24
       '@types/jsonwebtoken': 8.5.4
-      '@types/multer': 1.4.6
+      '@types/multer': 1.4.7
       '@types/node': 14.17.4
       '@types/node-fetch': 2.5.10
       '@types/passport-jwt': 3.0.5
@@ -136,7 +136,7 @@ importers:
       '@types/express': 4.17.13
       '@types/jest': 26.0.24
       '@types/jsonwebtoken': 8.5.4
-      '@types/multer': 1.4.6
+      '@types/multer': 1.4.7
       '@types/node': 14.17.4
       '@types/node-fetch': 2.5.10
       '@types/passport-jwt': 3.0.5
@@ -2928,10 +2928,10 @@ packages:
     resolution: {integrity: sha512-fZQQafSREFyuZcdWFAExYjBiCL7AUCdgsk80iO0q4yihYYdcIiH28CcuPTGFgLOCC8RlW49GSQxdHwZP+I7CNg==}
     dev: true
 
-  /@types/multer/1.4.6:
-    resolution: {integrity: sha512-F4EZ+KRrzdiSm3jSFj1GVUlw3zWXus5nXYBbrQW/0MGIUv9YHw1dM0cJOxq++v2+Gl4IBdSDvQ3YCORLdyCU+Q==}
+  /@types/multer/1.4.7:
+    resolution: {integrity: sha512-/SNsDidUFCvqqcWDwxv2feww/yqhNeTRL5CVoL3jU4Goc4kKEL10T7Eye65ZqPNi4HRx8sAEX59pV1aEH7drNA==}
     dependencies:
-      '@types/express': 4.17.12
+      '@types/express': 4.17.13
     dev: true
 
   /@types/node-fetch/2.5.10:
