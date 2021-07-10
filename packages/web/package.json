@@ -24,6 +24,7 @@
     "@vueuse/head": "0.6.0",
     "commitizen": "4.2.4",
     "git-cz": "4.7.6",
+    "msw": "^0.31.0",
     "prettier": "2.3.0",
     "simple-git-hooks": "2.5.1",
     "typescript": "4.3.5",
