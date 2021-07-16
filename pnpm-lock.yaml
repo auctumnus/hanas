@@ -19,7 +19,7 @@ importers:
       '@nestjs/passport': 7.1.6
       '@nestjs/platform-express': 7.6.18
       '@nestjs/schedule': 0.4.3
-      '@nestjs/schematics': 7.3.1
+      '@nestjs/schematics': 8.0.2
       '@nestjs/swagger': 4.8.2
       '@nestjs/testing': 7.6.18
       '@nestjs/typeorm': 7.1.5
@@ -127,7 +127,7 @@ importers:
       wait-on: 6.0.0
     devDependencies:
       '@nestjs/cli': 7.6.0
-      '@nestjs/schematics': 7.3.1_typescript@4.3.5
+      '@nestjs/schematics': 8.0.2_typescript@4.3.5
       '@nestjs/testing': 7.6.18_9cd0f963ae6f35bf288217e4f1c45cb4
       '@types/bcrypt': 5.0.0
       '@types/bull': 3.15.2
@@ -238,6 +238,18 @@ packages:
       source-map: 0.7.3
     dev: true
 
+  /@angular-devkit/core/12.0.5:
+    resolution: {integrity: sha512-zVSQV+8/vjUjsUKGlj8Kf5LioA6AXJTGI0yhHW9q1dFX4dPpbW63k0R1UoIB2wJ0F/AbYVgpnPGPe9BBm2fvZA==}
+    engines: {node: ^12.14.1 || >=14.0.0, npm: ^6.11.0 || ^7.5.6, yarn: '>= 1.13.0'}
+    dependencies:
+      ajv: 8.2.0
+      ajv-formats: 2.0.2
+      fast-json-stable-stringify: 2.1.0
+      magic-string: 0.25.7
+      rxjs: 6.6.7
+      source-map: 0.7.3
+    dev: true
+
   /@angular-devkit/schematics-cli/0.1102.6:
     resolution: {integrity: sha512-86PmafA9mYDeM08cNWHcJCEY1Yqo5aq/YaBzCak93luByDQ4Ao4Jqts9l/xBCZBGUdVrczCNzcdwr/Y/6JPPzA==}
     engines: {node: '>= 10.13.0', npm: ^6.11.0 || ^7.5.6, yarn: '>= 1.13.0'}
@@ -268,6 +280,15 @@ packages:
       '@angular-devkit/core': 11.2.6
       ora: 5.3.0
       rxjs: 6.6.3
+    dev: true
+
+  /@angular-devkit/schematics/12.0.5:
+    resolution: {integrity: sha512-iW3XuDHScr3TXuunlEjF5O01zBpwpLgfr1oEny8PvseFGDlHK4Nj8zNIoIn3Yg936aiFO4GJAC/UXsT8g5vKxQ==}
+    engines: {node: ^12.14.1 || >=14.0.0, npm: ^6.11.0 || ^7.5.6, yarn: '>= 1.13.0'}
+    dependencies:
+      '@angular-devkit/core': 12.0.5
+      ora: 5.4.0
+      rxjs: 6.6.7
     dev: true
 
   /@antfu/utils/0.2.4:
@@ -2249,14 +2270,14 @@ packages:
       typescript: 4.2.3
     dev: true
 
-  /@nestjs/schematics/7.3.1_typescript@4.3.5:
-    resolution: {integrity: sha512-eyBjJstAjecpdzRuBLiqnwomwXIAEV3+kPkpaphOieRUM6nBhjnXCCl3Qf8Dul2QUQK4NOVPd8FFxWtGP5XNlg==}
+  /@nestjs/schematics/8.0.2_typescript@4.3.5:
+    resolution: {integrity: sha512-iWtpXfn1Zh4Vm37BzY8OSJ60Y9TqNOjk8J+KLIwcql9EuP+0C/C4WUn+vIQMfmnut3MxRmAYFE2B/LFYrjGC5Q==}
     peerDependencies:
-      typescript: ^3.4.5 || ^4.0.0
+      typescript: ^3.4.5 || ^4.3.5
     dependencies:
-      '@angular-devkit/core': 11.2.4
-      '@angular-devkit/schematics': 11.2.4
-      fs-extra: 9.1.0
+      '@angular-devkit/core': 12.0.5
+      '@angular-devkit/schematics': 12.0.5
+      fs-extra: 10.0.0
       jsonc-parser: 3.0.0
       pluralize: 8.0.0
       typescript: 4.3.5
@@ -3563,6 +3584,15 @@ packages:
       indent-string: 4.0.0
     dev: true
 
+  /ajv-formats/2.0.2:
+    resolution: {integrity: sha512-Brah4Uo5/U8v76c6euTwtjVFFaVishwnJrQBYpev1JRh4vjA1F4HY3UzQez41YUCszUCXKagG8v6eVRBHV1gkw==}
+    peerDependenciesMeta:
+      ajv:
+        optional: true
+    dependencies:
+      ajv: 8.6.1
+    dev: true
+
   /ajv-keywords/3.5.2_ajv@6.12.6:
     resolution: {integrity: sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ==}
     peerDependencies:
@@ -3577,6 +3607,15 @@ packages:
       fast-deep-equal: 3.1.3
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
+      uri-js: 4.4.1
+    dev: true
+
+  /ajv/8.2.0:
+    resolution: {integrity: sha512-WSNGFuyWd//XO8n/m/EaOlNLtO0yL8EXT/74LqT4khdhpZjP7lkj/kT5uwRmGitKEVp/Oj7ZUHeGfPtgHhQ5CA==}
+    dependencies:
+      fast-deep-equal: 3.1.3
+      json-schema-traverse: 1.0.0
+      require-from-string: 2.0.2
       uri-js: 4.4.1
     dev: true
 
@@ -6631,6 +6670,15 @@ packages:
 
   /fs-constants/1.0.0:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
+
+  /fs-extra/10.0.0:
+    resolution: {integrity: sha512-C5owb14u9eJwizKGdchcDUQeFtlSHHthBk8pbX9Vc1PFZrLombudjDnNns88aYslCyF6IY5SUw3Roz6xShcEIQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      graceful-fs: 4.2.6
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: true
 
   /fs-extra/8.1.0:
     resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
