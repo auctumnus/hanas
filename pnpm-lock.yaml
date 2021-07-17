@@ -167,7 +167,7 @@ importers:
     specifiers:
       concurrently: 6.2.0
       eiki: ^0.1.0
-      jest: ^27.0.4
+      jest: 27.0.6
       js-base64: ^3.6.1
       prettier: 2.3.2
       redaxios: ^0.4.1
