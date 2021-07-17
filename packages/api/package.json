@@ -25,12 +25,12 @@
   },
   "dependencies": {
     "@nestjs/bull": "0.4.0",
-    "@nestjs/common": "7.6.18",
-    "@nestjs/core": "7.6.18",
+    "@nestjs/common": "8.0.4",
+    "@nestjs/core": "8.0.4",
     "@nestjs/jwt": "8.0.0",
     "@nestjs/mapped-types": "0.4.1",
     "@nestjs/passport": "7.1.6",
-    "@nestjs/platform-express": "7.6.18",
+    "@nestjs/platform-express": "8.0.4",
     "@nestjs/schedule": "0.4.3",
     "@nestjs/swagger": "4.8.2",
     "@nestjs/typeorm": "7.1.5",
@@ -65,9 +65,9 @@
     "wait-on": "6.0.0"
   },
   "devDependencies": {
-    "@nestjs/cli": "7.6.0",
+    "@nestjs/cli": "8.0.2",
     "@nestjs/schematics": "8.0.2",
-    "@nestjs/testing": "7.6.18",
+    "@nestjs/testing": "8.0.4",
     "@types/bcrypt": "5.0.0",
     "@types/bull": "3.15.2",
     "@types/bytes": "3.1.1",
