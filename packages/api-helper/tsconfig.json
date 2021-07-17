@@ -1,0 +1,6 @@
+{
+  "extends": "rollpkg/configs/tsconfig.json",
+  "compilerOptions": {
+    "experimentalDecorators": true
+  }
+}
