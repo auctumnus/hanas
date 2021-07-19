@@ -44,7 +44,7 @@ importers:
       aws-sdk: 2.948.0
       base-64: 1.0.0
       bcrypt: 5.0.1
-      better-sqlite3: 7.4.1
+      better-sqlite3: 7.4.3
       bull: 3.26.0
       bytes: 3.1.0
       class-transformer: 0.4.0
@@ -99,7 +99,7 @@ importers:
       aws-sdk: 2.948.0
       base-64: 1.0.0
       bcrypt: 5.0.1
-      better-sqlite3: 7.4.1
+      better-sqlite3: 7.4.3
       bull: 3.26.0
       bytes: 3.1.0
       class-transformer: 0.4.0
@@ -5019,8 +5019,8 @@ packages:
     resolution: {integrity: sha512-3pZEU3NT5BFUo/AD5ERPWOgQOCZITni6iavr5AUw5AUwQjMlI0kzu5btnyD39AF0gUEsDPwJT+oY1ORBJijPjQ==}
     dev: true
 
-  /better-sqlite3/7.4.1:
-    resolution: {integrity: sha512-sk1kW3PsWE7W7G9qbi5TQxCROlQVR8YWlp4srbyrwN5DrLeamKfrm3JExwOiNSAYyJv8cw5/2HOfvF/ipZj4qg==}
+  /better-sqlite3/7.4.3:
+    resolution: {integrity: sha512-07bKjClZg/f4KMVRkzWtoIvazVPcF1gsvVKVIXlxwleC2DxuIhnra3KCMlUT1rFeRYXXckot2a46UciF2d9KLw==}
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
