@@ -34,7 +34,7 @@
     "@nestjs/schedule": "0.4.3",
     "@nestjs/swagger": "4.8.2",
     "@nestjs/typeorm": "7.1.5",
-    "aws-sdk": "2.952.0",
+    "aws-sdk": "2.953.0",
     "base-64": "1.0.0",
     "bcrypt": "5.0.1",
     "better-sqlite3": "7.4.3",
