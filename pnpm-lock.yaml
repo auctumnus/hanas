@@ -201,7 +201,7 @@ importers:
       simple-git-hooks: 2.5.1
       typescript: 4.3.5
       vite: 2.4.3
-      vite-plugin-components: 0.13.0
+      vite-plugin-components: 0.13.2
       vite-plugin-favicon: 1.0.8
       vite-plugin-icons: 0.6.5
       vite-plugin-pages: 0.15.1
@@ -229,7 +229,7 @@ importers:
       simple-git-hooks: 2.5.1
       typescript: 4.3.5
       vite: 2.4.3
-      vite-plugin-components: 0.13.0_vite@2.4.3
+      vite-plugin-components: 0.13.2_vite@2.4.3
       vite-plugin-favicon: 1.0.8_vite@2.4.3
       vite-plugin-icons: 0.6.5_774edd05d2fe6e67dbc66770415e2b73
       vite-plugin-pages: 0.15.1_2e7abeba2e485b4890a9b09e0985f188
@@ -18010,8 +18010,8 @@ packages:
       replace-ext: 1.0.1
     dev: true
 
-  /vite-plugin-components/0.13.0_vite@2.4.3:
-    resolution: {integrity: sha512-MpaUrolJ/rYrshGmrUzF1rwqz+XDRxrvNMWWGaiL3mXsa+uZYmcOInScwHL3PIJqrTewi8kNi/0ZeTBvPXrxUg==}
+  /vite-plugin-components/0.13.2_vite@2.4.3:
+    resolution: {integrity: sha512-Fv5iTlZUvqUUjODdAkTadijobcys+SvrtYclj27/SCE7b4LtwNySd+nHvJcGI/GsL8npTdccj2IRwGsWLrTcvQ==}
     peerDependencies:
       vite: ^2.0.0
     dependencies:
