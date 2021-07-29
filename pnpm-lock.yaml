@@ -80,7 +80,7 @@ importers:
       ts-loader: 9.2.4
       ts-node: 10.1.0
       tsconfig-paths: 3.10.1
-      typeorm: 0.2.34
+      typeorm: 0.2.35
       typeorm-cursor-pagination: 0.6.1
       typescript: 4.3.5
       ua-parser-js: 0.7.28
@@ -95,7 +95,7 @@ importers:
       '@nestjs/platform-express': 7.6.18_2664420588e0901c7943acb4693cbaf4
       '@nestjs/schedule': 0.4.3_f68191e5ff76da46b0e7001b964108a3
       '@nestjs/swagger': 4.8.2_0d542cb4e210f05d96ba504c599ba722
-      '@nestjs/typeorm': 7.1.5_065a9fb07830bd2eaf813580bb6e63ed
+      '@nestjs/typeorm': 7.1.5_994a406c44d006efeb5bd4fc762ed6b5
       aws-sdk: 2.956.0
       base-64: 1.0.0
       bcrypt: 5.0.1
@@ -121,8 +121,8 @@ importers:
       rxjs: 7.3.0
       sharp: 0.28.3
       swagger-ui-express: 4.1.6
-      typeorm: 0.2.34
-      typeorm-cursor-pagination: 0.6.1_typeorm@0.2.34
+      typeorm: 0.2.35_better-sqlite3@7.4.3
+      typeorm-cursor-pagination: 0.6.1_typeorm@0.2.35
       ua-parser-js: 0.7.28
       wait-on: 6.0.0
     devDependencies:
@@ -2645,7 +2645,7 @@ packages:
       tslib: 2.2.0
     dev: true
 
-  /@nestjs/typeorm/7.1.5_065a9fb07830bd2eaf813580bb6e63ed:
+  /@nestjs/typeorm/7.1.5_994a406c44d006efeb5bd4fc762ed6b5:
     resolution: {integrity: sha512-utE1FkYM/gyCXUqw3zKYYS0YZ3DfkAnzsCx4T48cNnSDTCeWS+u3yt0FMDFjwSiQSaLrzpiSff/FaxJQvRlYow==}
     peerDependencies:
       '@nestjs/common': ^6.7.0 || ^7.0.0
@@ -2658,7 +2658,7 @@ packages:
       '@nestjs/core': 7.6.18_3111ef5313cb3be26ac1dcc779950b07
       reflect-metadata: 0.1.13
       rxjs: 7.3.0
-      typeorm: 0.2.34
+      typeorm: 0.2.35_better-sqlite3@7.4.3
       uuid: 8.3.1
     dev: false
 
@@ -17655,20 +17655,68 @@ packages:
   /typedarray/0.0.6:
     resolution: {integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=}
 
-  /typeorm-cursor-pagination/0.6.1_typeorm@0.2.34:
+  /typeorm-cursor-pagination/0.6.1_typeorm@0.2.35:
     resolution: {integrity: sha512-lqlvXBG2prsYFsBVZrWz2/wgoAcYzWCks/EMxP4wIVTISEO70dHQtQuaWWQP528lnW+rQNRwIK8sUuXMKJKavw==}
     peerDependencies:
       typeorm: ^0.2
     dependencies:
-      typeorm: 0.2.34
+      typeorm: 0.2.35_better-sqlite3@7.4.3
     dev: false
 
-  /typeorm/0.2.34:
-    resolution: {integrity: sha512-FZAeEGGdSGq7uTH3FWRQq67JjKu0mgANsSZ04j3kvDYNgy9KwBl/6RFgMVgiSgjf7Rqd7NrhC2KxVT7I80qf7w==}
+  /typeorm/0.2.35_better-sqlite3@7.4.3:
+    resolution: {integrity: sha512-vj4U8K1rlBW3N/3AkuEnjdawYp+yo3uw0OWK+5/E5tFuaofV9x3zWtLYKQngsEAZ7l/lLsN5fbz7MtBnwSPe8A==}
     hasBin: true
+    peerDependencies:
+      '@sap/hana-client': '*'
+      better-sqlite3: '*'
+      hdb-pool: '*'
+      ioredis: '*'
+      mongodb: ^3.6.0
+      mssql: '*'
+      mysql2: '*'
+      oracledb: '*'
+      pg: '*'
+      pg-native: '*'
+      pg-query-stream: '*'
+      redis: '*'
+      sql.js: '*'
+      sqlite3: '*'
+      typeorm-aurora-data-api-driver: '*'
+    peerDependenciesMeta:
+      '@sap/hana-client':
+        optional: true
+      better-sqlite3:
+        optional: true
+      hdb-pool:
+        optional: true
+      ioredis:
+        optional: true
+      mongodb:
+        optional: true
+      mssql:
+        optional: true
+      mysql2:
+        optional: true
+      oracledb:
+        optional: true
+      pg:
+        optional: true
+      pg-native:
+        optional: true
+      pg-query-stream:
+        optional: true
+      redis:
+        optional: true
+      sql.js:
+        optional: true
+      sqlite3:
+        optional: true
+      typeorm-aurora-data-api-driver:
+        optional: true
     dependencies:
       '@sqltools/formatter': 1.2.3
       app-root-path: 3.0.0
+      better-sqlite3: 7.4.3
       buffer: 6.0.3
       chalk: 4.1.1
       cli-highlight: 2.1.11
