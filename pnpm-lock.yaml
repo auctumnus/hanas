@@ -67,7 +67,7 @@ importers:
       passport-jwt: 4.0.0
       passport-local: 1.0.0
       prettier: 2.3.0
-      redoc-cli: 0.12.2
+      redoc-cli: 0.12.3
       reflect-metadata: 0.1.13
       rimraf: 3.0.2
       rxjs: 7.3.0
@@ -153,7 +153,7 @@ importers:
       eslint-plugin-prettier: 3.4.0_39707b7de4180b40645e0fe3095cfe49
       jest: 27.0.6_ts-node@10.2.0
       prettier: 2.3.0
-      redoc-cli: 0.12.2
+      redoc-cli: 0.12.3
       s3rver: 3.7.0
       simple-git-hooks: 2.5.1
       supertest: 6.1.4
@@ -2876,7 +2876,7 @@ packages:
     engines: {node: '>=12.0.0'}
     dependencies:
       '@redocly/ajv': 8.6.2
-      '@types/node': 14.17.5
+      '@types/node': 14.17.9
       colorette: 1.2.2
       js-levenshtein: 1.1.6
       js-yaml: 3.14.1
@@ -3302,10 +3302,6 @@ packages:
 
   /@types/node/14.17.4:
     resolution: {integrity: sha512-8kQ3+wKGRNN0ghtEn7EGps/B8CzuBz1nXZEIGGLP2GnwbqYn4dbTs7k+VKLTq1HvZLRCIDtN3Snx1Ege8B7L5A==}
-    dev: true
-
-  /@types/node/14.17.5:
-    resolution: {integrity: sha512-bjqH2cX/O33jXT/UmReo2pM7DIJREPMnarixbQ57DOOzzFaI6D2+IcwaJQaJpv0M1E9TIhPCYVxrkcityLjlqA==}
     dev: true
 
   /@types/node/14.17.9:
@@ -15352,8 +15348,8 @@ packages:
       redis-parser: 2.6.0
     dev: true
 
-  /redoc-cli/0.12.2:
-    resolution: {integrity: sha512-GyOCEr1g+U/Js7lgHj+0vH9L2uCwbc0m9CJrlb099qp6jzmxnJQ6sC85BiN9DOwr4/fsQfVhoNpWQSkkpFBo5Q==}
+  /redoc-cli/0.12.3:
+    resolution: {integrity: sha512-qTBaEfwVqCvqLbuloZ9sMBQA49WfMOQrLVBGiVyT7pNMAjosQCpMyFESqQL8WqVxDzV2olPCZ1L2rG9cuDGOsA==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -15365,7 +15361,7 @@ packages:
       node-libs-browser: 2.2.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      redoc: 2.0.0-rc.55_58ae92cd0feb36bdf4ef36accfd208de
+      redoc: 2.0.0-rc.56_58ae92cd0feb36bdf4ef36accfd208de
       styled-components: 5.3.0_react-dom@17.0.2+react@17.0.2
       yargs: 17.0.1
     transitivePeerDependencies:
@@ -15374,8 +15370,8 @@ packages:
       - react-native
     dev: true
 
-  /redoc/2.0.0-rc.55_58ae92cd0feb36bdf4ef36accfd208de:
-    resolution: {integrity: sha512-32sUHhc33m8zQKz2V7xREwlf05S52dDOkn7K0WMquu2GDl6ZquxmrQfqnlj0IPoVCWQPR+XosmmIJj4rZbqjeA==}
+  /redoc/2.0.0-rc.56_58ae92cd0feb36bdf4ef36accfd208de:
+    resolution: {integrity: sha512-ir2TtQ2d/1FqZWIoLmUZ3qvAAnO6jg8dt0SV75TanmfCXpEABcElXWH3mtUf6qKlvgDVt40diDCVuSvyPPxkAw==}
     engines: {node: '>=6.9', npm: '>=3.0.0'}
     peerDependencies:
       core-js: ^3.1.4
