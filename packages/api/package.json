@@ -59,7 +59,7 @@
     "rxjs": "7.3.0",
     "sharp": "0.28.3",
     "swagger-ui-express": "4.1.6",
-    "typeorm": "0.2.36",
+    "typeorm": "0.2.37",
     "typeorm-cursor-pagination": "0.6.1",
     "ua-parser-js": "0.7.28",
     "wait-on": "6.0.0"

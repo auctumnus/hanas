@@ -80,7 +80,7 @@ importers:
       ts-loader: 9.2.5
       ts-node: 10.2.0
       tsconfig-paths: 3.10.1
-      typeorm: 0.2.36
+      typeorm: 0.2.37
       typeorm-cursor-pagination: 0.6.1
       typescript: 4.3.5
       ua-parser-js: 0.7.28
@@ -95,7 +95,7 @@ importers:
       '@nestjs/platform-express': 7.6.18_2664420588e0901c7943acb4693cbaf4
       '@nestjs/schedule': 0.4.3_f68191e5ff76da46b0e7001b964108a3
       '@nestjs/swagger': 4.8.2_0d542cb4e210f05d96ba504c599ba722
-      '@nestjs/typeorm': 7.1.5_4277ce419d3a0747f2a8289b7dd7ad2d
+      '@nestjs/typeorm': 7.1.5_95d2a9bc74ea88835494afbf23ead825
       aws-sdk: 2.967.0
       base-64: 1.0.0
       bcrypt: 5.0.1
@@ -121,8 +121,8 @@ importers:
       rxjs: 7.3.0
       sharp: 0.28.3
       swagger-ui-express: 4.1.6
-      typeorm: 0.2.36_better-sqlite3@7.4.3
-      typeorm-cursor-pagination: 0.6.1_typeorm@0.2.36
+      typeorm: 0.2.37_better-sqlite3@7.4.3
+      typeorm-cursor-pagination: 0.6.1_typeorm@0.2.37
       ua-parser-js: 0.7.28
       wait-on: 6.0.0
     devDependencies:
@@ -2657,7 +2657,7 @@ packages:
       tslib: 2.2.0
     dev: true
 
-  /@nestjs/typeorm/7.1.5_4277ce419d3a0747f2a8289b7dd7ad2d:
+  /@nestjs/typeorm/7.1.5_95d2a9bc74ea88835494afbf23ead825:
     resolution: {integrity: sha512-utE1FkYM/gyCXUqw3zKYYS0YZ3DfkAnzsCx4T48cNnSDTCeWS+u3yt0FMDFjwSiQSaLrzpiSff/FaxJQvRlYow==}
     peerDependencies:
       '@nestjs/common': ^6.7.0 || ^7.0.0
@@ -2670,7 +2670,7 @@ packages:
       '@nestjs/core': 7.6.18_3111ef5313cb3be26ac1dcc779950b07
       reflect-metadata: 0.1.13
       rxjs: 7.3.0
-      typeorm: 0.2.36_better-sqlite3@7.4.3
+      typeorm: 0.2.37_better-sqlite3@7.4.3
       uuid: 8.3.1
     dev: false
 
@@ -17648,13 +17648,8 @@ packages:
   /tslib/2.2.0:
     resolution: {integrity: sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==}
 
-  /tslib/2.3.0:
-    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
-    dev: false
-
   /tslib/2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
-    dev: true
 
   /tsscmp/1.0.6:
     resolution: {integrity: sha512-LxhtAkPDTkVCMQjt2h6eBVY28KCjikZqZfMcC15YBeNjkgUpdCfBu5HoiOTDu86v6smE8yOjyEktJ8hlbANHQA==}
@@ -17759,16 +17754,16 @@ packages:
   /typedarray/0.0.6:
     resolution: {integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=}
 
-  /typeorm-cursor-pagination/0.6.1_typeorm@0.2.36:
+  /typeorm-cursor-pagination/0.6.1_typeorm@0.2.37:
     resolution: {integrity: sha512-lqlvXBG2prsYFsBVZrWz2/wgoAcYzWCks/EMxP4wIVTISEO70dHQtQuaWWQP528lnW+rQNRwIK8sUuXMKJKavw==}
     peerDependencies:
       typeorm: ^0.2
     dependencies:
-      typeorm: 0.2.36_better-sqlite3@7.4.3
+      typeorm: 0.2.37_better-sqlite3@7.4.3
     dev: false
 
-  /typeorm/0.2.36_better-sqlite3@7.4.3:
-    resolution: {integrity: sha512-l4knslldEqKi5EavopnQASnt2V+kLby3SQaww34tXq//ckfUqq/GCU4eMcLhVBQl9OXCxoWOVEDwklBqk+Q+KQ==}
+  /typeorm/0.2.37_better-sqlite3@7.4.3:
+    resolution: {integrity: sha512-7rkW0yCgFC24I5T0f3S/twmLSuccPh1SQmxET/oDWn2sSDVzbyWdnItSdKy27CdJGTlKHYtUVeOcMYw5LRsXVw==}
     hasBin: true
     peerDependencies:
       '@sap/hana-client': '*'
@@ -17831,7 +17826,7 @@ packages:
       mkdirp: 1.0.4
       reflect-metadata: 0.1.13
       sha.js: 2.4.11
-      tslib: 2.3.0
+      tslib: 2.3.1
       xml2js: 0.4.23
       yargonaut: 1.1.4
       yargs: 17.0.1
