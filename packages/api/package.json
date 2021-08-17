@@ -94,7 +94,7 @@
     "prettier": "2.3.0",
     "redoc-cli": "0.12.3",
     "s3rver": "3.7.0",
-    "simple-git-hooks": "2.5.1",
+    "simple-git-hooks": "2.6.1",
     "supertest": "6.1.5",
     "ts-jest": "27.0.4",
     "ts-loader": "9.2.5",
