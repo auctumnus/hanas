@@ -76,7 +76,7 @@ importers:
       simple-git-hooks: 2.6.1
       supertest: 6.1.5
       swagger-ui-express: 4.1.6
-      ts-jest: 27.0.4
+      ts-jest: 27.0.5
       ts-loader: 9.2.5
       ts-node: 10.2.0
       tsconfig-paths: 3.10.1
@@ -157,7 +157,7 @@ importers:
       s3rver: 3.7.0
       simple-git-hooks: 2.6.1
       supertest: 6.1.5
-      ts-jest: 27.0.4_52cc4273aa16028085013af47e479e10
+      ts-jest: 27.0.5_52cc4273aa16028085013af47e479e10
       ts-loader: 9.2.5_typescript@4.3.5
       ts-node: 10.2.0_3cddbd81c3a53971a7cbc3c93cba6165
       tsconfig-paths: 3.10.1
@@ -17449,13 +17449,13 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /ts-jest/27.0.4_52cc4273aa16028085013af47e479e10:
-    resolution: {integrity: sha512-c4E1ECy9Xz2WGfTMyHbSaArlIva7Wi2p43QOMmCqjSSjHP06KXv+aT+eSY+yZMuqsMi3k7pyGsGj2q5oSl5WfQ==}
+  /ts-jest/27.0.5_52cc4273aa16028085013af47e479e10:
+    resolution: {integrity: sha512-lIJApzfTaSSbtlksfFNHkWOzLJuuSm4faFAfo5kvzOiRAuoN4/eKxVJ2zEAho8aecE04qX6K1pAzfH5QHL1/8w==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     hasBin: true
     peerDependencies:
       '@babel/core': '>=7.0.0-beta.0 <8'
-      '@types/jest': ^26.0.0
+      '@types/jest': ^27.0.0
       babel-jest: '>=27.0.0 <28'
       jest: ^27.0.0
       typescript: '>=3.8 <5.0'
@@ -17469,14 +17469,12 @@ packages:
     dependencies:
       '@types/jest': 26.0.24
       bs-logger: 0.2.6
-      buffer-from: 1.1.1
       fast-json-stable-stringify: 2.1.0
       jest: 27.0.6_ts-node@10.2.0
       jest-util: 27.0.6
       json5: 2.2.0
       lodash: 4.17.21
       make-error: 1.3.6
-      mkdirp: 1.0.4
       semver: 7.3.5
       typescript: 4.3.5
       yargs-parser: 20.2.9

@@ -96,7 +96,7 @@
     "s3rver": "3.7.0",
     "simple-git-hooks": "2.6.1",
     "supertest": "6.1.5",
-    "ts-jest": "27.0.4",
+    "ts-jest": "27.0.5",
     "ts-loader": "9.2.5",
     "ts-node": "10.2.0",
     "tsconfig-paths": "3.10.1",
