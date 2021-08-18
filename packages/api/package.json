@@ -76,7 +76,7 @@
     "@types/jest": "26.0.24",
     "@types/jsonwebtoken": "8.5.4",
     "@types/multer": "1.4.7",
-    "@types/node": "14.17.9",
+    "@types/node": "14.17.10",
     "@types/node-fetch": "2.5.12",
     "@types/passport-jwt": "3.0.6",
     "@types/passport-local": "1.0.34",
