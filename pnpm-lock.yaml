@@ -29,7 +29,7 @@ importers:
       '@types/cron': 1.7.3
       '@types/express': 4.17.13
       '@types/jest': 26.0.24
-      '@types/jsonwebtoken': 8.5.4
+      '@types/jsonwebtoken': 8.5.5
       '@types/multer': 1.4.7
       '@types/node': 14.17.10
       '@types/node-fetch': 2.5.12
@@ -135,7 +135,7 @@ importers:
       '@types/cron': 1.7.3
       '@types/express': 4.17.13
       '@types/jest': 26.0.24
-      '@types/jsonwebtoken': 8.5.4
+      '@types/jsonwebtoken': 8.5.5
       '@types/multer': 1.4.7
       '@types/node': 14.17.10
       '@types/node-fetch': 2.5.12
@@ -3268,6 +3268,12 @@ packages:
     resolution: {integrity: sha512-4L8msWK31oXwdtC81RmRBAULd0ShnAHjBuKT9MRQpjP0piNrZdXyTRcKY9/UIfhGeKIT4PvF5amOOUbbT/9Wpg==}
     dependencies:
       '@types/node': 16.0.0
+
+  /@types/jsonwebtoken/8.5.5:
+    resolution: {integrity: sha512-OGqtHQ7N5/Ap/TUwO6IgHDuLiAoTmHhGpNvgkCm/F4N6pKzx/RBSfr2OXZSwC6vkfnsEdb6+7DNZVtiXiwdwFw==}
+    dependencies:
+      '@types/node': 16.3.1
+    dev: true
 
   /@types/keyv/3.1.2:
     resolution: {integrity: sha512-/FvAK2p4jQOaJ6CGDHJTqZcUtbZe820qIeTg7o0Shg7drB4JHeL+V/dhSaly7NXx6u8eSee+r7coT+yuJEvDLg==}
