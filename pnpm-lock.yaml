@@ -19,7 +19,7 @@ importers:
       '@nestjs/passport': 7.1.6
       '@nestjs/platform-express': 7.6.18
       '@nestjs/schedule': 0.4.3
-      '@nestjs/schematics': 8.0.2
+      '@nestjs/schematics': 8.0.3
       '@nestjs/swagger': 4.8.2
       '@nestjs/testing': 7.6.18
       '@nestjs/typeorm': 7.1.5
@@ -127,7 +127,7 @@ importers:
       wait-on: 6.0.0
     devDependencies:
       '@nestjs/cli': 7.6.0
-      '@nestjs/schematics': 8.0.2_typescript@4.3.5
+      '@nestjs/schematics': 8.0.3_typescript@4.3.5
       '@nestjs/testing': 7.6.18_9cd0f963ae6f35bf288217e4f1c45cb4
       '@types/bcrypt': 5.0.0
       '@types/bull': 3.15.3
@@ -2598,8 +2598,8 @@ packages:
       typescript: 4.2.3
     dev: true
 
-  /@nestjs/schematics/8.0.2_typescript@4.3.5:
-    resolution: {integrity: sha512-iWtpXfn1Zh4Vm37BzY8OSJ60Y9TqNOjk8J+KLIwcql9EuP+0C/C4WUn+vIQMfmnut3MxRmAYFE2B/LFYrjGC5Q==}
+  /@nestjs/schematics/8.0.3_typescript@4.3.5:
+    resolution: {integrity: sha512-A5qyS9yv6v2RIBqbsyYG57NfYA8Jm/aypRV1nc7JXjhdfDHwWKqCsgQ/7/82vVjhlvVAfr5x/dpCWqcF3XYd7w==}
     peerDependencies:
       typescript: ^3.4.5 || ^4.3.5
     dependencies:
