@@ -189,7 +189,7 @@ importers:
   packages/web:
     specifiers:
       '@iconify/json': 1.1.392
-      '@vitejs/plugin-vue': 1.4.0
+      '@vitejs/plugin-vue': 1.5.0
       '@vue/compiler-sfc': 3.2.4
       '@vue/server-renderer': 3.2.4
       '@vueuse/core': 5.3.0
@@ -219,7 +219,7 @@ importers:
       vuex-persist: 3.1.3_vuex@4.0.2
     devDependencies:
       '@iconify/json': 1.1.392
-      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.4
+      '@vitejs/plugin-vue': 1.5.0_@vue+compiler-sfc@3.2.4
       '@vue/compiler-sfc': 3.2.4
       '@vue/server-renderer': 3.2.4_vue@3.2.4
       '@vueuse/head': 0.6.0_vue@3.2.4
@@ -3688,11 +3688,11 @@ packages:
       eslint-visitor-keys: 2.1.0
     dev: true
 
-  /@vitejs/plugin-vue/1.4.0_@vue+compiler-sfc@3.2.4:
-    resolution: {integrity: sha512-RkqfJHz9wdLKBp5Yi+kQL8BAljdrvPoccQm2PTZc/UcL4EjD11xsv2PPCduYx2oV1a/bpSKA3sD5sxOHFhz+LA==}
+  /@vitejs/plugin-vue/1.5.0_@vue+compiler-sfc@3.2.4:
+    resolution: {integrity: sha512-DwTvr9J/SSYHsrTiYTWAaUn0OnqgdINlfuhtxpWHcJVUtxGt07zZylV/ITjfeYgdcUCi0oLD+n9lwLnxlYSGtA==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
-      '@vue/compiler-sfc': ^3.0.8
+      '@vue/compiler-sfc': ^3.2.0
     dependencies:
       '@vue/compiler-sfc': 3.2.4
     dev: true
