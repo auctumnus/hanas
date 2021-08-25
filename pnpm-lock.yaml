@@ -79,7 +79,7 @@ importers:
       ts-jest: 27.0.5
       ts-loader: 9.2.5
       ts-node: 10.2.1
-      tsconfig-paths: 3.10.1
+      tsconfig-paths: 3.11.0
       typeorm: 0.2.37
       typeorm-cursor-pagination: 0.6.1
       typescript: 4.3.5
@@ -160,7 +160,7 @@ importers:
       ts-jest: 27.0.5_52cc4273aa16028085013af47e479e10
       ts-loader: 9.2.5_typescript@4.3.5
       ts-node: 10.2.1_a3da7f9f56afe7b98c9382c63365a60d
-      tsconfig-paths: 3.10.1
+      tsconfig-paths: 3.11.0
       typescript: 4.3.5
 
   packages/api-helper:
@@ -17722,6 +17722,15 @@ packages:
     resolution: {integrity: sha512-rETidPDgCpltxF7MjBZlAFPUHv5aHH2MymyPvh+vEyWAED4Eb/WeMbsnD/JDr4OKPOA1TssDHgIcpTN5Kh0p6Q==}
     dependencies:
       json5: 2.2.0
+      minimist: 1.2.5
+      strip-bom: 3.0.0
+    dev: true
+
+  /tsconfig-paths/3.11.0:
+    resolution: {integrity: sha512-7ecdYDnIdmv639mmDwslG6KQg1Z9STTz1j7Gcz0xa+nshh/gKDAHcPxRbWOsA3SPp0tXP2leTcY9Kw+NAkfZzA==}
+    dependencies:
+      '@types/json5': 0.0.29
+      json5: 1.0.1
       minimist: 1.2.5
       strip-bom: 3.0.0
     dev: true
