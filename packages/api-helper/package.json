@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "concurrently": "6.2.1",
-    "jest": "27.0.6",
+    "jest": "27.1.0",
     "prettier": "2.3.2",
     "rollpkg": "0.5.7",
     "tslib": "2.3.1",
