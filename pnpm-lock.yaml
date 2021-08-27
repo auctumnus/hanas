@@ -41,7 +41,7 @@ importers:
       '@types/wait-on': 5.3.1
       '@typescript-eslint/eslint-plugin': 4.29.3
       '@typescript-eslint/parser': 4.29.3
-      aws-sdk: 2.977.0
+      aws-sdk: 2.978.0
       base-64: 1.0.0
       bcrypt: 5.0.1
       better-sqlite3: 7.4.3
@@ -96,7 +96,7 @@ importers:
       '@nestjs/schedule': 0.4.3_f68191e5ff76da46b0e7001b964108a3
       '@nestjs/swagger': 4.8.2_0d542cb4e210f05d96ba504c599ba722
       '@nestjs/typeorm': 7.1.5_95d2a9bc74ea88835494afbf23ead825
-      aws-sdk: 2.977.0
+      aws-sdk: 2.978.0
       base-64: 1.0.0
       bcrypt: 5.0.1
       better-sqlite3: 7.4.3
@@ -4750,8 +4750,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /aws-sdk/2.977.0:
-    resolution: {integrity: sha512-LU0ityBR3w28Ewwr+V0xu4KyQr8i4C1ypafmBNttYm3FHVUDDPQ/hLHASnGq1zGp6rBxBxO1ZE6meFqpKXIaug==}
+  /aws-sdk/2.978.0:
+    resolution: {integrity: sha512-UO1HP2b9FFtPhc5KbzEJ9oMBdzCmVv9nQTb+yIEh6SajcaErmK/ryleLOuPq9EsirE6wgb6mtf2qodRFucUA3g==}
     engines: {node: '>= 0.8.0'}
     requiresBuild: true
     dependencies:
