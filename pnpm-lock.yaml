@@ -62,7 +62,7 @@ importers:
       multer-s3-v3: 3.10.0
       nanoid: 3.1.25
       nest-router: 1.0.9
-      node-fetch: 2.6.1
+      node-fetch: 2.6.2
       passport: 0.4.1
       passport-jwt: 4.0.0
       passport-local: 1.0.0
@@ -112,7 +112,7 @@ importers:
       multer-s3-v3: 3.10.0
       nanoid: 3.1.25
       nest-router: 1.0.9
-      node-fetch: 2.6.1
+      node-fetch: 2.6.2
       passport: 0.4.1
       passport-jwt: 4.0.0
       passport-local: 1.0.0
@@ -13004,6 +13004,11 @@ packages:
   /node-fetch/2.6.1:
     resolution: {integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==}
     engines: {node: 4.x || >=6.0.0}
+
+  /node-fetch/2.6.2:
+    resolution: {integrity: sha512-aLoxToI6RfZ+0NOjmWAgn9+LEd30YCkJKFSyWacNZdEKTit/ZMcKjGkTRo8uWEsnIb/hfKecNPEbln02PdWbcA==}
+    engines: {node: 4.x || >=6.0.0}
+    dev: false
 
   /node-gyp/3.8.0:
     resolution: {integrity: sha512-3g8lYefrRRzvGeSowdJKAKyks8oUpLEd/DyPV4eMhVlhJ0aNaZqIrNUIPuEWWTAoPqyFkfGrM67MC69baqn6vA==}
