@@ -32,7 +32,7 @@
     "vite-plugin-favicon": "1.0.8",
     "vite-plugin-icons": "0.6.5",
     "vite-plugin-pages": "0.18.0",
-    "vite-plugin-windicss": "1.3.0",
+    "vite-plugin-windicss": "1.4.1",
     "vue-router": "4.0.11",
     "vue-tsc": "0.3.0"
   },
