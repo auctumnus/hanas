@@ -72,7 +72,7 @@ importers:
       rimraf: 3.0.2
       rxjs: 7.3.0
       s3rver: 3.7.0
-      sharp: 0.29.0
+      sharp: 0.29.1
       simple-git-hooks: 2.6.1
       supertest: 6.1.6
       swagger-ui-express: 4.1.6
@@ -119,7 +119,7 @@ importers:
       reflect-metadata: 0.1.13
       rimraf: 3.0.2
       rxjs: 7.3.0
-      sharp: 0.29.0
+      sharp: 0.29.1
       swagger-ui-express: 4.1.6
       typeorm: 0.2.37_better-sqlite3@7.4.3
       typeorm-cursor-pagination: 0.6.1_typeorm@0.2.37
@@ -4442,7 +4442,6 @@ packages:
   /ansi-regex/3.0.0:
     resolution: {integrity: sha1-7QMXwyIGT3lGbAKWa922Bas32Zg=}
     engines: {node: '>=4'}
-    dev: true
 
   /ansi-regex/4.1.0:
     resolution: {integrity: sha512-1apePfXM1UOSqw0o9IiFAovVz9M5S1Dg+4TrDwfMewQ6p/rmMueb7tWZjQ1rx4Loy1ArBggoqGpfqqdI4rondg==}
@@ -9879,7 +9878,6 @@ packages:
   /is-fullwidth-code-point/2.0.0:
     resolution: {integrity: sha1-o7MKXE8ZkYMWeqq5O+764937ZU8=}
     engines: {node: '>=4'}
-    dev: true
 
   /is-fullwidth-code-point/3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
@@ -12984,8 +12982,8 @@ packages:
   /node-addon-api/3.2.1:
     resolution: {integrity: sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==}
 
-  /node-addon-api/4.0.0:
-    resolution: {integrity: sha512-ALmRVBFzfwldBfk3SbKfl6+PVMXiCPKZBEfsJqB/EjXAMAI+MfFrEHR+GMRBuI162DihZ1QjEZ8ieYKuRCJ8Hg==}
+  /node-addon-api/4.1.0:
+    resolution: {integrity: sha512-Zz1o1BDX2VtduiAt6kgiUl8jX1Vm3NMboljFYKQJ6ee8AGfiTvM2mlZFI3xPbqjs80rCQgiVJI/DjQ/1QJ0HwA==}
     dev: false
 
   /node-emoji/1.10.0:
@@ -16390,14 +16388,14 @@ packages:
       tunnel-agent: 0.6.0
     dev: true
 
-  /sharp/0.29.0:
-    resolution: {integrity: sha512-mdN1Up0eN+SwyForPls59dWO0nx64J1XRQYy5ZiKSADAccGYCB10UAGJHSVG9VObzJdhHqrVJzQcq6gx8USyoA==}
+  /sharp/0.29.1:
+    resolution: {integrity: sha512-DpgdAny9TuS+oWCQ7MRS8XyY9x6q1+yW3a5wNx0J3HrGuB/Jot/8WcT+lElHY9iJu2pwtegSGxqMaqFiMhs4rQ==}
     engines: {node: '>=12.13.0'}
     requiresBuild: true
     dependencies:
       color: 4.0.1
       detect-libc: 1.0.3
-      node-addon-api: 4.0.0
+      node-addon-api: 4.1.0
       prebuild-install: 6.1.4
       semver: 7.3.5
       simple-get: 3.1.0
@@ -16963,7 +16961,6 @@ packages:
     dependencies:
       is-fullwidth-code-point: 2.0.0
       strip-ansi: 4.0.0
-    dev: true
 
   /string-width/3.1.0:
     resolution: {integrity: sha512-vafcv6KjVZKSgz06oM/H6GDBrAtz8vdhQakGjFIvNrHA6y3HCF1CInLy+QLq8dTJPQ1b+KDUqDFctkdRW44e1w==}
@@ -17032,7 +17029,6 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       ansi-regex: 3.0.0
-    dev: true
 
   /strip-ansi/5.2.0:
     resolution: {integrity: sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==}
@@ -19007,7 +19003,7 @@ packages:
   /wide-align/1.1.3:
     resolution: {integrity: sha512-QGkOQc8XL6Bt5PwnsExKBPuMKBxnGxWWW3fU55Xt4feHozMUhdUMaBCk290qpm/wG5u/RSKzwdAC4i51YigihA==}
     dependencies:
-      string-width: 1.0.2
+      string-width: 2.1.1
 
   /widest-line/3.1.0:
     resolution: {integrity: sha512-NsmoXalsWVDMGupxZ5R08ka9flZjjiLvHVAWYOKtiKM8ujtZWr9cRffak+uSE48+Ob8ObalXpwyeUiyDD6QFgg==}
