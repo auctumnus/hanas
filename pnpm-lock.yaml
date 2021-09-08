@@ -45,7 +45,7 @@ importers:
       base-64: 1.0.0
       bcrypt: 5.0.1
       better-sqlite3: 7.4.3
-      bull: 3.29.1
+      bull: 3.29.2
       bytes: 3.1.0
       class-transformer: 0.4.0
       class-validator: 0.13.1
@@ -86,7 +86,7 @@ importers:
       ua-parser-js: 0.7.28
       wait-on: 6.0.0
     dependencies:
-      '@nestjs/bull': 0.4.1_f3ff39d9f4cee084a5a5d02735dff1fa
+      '@nestjs/bull': 0.4.1_3d07feb2af7d5fdf151914721b3621f2
       '@nestjs/common': 7.6.18_7de7ece315067f012f2001b6a7f20971
       '@nestjs/core': 7.6.18_3111ef5313cb3be26ac1dcc779950b07
       '@nestjs/jwt': 8.0.0_@nestjs+common@7.6.18
@@ -100,7 +100,7 @@ importers:
       base-64: 1.0.0
       bcrypt: 5.0.1
       better-sqlite3: 7.4.3
-      bull: 3.29.1
+      bull: 3.29.2
       bytes: 3.1.0
       class-transformer: 0.4.0
       class-validator: 0.13.1
@@ -2481,7 +2481,7 @@ packages:
       - supports-color
     dev: false
 
-  /@nestjs/bull/0.4.1_f3ff39d9f4cee084a5a5d02735dff1fa:
+  /@nestjs/bull/0.4.1_3d07feb2af7d5fdf151914721b3621f2:
     resolution: {integrity: sha512-RwraagNSRHvd1QTC35BFnF+RkSjheKvX/HlpQU/G0O4Y1QOOBJpJLAYjgQgNqQazym3lTE/7ykCzZR/Ad1b0AQ==}
     peerDependencies:
       '@nestjs/common': ^6.10.11 || ^7.0.0 || ^8.0.0
@@ -2490,7 +2490,7 @@ packages:
     dependencies:
       '@nestjs/common': 7.6.18_7de7ece315067f012f2001b6a7f20971
       '@nestjs/core': 7.6.18_3111ef5313cb3be26ac1dcc779950b07
-      bull: 3.29.1
+      bull: 3.29.2
     dev: false
 
   /@nestjs/cli/7.6.0:
@@ -5305,8 +5305,8 @@ packages:
     resolution: {integrity: sha1-y5T662HIaWRR2zZTThQi+U8K7og=}
     dev: true
 
-  /bull/3.29.1:
-    resolution: {integrity: sha512-ASNnorakKCV4hmgHABfn8Ir+gy24a4gaGnXH/0bm1Msq+djOnNfM5XW7Igzsa5iTjpboWXhY9dHFVjiWRKsSGw==}
+  /bull/3.29.2:
+    resolution: {integrity: sha512-zWHyza/ElwVvJUqIEDJdUhGKd1V9EHjituUL7sJAmJoxS9Z7QMhYcMOWcgbUlWPgtiKN1g9ZlOtFAoq7C4/SQw==}
     engines: {node: '>=10'}
     dependencies:
       cron-parser: 2.18.0
