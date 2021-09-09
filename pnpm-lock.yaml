@@ -35,7 +35,7 @@ importers:
       '@types/node-fetch': 2.5.12
       '@types/passport-jwt': 3.0.6
       '@types/passport-local': 1.0.34
-      '@types/sharp': 0.29.0
+      '@types/sharp': 0.29.1
       '@types/supertest': 2.0.11
       '@types/ua-parser-js': 0.7.36
       '@types/wait-on': 5.3.1
@@ -141,7 +141,7 @@ importers:
       '@types/node-fetch': 2.5.12
       '@types/passport-jwt': 3.0.6
       '@types/passport-local': 1.0.34
-      '@types/sharp': 0.29.0
+      '@types/sharp': 0.29.1
       '@types/supertest': 2.0.11
       '@types/ua-parser-js': 0.7.36
       '@types/wait-on': 5.3.1
@@ -3465,8 +3465,8 @@ packages:
       '@types/node': 16.3.1
     dev: true
 
-  /@types/sharp/0.29.0:
-    resolution: {integrity: sha512-4NnheFjVvjMUMq8wna3tgvhbU89sBQTHy+ekM2wLWeq9b4TgdOywVBT1chQfwVfEZGVyuLrEtqiP3SA/NVMlbA==}
+  /@types/sharp/0.29.1:
+    resolution: {integrity: sha512-UOQu+7MY/TRlVNjVuNtLpAlekKWNZNZzYtIDHRzPloKRkPW8jlPh1RsUIhyG98OibzzneqoAhb31C5j42ERFwA==}
     dependencies:
       '@types/node': 16.3.1
     dev: true
