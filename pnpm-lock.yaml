@@ -51,7 +51,7 @@ importers:
       class-validator: 0.13.1
       concurrently: 6.2.1
       cross-env: 7.0.3
-      dotenv-defaults: 2.0.2
+      dotenv-defaults: 3.0.0
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0
       eslint-plugin-prettier: 3.4.1
@@ -105,7 +105,7 @@ importers:
       class-transformer: 0.4.0
       class-validator: 0.13.1
       cross-env: 7.0.3
-      dotenv-defaults: 2.0.2
+      dotenv-defaults: 3.0.0
       image-size: 1.0.0
       jsonwebtoken: 8.5.1
       multer: 1.4.3
@@ -7218,10 +7218,15 @@ packages:
       is-obj: 2.0.0
     dev: true
 
-  /dotenv-defaults/2.0.2:
-    resolution: {integrity: sha512-iOIzovWfsUHU91L5i8bJce3NYK5JXeAwH50Jh6+ARUdLiiGlYWfGw6UkzsYqaXZH/hjE/eCd/PlfM/qqyK0AMg==}
+  /dotenv-defaults/3.0.0:
+    resolution: {integrity: sha512-Hjl1WzXb/Vo95ugop6NxV65JkN/v7SUN1rbDjwqsXpXLh0zppQ/yvYG7kHAAlfmEt3sJ2xjgOV5OsMDjwLeyGw==}
     dependencies:
-      dotenv: 8.6.0
+      dotenv: 10.0.0
+    dev: false
+
+  /dotenv/10.0.0:
+    resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
+    engines: {node: '>=10'}
     dev: false
 
   /dotenv/8.6.0:
