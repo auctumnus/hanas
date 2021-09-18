@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@iconify/json": "1.1.403",
-    "@vitejs/plugin-vue": "1.7.0",
+    "@vitejs/plugin-vue": "1.8.0",
     "@vue/compiler-sfc": "3.2.12",
     "@vue/server-renderer": "3.2.12",
     "@vueuse/head": "0.6.0",
