@@ -62,7 +62,7 @@ importers:
       multer-s3-v3: 3.10.0
       nanoid: 3.1.25
       nest-router: 1.0.9
-      node-fetch: 2.6.3
+      node-fetch: 2.6.4
       passport: 0.4.1
       passport-jwt: 4.0.0
       passport-local: 1.0.0
@@ -112,7 +112,7 @@ importers:
       multer-s3-v3: 3.10.0
       nanoid: 3.1.25
       nest-router: 1.0.9
-      node-fetch: 2.6.3
+      node-fetch: 2.6.4
       passport: 0.4.1
       passport-jwt: 4.0.0
       passport-local: 1.0.0
@@ -13010,8 +13010,8 @@ packages:
     resolution: {integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==}
     engines: {node: 4.x || >=6.0.0}
 
-  /node-fetch/2.6.3:
-    resolution: {integrity: sha512-BXSmNTLLDHT0UjQDg5E23x+0n/hPDjySqc0ELE4NpCa2wE5qmmaEWFRP/+v8pfuocchR9l5vFLbSB7CPE2ahvQ==}
+  /node-fetch/2.6.4:
+    resolution: {integrity: sha512-aD1fO+xtLiSCc9vuD+sYMxpIuQyhHscGSkBEo2o5LTV/3bTEAYvdUii29n8LlO5uLCmWdGP7uVUVXFo5SRdkLA==}
     engines: {node: 4.x || >=6.0.0}
     dependencies:
       whatwg-url: 5.0.0
