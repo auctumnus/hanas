@@ -63,7 +63,7 @@ importers:
       nanoid: 3.1.25
       nest-router: 1.0.9
       node-fetch: 2.6.5
-      passport: 0.4.1
+      passport: 0.5.0
       passport-jwt: 4.0.0
       passport-local: 1.0.0
       prettier: 2.3.0
@@ -91,7 +91,7 @@ importers:
       '@nestjs/core': 7.6.18_3111ef5313cb3be26ac1dcc779950b07
       '@nestjs/jwt': 8.0.0_@nestjs+common@7.6.18
       '@nestjs/mapped-types': 0.4.1_6f8ce2e44b5ac9a8ad69c2d324f2c358
-      '@nestjs/passport': 7.1.6_fd45a09fcff1f973814c588ad08d33e0
+      '@nestjs/passport': 7.1.6_1b8f5eed36ce747133de95b67a6002a2
       '@nestjs/platform-express': 7.6.18_2664420588e0901c7943acb4693cbaf4
       '@nestjs/schedule': 0.4.3_f68191e5ff76da46b0e7001b964108a3
       '@nestjs/swagger': 4.8.2_0d542cb4e210f05d96ba504c599ba722
@@ -113,7 +113,7 @@ importers:
       nanoid: 3.1.25
       nest-router: 1.0.9
       node-fetch: 2.6.5
-      passport: 0.4.1
+      passport: 0.5.0
       passport-jwt: 4.0.0
       passport-local: 1.0.0
       reflect-metadata: 0.1.13
@@ -2603,14 +2603,14 @@ packages:
       reflect-metadata: 0.1.13
     dev: false
 
-  /@nestjs/passport/7.1.6_fd45a09fcff1f973814c588ad08d33e0:
+  /@nestjs/passport/7.1.6_1b8f5eed36ce747133de95b67a6002a2:
     resolution: {integrity: sha512-iHD/4D01CsKKWg7kUzo4yGNS4m90z1an0eUz+6nBlE5VeEOuCzhGFoBKAt0OKLJLOTEsJKuj4C2b5QfjqXVTyQ==}
     peerDependencies:
       '@nestjs/common': ^6.0.0 || ^7.0.0
       passport: ^0.4.0
     dependencies:
       '@nestjs/common': 7.6.18_7de7ece315067f012f2001b6a7f20971
-      passport: 0.4.1
+      passport: 0.5.0
     dev: false
 
   /@nestjs/platform-express/7.6.18_2664420588e0901c7943acb4693cbaf4:
@@ -14150,8 +14150,8 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: false
 
-  /passport/0.4.1:
-    resolution: {integrity: sha512-IxXgZZs8d7uFSt3eqNjM9NQ3g3uQCW5avD8mRNoXV99Yig50vjuaez6dQK2qC0kVWPRTujxY0dWgGfT09adjYg==}
+  /passport/0.5.0:
+    resolution: {integrity: sha512-ln+ue5YaNDS+fes6O5PCzXKSseY5u8MYhX9H5Co4s+HfYI5oqvnHKoOORLYDUPh+8tHvrxugF2GFcUA1Q1Gqfg==}
     engines: {node: '>= 0.4.0'}
     dependencies:
       passport-strategy: 1.0.0
