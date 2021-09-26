@@ -60,7 +60,7 @@ importers:
       jsonwebtoken: 8.5.1
       multer: 1.4.3
       multer-s3-v3: 3.10.0
-      nanoid: 3.1.25
+      nanoid: 3.1.28
       nest-router: 1.0.9
       node-fetch: 2.6.5
       passport: 0.5.0
@@ -110,7 +110,7 @@ importers:
       jsonwebtoken: 8.5.1
       multer: 1.4.3
       multer-s3-v3: 3.10.0
-      nanoid: 3.1.25
+      nanoid: 3.1.28
       nest-router: 1.0.9
       node-fetch: 2.6.5
       passport: 0.5.0
@@ -12906,6 +12906,12 @@ packages:
     resolution: {integrity: sha512-rdwtIXaXCLFAQbnfqDRnI6jaRHp9fTcYBjtFKE8eezcZ7LuLjhUaQGNeMXf1HmRoCH32CLz6XwX0TtxEOS/A3Q==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  /nanoid/3.1.28:
+    resolution: {integrity: sha512-gSu9VZ2HtmoKYe/lmyPFES5nknFrHa+/DT9muUFWFMi6Jh9E1I7bkvlQ8xxf1Kos9pi9o8lBnIOkatMhKX/YUw==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+    dev: false
 
   /nanomatch/1.2.13:
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
