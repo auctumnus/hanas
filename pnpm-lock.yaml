@@ -188,7 +188,7 @@ importers:
 
   packages/web:
     specifiers:
-      '@iconify/json': 1.1.406
+      '@iconify/json': 1.1.407
       '@vitejs/plugin-vue': 1.9.2
       '@vue/compiler-sfc': 3.2.19
       '@vue/server-renderer': 3.2.19
@@ -218,7 +218,7 @@ importers:
       vuex: 4.0.2_vue@3.2.19
       vuex-persist: 3.1.3_vuex@4.0.2
     devDependencies:
-      '@iconify/json': 1.1.406
+      '@iconify/json': 1.1.407
       '@vitejs/plugin-vue': 1.9.2_vite@2.5.10
       '@vue/compiler-sfc': 3.2.19
       '@vue/server-renderer': 3.2.19_vue@3.2.19
@@ -231,7 +231,7 @@ importers:
       vite: 2.5.10
       vite-plugin-components: 0.13.3_vite@2.5.10
       vite-plugin-favicon: 1.0.8_vite@2.5.10
-      vite-plugin-icons: 0.6.5_5dbe9e8d8614e46bffca18b80672bab8
+      vite-plugin-icons: 0.6.5_5e3531e64d77b4a4aa509d5a22779aa6
       vite-plugin-pages: 0.18.1_b9ae0996bc931d681075723dfc8cab4c
       vite-plugin-windicss: 1.4.7_typescript@4.4.3+vite@2.5.10
       vue-router: 4.0.11_vue@3.2.19
@@ -915,8 +915,8 @@ packages:
     resolution: {integrity: sha512-LFelJDOLZ6JHlmlAkgrvmcu4hpNPB91KYcr4f60D/exzU1eNOb4/KCVHIydGHIQFaOacIOD+Xy+B7P1z812cZg==}
     dev: true
 
-  /@iconify/json/1.1.406:
-    resolution: {integrity: sha512-3mNuYfU1cQeaV0m2mSI5Lf+13Tr6xueOP30w3Du4xCIBFGQY4O0D8wJ8rOp9PXRik1oleu+aKfEVnned0b/tqw==}
+  /@iconify/json/1.1.407:
+    resolution: {integrity: sha512-qDPlh+sS+DLUOraBgQtAf1RCSGpOuBTJrF74Ato5mFOemawmbqXpY/c+oPIuQ4MIo/biWZ9dxQK8s/AD+tYiYg==}
     dev: true
 
   /@istanbuljs/load-nyc-config/1.1.0:
@@ -18452,7 +18452,7 @@ packages:
       vite: 2.5.10
     dev: true
 
-  /vite-plugin-icons/0.6.5_5dbe9e8d8614e46bffca18b80672bab8:
+  /vite-plugin-icons/0.6.5_5e3531e64d77b4a4aa509d5a22779aa6:
     resolution: {integrity: sha512-lfePr8juO2ajp0571iLL+9zIoyBD9nSSSHlC4JYXbAeMOJB6WTP+Vdc2gze8yI8JRO+Z0TXCCvvL9bPgvkI4Cg==}
     peerDependencies:
       '@iconify/json': '*'
@@ -18464,7 +18464,7 @@ packages:
       vue-template-compiler:
         optional: true
     dependencies:
-      '@iconify/json': 1.1.406
+      '@iconify/json': 1.1.407
       '@iconify/json-tools': 1.0.10
       '@vue/compiler-sfc': 3.2.19
       vue-template-es2015-compiler: 1.9.1
