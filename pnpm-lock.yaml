@@ -66,7 +66,7 @@ importers:
       passport: 0.5.0
       passport-jwt: 4.0.0
       passport-local: 1.0.0
-      prettier: 2.3.0
+      prettier: 2.4.1
       redoc-cli: 0.12.3
       reflect-metadata: 0.1.13
       rimraf: 3.0.2
@@ -150,9 +150,9 @@ importers:
       concurrently: 6.2.2
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0_eslint@7.32.0
-      eslint-plugin-prettier: 3.4.1_39707b7de4180b40645e0fe3095cfe49
+      eslint-plugin-prettier: 3.4.1_6e975bd57c7acf028c1a9ddbbf60c898
       jest: 27.2.3_ts-node@10.2.1
-      prettier: 2.3.0
+      prettier: 2.4.1
       redoc-cli: 0.12.3
       s3rver: 3.7.0
       simple-git-hooks: 2.6.1
@@ -169,7 +169,7 @@ importers:
       eiki: ^0.1.0
       jest: 27.2.3
       js-base64: ^3.6.1
-      prettier: 2.3.2
+      prettier: 2.4.1
       redaxios: ^0.4.1
       rollpkg: 0.5.7
       tslib: 2.3.1
@@ -181,7 +181,7 @@ importers:
     devDependencies:
       concurrently: 6.2.2
       jest: 27.2.3
-      prettier: 2.3.2
+      prettier: 2.4.1
       rollpkg: 0.5.7_typescript@4.4.3
       tslib: 2.3.1
       typescript: 4.4.3
@@ -196,7 +196,7 @@ importers:
       '@vueuse/head': 0.6.0
       commitizen: 4.2.4
       git-cz: 4.7.6
-      prettier: 2.3.0
+      prettier: 2.4.1
       reset.css: 2.0.2
       simple-git-hooks: 2.6.1
       typescript: 4.4.3
@@ -225,7 +225,7 @@ importers:
       '@vueuse/head': 0.6.0_vue@3.2.19
       commitizen: 4.2.4
       git-cz: 4.7.6
-      prettier: 2.3.0
+      prettier: 2.4.1
       simple-git-hooks: 2.6.1
       typescript: 4.4.3
       vite: 2.5.10
@@ -7683,7 +7683,7 @@ packages:
       language-tags: 1.0.5
     dev: true
 
-  /eslint-plugin-prettier/3.4.1_39707b7de4180b40645e0fe3095cfe49:
+  /eslint-plugin-prettier/3.4.1_6e975bd57c7acf028c1a9ddbbf60c898:
     resolution: {integrity: sha512-htg25EUYUeIhKHXjOinK4BgCcDwtLHjqaxCDsMy5nbnUMkKFvIhMVCp+5GFUXQ4Nr8lBsPqtGAqBenbpFqAA2g==}
     engines: {node: '>=6.0.0'}
     peerDependencies:
@@ -7696,7 +7696,7 @@ packages:
     dependencies:
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0_eslint@7.32.0
-      prettier: 2.3.0
+      prettier: 2.4.1
       prettier-linter-helpers: 1.0.0
     dev: true
 
@@ -14869,14 +14869,14 @@ packages:
     dev: true
     optional: true
 
-  /prettier/2.3.0:
-    resolution: {integrity: sha512-kXtO4s0Lz/DW/IJ9QdWhAf7/NmPWQXkFr/r/WkR3vyI+0v8amTDxiaQSLzs8NBlytfLWX/7uQUMIW677yLKl4w==}
+  /prettier/2.3.2:
+    resolution: {integrity: sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
 
-  /prettier/2.3.2:
-    resolution: {integrity: sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==}
+  /prettier/2.4.1:
+    resolution: {integrity: sha512-9fbDAXSBcc6Bs1mZrDYb3XKzDLm4EXXL9sC1LqKP5rZkT6KRr/rf9amVUcODVXgguK/isJz0d0hP72WeaKWsvA==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
