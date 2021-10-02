@@ -80,7 +80,7 @@ importers:
       ts-loader: 9.2.6
       ts-node: 10.2.1
       tsconfig-paths: 3.11.0
-      typeorm: 0.2.37
+      typeorm: 0.2.38
       typeorm-cursor-pagination: 0.6.1
       typescript: 4.4.3
       ua-parser-js: 0.7.28
@@ -95,7 +95,7 @@ importers:
       '@nestjs/platform-express': 7.6.18_2664420588e0901c7943acb4693cbaf4
       '@nestjs/schedule': 0.4.3_f68191e5ff76da46b0e7001b964108a3
       '@nestjs/swagger': 4.8.2_0d542cb4e210f05d96ba504c599ba722
-      '@nestjs/typeorm': 7.1.5_4b503dce01b7e48970f91c50fac7076a
+      '@nestjs/typeorm': 7.1.5_aa1d03fecf1183f713695fd0cf7c04e1
       aws-sdk: 2.999.0
       base-64: 1.0.0
       bcrypt: 5.0.1
@@ -121,8 +121,8 @@ importers:
       rxjs: 7.3.1
       sharp: 0.29.1
       swagger-ui-express: 4.1.6
-      typeorm: 0.2.37_better-sqlite3@7.4.3
-      typeorm-cursor-pagination: 0.6.1_typeorm@0.2.37
+      typeorm: 0.2.38_better-sqlite3@7.4.3
+      typeorm-cursor-pagination: 0.6.1_typeorm@0.2.38
       ua-parser-js: 0.7.28
       wait-on: 6.0.0
     devDependencies:
@@ -2710,7 +2710,7 @@ packages:
       tslib: 2.2.0
     dev: true
 
-  /@nestjs/typeorm/7.1.5_4b503dce01b7e48970f91c50fac7076a:
+  /@nestjs/typeorm/7.1.5_aa1d03fecf1183f713695fd0cf7c04e1:
     resolution: {integrity: sha512-utE1FkYM/gyCXUqw3zKYYS0YZ3DfkAnzsCx4T48cNnSDTCeWS+u3yt0FMDFjwSiQSaLrzpiSff/FaxJQvRlYow==}
     peerDependencies:
       '@nestjs/common': ^6.7.0 || ^7.0.0
@@ -2723,7 +2723,7 @@ packages:
       '@nestjs/core': 7.6.18_885ba85df7e912985d29e52d08148fdb
       reflect-metadata: 0.1.13
       rxjs: 7.3.1
-      typeorm: 0.2.37_better-sqlite3@7.4.3
+      typeorm: 0.2.38_better-sqlite3@7.4.3
       uuid: 8.3.1
     dev: false
 
@@ -5589,7 +5589,6 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-    dev: true
 
   /char-regex/1.0.2:
     resolution: {integrity: sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==}
@@ -5746,7 +5745,7 @@ packages:
     engines: {node: '>=8.0.0', npm: '>=5.0.0'}
     hasBin: true
     dependencies:
-      chalk: 4.1.1
+      chalk: 4.1.2
       highlight.js: 10.7.3
       mz: 2.7.0
       parse5: 5.1.1
@@ -18001,16 +18000,16 @@ packages:
   /typedarray/0.0.6:
     resolution: {integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=}
 
-  /typeorm-cursor-pagination/0.6.1_typeorm@0.2.37:
+  /typeorm-cursor-pagination/0.6.1_typeorm@0.2.38:
     resolution: {integrity: sha512-lqlvXBG2prsYFsBVZrWz2/wgoAcYzWCks/EMxP4wIVTISEO70dHQtQuaWWQP528lnW+rQNRwIK8sUuXMKJKavw==}
     peerDependencies:
       typeorm: ^0.2
     dependencies:
-      typeorm: 0.2.37_better-sqlite3@7.4.3
+      typeorm: 0.2.38_better-sqlite3@7.4.3
     dev: false
 
-  /typeorm/0.2.37_better-sqlite3@7.4.3:
-    resolution: {integrity: sha512-7rkW0yCgFC24I5T0f3S/twmLSuccPh1SQmxET/oDWn2sSDVzbyWdnItSdKy27CdJGTlKHYtUVeOcMYw5LRsXVw==}
+  /typeorm/0.2.38_better-sqlite3@7.4.3:
+    resolution: {integrity: sha512-M6Y3KQcAREQcphOVJciywf4mv6+A0I/SeR+lWNjKsjnQ+a3XcMwGYMGL0Jonsx3H0Cqlf/3yYqVki1jIXSK/xg==}
     hasBin: true
     peerDependencies:
       '@sap/hana-client': '*'
@@ -18064,7 +18063,7 @@ packages:
       app-root-path: 3.0.0
       better-sqlite3: 7.4.3
       buffer: 6.0.3
-      chalk: 4.1.1
+      chalk: 4.1.2
       cli-highlight: 2.1.11
       debug: 4.3.2
       dotenv: 8.6.0
