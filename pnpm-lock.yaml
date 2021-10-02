@@ -49,7 +49,7 @@ importers:
       bytes: 3.1.0
       class-transformer: 0.4.0
       class-validator: 0.13.1
-      concurrently: 6.2.2
+      concurrently: 6.3.0
       cross-env: 7.0.3
       dotenv-defaults: 2.0.2
       eslint: 7.32.0
@@ -147,7 +147,7 @@ importers:
       '@types/wait-on': 5.3.1
       '@typescript-eslint/eslint-plugin': 4.32.0_1eacf2495a01e8a68ffa99482308e8ec
       '@typescript-eslint/parser': 4.32.0_eslint@7.32.0+typescript@4.4.3
-      concurrently: 6.2.2
+      concurrently: 6.3.0
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0_eslint@7.32.0
       eslint-plugin-prettier: 3.4.1_6e975bd57c7acf028c1a9ddbbf60c898
@@ -165,7 +165,7 @@ importers:
 
   packages/api-helper:
     specifiers:
-      concurrently: 6.2.2
+      concurrently: 6.3.0
       eiki: ^0.1.0
       jest: 27.2.4
       js-base64: ^3.6.1
@@ -179,7 +179,7 @@ importers:
       js-base64: 3.6.1
       redaxios: 0.4.1
     devDependencies:
-      concurrently: 6.2.2
+      concurrently: 6.3.0
       jest: 27.2.4
       prettier: 2.4.1
       rollpkg: 0.5.7_typescript@4.4.3
@@ -6090,8 +6090,8 @@ packages:
       typedarray: 0.0.6
     dev: true
 
-  /concurrently/6.2.2:
-    resolution: {integrity: sha512-7a45BjVakAl3pprLOeqaOoZfIWZRmdC68NkjyzPbKu0/pE6CRmqS3l8RG7Q2cX9LnRHkB0oPM6af8PS7NEQvYQ==}
+  /concurrently/6.3.0:
+    resolution: {integrity: sha512-k4k1jQGHHKsfbqzkUszVf29qECBrkvBKkcPJEUDTyVR7tZd1G/JOfnst4g1sYbFvJ4UjHZisj1aWQR8yLKpGPw==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     dependencies:
