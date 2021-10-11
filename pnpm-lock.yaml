@@ -67,7 +67,7 @@ importers:
       passport-jwt: 4.0.0
       passport-local: 1.0.0
       prettier: 2.4.1
-      redoc-cli: 0.12.3
+      redoc-cli: 0.13.0
       reflect-metadata: 0.1.13
       rimraf: 3.0.2
       rxjs: 7.4.0
@@ -153,7 +153,7 @@ importers:
       eslint-plugin-prettier: 3.4.1_6e975bd57c7acf028c1a9ddbbf60c898
       jest: 27.2.5_ts-node@10.2.1
       prettier: 2.4.1
-      redoc-cli: 0.12.3
+      redoc-cli: 0.13.0
       s3rver: 3.7.1
       simple-git-hooks: 2.6.1
       supertest: 6.1.6
@@ -374,7 +374,7 @@ packages:
     resolution: {integrity: sha512-EivH9EgBIb+G8ij1B2jAwSH36WnGvkQSEC6CkX/6v6ZFlw5fVOHvsgGF4uiEHO2GzMvunZb6tDLQEQSdrdocrA==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.14.5
+      '@babel/types': 7.15.0
     dev: true
 
   /@babel/helper-compilation-targets/7.14.5_@babel+core@7.14.6:
@@ -2925,18 +2925,18 @@ packages:
       uri-js: 4.4.1
     dev: true
 
-  /@redocly/openapi-core/1.0.0-beta.53:
-    resolution: {integrity: sha512-n5WixBRb7oWS31v3/cdOW/eNXbr2M4N8+HjHfCA/oQX6Z4ZYqPOJCekw64sQ/fnUQMIQyT6fKqyaf+iO4tG7YA==}
+  /@redocly/openapi-core/1.0.0-beta.62:
+    resolution: {integrity: sha512-g4iPB7qpSNFCOpf/FgKiic+QCaCn4mdNQOWVEPuwpN7l72hlQ7J3YUa9cssJomkJXXxZ1zdP4h208s12LkhwVA==}
     engines: {node: '>=12.0.0'}
     dependencies:
       '@redocly/ajv': 8.6.2
-      '@types/node': 14.17.9
+      '@types/node': 14.17.21
       colorette: 1.2.2
       js-levenshtein: 1.1.6
       js-yaml: 3.14.1
       lodash.isequal: 4.5.0
       minimatch: 3.0.4
-      node-fetch: 2.6.1
+      node-fetch: 2.6.5
       yaml-ast-parser: 0.0.43
     dev: true
 
@@ -3366,14 +3366,6 @@ packages:
 
   /@types/node/14.17.4:
     resolution: {integrity: sha512-8kQ3+wKGRNN0ghtEn7EGps/B8CzuBz1nXZEIGGLP2GnwbqYn4dbTs7k+VKLTq1HvZLRCIDtN3Snx1Ege8B7L5A==}
-    dev: true
-
-  /@types/node/14.17.9:
-    resolution: {integrity: sha512-CMjgRNsks27IDwI785YMY0KLt3co/c0cQ5foxHYv/shC2w8oOnVwz5Ubq1QG5KzrcW+AXk6gzdnxIkDnTvzu3g==}
-    dev: true
-
-  /@types/node/15.14.1:
-    resolution: {integrity: sha512-wF6hazbsnwaW3GhK4jFuw5NaLDQVRQ6pWQUGAUrJzxixFkTaODSiAKMPXuHwPEPkAKQWHAzj6uJ5h+3zU9gQxg==}
     dev: true
 
   /@types/node/16.0.0:
@@ -13008,7 +13000,6 @@ packages:
     engines: {node: 4.x || >=6.0.0}
     dependencies:
       whatwg-url: 5.0.0
-    dev: false
 
   /node-gyp/3.8.0:
     resolution: {integrity: sha512-3g8lYefrRRzvGeSowdJKAKyks8oUpLEd/DyPV4eMhVlhJ0aNaZqIrNUIPuEWWTAoPqyFkfGrM67MC69baqn6vA==}
@@ -15524,8 +15515,8 @@ packages:
       redis-parser: 2.6.0
     dev: true
 
-  /redoc-cli/0.12.3:
-    resolution: {integrity: sha512-qTBaEfwVqCvqLbuloZ9sMBQA49WfMOQrLVBGiVyT7pNMAjosQCpMyFESqQL8WqVxDzV2olPCZ1L2rG9cuDGOsA==}
+  /redoc-cli/0.13.0:
+    resolution: {integrity: sha512-SLGjajbYf2QKByYKBWCDTW1mnX6BWfojV3Y6SFkCXtehNFgy4OGGKmi3Dy4/PqSx5liWeGggxMQ9N/oiSsFhbA==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -15537,7 +15528,7 @@ packages:
       node-libs-browser: 2.2.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      redoc: 2.0.0-rc.56_58ae92cd0feb36bdf4ef36accfd208de
+      redoc: 2.0.0-rc.57_58ae92cd0feb36bdf4ef36accfd208de
       styled-components: 5.3.0_react-dom@17.0.2+react@17.0.2
       yargs: 17.0.1
     transitivePeerDependencies:
@@ -15546,8 +15537,8 @@ packages:
       - react-native
     dev: true
 
-  /redoc/2.0.0-rc.56_58ae92cd0feb36bdf4ef36accfd208de:
-    resolution: {integrity: sha512-ir2TtQ2d/1FqZWIoLmUZ3qvAAnO6jg8dt0SV75TanmfCXpEABcElXWH3mtUf6qKlvgDVt40diDCVuSvyPPxkAw==}
+  /redoc/2.0.0-rc.57_58ae92cd0feb36bdf4ef36accfd208de:
+    resolution: {integrity: sha512-f8XIqvZF1agphq6xmOU9jTDVNDFHJt3MzDq1lUgZojb/7YY4eqLyDi6er/yCWYkY9DuB+v2jHCOn5UUbMuKAfg==}
     engines: {node: '>=6.9', npm: '>=3.0.0'}
     peerDependencies:
       core-js: ^3.1.4
@@ -15557,9 +15548,8 @@ packages:
       styled-components: ^4.1.1 || ^5.1.1
     dependencies:
       '@babel/runtime': 7.14.6
-      '@redocly/openapi-core': 1.0.0-beta.53
+      '@redocly/openapi-core': 1.0.0-beta.62
       '@redocly/react-dropdown-aria': 2.0.12_c59160f3e2ae0f45324a65c8464c8ff0
-      '@types/node': 15.14.1
       classnames: 2.3.1
       decko: 1.2.0
       dompurify: 2.2.9
@@ -17288,7 +17278,7 @@ packages:
     hasBin: true
     dependencies:
       call-me-maybe: 1.0.1
-      node-fetch: 2.6.1
+      node-fetch: 2.6.5
       node-fetch-h2: 2.3.0
       node-readfiles: 0.2.0
       oas-kit-common: 1.0.8
@@ -17670,7 +17660,6 @@ packages:
 
   /tr46/0.0.3:
     resolution: {integrity: sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=}
-    dev: false
 
   /tr46/2.1.0:
     resolution: {integrity: sha512-15Ih7phfcdP5YxqiB+iDtLoaTz4Nd35+IiAv0kQ5FNKHzXgdWqPoTIqEDDJmXceQt4JZk6lVPT8lnDlPpGDppw==}
@@ -18842,7 +18831,6 @@ packages:
 
   /webidl-conversions/3.0.1:
     resolution: {integrity: sha1-JFNCdeKnvGvnvIZhHMFq4KVlSHE=}
-    dev: false
 
   /webidl-conversions/5.0.0:
     resolution: {integrity: sha512-VlZwKPCkYKxQgeSbH5EyngOmRp7Ww7I9rQLERETtf5ofd9pGeswWiOtogpEO850jziPRarreGxn5QIiTqpb2wA==}
@@ -18961,7 +18949,6 @@ packages:
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
-    dev: false
 
   /whatwg-url/8.7.0:
     resolution: {integrity: sha512-gAojqb/m9Q8a5IV96E3fHJM70AzCkgt4uXYX2O7EmuyOnLrViCQlsEBmF9UQIu3/aeAIp2U17rtbpZWNntQqdg==}

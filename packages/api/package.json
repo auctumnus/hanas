@@ -92,7 +92,7 @@
     "eslint-plugin-prettier": "3.4.1",
     "jest": "27.2.5",
     "prettier": "2.4.1",
-    "redoc-cli": "0.12.3",
+    "redoc-cli": "0.13.0",
     "s3rver": "3.7.1",
     "simple-git-hooks": "2.6.1",
     "supertest": "6.1.6",
