@@ -54,7 +54,7 @@ importers:
       dotenv-defaults: 2.0.2
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0
-      eslint-plugin-prettier: 3.4.1
+      eslint-plugin-prettier: 4.0.0
       image-size: 1.0.0
       jest: 27.2.5
       jsonwebtoken: 8.5.1
@@ -150,7 +150,7 @@ importers:
       concurrently: 6.3.0
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0_eslint@7.32.0
-      eslint-plugin-prettier: 3.4.1_6e975bd57c7acf028c1a9ddbbf60c898
+      eslint-plugin-prettier: 4.0.0_6e975bd57c7acf028c1a9ddbbf60c898
       jest: 27.2.5_ts-node@10.3.0
       prettier: 2.4.1
       redoc-cli: 0.13.0
@@ -7672,13 +7672,13 @@ packages:
       language-tags: 1.0.5
     dev: true
 
-  /eslint-plugin-prettier/3.4.1_6e975bd57c7acf028c1a9ddbbf60c898:
-    resolution: {integrity: sha512-htg25EUYUeIhKHXjOinK4BgCcDwtLHjqaxCDsMy5nbnUMkKFvIhMVCp+5GFUXQ4Nr8lBsPqtGAqBenbpFqAA2g==}
+  /eslint-plugin-prettier/4.0.0_6e975bd57c7acf028c1a9ddbbf60c898:
+    resolution: {integrity: sha512-98MqmCJ7vJodoQK359bqQWaxOE0CS8paAz/GgjaZLyex4TTk3g9HugoO89EqWCrFiOqn9EVvcoo7gZzONCWVwQ==}
     engines: {node: '>=6.0.0'}
     peerDependencies:
-      eslint: '>=5.0.0'
+      eslint: '>=7.28.0'
       eslint-config-prettier: '*'
-      prettier: '>=1.13.0'
+      prettier: '>=2.0.0'
     peerDependenciesMeta:
       eslint-config-prettier:
         optional: true
