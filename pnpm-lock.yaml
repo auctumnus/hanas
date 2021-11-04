@@ -10,7 +10,7 @@ importers:
 
   packages/api:
     specifiers:
-      '@nestjs/bull': 0.4.1
+      '@nestjs/bull': 0.4.2
       '@nestjs/cli': 7.6.0
       '@nestjs/common': 7.6.18
       '@nestjs/core': 7.6.18
@@ -86,7 +86,7 @@ importers:
       ua-parser-js: 0.7.28
       wait-on: 6.0.0
     dependencies:
-      '@nestjs/bull': 0.4.1_3d07feb2af7d5fdf151914721b3621f2
+      '@nestjs/bull': 0.4.2_3d07feb2af7d5fdf151914721b3621f2
       '@nestjs/common': 7.6.18_43f93dd897e68fe834a23ddd32fb54cc
       '@nestjs/core': 7.6.18_9c33563c8577d8506c63ecc8818f31a3
       '@nestjs/jwt': 8.0.0_@nestjs+common@7.6.18
@@ -2477,8 +2477,8 @@ packages:
       - supports-color
     dev: false
 
-  /@nestjs/bull/0.4.1_3d07feb2af7d5fdf151914721b3621f2:
-    resolution: {integrity: sha512-RwraagNSRHvd1QTC35BFnF+RkSjheKvX/HlpQU/G0O4Y1QOOBJpJLAYjgQgNqQazym3lTE/7ykCzZR/Ad1b0AQ==}
+  /@nestjs/bull/0.4.2_3d07feb2af7d5fdf151914721b3621f2:
+    resolution: {integrity: sha512-HYRMbgqoUIpGplXN8kaZ23E/yHn6TRrQ297ILRqaHTxBp4vO+XNLfL1qUmJ4Z6weufsNKGg0xcX4dSC5AhXV9g==}
     peerDependencies:
       '@nestjs/common': ^6.10.11 || ^7.0.0 || ^8.0.0
       '@nestjs/core': ^6.10.11 || ^7.0.0 || ^8.0.0
