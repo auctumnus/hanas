@@ -44,7 +44,7 @@ importers:
       aws-sdk: 2.1005.0
       base-64: 1.0.0
       bcrypt: 5.0.1
-      better-sqlite3: 7.4.3
+      better-sqlite3: 7.4.4
       bull: 3.29.2
       bytes: 3.1.0
       class-transformer: 0.4.0
@@ -99,7 +99,7 @@ importers:
       aws-sdk: 2.1005.0
       base-64: 1.0.0
       bcrypt: 5.0.1
-      better-sqlite3: 7.4.3
+      better-sqlite3: 7.4.4
       bull: 3.29.2
       bytes: 3.1.0
       class-transformer: 0.4.0
@@ -121,7 +121,7 @@ importers:
       rxjs: 7.4.0
       sharp: 0.29.1
       swagger-ui-express: 4.1.6
-      typeorm: 0.2.38_better-sqlite3@7.4.3
+      typeorm: 0.2.38_better-sqlite3@7.4.4
       typeorm-cursor-pagination: 0.6.1_typeorm@0.2.38
       ua-parser-js: 0.7.28
       wait-on: 6.0.0
@@ -2724,7 +2724,7 @@ packages:
       '@nestjs/core': 7.6.18_9c33563c8577d8506c63ecc8818f31a3
       reflect-metadata: 0.1.13
       rxjs: 7.4.0
-      typeorm: 0.2.38_better-sqlite3@7.4.3
+      typeorm: 0.2.38_better-sqlite3@7.4.4
       uuid: 8.3.1
     dev: false
 
@@ -4977,13 +4977,13 @@ packages:
     resolution: {integrity: sha512-3pZEU3NT5BFUo/AD5ERPWOgQOCZITni6iavr5AUw5AUwQjMlI0kzu5btnyD39AF0gUEsDPwJT+oY1ORBJijPjQ==}
     dev: true
 
-  /better-sqlite3/7.4.3:
-    resolution: {integrity: sha512-07bKjClZg/f4KMVRkzWtoIvazVPcF1gsvVKVIXlxwleC2DxuIhnra3KCMlUT1rFeRYXXckot2a46UciF2d9KLw==}
+  /better-sqlite3/7.4.4:
+    resolution: {integrity: sha512-CnK1JjchxbEumd2J6lqfzSG5nT4B/v+J9P0AKSm3NHSfcPsEGE4rHUp9lDlslJ1TL701RM7GWlTp3Pbacpn1/Q==}
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
-      prebuild-install: 6.1.3
-      tar: 6.1.0
+      prebuild-install: 6.1.4
+      tar: 6.1.11
     dev: false
 
   /big.js/5.2.2:
@@ -14806,6 +14806,7 @@ packages:
       simple-get: 3.1.0
       tar-fs: 2.1.1
       tunnel-agent: 0.6.0
+    dev: true
 
   /prebuild-install/6.1.4:
     resolution: {integrity: sha512-Z4vpywnK1lBg+zdPCVCsKq0xO66eEV9rWo2zrROGGiRS4JtueBOdlB1FnY8lcy7JsUud/Q3ijUxyWN26Ika0vQ==}
@@ -17376,6 +17377,18 @@ packages:
       mkdirp: 1.0.4
       yallist: 4.0.0
 
+  /tar/6.1.11:
+    resolution: {integrity: sha512-an/KZQzQUkZCkuoAA64hM92X0Urb6VpRhAFllDzz44U2mcD5scmT3zBc4VgVpkugF580+DQn8eAFSyoQt0tznA==}
+    engines: {node: '>= 10'}
+    dependencies:
+      chownr: 2.0.0
+      fs-minipass: 2.1.0
+      minipass: 3.1.3
+      minizlib: 2.1.2
+      mkdirp: 1.0.4
+      yallist: 4.0.0
+    dev: false
+
   /temp-dir/1.0.0:
     resolution: {integrity: sha1-CnwOom06Oa+n4OvqnB/AvE2qAR0=}
     engines: {node: '>=4'}
@@ -17993,10 +18006,10 @@ packages:
     peerDependencies:
       typeorm: ^0.2
     dependencies:
-      typeorm: 0.2.38_better-sqlite3@7.4.3
+      typeorm: 0.2.38_better-sqlite3@7.4.4
     dev: false
 
-  /typeorm/0.2.38_better-sqlite3@7.4.3:
+  /typeorm/0.2.38_better-sqlite3@7.4.4:
     resolution: {integrity: sha512-M6Y3KQcAREQcphOVJciywf4mv6+A0I/SeR+lWNjKsjnQ+a3XcMwGYMGL0Jonsx3H0Cqlf/3yYqVki1jIXSK/xg==}
     hasBin: true
     peerDependencies:
@@ -18049,7 +18062,7 @@ packages:
     dependencies:
       '@sqltools/formatter': 1.2.3
       app-root-path: 3.0.0
-      better-sqlite3: 7.4.3
+      better-sqlite3: 7.4.4
       buffer: 6.0.3
       chalk: 4.1.2
       cli-highlight: 2.1.11
