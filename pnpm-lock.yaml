@@ -31,7 +31,7 @@ importers:
       '@types/jest': 26.0.24
       '@types/jsonwebtoken': 8.5.5
       '@types/multer': 1.4.7
-      '@types/node': 14.17.22
+      '@types/node': 14.17.32
       '@types/node-fetch': 2.5.12
       '@types/passport-jwt': 3.0.6
       '@types/passport-local': 1.0.34
@@ -137,7 +137,7 @@ importers:
       '@types/jest': 26.0.24
       '@types/jsonwebtoken': 8.5.5
       '@types/multer': 1.4.7
-      '@types/node': 14.17.22
+      '@types/node': 14.17.32
       '@types/node-fetch': 2.5.12
       '@types/passport-jwt': 3.0.6
       '@types/passport-local': 1.0.34
@@ -159,7 +159,7 @@ importers:
       supertest: 6.1.6
       ts-jest: 27.0.5_6454056cdbdfb4ca5061dbc6d05379ff
       ts-loader: 9.2.6_typescript@4.4.3
-      ts-node: 10.3.0_60d8bf4d6a237eedf6aac0d2759c4c8a
+      ts-node: 10.3.0_90b6d9b34402d457245fa817db90f951
       tsconfig-paths: 3.11.0
       typescript: 4.4.3
 
@@ -2930,7 +2930,7 @@ packages:
     engines: {node: '>=12.0.0'}
     dependencies:
       '@redocly/ajv': 8.6.2
-      '@types/node': 14.17.21
+      '@types/node': 14.17.32
       colorette: 1.2.2
       js-levenshtein: 1.1.6
       js-yaml: 3.14.1
@@ -3220,7 +3220,7 @@ packages:
   /@types/cron/1.7.3:
     resolution: {integrity: sha512-iPmUXyIJG1Js+ldPYhOQcYU3kCAQ2FWrSkm1FJPoii2eYSn6wEW6onPukNTT0bfiflexNSRPl6KWmAIqS+36YA==}
     dependencies:
-      '@types/node': 16.0.0
+      '@types/node': 16.3.1
       moment: 2.29.1
     dev: true
 
@@ -3321,7 +3321,7 @@ packages:
   /@types/jsonwebtoken/8.5.4:
     resolution: {integrity: sha512-4L8msWK31oXwdtC81RmRBAULd0ShnAHjBuKT9MRQpjP0piNrZdXyTRcKY9/UIfhGeKIT4PvF5amOOUbbT/9Wpg==}
     dependencies:
-      '@types/node': 16.0.0
+      '@types/node': 16.3.1
 
   /@types/jsonwebtoken/8.5.5:
     resolution: {integrity: sha512-OGqtHQ7N5/Ap/TUwO6IgHDuLiAoTmHhGpNvgkCm/F4N6pKzx/RBSfr2OXZSwC6vkfnsEdb6+7DNZVtiXiwdwFw==}
@@ -3360,20 +3360,9 @@ packages:
       form-data: 3.0.1
     dev: true
 
-  /@types/node/14.17.21:
-    resolution: {integrity: sha512-zv8ukKci1mrILYiQOwGSV4FpkZhyxQtuFWGya2GujWg+zVAeRQ4qbaMmWp9vb9889CFA8JECH7lkwCL6Ygg8kA==}
+  /@types/node/14.17.32:
+    resolution: {integrity: sha512-JcII3D5/OapPGx+eJ+Ik1SQGyt6WvuqdRfh9jUwL6/iHGjmyOriBDciBUu7lEIBTL2ijxwrR70WUnw5AEDmFvQ==}
     dev: true
-
-  /@types/node/14.17.22:
-    resolution: {integrity: sha512-6Mgu9YWd8j0dk9M8V9+5w6ktqIFCcn/fFXAVIDFk/niAOFiOiz4GeFAMWYAQjKrcsASbFqMkqR8/Y2wuVCAkNg==}
-    dev: true
-
-  /@types/node/14.17.4:
-    resolution: {integrity: sha512-8kQ3+wKGRNN0ghtEn7EGps/B8CzuBz1nXZEIGGLP2GnwbqYn4dbTs7k+VKLTq1HvZLRCIDtN3Snx1Ege8B7L5A==}
-    dev: true
-
-  /@types/node/16.0.0:
-    resolution: {integrity: sha512-TmCW5HoZ2o2/z2EYi109jLqIaPIi9y/lc2LmDCWzuCi35bcaQ+OtUh6nwBiFK7SOu25FAU5+YKdqFZUwtqGSdg==}
 
   /@types/node/16.3.1:
     resolution: {integrity: sha512-N87VuQi7HEeRJkhzovao/JviiqKjDKMVKxKMfUvSKw+MbkbW8R0nA3fi/MQhhlxV2fQ+2ReM+/Nt4efdrJx3zA==}
@@ -3471,7 +3460,7 @@ packages:
     resolution: {integrity: sha512-1GQvD6sySQPD6p9EopDFI3f5OogdICl1sU/2ij3Esobz/RtL9fWZZDPmsuv7eiy5ya+XNiPAxUcI3HIUTJa+3A==}
     dependencies:
       '@types/cookiejar': 2.1.2
-      '@types/node': 14.17.4
+      '@types/node': 16.3.1
     dev: true
 
   /@types/supertest/2.0.11:
@@ -3495,7 +3484,7 @@ packages:
   /@types/wait-on/5.3.1:
     resolution: {integrity: sha512-2FFOKCF/YydrMUaqg+fkk49qf0e5rDgwt6aQsMzFQzbS419h2gNOXyiwp/o2yYy27bi/C1z+HgfncryjGzlvgQ==}
     dependencies:
-      '@types/node': 16.0.0
+      '@types/node': 16.3.1
     dev: true
 
   /@types/webpack/5.28.0:
@@ -10486,7 +10475,7 @@ packages:
       jest-validate: 27.2.5
       micromatch: 4.0.4
       pretty-format: 27.2.5
-      ts-node: 10.3.0_60d8bf4d6a237eedf6aac0d2759c4c8a
+      ts-node: 10.3.0_90b6d9b34402d457245fa817db90f951
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -17786,7 +17775,7 @@ packages:
       typescript: 4.4.3
     dev: true
 
-  /ts-node/10.3.0_60d8bf4d6a237eedf6aac0d2759c4c8a:
+  /ts-node/10.3.0_90b6d9b34402d457245fa817db90f951:
     resolution: {integrity: sha512-RYIy3i8IgpFH45AX4fQHExrT8BxDeKTdC83QFJkNzkvt8uFB6QJ8XMyhynYiKMLxt9a7yuXaDBZNOYS3XjDcYw==}
     hasBin: true
     peerDependencies:
@@ -17805,7 +17794,7 @@ packages:
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
-      '@types/node': 14.17.22
+      '@types/node': 14.17.32
       acorn: 8.4.1
       acorn-walk: 8.1.1
       arg: 4.1.3
