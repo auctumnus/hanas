@@ -62,7 +62,7 @@ importers:
       multer-s3-v3: 3.10.0
       nanoid: 3.1.30
       nest-router: 1.0.9
-      node-fetch: 2.6.5
+      node-fetch: 2.6.6
       passport: 0.5.0
       passport-jwt: 4.0.0
       passport-local: 1.0.0
@@ -112,7 +112,7 @@ importers:
       multer-s3-v3: 3.10.0
       nanoid: 3.1.30
       nest-router: 1.0.9
-      node-fetch: 2.6.5
+      node-fetch: 2.6.6
       passport: 0.5.0
       passport-jwt: 4.0.0
       passport-local: 1.0.0
@@ -2467,7 +2467,7 @@ packages:
       detect-libc: 1.0.3
       https-proxy-agent: 5.0.0
       make-dir: 3.1.0
-      node-fetch: 2.6.1
+      node-fetch: 2.6.6
       nopt: 5.0.0
       npmlog: 4.1.2
       rimraf: 3.0.2
@@ -2810,7 +2810,7 @@ packages:
     dependencies:
       chalk: 4.1.2
       consola: 2.15.3
-      node-fetch: 2.6.1
+      node-fetch: 2.6.6
     dev: false
 
   /@octokit/auth-token/2.4.5:
@@ -2936,7 +2936,7 @@ packages:
       js-yaml: 3.14.1
       lodash.isequal: 4.5.0
       minimatch: 3.0.4
-      node-fetch: 2.6.5
+      node-fetch: 2.6.6
       yaml-ast-parser: 0.0.43
     dev: true
 
@@ -12979,9 +12979,10 @@ packages:
   /node-fetch/2.6.1:
     resolution: {integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==}
     engines: {node: 4.x || >=6.0.0}
+    dev: true
 
-  /node-fetch/2.6.5:
-    resolution: {integrity: sha512-mmlIVHJEu5rnIxgEgez6b9GgWXbkZj5YZ7fx+2r94a2E+Uirsp6HsPTPlomfdHtpt/B0cdKviwkoaM6pyvUOpQ==}
+  /node-fetch/2.6.6:
+    resolution: {integrity: sha512-Z8/6vRlTUChSdIgMa51jxQ4lrw/Jy5SOW10ObaA47/RElsAN2c5Pn8bTgFGWn/ibwzXTE8qwr1Yzx28vsecXEA==}
     engines: {node: 4.x || >=6.0.0}
     dependencies:
       whatwg-url: 5.0.0
@@ -17279,7 +17280,7 @@ packages:
     hasBin: true
     dependencies:
       call-me-maybe: 1.0.1
-      node-fetch: 2.6.5
+      node-fetch: 2.6.6
       node-fetch-h2: 2.3.0
       node-readfiles: 0.2.0
       oas-kit-common: 1.0.8
