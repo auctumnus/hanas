@@ -10,7 +10,7 @@
     "commit": "git-cz"
   },
   "dependencies": {
-    "@vueuse/core": "5.3.0",
+    "@vueuse/core": "6.9.2",
     "reset.css": "2.0.2",
     "vue": "3.2.19",
     "vuex": "4.0.2",
