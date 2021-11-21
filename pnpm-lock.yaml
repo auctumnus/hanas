@@ -204,7 +204,7 @@ importers:
       vite-plugin-components: 0.13.3
       vite-plugin-favicon: 1.0.8
       vite-plugin-icons: 0.6.5
-      vite-plugin-pages: 0.18.1
+      vite-plugin-pages: 0.18.2
       vite-plugin-windicss: 1.4.8
       vue: 3.2.19
       vue-router: 4.0.11
@@ -232,7 +232,7 @@ importers:
       vite-plugin-components: 0.13.3_vite@2.5.10
       vite-plugin-favicon: 1.0.8_vite@2.5.10
       vite-plugin-icons: 0.6.5_5e3531e64d77b4a4aa509d5a22779aa6
-      vite-plugin-pages: 0.18.1_b9ae0996bc931d681075723dfc8cab4c
+      vite-plugin-pages: 0.18.2_b9ae0996bc931d681075723dfc8cab4c
       vite-plugin-windicss: 1.4.8_typescript@4.4.3+vite@2.5.10
       vue-router: 4.0.11_vue@3.2.19
       vue-tsc: 0.3.0_typescript@4.4.3
@@ -18514,8 +18514,8 @@ packages:
       vue-template-es2015-compiler: 1.9.1
     dev: true
 
-  /vite-plugin-pages/0.18.1_b9ae0996bc931d681075723dfc8cab4c:
-    resolution: {integrity: sha512-+hNe98nkKoN/jK5dEdsTWRpTEpF++5A523cdNXE329eLedp9nql1EmWAuR5UqvP8aU+LCtWJN6Nnw3NWGWB9gQ==}
+  /vite-plugin-pages/0.18.2_b9ae0996bc931d681075723dfc8cab4c:
+    resolution: {integrity: sha512-Z6ylvMKYSiCngtSpWw9pHN4UzjMQvOG7f0RtLMDKm1LrO5iye7V8BS8Rfdvrl9Nz+D2W+i0pi98+vOL5VsmTvQ==}
     peerDependencies:
       '@vue/compiler-sfc': '>=3'
       vite: '>=2'
