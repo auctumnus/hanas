@@ -18,7 +18,7 @@ importers:
       '@nestjs/mapped-types': 0.4.1
       '@nestjs/passport': 7.1.6
       '@nestjs/platform-express': 7.6.18
-      '@nestjs/schedule': 0.4.3
+      '@nestjs/schedule': 1.0.2
       '@nestjs/schematics': 8.0.5
       '@nestjs/swagger': 4.8.2
       '@nestjs/testing': 7.6.18
@@ -93,7 +93,7 @@ importers:
       '@nestjs/mapped-types': 0.4.1_f60a0afa809bd9366faa880aa4493924
       '@nestjs/passport': 7.1.6_1b8f5eed36ce747133de95b67a6002a2
       '@nestjs/platform-express': 7.6.18_2664420588e0901c7943acb4693cbaf4
-      '@nestjs/schedule': 0.4.3_f68191e5ff76da46b0e7001b964108a3
+      '@nestjs/schedule': 1.0.2_9241aa6ee00b75edbdf05596e17eb42e
       '@nestjs/swagger': 4.8.2_096b026f778fb750e129715bc5f2c999
       '@nestjs/typeorm': 7.1.5_0a30ae15ab03105d0895434012c13d2c
       aws-sdk: 2.1005.0
@@ -2636,13 +2636,15 @@ packages:
       tslib: 2.2.0
     dev: false
 
-  /@nestjs/schedule/0.4.3_f68191e5ff76da46b0e7001b964108a3:
-    resolution: {integrity: sha512-EowkpwD09lrdMFzjt/kNQgaq6MG0GrNadNoOEebbfyA0qBU0UTg7J+FVullTR9+5HtaegqqAuWDvZlVoGHYz+Q==}
+  /@nestjs/schedule/1.0.2_9241aa6ee00b75edbdf05596e17eb42e:
+    resolution: {integrity: sha512-GGRehpSm0nCthYNxAGdTzondPrRvurtKnkQCzIb3Tccqq6PhfS2QiHMwDaCel5/4jhYbR/lZR9UsVr6KSJc2Xg==}
     peerDependencies:
-      '@nestjs/common': ^6.10.11 || ^7.0.0
+      '@nestjs/common': ^6.10.11 || ^7.0.0 || ^8.0.0
+      '@nestjs/core': ^7.0.0 || ^8.0.0
       reflect-metadata: ^0.1.12
     dependencies:
       '@nestjs/common': 7.6.18_9f336696e46810abee7fb18d16bfe44e
+      '@nestjs/core': 7.6.18_9c33563c8577d8506c63ecc8818f31a3
       cron: 1.7.2
       reflect-metadata: 0.1.13
       uuid: 8.3.2
