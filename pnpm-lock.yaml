@@ -29,7 +29,7 @@ importers:
       '@types/cron': 1.7.3
       '@types/express': 4.17.13
       '@types/jest': 26.0.24
-      '@types/jsonwebtoken': 8.5.5
+      '@types/jsonwebtoken': 8.5.6
       '@types/multer': 1.4.7
       '@types/node': 14.17.32
       '@types/node-fetch': 2.5.12
@@ -135,7 +135,7 @@ importers:
       '@types/cron': 1.7.3
       '@types/express': 4.17.13
       '@types/jest': 26.0.24
-      '@types/jsonwebtoken': 8.5.5
+      '@types/jsonwebtoken': 8.5.6
       '@types/multer': 1.4.7
       '@types/node': 14.17.32
       '@types/node-fetch': 2.5.12
@@ -3333,9 +3333,10 @@ packages:
     resolution: {integrity: sha512-4L8msWK31oXwdtC81RmRBAULd0ShnAHjBuKT9MRQpjP0piNrZdXyTRcKY9/UIfhGeKIT4PvF5amOOUbbT/9Wpg==}
     dependencies:
       '@types/node': 16.3.1
+    dev: false
 
-  /@types/jsonwebtoken/8.5.5:
-    resolution: {integrity: sha512-OGqtHQ7N5/Ap/TUwO6IgHDuLiAoTmHhGpNvgkCm/F4N6pKzx/RBSfr2OXZSwC6vkfnsEdb6+7DNZVtiXiwdwFw==}
+  /@types/jsonwebtoken/8.5.6:
+    resolution: {integrity: sha512-+P3O/xC7nzVizIi5VbF34YtqSonFsdnbXBnWUCYRiKOi1f9gA4sEFvXkrGr/QVV23IbMYvcoerI7nnhDUiWXRQ==}
     dependencies:
       '@types/node': 16.3.1
     dev: true
@@ -3390,7 +3391,7 @@ packages:
     resolution: {integrity: sha512-cmAAMIRTaEwpqxlrZyiEY9kdibk94gP5KTF8AT1Ra4rWNZYHNMreqhKUEeC5WJtuN5SJZjPQmV+XO2P5PlnvNQ==}
     dependencies:
       '@types/express': 4.17.13
-      '@types/jsonwebtoken': 8.5.4
+      '@types/jsonwebtoken': 8.5.6
       '@types/passport-strategy': 0.2.35
     dev: true
 
