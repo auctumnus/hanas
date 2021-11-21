@@ -35,7 +35,7 @@ importers:
       '@types/node-fetch': 2.5.12
       '@types/passport-jwt': 3.0.6
       '@types/passport-local': 1.0.34
-      '@types/sharp': 0.29.3
+      '@types/sharp': 0.29.4
       '@types/supertest': 2.0.11
       '@types/ua-parser-js': 0.7.36
       '@types/wait-on': 5.3.1
@@ -72,7 +72,7 @@ importers:
       rimraf: 3.0.2
       rxjs: 7.4.0
       s3rver: 3.7.1
-      sharp: 0.29.2
+      sharp: 0.29.3
       simple-git-hooks: 2.6.1
       supertest: 6.1.6
       swagger-ui-express: 4.1.6
@@ -119,7 +119,7 @@ importers:
       reflect-metadata: 0.1.13
       rimraf: 3.0.2
       rxjs: 7.4.0
-      sharp: 0.29.2
+      sharp: 0.29.3
       swagger-ui-express: 4.1.6
       typeorm: 0.2.38_better-sqlite3@7.4.5
       typeorm-cursor-pagination: 0.6.1_typeorm@0.2.38
@@ -141,7 +141,7 @@ importers:
       '@types/node-fetch': 2.5.12
       '@types/passport-jwt': 3.0.6
       '@types/passport-local': 1.0.34
-      '@types/sharp': 0.29.3
+      '@types/sharp': 0.29.4
       '@types/supertest': 2.0.11
       '@types/ua-parser-js': 0.7.36
       '@types/wait-on': 5.3.1
@@ -3458,8 +3458,8 @@ packages:
       '@types/node': 16.3.1
     dev: true
 
-  /@types/sharp/0.29.3:
-    resolution: {integrity: sha512-83Xp05eK2hvfNnmKLr2Fz0C2A0jrr2TnSLqKRbkLTYuAu+Erj6mKQLoEMGafE73Om8p3q3ryZxtHFM/7hy4Adg==}
+  /@types/sharp/0.29.4:
+    resolution: {integrity: sha512-asrPef2LYenr76zBzyy+Fw40yGzq/q/CY77mUP5n43DnuWjQoOB+8vxnzFcqccz+LF+A7mbnknGCfpVWSG82Bw==}
     dependencies:
       '@types/node': 16.3.1
     dev: true
@@ -6870,6 +6870,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       mimic-response: 2.1.0
+    dev: true
 
   /decompress-response/5.0.0:
     resolution: {integrity: sha512-TLZWWybuxWgoW7Lykv+gq9xvzOsUjQ9tF09Tj6NSTYGMTCHNXzrPnD6Hi+TgZq19PyTAGH4Ll/NIM/eTGglnMw==}
@@ -12571,6 +12572,7 @@ packages:
   /mimic-response/2.1.0:
     resolution: {integrity: sha512-wXqjST+SLt7R009ySCglWBCFpjUygmCIfD790/kVbiGmUgfYGuB14PiTd5DwVxSV4NcYHjzMkoj5LjQZwTQLEA==}
     engines: {node: '>=8'}
+    dev: true
 
   /mimic-response/3.1.0:
     resolution: {integrity: sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==}
@@ -12987,6 +12989,7 @@ packages:
     resolution: {integrity: sha512-g6bZh3YCKQRdwuO/tSZZYJAw622SjsRfJ2X0Iy4sSOHZ34/sPPdVBn8fev2tj7njzLwuqPw9uMtGsGkO5kIQvg==}
     dependencies:
       semver: 5.7.1
+    dev: true
 
   /node-abi/3.5.0:
     resolution: {integrity: sha512-LtHvNIBgOy5mO8mPEUtkCW/YCRWYEKshIvqhe1GHHyXEHEB5mgICyYnAcl4qan3uFeRROErKGzatFHPf6kDxWw==}
@@ -14848,26 +14851,6 @@ packages:
       tunnel-agent: 0.6.0
     dev: true
 
-  /prebuild-install/6.1.4:
-    resolution: {integrity: sha512-Z4vpywnK1lBg+zdPCVCsKq0xO66eEV9rWo2zrROGGiRS4JtueBOdlB1FnY8lcy7JsUud/Q3ijUxyWN26Ika0vQ==}
-    engines: {node: '>=6'}
-    hasBin: true
-    dependencies:
-      detect-libc: 1.0.3
-      expand-template: 2.0.3
-      github-from-package: 0.0.0
-      minimist: 1.2.5
-      mkdirp-classic: 0.5.3
-      napi-build-utils: 1.0.2
-      node-abi: 2.30.0
-      npmlog: 4.1.2
-      pump: 3.0.0
-      rc: 1.2.8
-      simple-get: 3.1.0
-      tar-fs: 2.1.1
-      tunnel-agent: 0.6.0
-    dev: false
-
   /prebuild-install/7.0.0:
     resolution: {integrity: sha512-IvSenf33K7JcgddNz2D5w521EgO+4aMMjFt73Uk9FRzQ7P+QZPKrp7qPsDydsSwjGt3T5xRNnM1bj1zMTD5fTA==}
     engines: {node: '>=10'}
@@ -16442,17 +16425,17 @@ packages:
       tunnel-agent: 0.6.0
     dev: true
 
-  /sharp/0.29.2:
-    resolution: {integrity: sha512-XWRdiYLIJ3tDUejRyG24KERnJzMfIoyiJBntd2S6/uj3NEeNgRFRLgiBlvPxMa8aml14dKKD98yHinSNKp1xzQ==}
+  /sharp/0.29.3:
+    resolution: {integrity: sha512-fKWUuOw77E4nhpyzCCJR1ayrttHoFHBT2U/kR/qEMRhvPEcluG4BKj324+SCO1e84+knXHwhJ1HHJGnUt4ElGA==}
     engines: {node: '>=12.13.0'}
     requiresBuild: true
     dependencies:
       color: 4.0.1
       detect-libc: 1.0.3
       node-addon-api: 4.2.0
-      prebuild-install: 6.1.4
+      prebuild-install: 7.0.0
       semver: 7.3.5
-      simple-get: 3.1.0
+      simple-get: 4.0.0
       tar-fs: 2.1.1
       tunnel-agent: 0.6.0
     dev: false
@@ -16562,6 +16545,7 @@ packages:
       decompress-response: 4.2.1
       once: 1.4.0
       simple-concat: 1.0.1
+    dev: true
 
   /simple-get/4.0.0:
     resolution: {integrity: sha512-ZalZGexYr3TA0SwySsr5HlgOOinS4Jsa8YB2GJ6lUNAazyAu4KG/VmzMTwAt2YVXzzVj8QmefmAonZIK2BSGcQ==}
