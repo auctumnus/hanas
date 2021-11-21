@@ -46,7 +46,7 @@ importers:
       bcrypt: 5.0.1
       better-sqlite3: 7.4.5
       bull: 3.29.3
-      bytes: 3.1.0
+      bytes: 3.1.1
       class-transformer: 0.4.0
       class-validator: 0.13.1
       concurrently: 6.3.0
@@ -101,7 +101,7 @@ importers:
       bcrypt: 5.0.1
       better-sqlite3: 7.4.5
       bull: 3.29.3
-      bytes: 3.1.0
+      bytes: 3.1.1
       class-transformer: 0.4.0
       class-validator: 0.13.1
       cross-env: 7.0.3
@@ -5341,6 +5341,10 @@ packages:
 
   /bytes/3.1.0:
     resolution: {integrity: sha512-zauLjrfCG+xvoyaqLoV8bLVXXNGC4JqlxFCutSDWA6fJrTo2ZuvLYTqZ7aHBLZSMOopbzwv8f+wZcVzfVTI2Dg==}
+    engines: {node: '>= 0.8'}
+
+  /bytes/3.1.1:
+    resolution: {integrity: sha512-dWe4nWO/ruEOY7HkUJ5gFt1DCFV9zPRoJr8pV0/ASQermOZjtq8jMjOprC0Kd10GLN+l7xaUPvxzJFWtxGu8Fg==}
     engines: {node: '>= 0.8'}
 
   /cac/6.7.3:
@@ -11701,7 +11705,7 @@ packages:
     resolution: {integrity: sha512-MjlznhLLKy9+kG8nAXKJLM0/ClsQp/Or2vI3a5rbSQmgl8IJBQO0KI5FA70BvW+hqjtxjp49SpH2E7okS6NmHg==}
     engines: {node: '>= 7.6.0'}
     dependencies:
-      bytes: 3.1.0
+      bytes: 3.1.1
       chalk: 2.4.2
       humanize-number: 0.0.2
       passthrough-counter: 1.0.0
