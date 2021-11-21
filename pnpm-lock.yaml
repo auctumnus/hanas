@@ -16,7 +16,7 @@ importers:
       '@nestjs/core': 7.6.18
       '@nestjs/jwt': 8.0.0
       '@nestjs/mapped-types': 0.4.1
-      '@nestjs/passport': 7.1.6
+      '@nestjs/passport': 8.0.1
       '@nestjs/platform-express': 7.6.18
       '@nestjs/schedule': 0.4.3
       '@nestjs/schematics': 8.0.5
@@ -91,7 +91,7 @@ importers:
       '@nestjs/core': 7.6.18_9c33563c8577d8506c63ecc8818f31a3
       '@nestjs/jwt': 8.0.0_@nestjs+common@7.6.18
       '@nestjs/mapped-types': 0.4.1_f60a0afa809bd9366faa880aa4493924
-      '@nestjs/passport': 7.1.6_1b8f5eed36ce747133de95b67a6002a2
+      '@nestjs/passport': 8.0.1_1b8f5eed36ce747133de95b67a6002a2
       '@nestjs/platform-express': 7.6.18_2664420588e0901c7943acb4693cbaf4
       '@nestjs/schedule': 0.4.3_f68191e5ff76da46b0e7001b964108a3
       '@nestjs/swagger': 4.8.2_096b026f778fb750e129715bc5f2c999
@@ -2611,10 +2611,10 @@ packages:
       reflect-metadata: 0.1.13
     dev: false
 
-  /@nestjs/passport/7.1.6_1b8f5eed36ce747133de95b67a6002a2:
-    resolution: {integrity: sha512-iHD/4D01CsKKWg7kUzo4yGNS4m90z1an0eUz+6nBlE5VeEOuCzhGFoBKAt0OKLJLOTEsJKuj4C2b5QfjqXVTyQ==}
+  /@nestjs/passport/8.0.1_1b8f5eed36ce747133de95b67a6002a2:
+    resolution: {integrity: sha512-vn/ZJLXQKvSf9D0BvEoNFJLfzl9AVqfGtDyQMfWDLbaNpoEB2FyeaHGxdiX6H71oLSrQV78c/yuhfantzwdjdg==}
     peerDependencies:
-      '@nestjs/common': ^6.0.0 || ^7.0.0
+      '@nestjs/common': ^6.0.0 || ^7.0.0 || ^8.0.0
       passport: ^0.4.0
     dependencies:
       '@nestjs/common': 7.6.18_9f336696e46810abee7fb18d16bfe44e
