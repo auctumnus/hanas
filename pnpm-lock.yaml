@@ -22,7 +22,7 @@ importers:
       '@nestjs/schematics': 8.0.5
       '@nestjs/swagger': 4.8.2
       '@nestjs/testing': 7.6.18
-      '@nestjs/typeorm': 7.1.5
+      '@nestjs/typeorm': 8.0.2
       '@types/bcrypt': 5.0.0
       '@types/bull': 3.15.5
       '@types/bytes': 3.1.1
@@ -95,7 +95,7 @@ importers:
       '@nestjs/platform-express': 7.6.18_2664420588e0901c7943acb4693cbaf4
       '@nestjs/schedule': 0.4.3_f68191e5ff76da46b0e7001b964108a3
       '@nestjs/swagger': 4.8.2_096b026f778fb750e129715bc5f2c999
-      '@nestjs/typeorm': 7.1.5_698eed60c11f3ae4c87f4f36a5a5b530
+      '@nestjs/typeorm': 8.0.2_698eed60c11f3ae4c87f4f36a5a5b530
       aws-sdk: 2.1005.0
       base-64: 1.0.0
       bcrypt: 5.0.1
@@ -2722,21 +2722,21 @@ packages:
       tslib: 2.2.0
     dev: true
 
-  /@nestjs/typeorm/7.1.5_698eed60c11f3ae4c87f4f36a5a5b530:
-    resolution: {integrity: sha512-utE1FkYM/gyCXUqw3zKYYS0YZ3DfkAnzsCx4T48cNnSDTCeWS+u3yt0FMDFjwSiQSaLrzpiSff/FaxJQvRlYow==}
+  /@nestjs/typeorm/8.0.2_698eed60c11f3ae4c87f4f36a5a5b530:
+    resolution: {integrity: sha512-UHn4IsRkzm22eNDir/uI+x8gmgo66EO7SxWfVOiPpeLSdrTfZHKYz6q/P9KRgYbwXs8TrywVdIbJhp+4C0tzjQ==}
     peerDependencies:
-      '@nestjs/common': ^6.7.0 || ^7.0.0
-      '@nestjs/core': ^6.7.0 || ^7.0.0
-      reflect-metadata: ^0.1.12
-      rxjs: ^6.0.0
-      typeorm: ^0.2.7
+      '@nestjs/common': ^8.0.0
+      '@nestjs/core': ^8.0.0
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.2.0
+      typeorm: ^0.2.34
     dependencies:
       '@nestjs/common': 7.6.18_9f336696e46810abee7fb18d16bfe44e
       '@nestjs/core': 7.6.18_9c33563c8577d8506c63ecc8818f31a3
       reflect-metadata: 0.1.13
       rxjs: 7.4.0
       typeorm: 0.2.41_better-sqlite3@7.4.5
-      uuid: 8.3.1
+      uuid: 8.3.2
     dev: false
 
   /@nodelib/fs.scandir/2.1.5:
@@ -18386,11 +18386,6 @@ packages:
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
     hasBin: true
     dev: true
-
-  /uuid/8.3.1:
-    resolution: {integrity: sha512-FOmRr+FmWEIG8uhZv6C2bTgEVXsHk08kE7mPlrBbEe+c3r9pjceVPgupIfNIhc4yx55H69OXANrUaSuu9eInKg==}
-    hasBin: true
-    dev: false
 
   /uuid/8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
