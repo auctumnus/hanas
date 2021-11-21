@@ -21,7 +21,7 @@
     "@vitejs/plugin-vue": "1.9.2",
     "@vue/compiler-sfc": "3.2.19",
     "@vue/server-renderer": "3.2.19",
-    "@vueuse/head": "0.6.0",
+    "@vueuse/head": "0.7.2",
     "commitizen": "4.2.4",
     "git-cz": "4.7.6",
     "prettier": "2.4.1",

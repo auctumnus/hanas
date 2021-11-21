@@ -193,7 +193,7 @@ importers:
       '@vue/compiler-sfc': 3.2.19
       '@vue/server-renderer': 3.2.19
       '@vueuse/core': 5.3.0
-      '@vueuse/head': 0.6.0
+      '@vueuse/head': 0.7.2
       commitizen: 4.2.4
       git-cz: 4.7.6
       prettier: 2.4.1
@@ -222,7 +222,7 @@ importers:
       '@vitejs/plugin-vue': 1.9.2_vite@2.5.10
       '@vue/compiler-sfc': 3.2.19
       '@vue/server-renderer': 3.2.19_vue@3.2.19
-      '@vueuse/head': 0.6.0_vue@3.2.19
+      '@vueuse/head': 0.7.2_vue@3.2.19
       commitizen: 4.2.4
       git-cz: 4.7.6
       prettier: 2.4.1
@@ -3941,8 +3941,8 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/head/0.6.0_vue@3.2.19:
-    resolution: {integrity: sha512-fi7ZjkMpEAUtTT6iR5wgL2HkX1+3zbrmbpcwU//RgJIWEr5b42jk8E9yOheaC2dYAAHzelAllVpX0pDmhcTXuw==}
+  /@vueuse/head/0.7.2_vue@3.2.19:
+    resolution: {integrity: sha512-97RxYbIYwB9yFuRbdDbktsjKS0k12wYNksYV/UtYLOFNx+GAflK2kQ63b+sx09MJllEozD3GLeXV7O8rzMskeQ==}
     peerDependencies:
       vue: '>=3'
     dependencies:
