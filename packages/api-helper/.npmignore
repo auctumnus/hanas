@@ -1,0 +1,4 @@
+dist/types
+src
+rollup.config.js
+tsconfig.json

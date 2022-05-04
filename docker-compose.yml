@@ -1,0 +1,87 @@
+version: '3.7'
+
+# This is not particularly suited for production.
+#
+# In a production environment, you should:
+# - Change the password for postgres. Ideally, this should have been a single
+#   variable, but I don't know how to do this in Docker.
+# - Change Mailslurper to use a real email service.
+# - Don't expose Kratos' admin panel.
+# - Probably double check everything in kratos.yml.
+# - Fix the POSTGRES_HOST_AUTH_METHOD and the password authentication for
+#   postgres in general. No clue what the problem is there.
+#
+# I've put the text `CHANGEME` near anything that should be changed, so you can
+# grep for it.
+#
+# I am not responsible for anything that should result from this dockerfile
+# being run either customized or non-customized. がんばれ！
+
+services:
+  # Postgres database
+  database:
+    image: postgres:14-alpine
+    restart: on-failure
+    ports:
+      - '5432:5432'
+    environment:
+      #POSTGRES_PASSWORD: 3xceed1ngly1ns3cure # CHANGEME
+      # This is a mortal sin.
+      POSTGRES_HOST_AUTH_METHOD: trust # CHANGEME
+    volumes:
+      - './pg-data:/var/lib/postgresql/data'
+      - type: bind
+        source: ./init-pg.sh
+        target: /docker-entrypoint-initdb.d/init-pg.sh
+
+  # Sets up the database for Kratos
+  kratos-migrate:
+    image: oryd/kratos:v0.7.4-alpha.1
+    depends_on:
+      - database
+    volumes:
+      - type: bind
+        source: ./kratos-config
+        target: /etc/config/kratos
+    environment:
+      DSN: postgres://kratos:v3ry1nsecur3@database:5432/kratos # CHANGEME
+    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
+
+  # Kratos itself, for auth
+  kratos:
+    image: oryd/kratos:v0.7.4-alpha.1
+    restart: unless-stopped
+    ports:
+      - '4433:4433'
+      - '4434:4434' # CHANGEME
+    depends_on:
+      - database
+      - kratos-migrate
+    environment:
+      DSN: postgres://kratos:v3ry1nsecur3@database:5432/kratos
+    volumes:
+      - type: bind
+        source: ./kratos-config
+        target: /etc/config/kratos
+    command: -c /etc/config/kratos/kratos.yml serve
+
+  # Mailslurper - holds mail from Kratos. CHANGEME !
+  mailslurper:
+    image: oryd/mailslurper:smtps-latest
+    ports:
+      - '4436:4436'
+      - '4437:4437'
+
+  # Migrate the database to use the prisma-generated schema
+  #hanas-prisma:
+  #  build:
+  #    context: "."
+  #    dockerfile: "./Dockerfile"
+
+  # Hanas
+  #hanas-api:
+  #  build:
+  #    context: "."
+  #    dockerfile: "./Dockerfile"
+  #  environment:
+  #    DATABASE_URL: postgres://hanas:runn1ngout0fsynonym5@database:5432/hanas # CHANGEME

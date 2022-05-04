@@ -1,0 +1,7 @@
+pg-data
+dist
+node_modules
+.env
+.pnpm-debug.log
+.vscode
+.idea

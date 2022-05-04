@@ -1,0 +1,32 @@
+{
+  "name": "hanas-app",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint": "prettier --write packages/**/*",
+    "lint:check": "prettier --check packages/**/*",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hanas",
+    "linguistics",
+    "webapp"
+  ],
+  "author": {
+    "name": "autumn",
+    "url": "https://autumns.page"
+  },
+  "license": "CNVPD",
+  "devDependencies": {
+    "lint-staged": "^12.4.0",
+    "prettier": "^2.6.2",
+    "simple-git-hooks": "^2.7.0",
+    "typescript": "^4.6.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{md,js,ts,vue,css,yml,json}": "prettier --write"
+  }
+}

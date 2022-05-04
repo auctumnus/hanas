@@ -1,0 +1,48 @@
+{
+  "name": "api-helper",
+  "version": "1.0.0",
+  "description": "API wrapper for Hanas",
+  "keywords": [
+    "hanas",
+    "linguistics",
+    "webapp",
+    "api"
+  ],
+  "license": "NVPD",
+  "author": {
+    "name": "autumn",
+    "url": "https://autumns.page"
+  },
+  "sideEffects": false,
+  "source": "./src/index.ts",
+  "main": "./dist/hanas-api-helper.cjs.js",
+  "module": "./dist/hanas-api-helper.esm.js",
+  "unpkg": "./dist/hanas-api-helper.umd.js",
+  "exports": {
+    "require": "./dist/hanas-api-helper.cjs.js",
+    "default": "./dist/hanas-api-helper.esm.js"
+  },
+  "typings": "./dist/hanas-api-helper.d.ts",
+  "scripts": {
+    "size": "size-limit",
+    "types": "tsc && rollup -c types.rollup.config.js",
+    "build": "rollup -c && npm run types",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-models": "ts-node generate-models.ts"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.10",
+    "rollup": "^2.62.0",
+    "rollup-plugin-dts": "^4.1.0",
+    "rollup-plugin-esbuild": "^4.8.2",
+    "rollup-plugin-filesize": "^9.1.1",
+    "typescript": "^4.5.4",
+    "docs-generator": "workspace:*"
+  },
+  "dependencies": {
+    "isomorphic-unfetch": "^3.1.0",
+    "ky": "^0.28.7",
+    "merge-options": "^3.0.4",
+    "redaxios": "^0.4.1"
+  }
+}

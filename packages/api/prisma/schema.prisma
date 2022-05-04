@@ -1,0 +1,270 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator jsonschema {
+  provider = "prisma-json-schema-generator"
+}
+
+/// User model.
+model User {
+  /// Internal ID.
+  /// @internal
+  id          String  @id @default(cuid())
+  /// ID used in Kratos.
+  /// @internal
+  kratosID    String  @unique
+  /// Username; between 2 and 30 characters, and must match
+  /// the regex /^([a-z0-9](-|_)?)+[a-z0-9]$/.
+  /// @example alice
+  username    String  @unique
+  /// The display name of this user - if you're displaying users, you should use
+  /// this rather than the username if it's present.
+  /// @example Alice Iwakura
+  displayName String? @unique
+  /// A short description of the user.
+  /// @example I love languages!
+  description String?
+  /// Any hex color, given without the hash sign.
+  /// @example eaa82e
+  gender      String?
+  /// Free text field. Intended to store pronouns in the format of
+  /// nominative / accusative or nominative / accusative / possessive, but is
+  /// not required to be so since it's impossible to predict the ways in which
+  /// a user might want to format this.
+  /// @example she / her
+  pronouns    String?
+
+  /// Profile picture.
+  /// Currently unused.
+  profilePicture String?
+  /// Top banner, similar to Twitter.
+  /// Currently unused.
+  banner         String?
+
+  /// The language permission objects related to this user.
+  /// @internal
+  langPermissions LangPermission[]
+  /// All language invites sent by this user.
+  /// @internal
+  sentInvites     LangInvite[]     @relation(name: "sentInvites")
+  /// All language invites sent to this user.
+  /// @internal
+  receivedInvites LangInvite[]     @relation(name: "receivedInvites")
+
+  // I literally hate the fact that I have to do this.
+  /// @internal
+  createdLangs               Lang[]           @relation("createdLangs")
+  /// @internal
+  lastUpdatedLangs           Lang[]           @relation("lastUpdatedLangs")
+  /// @internal
+  createdLangPermissions     LangPermission[] @relation("createdLangPermissions")
+  /// @internal
+  lastUpdatedLangPermissions LangPermission[] @relation("lastUpdatedLangPermissions")
+  /// @internal
+  createdWords               Word[]           @relation("createdWords")
+  /// @internal
+  lastUpdatedWords           Word[]           @relation("lastUpdatedWords")
+  /// @internal
+  createdWordClasses         WordClass[]      @relation("createdWordClasses")
+  /// @internal
+  lastUpdatedWordClasses     WordClass[]      @relation("lastUpdatedWordClasses")
+
+  /// When this user was created.
+  created DateTime @default(now())
+  /// When this user was last updated.
+  updated DateTime @updatedAt
+}
+
+/// Language model.
+model Lang {
+  /// Internal ID.
+  /// @internal
+  id          String  @id @default(cuid())
+  /// Language code; between 3 and 5 lowercase alphabetical characters.
+  /// @example elv
+  code        String  @unique
+  /// Language name; any string between 2 and 30 characters.
+  /// @example Elvish
+  name        String  @unique
+  /// Description of the language.
+  /// @example Elvish is spoken by the elves in my conworld!
+  description String?
+
+  /// Invites to collaborate on this language.
+  /// @internal
+  invites         LangInvite[]
+  /// Permission objects relating to this language.
+  /// @internal
+  langPermissions LangPermission[]
+
+  createdBy       User?   @relation(name: "createdLangs", fields: [createdById], references: [id])
+  createdById     String?
+  lastUpdatedBy   User?   @relation(name: "lastUpdatedLangs", fields: [lastUpdatedById], references: [id])
+  lastUpdatedById String?
+
+  /// When this language was created.
+  created DateTime @default(now())
+  /// When the information for this language was last updated.
+  updated DateTime @updatedAt
+
+  wordClasses WordClass[]
+  words       Word[]
+}
+
+/// Model for storing users' permissions on languages.
+model LangPermission {
+  /// Internal ID.
+  /// @internal
+  id String @id @default(cuid())
+
+  /// The user who has these permissions.
+  /// @internal
+  user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
+  /// Internal ID of the user who has these permissions.
+  /// @internal
+  userID String
+  /// The language these permissions apply to.
+  /// @internal
+  lang   Lang   @relation(fields: [langID], references: [id], onDelete: Cascade)
+  /// Internal ID of the language these permissions apply to.
+  /// @internal
+  langID String
+
+  /// Whether this user owns the language. Overrides all other permissions.
+  owner             Boolean @default(false)
+  /// Whether this user can update the permissions for this language, including
+  /// inviting other users or removing their permissions. They cannot edit the
+  /// permissions of other users with this permission, or those of the owner.
+  changePermissions Boolean @default(false)
+  /// Whether this user can update the ID of the language.
+  changeId          Boolean @default(false)
+  /// Whether this user can update the other information of this language.
+  changeInfo        Boolean @default(false)
+  /// Whether this user can add words to this language.
+  changeWords       Boolean @default(false)
+
+  /// This is whoever sent the invite to the user, or in the case of the owner,
+  /// themselves.
+  /// If the user is deleted, this may be null.
+  /// @internal
+  createdBy       User?   @relation(name: "createdLangPermissions", fields: [createdById], references: [id])
+  /// @internal
+  createdById     String?
+  /// This is whoever sent the invite, or in the case of the owner, themselves.
+  /// If the user is deleted, this may be null.
+  /// @internal
+  lastUpdatedBy   User?   @relation(name: "lastUpdatedLangPermissions", fields: [lastUpdatedById], references: [id])
+  /// @internal
+  lastUpdatedById String?
+
+  /// When this set of permissions was created; aka when the invite was accepted,
+  /// or in the case of the owner, when the language was created.
+  created DateTime @default(now())
+  /// When this set of permissions was last updated.
+  updated DateTime @updatedAt
+}
+
+/// Model for storing invitations to collaborate on languages.
+model LangInvite {
+  /// The internal ID for this invite.
+  /// @internal
+  id String @id @default(cuid())
+
+  /// If this is true, the invite can be accepted.
+  active Boolean
+
+  /// The user that sent this invite.
+  /// @internal
+  sender     User   @relation(name: "sentInvites", fields: [senderID], references: [id], onDelete: Cascade)
+  /// The internal ID of the user that sent this invite.
+  /// @internal
+  senderID   String
+  /// The user who received this invite.
+  /// @internal
+  receiver   User   @relation(name: "receivedInvites", fields: [receiverID], references: [id], onDelete: Cascade)
+  /// The internal ID of the user who received this invite.
+  /// @internal
+  receiverID String
+  /// The language this invite is for.
+  /// @internal
+  lang       Lang   @relation(fields: [langID], references: [id], onDelete: Cascade)
+  /// The internal ID of the language this invite is for.
+  /// @internal
+  langID     String
+
+  /// Whether this user owns the language. Overrides all other permissions.
+  owner             Boolean @default(false)
+  /// Whether this user can update the permissions for this language, including
+  /// inviting other users or removing their permissions. They cannot edit the
+  /// permissions of other users with this permission, or those of the owner.
+  changePermissions Boolean @default(false)
+  /// Whether this user can update the ID of the language.
+  changeId          Boolean @default(false)
+  /// Whether this user can update the other information of this language.
+  changeInfo        Boolean @default(false)
+  /// Whether this user can add words to this language.
+  changeWords       Boolean @default(false)
+
+  /// When this invite was sent.
+  created  DateTime  @default(now())
+  /// When this invite was accepted, if it has been.
+  accepted DateTime?
+}
+
+model WordClass {
+  /// Internal ID.
+  /// @internal
+  id String @id @default(cuid())
+
+  /// The language this word class belongs to.
+  /// @internal
+  lang   Lang   @relation(fields: [langID], references: [id], onDelete: Cascade)
+  /// The internal ID of the language this word class belongs to.
+  /// @internal
+  langID String
+
+  name         String
+  abbreviation String
+
+  createdBy       User?   @relation(name: "createdWordClasses", fields: [createdById], references: [id])
+  createdById     String?
+  lastUpdatedBy   User?   @relation(name: "lastUpdatedWordClasses", fields: [lastUpdatedById], references: [id])
+  lastUpdatedById String?
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+  words   Word[]
+}
+
+model Word {
+  id String @id @default(cuid())
+
+  word       String
+  definition String
+  ipa        String?
+  notes      String?
+
+  /// The language this word belongs to.
+  /// @internal
+  lang   Lang   @relation(fields: [langID], references: [id], onDelete: Cascade)
+  /// The internal ID of the language this word belongs to.
+  /// @internal
+  langID String
+
+  /// The word classes this word has.
+  wordClasses WordClass[]
+
+  createdBy       User?   @relation(name: "createdWords", fields: [createdById], references: [id])
+  createdById     String?
+  lastUpdatedBy   User?   @relation(name: "lastUpdatedWords", fields: [lastUpdatedById], references: [id])
+  lastUpdatedById String?
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+}

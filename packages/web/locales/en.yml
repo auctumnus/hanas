@@ -1,0 +1,29 @@
+button.about: About
+button.back: Back
+button.home: Home
+button.toggle_dark: Toggle dark mode
+button.toggle_langs: Change languages
+button.submit: Submit
+intro:
+  desc: Opinionated Vite Starter Template
+  dynamic-route: Demo of dynamic route
+  hi: Hi, {name}!
+  aka: Also known as
+  whats-your-name: What's your name?
+not-found: Not found
+
+route.settings: Settings
+
+menu.home: Home
+menu.languages: Languages
+menu.invites: Invites
+menu.users: Users
+menu.settings: Settings
+menu.about: About Hanas
+
+menu.close: Close navigation
+menu.open: Open navigation
+menu.back: Go back
+
+locales.en: 'English'
+locales.es: 'Spanish'

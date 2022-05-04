@@ -1,0 +1,5034 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+    <title>Hanas Backend API</title>
+    <meta name="title" content="Hanas Backend API">
+    <meta name="description" content="An API description of the backend API for Hanas, a tool and community for constructed languages.">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script>
+      var recentlyCopied = []
+
+      setInterval(function () {
+        recentlyCopied.pop()
+      }, 5000)
+
+      function copyLink(element) {
+        if('clipboard' in navigator) {
+          navigator.clipboard.writeText(element.baseURI)
+
+          var copied = document.createElement('span')
+          copied.classList.add('copied-popup')
+          copied.classList.add('fadeable')
+
+          if(recentlyCopied.indexOf(element) > -1) {
+            copied.innerText = "stop copying me >:^("
+            recentlyCopied[recentlyCopied.indexOf(element)] = undefined
+          } else {
+            copied.innerText = "link copied!"
+          }
+          recentlyCopied.push(element)
+
+          copied.setAttribute("role", "alert")
+
+          if(element.nextSibling) {
+            if(!element.nextSibling.classList || !element.nextSibling.classList.contains('copied-popup'))
+              element.parentNode.insertBefore(copied, element.nextSibling)
+          } else {
+            element.parentNode.appendChild(copied)
+          }
+
+          setTimeout(function() {
+            copied.classList.add('fade-out')
+            setTimeout(function() {
+              copied.remove()
+            }, 1000)
+          }, 500)
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header id="top-bar">
+      <nav id="menu">
+        <!-- major apologies on the header nesting lmfoa -->
+        <header>
+          <label>
+            <input type="checkbox">
+            <svg id="open-button" alt="Open menu" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+            </svg>
+            <svg id="close-button" alt="Close menu" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </label>
+          <h1>Navigation</h1>
+        </header>
+        <ul>
+          <li><h2><a href="#header">Summary</a></h2></li>
+          <li>
+            <h2><a href="#models">Models</a></h2>
+            <ul><li class="model"><a href="#model-user"><code>User</code></a></li><li class="model"><a href="#model-lang"><code>Lang</code></a></li><li class="model"><a href="#model-langpermission"><code>LangPermission</code></a></li><li class="model"><a href="#model-langinvite"><code>LangInvite</code></a></li><li class="model"><a href="#model-wordclass"><code>WordClass</code></a></li><li class="model"><a href="#model-word"><code>Word</code></a></li></ul>
+          </li>
+
+          <li>
+            <h2><a href="#routes">Routes</a></h2>
+            
+<ul>
+  <li>
+  <a href="#base" class="route final"><code>/</code></a></li><li>
+        <details open>
+          <summary><a href="#route-users" class="route"><code>/users</code></a></summary>
+          
+<ul>
+  <li>
+  
+        <details open>
+          <summary><a href="#route-users-username" class="route"><code>/users<wbr>/<span class="param">:username</span></code></a></summary>
+          
+<ul>
+  <li>
+  <a href="#route-users-username-langs" class="route final"><code>/users<wbr>/<span class="param">:username</span><wbr>/langs</code></a>
+  </li>
+</ul>
+
+        </details>
+      
+  </li>
+</ul>
+
+        </details>
+      </li><li>
+        <details open>
+          <summary><a href="#route-langs" class="route"><code>/langs</code></a></summary>
+          
+<ul>
+  <li>
+  
+        <details open>
+          <summary><a href="#route-langs-id" class="route"><code>/langs<wbr>/<span class="param">:id</span></code></a></summary>
+          
+<ul>
+  <li>
+  
+        <details open>
+          <summary><a href="#route-langs-id-words" class="route"><code>/langs<wbr>/<span class="param">:id</span><wbr>/words</code></a></summary>
+          
+<ul>
+  <li>
+  
+        <details open>
+          <summary><a href="#route-langs-id-words-lemma" class="route"><code>/langs<wbr>/<span class="param">:id</span><wbr>/words<wbr>/<span class="param">:lemma</span></code></a></summary>
+          
+<ul>
+  <li>
+  <a href="#route-langs-id-words-lemma-form" class="route final"><code>/langs<wbr>/<span class="param">:id</span><wbr>/words<wbr>/<span class="param">:lemma</span><wbr>/<span class="param">:form</span></code></a>
+  </li>
+</ul>
+
+        </details>
+      
+  </li>
+</ul>
+
+        </details>
+      </li><li>
+        <details open>
+          <summary><a href="#route-langs-id-perms" class="route"><code>/langs<wbr>/<span class="param">:id</span><wbr>/perms</code></a></summary>
+          
+<ul>
+  <li>
+  <a href="#route-langs-id-perms-username" class="route final"><code>/langs<wbr>/<span class="param">:id</span><wbr>/perms<wbr>/<span class="param">:username</span></code></a>
+  </li>
+</ul>
+
+        </details>
+      
+  </li>
+</ul>
+
+        </details>
+      
+  </li>
+</ul>
+
+        </details>
+      </li><li>
+        <details open>
+          <summary><a href="#route-invites" class="route"><code>/invites</code></a></summary>
+          
+<ul>
+  <li>
+  
+        <details open>
+          <summary><a href="#route-invites-code" class="route"><code>/invites<wbr>/<span class="param">:code</span></code></a></summary>
+          
+<ul>
+  <li>
+  
+        <details open>
+          <summary><a href="#route-invites-code-username" class="route"><code>/invites<wbr>/<span class="param">:code</span><wbr>/<span class="param">:username</span></code></a></summary>
+          
+<ul>
+  <li>
+  <a href="#route-invites-code-username-receiver" class="route final"><code>/invites<wbr>/<span class="param">:code</span><wbr>/<span class="param">:username</span><wbr>/receiver</code></a></li><li><a href="#route-invites-code-username-sender" class="route final"><code>/invites<wbr>/<span class="param">:code</span><wbr>/<span class="param">:username</span><wbr>/sender</code></a>
+  </li>
+</ul>
+
+        </details>
+      
+  </li>
+</ul>
+
+        </details>
+      
+  </li>
+</ul>
+
+        </details>
+      
+  </li>
+</ul>
+
+          </li>
+        </ul>
+      </nav>
+      <h1>Hanas Backend API</h1>
+    </header>
+    <main>
+      <header id="header">
+        <h1>Hanas Backend API</h1>
+        <p>An API description of the backend API for Hanas, a tool and community for constructed languages.</p>
+
+        <p>Authentication is done through the same methods as
+<a href="https://www.ory.sh/kratos/docs/">Kratos</a>.
+You should either submit an API key with authenticated requests in the
+<code>X-Session-Token</code> header, or in a cookie set by logging in with Kratos.
+Authenticated operations are marked with a badge icon.</p>
+<p>Pagination in Hanas is done using a cursor with a prefix. On any paginated
+endpoint, the response will look like this:</p>
+<pre><code>{
+  data: [
+    { ... },
+    { ... },
+    ...
+  ],
+  cursor: {
+    next: &quot;next__cjld2cyuq0000t3rmniod1foy&quot;,
+    previous: null
+  }
+}
+</code></pre>
+<p>The client can then pass a query parameter with <code>cursor</code> set to the value from
+<code>cursor.next</code> or <code>cursor.previous</code> in order to find the page before or after.
+The client can also specify the maximum number of records to receive in one
+request using the <code>take</code> query parameter. This must be an integer value
+greater than 0 and lower than the instance's <code>HANAS_RESULTS_MAX_PAGE_SIZE</code>.</p>
+<p>For example, if a client wanted to get the next page of the example response
+above, and receive up to 6 objects, they would resend their <code>GET</code> request to
+<code>https://hanas.instance/endpoint?cursor=next__cjld2cyuq0000t3rmniod1foy&amp;take=6</code>.</p>
+<p>Paginated responses are marked with a &quot;duplicate&quot; icon.</p>
+
+        <noscript>
+          <p>
+            Note that while these docs work without Javascript, some enhancements
+            may be unavailable. The menu also requires Javascript when the
+            viewport is at a mobile size.
+          </p>
+        </noscript>
+      </header>
+      <section id="models">
+        <h2>Models</h2>
+        
+  <section id=model-user class="model">
+    <details>
+      <summary>
+        <h2><code>User</code></h2>
+      </summary>
+      
+  <div class="property">
+    <div class="property-header">
+      <code>username</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-z0-9](-|_)?)+[a-z0-9]/</code>, between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The username for this user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>displayName</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The display name for this user.</p>
+<p>If you're displaying users, you should use this rather than the
+username, if it's available.</p>
+<p>Be wary of weird display names. You should fully expect people to use all
+sorts of unicode hell here.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 1000 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>gender</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-fA-F0-9]{3}){1,2}$/</code>)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Hex color representing the gender of the user.</p>
+<p>Please don't ruin the fun by just giving users a pink/blue selector. It's
+way funnier if you just give them a free color selection thing.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>pronouns</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 15 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A free text field, intended to store pronouns in the format of
+nominative/accusative or nominative/accusative/possessive. In reality it's a
+short free text field since I can't predict everything users might have.</p>
+<p>The length may end up being raised, but it should generally only be large
+enough for something like &quot;she/they/it&quot; or whatever.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>profilePicture</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>banner</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to birdsite-esque profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+      
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    username: <span class="string">"alice"</span>,
+    displayName: <span class="string">"Alice Iwakura"</span>,
+    description: <span class="string">"I love languages!"</span>,
+    gender: <span class="string">"76428a"</span>,
+    pronouns: <span class="string">"she/her"</span>,
+    profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
+    banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
+    created: <span class="string">"2021-09-27T20:27:47.803Z"</span>,
+    updated: <span class="string">"2021-09-27T20:05:27.466Z"</span>
+}</code></pre>
+
+    </details>
+  </section>
+  
+  <section id=model-lang class="model">
+    <details>
+      <summary>
+        <h2><code>Lang</code></h2>
+      </summary>
+      
+  <div class="property">
+    <div class="property-header">
+      <code>code</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/[a-z]/</code>, between 3 and 5 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Language code, primary identifier for languages.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>name</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Name of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 2500 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+      
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    code: <span class="string">"elv"</span>,
+    name: <span class="string">"Elvish"</span>,
+    description: <span class="string">"A language spoken by elves in my conworld!"</span>,
+    created: <span class="string">"2021-09-27T00:36:35.800Z"</span>,
+    updated: <span class="string">"2021-09-27T13:22:24.520Z"</span>
+}</code></pre>
+
+    </details>
+  </section>
+  
+  <section id=model-langpermission class="model">
+    <details>
+      <summary>
+        <h2><code>LangPermission</code></h2>
+      </summary>
+      
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this set of permissions was created; aka when the invite
+for this language was accepted, or in the case of the owner, when the
+language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this set of permissions was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>owner</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user owns the language.
+Overrides all other permissions.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changePermissions</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the permissions for this language, including
+permissions of other users or removing their permissions. They cannot edit
+the permissions of other users with this permission, or those of the owner.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeId</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the ID (or code) of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeInfo</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the other
+information of the language, including the name and description.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeWords</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can add/edit/remove words in this language.</p>
+</p>
+    </div>
+  </div>
+  
+      
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    created: <span class="string">"2021-09-27T23:53:53.449Z"</span>,
+    updated: <span class="string">"2021-09-27T19:14:31.563Z"</span>,
+    owner: <span class="boolean">false</span>,
+    changePermissions: <span class="boolean">false</span>,
+    changeId: <span class="boolean">false</span>,
+    changeInfo: <span class="boolean">false</span>,
+    changeWords: <span class="boolean">false</span>
+}</code></pre>
+
+    </details>
+  </section>
+  
+  <section id=model-langinvite class="model">
+    <details>
+      <summary>
+        <h2><code>LangInvite</code></h2>
+      </summary>
+      
+  <div class="property">
+    <div class="property-header">
+      <code>active</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>If this is true, then the invite can be accepted.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this invite was sent.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>accepted</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this invite was accepted, if it has been.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>owner</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user owns the language.
+Overrides all other permissions.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changePermissions</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the permissions for this language, including
+permissions of other users or removing their permissions. They cannot edit
+the permissions of other users with this permission, or those of the owner.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeId</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the ID (or code) of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeInfo</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the other
+information of the language, including the name and description.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeWords</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can add/edit/remove words in this language.</p>
+</p>
+    </div>
+  </div>
+  
+      
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    active: <span class="boolean">false</span>,
+    created: <span class="string">"2021-09-27T09:26:20.005Z"</span>,
+    accepted: <span class="string">"2021-09-27T01:41:11.680Z"</span>,
+    owner: <span class="boolean">false</span>,
+    changePermissions: <span class="boolean">false</span>,
+    changeId: <span class="boolean">false</span>,
+    changeInfo: <span class="boolean">false</span>,
+    changeWords: <span class="boolean">false</span>
+}</code></pre>
+
+    </details>
+  </section>
+  
+  <section id=model-wordclass class="model">
+    <details>
+      <summary>
+        <h2><code>WordClass</code></h2>
+      </summary>
+      
+  <div class="property">
+    <div class="property-header">
+      <code>name</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A name for this word class.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>abbreviation</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>An abbreviation for this word class, generally only a couple
+characters long.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this word class was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this word class was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+      
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    name: <span class="string">""</span>,
+    abbreviation: <span class="string">""</span>,
+    created: <span class="string">"2021-09-27T06:47:37.567Z"</span>,
+    updated: <span class="string">"2021-09-27T22:41:52.229Z"</span>
+}</code></pre>
+
+    </details>
+  </section>
+  
+  <section id=model-word class="model">
+    <details>
+      <summary>
+        <h2><code>Word</code></h2>
+      </summary>
+      
+  <div class="property">
+    <div class="property-header">
+      <code>word</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The word, in the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>definition</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A definition for the word.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>ipa</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The pronunciation of the word in the International Phonetic
+Alphabet. May later be automatically generated by an SCE ruleset -
+currently manual.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>notes</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Longer-form notes about the word.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this word was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this word was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+      
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    word: <span class="string">""</span>,
+    definition: <span class="string">""</span>,
+    ipa: <span class="string">""</span>,
+    notes: <span class="string">""</span>,
+    created: <span class="string">"2021-09-27T05:51:38.977Z"</span>,
+    updated: <span class="string">"2021-09-27T16:39:11.285Z"</span>
+}</code></pre>
+
+    </details>
+  </section>
+  
+      </section>
+      <section id="routes">
+        <h2>Routes</h2>
+        
+  <section id="base" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#base"><code>/</code></a></h2>
+          <a href="#base-GET" class="verb-chip GET">GET</a>
+          <a onclick="copyLink(this)" class="anchor" href="#base"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=base-GET>
+          <a href="#base-GET" class="verb-chip GET">GET</a>
+          
+          <code>/</code>
+          <a onclick="copyLink(this)" class="anchor" href="#base-GET"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>error</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>data</code>
+      <span class="property-type">
+        <span class="property-type-name type-"></span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">false</span>,
+    data: <span class="type-note">(TODO: implement model properties)</span class="type-note">
+}</code></pre>
+
+                  
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-users" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-users"><code>/users</code></a></h2>
+          <a href="#route-users-get" class="verb-chip GET">GET</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-users"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-users-get>
+          <a href="#route-users-get" class="verb-chip GET">GET</a>
+          
+          <code>/users</code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-users-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+<svg class="paginated" title="This request is paginated." alt="This request is paginated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
+  <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
+</svg>
+
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>username</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-z0-9](-|_)?)+[a-z0-9]/</code>, between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The username for this user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>displayName</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The display name for this user.</p>
+<p>If you're displaying users, you should use this rather than the
+username, if it's available.</p>
+<p>Be wary of weird display names. You should fully expect people to use all
+sorts of unicode hell here.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 1000 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>gender</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-fA-F0-9]{3}){1,2}$/</code>)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Hex color representing the gender of the user.</p>
+<p>Please don't ruin the fun by just giving users a pink/blue selector. It's
+way funnier if you just give them a free color selection thing.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>pronouns</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 15 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A free text field, intended to store pronouns in the format of
+nominative/accusative or nominative/accusative/possessive. In reality it's a
+short free text field since I can't predict everything users might have.</p>
+<p>The length may end up being raised, but it should generally only be large
+enough for something like &quot;she/they/it&quot; or whatever.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>profilePicture</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>banner</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to birdsite-esque profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    username: <span class="string">"alice"</span>,
+    displayName: <span class="string">"Alice Iwakura"</span>,
+    description: <span class="string">"I love languages!"</span>,
+    gender: <span class="string">"76428a"</span>,
+    pronouns: <span class="string">"she/her"</span>,
+    profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
+    banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
+    created: <span class="string">"2021-09-27T03:54:03.615Z"</span>,
+    updated: <span class="string">"2021-09-27T07:15:48.522Z"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-langs" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-langs"><code>/langs</code></a></h2>
+          <a href="#route-langs-get" class="verb-chip GET">GET</a><a href="#route-langs-post" class="verb-chip POST">POST</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-langs-get>
+          <a href="#route-langs-get" class="verb-chip GET">GET</a>
+          
+          <code>/langs</code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+<svg class="paginated" title="This request is paginated." alt="This request is paginated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
+  <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
+</svg>
+
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>code</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/[a-z]/</code>, between 3 and 5 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Language code, primary identifier for languages.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>name</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Name of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 2500 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    code: <span class="string">"elv"</span>,
+    name: <span class="string">"Elvish"</span>,
+    description: <span class="string">"A language spoken by elves in my conworld!"</span>,
+    created: <span class="string">"2021-09-27T19:59:55.952Z"</span>,
+    updated: <span class="string">"2021-09-27T23:30:02.760Z"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+    </details>
+  </section>
+  
+
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-langs-post>
+          <a href="#route-langs-post" class="verb-chip POST">POST</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/langs</code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-post"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+          <details>
+            <summary><h4>Request</h4></summary>
+            
+            
+  <div class="property">
+    <div class="property-header">
+      <code>code</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/[a-z]/</code>, between 3 and 5 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Language code, primary identifier for languages.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>name</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Name of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 2500 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the language.</p>
+</p>
+    </div>
+  </div>
+  
+            
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    code: <span class="string">"elv"</span>,
+    name: <span class="string">"Elvish"</span>,
+    description: <span class="string">"A language spoken by elves in my conworld!"</span>
+}</code></pre>
+
+          </details>
+          
+      
+        <details>
+          <summary>
+            <h4>Response 201</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>code</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/[a-z]/</code>, between 3 and 5 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Language code, primary identifier for languages.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>name</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Name of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 2500 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    code: <span class="string">"elv"</span>,
+    name: <span class="string">"Elvish"</span>,
+    description: <span class="string">"A language spoken by elves in my conworld!"</span>,
+    created: <span class="string">"2021-09-27T07:11:00.261Z"</span>,
+    updated: <span class="string">"2021-09-27T22:54:29.705Z"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 400</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<span>This error is a validation error; it will contain errors reported by <a href="https://www.npmjs.com/package/zod">Zod</a></span>.
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">400</span>,
+        message: <span class="string">"Input validation error; see issues for details"</span>,
+        issues: [
+          ... (zod errors)
+        ]
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 400</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">400</span>,
+        message: <span class="string">"A lang with that code already exists."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-invites" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-invites"><code>/invites</code></a></h2>
+          <a href="#route-invites-get" class="verb-chip GET">GET</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-invites-get>
+          <a href="#route-invites-get" class="verb-chip GET">GET</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/invites</code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      <p>Somewhat WIP. This endpoint is likely to change.</p>
+
+      
+          <details>
+            <summary><h4>Request</h4></summary>
+            
+    <details>
+    <summary><h5>Query Parameters</h5></summary>
+    
+  <div class="property">
+    <div class="property-header">
+      <code>sent</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>True if you want invites sent by you, false otherwise.</p>
+</p>
+    </div>
+  </div>
+  
+    </details>
+    
+            
+            
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    
+}</code></pre>
+
+          </details>
+          
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+<svg class="paginated" title="This request is paginated." alt="This request is paginated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
+  <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
+</svg>
+
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>active</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>If this is true, then the invite can be accepted.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this invite was sent.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>accepted</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this invite was accepted, if it has been.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>owner</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user owns the language.
+Overrides all other permissions.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changePermissions</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the permissions for this language, including
+permissions of other users or removing their permissions. They cannot edit
+the permissions of other users with this permission, or those of the owner.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeId</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the ID (or code) of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeInfo</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the other
+information of the language, including the name and description.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeWords</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can add/edit/remove words in this language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>code</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/[a-z]/</code>, between 3 and 5 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Language code, primary identifier for languages.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    active: <span class="boolean">false</span>,
+    created: <span class="string">"2021-09-27T08:04:07.009Z"</span>,
+    accepted: <span class="string">"2021-09-27T13:35:17.170Z"</span>,
+    owner: <span class="boolean">false</span>,
+    changePermissions: <span class="boolean">false</span>,
+    changeId: <span class="boolean">false</span>,
+    changeInfo: <span class="boolean">false</span>,
+    changeWords: <span class="boolean">false</span>,
+    code: <span class="string">"elv"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>active</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>If this is true, then the invite can be accepted.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this invite was sent.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>accepted</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this invite was accepted, if it has been.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>owner</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user owns the language.
+Overrides all other permissions.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changePermissions</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the permissions for this language, including
+permissions of other users or removing their permissions. They cannot edit
+the permissions of other users with this permission, or those of the owner.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeId</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the ID (or code) of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeInfo</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the other
+information of the language, including the name and description.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeWords</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can add/edit/remove words in this language.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    active: <span class="boolean">false</span>,
+    created: <span class="string">"2021-09-27T12:48:39.231Z"</span>,
+    accepted: <span class="string">"2021-09-27T21:03:24.448Z"</span>,
+    owner: <span class="boolean">false</span>,
+    changePermissions: <span class="boolean">false</span>,
+    changeId: <span class="boolean">false</span>,
+    changeInfo: <span class="boolean">false</span>,
+    changeWords: <span class="boolean">false</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-users-username" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-users-username"><code>/users<wbr>/<span class="param">:username</span></code></a></h2>
+          <a href="#route-users-username-get" class="verb-chip GET">GET</a><a href="#route-users-username-patch" class="verb-chip PATCH">PATCH</a><a href="#route-users-username-delete" class="verb-chip DELETE">DELETE</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-users-username"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-users-username-get>
+          <a href="#route-users-username-get" class="verb-chip GET">GET</a>
+          
+          <code>/users<wbr>/<span class="param">:username</span></code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-users-username-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>username</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-z0-9](-|_)?)+[a-z0-9]/</code>, between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The username for this user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>displayName</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The display name for this user.</p>
+<p>If you're displaying users, you should use this rather than the
+username, if it's available.</p>
+<p>Be wary of weird display names. You should fully expect people to use all
+sorts of unicode hell here.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 1000 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>gender</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-fA-F0-9]{3}){1,2}$/</code>)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Hex color representing the gender of the user.</p>
+<p>Please don't ruin the fun by just giving users a pink/blue selector. It's
+way funnier if you just give them a free color selection thing.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>pronouns</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 15 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A free text field, intended to store pronouns in the format of
+nominative/accusative or nominative/accusative/possessive. In reality it's a
+short free text field since I can't predict everything users might have.</p>
+<p>The length may end up being raised, but it should generally only be large
+enough for something like &quot;she/they/it&quot; or whatever.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>profilePicture</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>banner</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to birdsite-esque profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    username: <span class="string">"alice"</span>,
+    displayName: <span class="string">"Alice Iwakura"</span>,
+    description: <span class="string">"I love languages!"</span>,
+    gender: <span class="string">"76428a"</span>,
+    pronouns: <span class="string">"she/her"</span>,
+    profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
+    banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
+    created: <span class="string">"2021-09-27T05:30:05.798Z"</span>,
+    updated: <span class="string">"2021-09-27T12:21:12.055Z"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No user was found with that username."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-users-username-patch>
+          <a href="#route-users-username-patch" class="verb-chip PATCH">PATCH</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/users<wbr>/<span class="param">:username</span></code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-users-username-patch"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+          <details>
+            <summary><h4>Request</h4></summary>
+            
+            
+  <div class="property">
+    <div class="property-header">
+      <code>username</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-z0-9](-|_)?)+[a-z0-9]/</code>, between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The username for this user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>displayName</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The display name for this user.</p>
+<p>If you're displaying users, you should use this rather than the
+username, if it's available.</p>
+<p>Be wary of weird display names. You should fully expect people to use all
+sorts of unicode hell here.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 1000 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>gender</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-fA-F0-9]{3}){1,2}$/</code>)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Hex color representing the gender of the user.</p>
+<p>Please don't ruin the fun by just giving users a pink/blue selector. It's
+way funnier if you just give them a free color selection thing.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>pronouns</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 15 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A free text field, intended to store pronouns in the format of
+nominative/accusative or nominative/accusative/possessive. In reality it's a
+short free text field since I can't predict everything users might have.</p>
+<p>The length may end up being raised, but it should generally only be large
+enough for something like &quot;she/they/it&quot; or whatever.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+            
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    username: <span class="string">"alice"</span>,
+    displayName: <span class="string">"Alice Iwakura"</span>,
+    description: <span class="string">"I love languages!"</span>,
+    gender: <span class="string">"76428a"</span>,
+    pronouns: <span class="string">"she/her"</span>
+}</code></pre>
+
+          </details>
+          
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>username</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-z0-9](-|_)?)+[a-z0-9]/</code>, between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The username for this user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>displayName</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The display name for this user.</p>
+<p>If you're displaying users, you should use this rather than the
+username, if it's available.</p>
+<p>Be wary of weird display names. You should fully expect people to use all
+sorts of unicode hell here.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 1000 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>gender</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-fA-F0-9]{3}){1,2}$/</code>)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Hex color representing the gender of the user.</p>
+<p>Please don't ruin the fun by just giving users a pink/blue selector. It's
+way funnier if you just give them a free color selection thing.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>pronouns</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 15 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A free text field, intended to store pronouns in the format of
+nominative/accusative or nominative/accusative/possessive. In reality it's a
+short free text field since I can't predict everything users might have.</p>
+<p>The length may end up being raised, but it should generally only be large
+enough for something like &quot;she/they/it&quot; or whatever.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>profilePicture</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>banner</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to birdsite-esque profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    username: <span class="string">"alice"</span>,
+    displayName: <span class="string">"Alice Iwakura"</span>,
+    description: <span class="string">"I love languages!"</span>,
+    gender: <span class="string">"76428a"</span>,
+    pronouns: <span class="string">"she/her"</span>,
+    profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
+    banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
+    created: <span class="string">"2021-09-27T00:07:12.274Z"</span>,
+    updated: <span class="string">"2021-09-27T05:47:11.888Z"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 403</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">403</span>,
+        message: <span class="string">"You do not have permission to edit another user."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-users-username-delete>
+          <a href="#route-users-username-delete" class="verb-chip DELETE">DELETE</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/users<wbr>/<span class="param">:username</span></code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-users-username-delete"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 204</h4>
+            
+            
+          </summary>
+          (no content)
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-users-username-langs" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-users-username-langs"><code>/users<wbr>/<span class="param">:username</span><wbr>/langs</code></a></h2>
+          
+          <a onclick="copyLink(this)" class="anchor" href="#route-users-username-langs"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+    </details>
+  </section>
+  
+  <section id="route-langs-id" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-langs-id"><code>/langs<wbr>/<span class="param">:id</span></code></a></h2>
+          <a href="#route-langs-id-get" class="verb-chip GET">GET</a><a href="#route-langs-id-patch" class="verb-chip PATCH">PATCH</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-id"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-langs-id-get>
+          <a href="#route-langs-id-get" class="verb-chip GET">GET</a>
+          
+          <code>/langs<wbr>/<span class="param">:id</span></code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-id-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>code</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/[a-z]/</code>, between 3 and 5 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Language code, primary identifier for languages.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>name</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Name of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 2500 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    code: <span class="string">"elv"</span>,
+    name: <span class="string">"Elvish"</span>,
+    description: <span class="string">"A language spoken by elves in my conworld!"</span>,
+    created: <span class="string">"2021-09-27T04:39:21.642Z"</span>,
+    updated: <span class="string">"2021-09-27T01:43:19.575Z"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No language was found by that code."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-langs-id-patch>
+          <a href="#route-langs-id-patch" class="verb-chip PATCH">PATCH</a>
+          
+          <code>/langs<wbr>/<span class="param">:id</span></code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-id-patch"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+          <details>
+            <summary><h4>Request</h4></summary>
+            
+            
+  <div class="property">
+    <div class="property-header">
+      <code>code</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/[a-z]/</code>, between 3 and 5 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Language code, primary identifier for languages.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>name</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Name of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 2500 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+            
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    code: <span class="string">"elv"</span>,
+    name: <span class="string">"Elvish"</span>,
+    description: <span class="string">"A language spoken by elves in my conworld!"</span>,
+    created: <span class="string">"2021-09-27T15:15:36.812Z"</span>,
+    updated: <span class="string">"2021-09-27T22:12:15.644Z"</span>
+}</code></pre>
+
+          </details>
+          
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>code</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/[a-z]/</code>, between 3 and 5 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Language code, primary identifier for languages.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>name</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Name of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 2500 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    code: <span class="string">"elv"</span>,
+    name: <span class="string">"Elvish"</span>,
+    description: <span class="string">"A language spoken by elves in my conworld!"</span>,
+    created: <span class="string">"2021-09-27T21:28:44.472Z"</span>,
+    updated: <span class="string">"2021-09-27T12:53:20.497Z"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 403</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">403</span>,
+        message: <span class="string">"You do not have permission to make this edit."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No language was found by that code."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-langs-id-words" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-langs-id-words"><code>/langs<wbr>/<span class="param">:id</span><wbr>/words</code></a></h2>
+          
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-id-words"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+    </details>
+  </section>
+  
+  <section id="route-langs-id-perms" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-langs-id-perms"><code>/langs<wbr>/<span class="param">:id</span><wbr>/perms</code></a></h2>
+          <a href="#route-langs-id-perms-get" class="verb-chip GET">GET</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-id-perms"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-langs-id-perms-get>
+          <a href="#route-langs-id-perms-get" class="verb-chip GET">GET</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/langs<wbr>/<span class="param">:id</span><wbr>/perms</code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-id-perms-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this set of permissions was created; aka when the invite
+for this language was accepted, or in the case of the owner, when the
+language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this set of permissions was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>owner</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user owns the language.
+Overrides all other permissions.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changePermissions</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the permissions for this language, including
+permissions of other users or removing their permissions. They cannot edit
+the permissions of other users with this permission, or those of the owner.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeId</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the ID (or code) of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeInfo</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the other
+information of the language, including the name and description.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeWords</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can add/edit/remove words in this language.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    created: <span class="string">"2021-09-27T07:54:41.405Z"</span>,
+    updated: <span class="string">"2021-09-27T21:28:06.317Z"</span>,
+    owner: <span class="boolean">false</span>,
+    changePermissions: <span class="boolean">false</span>,
+    changeId: <span class="boolean">false</span>,
+    changeInfo: <span class="boolean">false</span>,
+    changeWords: <span class="boolean">false</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 403</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">403</span>,
+        message: <span class="string">"You do not have permission to see the permissions of this language."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-langs-id-words-lemma" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-langs-id-words-lemma"><code>/langs<wbr>/<span class="param">:id</span><wbr>/words<wbr>/<span class="param">:lemma</span></code></a></h2>
+          
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-id-words-lemma"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+    </details>
+  </section>
+  
+  <section id="route-langs-id-words-lemma-form" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-langs-id-words-lemma-form"><code>/langs<wbr>/<span class="param">:id</span><wbr>/words<wbr>/<span class="param">:lemma</span><wbr>/<span class="param">:form</span></code></a></h2>
+          
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-id-words-lemma-form"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+    </details>
+  </section>
+  
+  <section id="route-langs-id-perms-username" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-langs-id-perms-username"><code>/langs<wbr>/<span class="param">:id</span><wbr>/perms<wbr>/<span class="param">:username</span></code></a></h2>
+          <a href="#route-langs-id-perms-username-patch" class="verb-chip PATCH">PATCH</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-id-perms-username"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-langs-id-perms-username-patch>
+          <a href="#route-langs-id-perms-username-patch" class="verb-chip PATCH">PATCH</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/langs<wbr>/<span class="param">:id</span><wbr>/perms<wbr>/<span class="param">:username</span></code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-langs-id-perms-username-patch"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+          <details>
+            <summary><h4>Request</h4></summary>
+            
+            
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this set of permissions was created; aka when the invite
+for this language was accepted, or in the case of the owner, when the
+language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this set of permissions was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>owner</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user owns the language.
+Overrides all other permissions.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changePermissions</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the permissions for this language, including
+permissions of other users or removing their permissions. They cannot edit
+the permissions of other users with this permission, or those of the owner.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeId</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the ID (or code) of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeInfo</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the other
+information of the language, including the name and description.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeWords</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can add/edit/remove words in this language.</p>
+</p>
+    </div>
+  </div>
+  
+            
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    created: <span class="string">"2021-09-27T09:59:29.260Z"</span>,
+    updated: <span class="string">"2021-09-27T03:22:11.343Z"</span>,
+    owner: <span class="boolean">false</span>,
+    changePermissions: <span class="boolean">false</span>,
+    changeId: <span class="boolean">false</span>,
+    changeInfo: <span class="boolean">false</span>,
+    changeWords: <span class="boolean">false</span>
+}</code></pre>
+
+          </details>
+          
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this set of permissions was created; aka when the invite
+for this language was accepted, or in the case of the owner, when the
+language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this set of permissions was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>owner</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user owns the language.
+Overrides all other permissions.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changePermissions</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the permissions for this language, including
+permissions of other users or removing their permissions. They cannot edit
+the permissions of other users with this permission, or those of the owner.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeId</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the ID (or code) of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeInfo</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the other
+information of the language, including the name and description.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeWords</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can add/edit/remove words in this language.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    created: <span class="string">"2021-09-27T02:52:31.266Z"</span>,
+    updated: <span class="string">"2021-09-27T23:26:35.586Z"</span>,
+    owner: <span class="boolean">false</span>,
+    changePermissions: <span class="boolean">false</span>,
+    changeId: <span class="boolean">false</span>,
+    changeInfo: <span class="boolean">false</span>,
+    changeWords: <span class="boolean">false</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 403</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">403</span>,
+        message: <span class="string">"You do not have permission to edit the permissions of this language."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No user with permissions for this language was found by that username."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-invites-code" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-invites-code"><code>/invites<wbr>/<span class="param">:code</span></code></a></h2>
+          <a href="#route-invites-code-delete" class="verb-chip DELETE">DELETE</a><a href="#route-invites-code-get" class="verb-chip GET">GET</a><a href="#route-invites-code-post" class="verb-chip POST">POST</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-code"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-invites-code-delete>
+          <a href="#route-invites-code-delete" class="verb-chip DELETE">DELETE</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/invites<wbr>/<span class="param">:code</span></code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-code-delete"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-invites-code-get>
+          <a href="#route-invites-code-get" class="verb-chip GET">GET</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/invites<wbr>/<span class="param">:code</span></code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-code-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      <p>This will return all invites for the language.</p>
+
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+<svg class="paginated" title="This request is paginated." alt="This request is paginated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
+  <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
+</svg>
+
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>active</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>If this is true, then the invite can be accepted.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this invite was sent.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>accepted</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this invite was accepted, if it has been.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>owner</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user owns the language.
+Overrides all other permissions.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changePermissions</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the permissions for this language, including
+permissions of other users or removing their permissions. They cannot edit
+the permissions of other users with this permission, or those of the owner.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeId</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the ID (or code) of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeInfo</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the other
+information of the language, including the name and description.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeWords</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can add/edit/remove words in this language.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    active: <span class="boolean">false</span>,
+    created: <span class="string">"2021-09-27T05:48:32.237Z"</span>,
+    accepted: <span class="string">"2021-09-27T20:17:16.049Z"</span>,
+    owner: <span class="boolean">false</span>,
+    changePermissions: <span class="boolean">false</span>,
+    changeId: <span class="boolean">false</span>,
+    changeInfo: <span class="boolean">false</span>,
+    changeWords: <span class="boolean">false</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 403</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">403</span>,
+        message: <span class="string">"You do not have permission to see the permissions of this language."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No language was found by this code."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-invites-code-post>
+          <a href="#route-invites-code-post" class="verb-chip POST">POST</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/invites<wbr>/<span class="param">:code</span></code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-code-post"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+          <details>
+            <summary><h4>Request</h4></summary>
+            
+            
+  <div class="property">
+    <div class="property-header">
+      <code>accept</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>If this invite should be accepted.
+Given the limitations of this docs generator, there's only one request possible per
+endpoint, but this one technically has two: one with only
+<code>{ accept: boolean }</code>,
+and one with the rest of the properties. To send an invite, you use the latter,
+while to accept one, you use the former.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>username</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The user to send the invite to.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>owner</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user owns the language.
+Overrides all other permissions.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changePermissions</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the permissions for this language, including
+permissions of other users or removing their permissions. They cannot edit
+the permissions of other users with this permission, or those of the owner.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeId</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the ID (or code) of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeInfo</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the other
+information of the language, including the name and description.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeWords</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can add/edit/remove words in this language.</p>
+</p>
+    </div>
+  </div>
+  
+            
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    accept: <span class="boolean">false</span>,
+    username: <span class="string">"amelie"</span>,
+    owner: <span class="boolean">false</span>,
+    changePermissions: <span class="boolean">false</span>,
+    changeId: <span class="boolean">false</span>,
+    changeInfo: <span class="boolean">false</span>,
+    changeWords: <span class="boolean">false</span>
+}</code></pre>
+
+          </details>
+          
+      
+        <details>
+          <summary>
+            <h4>Response 204</h4>
+            
+            
+          </summary>
+          (no content)
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-invites-code-username" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-invites-code-username"><code>/invites<wbr>/<span class="param">:code</span><wbr>/<span class="param">:username</span></code></a></h2>
+          <a href="#route-invites-code-username-get" class="verb-chip GET">GET</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-code-username"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-invites-code-username-get>
+          <a href="#route-invites-code-username-get" class="verb-chip GET">GET</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/invites<wbr>/<span class="param">:code</span><wbr>/<span class="param">:username</span></code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-code-username-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>active</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>If this is true, then the invite can be accepted.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this invite was sent.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>accepted</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this invite was accepted, if it has been.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>owner</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user owns the language.
+Overrides all other permissions.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changePermissions</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the permissions for this language, including
+permissions of other users or removing their permissions. They cannot edit
+the permissions of other users with this permission, or those of the owner.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeId</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the ID (or code) of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeInfo</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can update the other
+information of the language, including the name and description.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>changeWords</code>
+      <span class="property-type">
+        <span class="property-type-name type-boolean">boolean</span>
+        <span class="property-type-specifics"></span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Whether this user can add/edit/remove words in this language.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    active: <span class="boolean">false</span>,
+    created: <span class="string">"2021-09-27T14:21:51.539Z"</span>,
+    accepted: <span class="string">"2021-09-27T03:22:21.805Z"</span>,
+    owner: <span class="boolean">false</span>,
+    changePermissions: <span class="boolean">false</span>,
+    changeId: <span class="boolean">false</span>,
+    changeInfo: <span class="boolean">false</span>,
+    changeWords: <span class="boolean">false</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 403</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">403</span>,
+        message: <span class="string">"You do not have permission to see an invite for this user for this language."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No language was found by this code."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No invite has been sent to this user for this language."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-invites-code-username-receiver" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-invites-code-username-receiver"><code>/invites<wbr>/<span class="param">:code</span><wbr>/<span class="param">:username</span><wbr>/receiver</code></a></h2>
+          <a href="#route-invites-code-username-receiver-get" class="verb-chip GET">GET</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-code-username-receiver"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-invites-code-username-receiver-get>
+          <a href="#route-invites-code-username-receiver-get" class="verb-chip GET">GET</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/invites<wbr>/<span class="param">:code</span><wbr>/<span class="param">:username</span><wbr>/receiver</code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-code-username-receiver-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>username</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-z0-9](-|_)?)+[a-z0-9]/</code>, between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The username for this user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>displayName</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The display name for this user.</p>
+<p>If you're displaying users, you should use this rather than the
+username, if it's available.</p>
+<p>Be wary of weird display names. You should fully expect people to use all
+sorts of unicode hell here.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 1000 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>gender</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-fA-F0-9]{3}){1,2}$/</code>)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Hex color representing the gender of the user.</p>
+<p>Please don't ruin the fun by just giving users a pink/blue selector. It's
+way funnier if you just give them a free color selection thing.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>pronouns</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 15 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A free text field, intended to store pronouns in the format of
+nominative/accusative or nominative/accusative/possessive. In reality it's a
+short free text field since I can't predict everything users might have.</p>
+<p>The length may end up being raised, but it should generally only be large
+enough for something like &quot;she/they/it&quot; or whatever.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>profilePicture</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>banner</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to birdsite-esque profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    username: <span class="string">"alice"</span>,
+    displayName: <span class="string">"Alice Iwakura"</span>,
+    description: <span class="string">"I love languages!"</span>,
+    gender: <span class="string">"76428a"</span>,
+    pronouns: <span class="string">"she/her"</span>,
+    profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
+    banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
+    created: <span class="string">"2021-09-27T14:33:04.815Z"</span>,
+    updated: <span class="string">"2021-09-27T06:49:06.130Z"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 403</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">403</span>,
+        message: <span class="string">"You do not have permission to see an invite for this user for this language."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"The receiver was not found for this invite. (Maybe their account was deleted?)"</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No language was found by this code."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No invite has been sent to this user for this language."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+  <section id="route-invites-code-username-sender" class="route">
+    <details>
+      <summary>
+        <header>
+          <h2><a href="#route-invites-code-username-sender"><code>/invites<wbr>/<span class="param">:code</span><wbr>/<span class="param">:username</span><wbr>/sender</code></a></h2>
+          <a href="#route-invites-code-username-sender-get" class="verb-chip GET">GET</a>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-code-username-sender"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </header>
+      </summary>
+      
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-invites-code-username-sender-get>
+          <a href="#route-invites-code-username-sender-get" class="verb-chip GET">GET</a>
+          
+<svg class="auth-badge" title="This request is authenticated." alt="This request is authenticated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+</svg>
+
+          <code>/invites<wbr>/<span class="param">:code</span><wbr>/<span class="param">:username</span><wbr>/sender</code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-invites-code-username-sender-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>username</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-z0-9](-|_)?)+[a-z0-9]/</code>, between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The username for this user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>displayName</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>The display name for this user.</p>
+<p>If you're displaying users, you should use this rather than the
+username, if it's available.</p>
+<p>Be wary of weird display names. You should fully expect people to use all
+sorts of unicode hell here.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 1000 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the user.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>gender</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/^([a-fA-F0-9]{3}){1,2}$/</code>)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Hex color representing the gender of the user.</p>
+<p>Please don't ruin the fun by just giving users a pink/blue selector. It's
+way funnier if you just give them a free color selection thing.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>pronouns</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 15 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A free text field, intended to store pronouns in the format of
+nominative/accusative or nominative/accusative/possessive. In reality it's a
+short free text field since I can't predict everything users might have.</p>
+<p>The length may end up being raised, but it should generally only be large
+enough for something like &quot;she/they/it&quot; or whatever.</p>
+<p>The min/max length given here is after cleaning.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>profilePicture</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>banner</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (uri)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Link to birdsite-esque profile picture. Currently unused.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this user was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    username: <span class="string">"alice"</span>,
+    displayName: <span class="string">"Alice Iwakura"</span>,
+    description: <span class="string">"I love languages!"</span>,
+    gender: <span class="string">"76428a"</span>,
+    pronouns: <span class="string">"she/her"</span>,
+    profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
+    banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
+    created: <span class="string">"2021-09-27T01:03:10.044Z"</span>,
+    updated: <span class="string">"2021-09-27T13:10:45.877Z"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 401</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">401</span>,
+        message: <span class="string">"You must be authenticated to access this endpoint."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 403</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">403</span>,
+        message: <span class="string">"You do not have permission to see an invite for this user for this language."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"The sender was not found for this invite. (Maybe their account was deleted?)"</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No language was found by this code."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No invite has been sent to this user for this language."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
+    </details>
+  </section>
+  
+      </section>
+    </main>
+    <script>
+      var nav = document.querySelector('nav#menu')
+      var input = document.querySelector('nav#menu input')
+      input.addEventListener('click', function() {
+        nav.classList.toggle('active')
+      })
+    </script>
+  </body>
+</html>

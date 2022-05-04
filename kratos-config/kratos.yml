@@ -1,0 +1,78 @@
+version: v0.7.4-alpha.1
+
+dsn: postgres://kratos:v3ry1nsecur3@database:5432/kratos # CHANGEME
+
+# I would really like this to be shorter and refreshable. Very tentative CHANGEME
+# since constant logging in is bad UX but long sessions can be a risk.
+# https://github.com/ory/kratos/issues/615
+session:
+  lifespan: 336h
+
+secrets:
+  cookie:
+    - LOL_THIS_IS_INSECURE_AS_HELL # CHANGEME
+      #cipher:
+      #- THIS_IS_ALSO_HORRIFYINGLY_INSECURE # CHANGEME
+
+courier:
+  smtp:
+    connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true # CHANGEME
+selfservice:
+  default_browser_return_url: http://127.0.0.1:4455
+  flows:
+    registration:
+      # TODO: Why the fuck is this not getting called
+      before: # This hook is just to make sure the Hanas server is there before
+        # we go ahead with registering a user.
+        hooks:
+          - hook: web_hook
+            config:
+              method:
+                POST
+                # CHANGEME but it's just the port here, probably.
+              url: http://172.17.0.1:1337/hooks/kratos/before_registration
+              body: file:///etc/config/kratos/before_registration.jsonnet
+              auth:
+                type: api_key
+                config:
+                  name: X-Unimportant
+                  value: has-no-effect
+                  in: header
+      after:
+        hooks:
+          - hook: web_hook
+            config:
+              method:
+                POST
+                # CHANGEME but it's just the port here, probably.
+              url: http://172.17.0.1:1337/hooks/kratos/after_registration
+              body: file:///etc/config/kratos/after_registration.jsonnet
+              auth:
+                type: api_key
+                config:
+                  name: X-Kratos-Key
+                  value: kr4t0s1ss3cure # CHANGEME
+                  in: header
+
+log:
+  level: info
+  format: text
+
+hashers:
+  argon2:
+    parallelism: 1
+    memory: 128MB
+    iterations: 2
+    salt_length: 16
+    key_length: 16
+
+identity:
+  default_schema_url: file:///etc/config/kratos/identity.schema.json
+
+serve:
+  public:
+    base_url: http://127.0.0.1:4433/
+    cors:
+      enabled: true
+  admin:
+    base_url: http://kratos:4434/

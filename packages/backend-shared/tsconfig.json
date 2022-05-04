@@ -1,0 +1,12 @@
+{
+  "exclude": ["dist/**/*"],
+  "compilerOptions": {
+    "declaration": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "removeComments": false,
+    "esModuleInterop": true,
+
+    "outDir": "./dist/types"
+  }
+}

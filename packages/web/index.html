@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/pwa-192x192.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#81a1c1" />
+    <meta name="msapplication-TileColor" content="#88c0d0" />
+    <meta name="theme-color" content="#88c0d0" />
+    <title>Hanas</title>
+    <!-- Primary Meta Tags -->
+    <title>Hanas</title>
+    <meta name="title" content="Hanas" />
+    <meta name="description" content="Conlanging tool and community" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hanas.app/" />
+    <meta property="og:title" content="Hanas" />
+    <meta property="og:description" content="Conlanging tool and community" />
+    <meta
+      property="og:image"
+      content="https://repository-images.githubusercontent.com/368702870/3f7c4280-c3e4-11eb-9f5f-e66d200b30f8"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://hanas.app/" />
+    <meta property="twitter:title" content="Hanas" />
+    <meta
+      property="twitter:description"
+      content="Conlanging tool and community"
+    />
+    <meta
+      property="twitter:image"
+      content="https://repository-images.githubusercontent.com/368702870/3f7c4280-c3e4-11eb-9f5f-e66d200b30f8"
+    />
+    <script>
+      ;(function () {
+        const prefersDark =
+          window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches
+        const setting = localStorage.getItem('vueuse-color-scheme') || 'auto'
+        if (setting === 'dark' || (prefersDark && setting !== 'light'))
+          document.documentElement.classList.toggle('dark', true)
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <span
+        style="
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          text-align: center;
+          font-family: system-ui;
+        "
+      >
+        loading...<br />
+        (if this loads forever, the page is either broken, or you have
+        javascript disabled)
+      </span>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

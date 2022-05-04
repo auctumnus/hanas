@@ -1,0 +1,600 @@
+/*
+ * This is a description of the Hanas API in KDL.
+ */
+
+meta {
+  name "Hanas Backend API"
+  summary "An API description of the backend API for Hanas, a tool and community for constructed languages."
+  description "Authentication is done through the same methods as
+  [Kratos](https://www.ory.sh/kratos/docs/).
+  You should either submit an API key with authenticated requests in the
+  `X-Session-Token` header, or in a cookie set by logging in with Kratos.
+  Authenticated operations are marked with a badge icon.
+
+  Pagination in Hanas is done using a cursor with a prefix. On any paginated
+  endpoint, the response will look like this:
+
+  ```
+  {
+    data: [
+      { ... },
+      { ... },
+      ...
+    ],
+    cursor: {
+      next: \"next__cjld2cyuq0000t3rmniod1foy\",
+      previous: null
+    }
+  }
+  ```
+
+  The client can then pass a query parameter with `cursor` set to the value from
+  `cursor.next` or `cursor.previous` in order to find the page before or after.
+  The client can also specify the maximum number of records to receive in one
+  request using the `take` query parameter. This must be an integer value
+  greater than 0 and lower than the instance's `HANAS_RESULTS_MAX_PAGE_SIZE`.
+
+  For example, if a client wanted to get the next page of the example response
+  above, and receive up to 6 objects, they would resend their `GET` request to
+  `https://hanas.instance/endpoint?cursor=next__cjld2cyuq0000t3rmniod1foy&take=6`.
+  
+  Paginated responses are marked with a \"duplicate\" icon.
+  "
+}
+
+model "User" {
+  username                                    \
+    type="string"                            \
+    description="The username for this user." \
+    example="alice"                           \
+    maxLength=30                              \
+    minLength=2                               \
+    regex="^([a-z0-9](-|_)?)+[a-z0-9]"
+
+  displayName                                         \
+    type="string?"                                    \
+    description="The display name for this user.
+
+    If you're displaying users, you should use this rather than the
+    username, if it's available.
+
+    Be wary of weird display names. You should fully expect people to use all
+    sorts of unicode hell here.
+
+    The min/max length given here is after cleaning." \
+    example="Alice Iwakura"                           \
+    minLength=2                                       \
+    maxLength=30
+
+  description                                      \
+    type="string?"                                 \
+    maxLength=1000                                 \
+    description="A short description of the user." \
+    example="I love languages!"
+
+  gender                                                             \
+    type="string?"                                                   \
+    description="Hex color representing the gender of the user.
+
+    Please don't ruin the fun by just giving users a pink/blue selector. It's
+    way funnier if you just give them a free color selection thing." \
+    regex="^([a-fA-F0-9]{3}){1,2}$"                                  \
+    example="76428a"
+
+  pronouns                                            \
+    type="string?"                                    \
+    description="A free text field, intended to store pronouns in the format of
+    nominative/accusative or nominative/accusative/possessive. In reality it's a
+    short free text field since I can't predict everything users might have.
+
+    The length may end up being raised, but it should generally only be large
+    enough for something like \"she/they/it\" or whatever.
+
+    The min/max length given here is after cleaning." \
+    example="she/her"                                 \
+    minLength=2                                       \
+    maxLength=15
+
+  profilePicture                                             \
+    type="string?"                                           \
+    format="uri"                                             \
+    description="Link to profile picture. Currently unused." \
+    example="https://cdn.hanas.app/users/pfp/alice.png"
+
+  banner                                                                    \
+    type="string?"                                                          \
+    format="uri"                                                            \
+    description="Link to birdsite-esque profile picture. Currently unused." \
+    example="https://cdn.hanas.app/users/banner/alice.png"
+
+  created             \
+    type="string"     \
+    format="datetime" \
+    description="When this user was created."
+
+  updated             \
+    type="string"     \
+    format="datetime" \
+    description="When this user was last updated."
+}
+
+model "Lang" {
+  code                                                             \
+    type="string"                                                  \
+    regex="[a-z]"                                                  \
+    minLength=3                                                    \
+    maxLength=5                                                    \
+    description="Language code, primary identifier for languages." \
+    example="elv"
+
+  name                                  \
+    type="string"                       \
+    minLength=2                         \
+    maxLength=30                        \
+    description="Name of the language." \
+    example="Elvish"
+
+  description                                          \
+    type="string?"                                     \
+    maxLength=2500                                     \
+    description="A short description of the language." \
+    example="A language spoken by elves in my conworld!"
+
+  created             \
+    type="string"     \
+    format="datetime" \
+    description="When this language was created."
+
+  updated             \
+    type="string"     \
+    format="datetime" \
+    description="When this language was last updated."
+}
+
+model "LangPermission" {
+  created             \
+    type="string"     \
+    format="datetime" \
+    description="When this set of permissions was created; aka when the invite
+      for this language was accepted, or in the case of the owner, when the
+      language was created."
+
+  updated             \
+    type="string"     \
+    format="datetime" \
+    description="When this set of permissions was last updated."
+
+  owner type="boolean" description="Whether this user owns the language.
+    Overrides all other permissions."
+
+  changePermissions type="boolean" description="
+    Whether this user can update the permissions for this language, including
+    permissions of other users or removing their permissions. They cannot edit
+    the permissions of other users with this permission, or those of the owner.
+  "
+
+  changeId type="boolean" description="Whether this user can update the ID (or code) of the language."
+
+  changeInfo type="boolean" description="Whether this user can update the other
+    information of the language, including the name and description."
+
+  changeWords type="boolean" description="Whether this user can add/edit/remove words in this language."
+
+}
+
+model "LangInvite" {
+  active type="boolean" description="If this is true, then the invite can be accepted."
+  includes "LangPermission" "!LangPermission.created" "!LangPermission.updated"
+
+  created             \
+    type="string"     \
+    format="datetime" \
+    description="When this invite was sent."
+  accepted            \
+    type="string?"    \
+    format="datetime" \
+    description="When this invite was accepted, if it has been."
+}
+
+model "WordClass" {
+  name            \
+    type="string" \
+    description="A name for this word class."
+
+  abbreviation    \
+    type="string" \
+    description="An abbreviation for this word class, generally only a couple
+    characters long."
+
+  created             \
+    type="string"     \
+    format="datetime" \
+    description="When this word class was created."
+
+  updated             \
+    type="string"    \
+    format="datetime" \
+    description="When this word class was last updated."
+}
+
+model "Word" {
+  word            \
+    type="string" \
+    description="The word, in the language."
+
+  definition      \
+    type="string" \
+    description="A definition for the word."
+
+  ipa              \
+    type="string?" \
+    description="The pronunciation of the word in the International Phonetic
+      Alphabet. May later be automatically generated by an SCE ruleset -
+      currently manual."
+
+  notes            \
+    type="string?" \
+    description="Longer-form notes about the word."
+
+  created             \
+    type="string"     \
+    format="datetime" \
+    description="When this word was created."
+
+  updated             \
+    type="string"    \
+    format="datetime" \
+    description="When this word was last updated."
+}
+
+
+route "/" {
+  GET {
+    response {
+      status 200
+      content {
+        error type="boolean"
+        data {
+          version type="string"
+          timestamp type="string" format="datetime"
+        }
+      }
+    }
+  }
+}
+
+route "/users" {
+  GET {
+    response {
+      status 200
+      paginated
+      content {
+        includes "User"
+      }
+    }
+  }
+  route "/:username" {
+    GET {
+      response {
+        status 200
+        content {
+          includes "User"
+        }
+      }
+      response {
+        status 404
+        err "No user was found with that username."
+      }
+    }
+
+    PATCH {
+      authenticated
+      request {
+        content {
+          includes                 \
+            "User"                 \
+            "!User.created"        \
+            "!User.updated"        \
+            "!User.profilePicture" \
+            "!User.banner"
+        }
+      }
+
+      response {
+        status 403
+        err "You do not have permission to edit another user."
+      }
+      response {
+        status 200
+        content {
+          includes "User"
+        }
+      }
+    }
+
+    DELETE {
+      authenticated
+      response {
+        status 204
+      }
+    }
+
+    route "/langs" {
+    }
+  }
+}
+
+route "/langs" {
+  GET {
+    response {
+      status 200
+      paginated
+      content {
+        includes "Lang"
+      }
+    }
+  }
+  POST {
+    authenticated
+    request {
+      content {
+        includes "Lang.code" "Lang.name" "Lang.description"
+      }
+    }
+    response {
+      status 400
+      err "zod error"
+    }
+    response {
+      status 400
+      err "A lang with that code already exists."
+    }
+    response {
+      status 201
+      content {
+        includes "Lang"
+      }
+    }
+  }
+
+  route "/:id" {
+    GET {
+      response {
+        status 404
+        err "No language was found by that code."
+      }
+      response {
+        status 200
+        content {
+          includes "Lang"
+        }
+      }
+    }
+
+    PATCH {
+      request {
+        content {
+          includes "Lang"
+        }
+      }
+      response {
+        status 200
+        content {
+          includes "Lang"
+        }
+      }
+      response {
+        status 404
+        err "No language was found by that code."
+      }
+      response {
+        status 403
+        err "You do not have permission to make this edit."
+      }
+    }
+
+    route "/words" {
+      route "/:lemma" {
+        route "/:form" {
+        
+        }
+      }
+    }
+
+    route "/perms" {
+      GET {
+        authenticated
+        response {
+          status 403
+          err "You do not have permission to see the permissions of this language."
+        }
+        response {
+          status 200
+          content {
+            includes "LangPermission"
+          }
+        }
+      }
+      route "/:username" {
+        PATCH {
+          authenticated
+          request {
+            content {
+              includes "LangPermission"
+            }
+          }
+          response {
+            status 403
+            err "You do not have permission to edit the permissions of this language."
+          }
+          response {
+            status 404
+            err "No user with permissions for this language was found by that username."
+          }
+          response {
+            status 200
+            content {
+              includes "LangPermission"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+route "/invites" {
+  GET {
+    description "Somewhat WIP. This endpoint is likely to change."
+    authenticated
+
+    request {
+      query "sent" type="boolean" description="True if you want invites sent by you, false otherwise."
+      content { }
+    }
+
+    response {
+      status 200
+      paginated
+      content {
+        includes "LangInvite" "Lang.code"
+      }
+    }
+
+    response {
+      status 200
+      content {
+        includes "LangInvite"
+      }
+    }
+  }
+
+
+  route "/:code" {
+    DELETE {
+      authenticated
+      response
+    }
+    GET {
+      authenticated
+
+      description "This will return all invites for the language."
+
+      response {
+        status 200
+        paginated
+        content {
+          includes "LangInvite"
+        }
+      }
+
+      response {
+        status 403
+        err "You do not have permission to see the permissions of this language."
+      }
+      response {
+        status 404
+        err "No language was found by this code."
+      }
+    }
+
+    POST {
+      authenticated
+      request {
+        content {
+          accept type="boolean?" description="If this invite should be accepted.
+          Given the limitations of this docs generator, there's only one request possible per
+          endpoint, but this one technically has two: one with only
+          `{ accept: boolean }`,
+          and one with the rest of the properties. To send an invite, you use the latter,
+          while to accept one, you use the former."
+          username type="string" description="The user to send the invite to." example="amelie"
+          includes "LangPermission" "!LangPermission.created" "!LangPermission.updated"
+        }
+      }
+      response {
+        status 204
+      }
+    }
+
+    route "/:username" {
+      GET {
+        authenticated
+        response {
+          status 200
+          content {
+            includes "LangInvite"
+          }
+        }
+        response {
+          status 404
+          err "No language was found by this code."
+        }
+        response {
+          status 404
+          err "No invite has been sent to this user for this language."
+        }
+        response {
+          status 403
+          err "You do not have permission to see an invite for this user for this language."
+        }
+      }
+
+      route "/receiver" {
+        GET {
+          authenticated
+          response {
+            status 200
+            content {
+              includes "User"
+            }
+          }
+          response {
+            status 404
+            err "The receiver was not found for this invite. (Maybe their account was deleted?)"
+          }
+          response {
+            status 404
+            err "No language was found by this code."
+          }
+          response {
+            status 404
+            err "No invite has been sent to this user for this language."
+          }
+          response {
+            status 403
+            err "You do not have permission to see an invite for this user for this language."
+          }
+        }
+      }
+
+      route "/sender" {
+        GET {
+          authenticated
+          response {
+            status 200
+            content {
+              includes "User"
+            }
+          }
+          response {
+            status 404
+            err "The sender was not found for this invite. (Maybe their account was deleted?)"
+          }
+          response {
+            status 404
+            err "No language was found by this code."
+          }
+          response {
+            status 404
+            err "No invite has been sent to this user for this language."
+          }
+          response {
+            status 403
+            err "You do not have permission to see an invite for this user for this language."
+          }
+        }
+      }
+    }
+  }
+}

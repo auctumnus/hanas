@@ -1,0 +1,52 @@
+@import './markdown.css';
+
+:root {
+  --material-fn: cubic-bezier(0.4, 0, 0.2, 1);
+  --material-timing: 150ms var(--material-fn);
+}
+
+html,
+body {
+  min-height: 100vh;
+  transition-timing-function: var(--material-fn);
+}
+
+html.dark {
+  @apply bg-surface-dark;
+}
+
+html,
+body,
+#app {
+  @apply min-h-full m-0 p-0 
+    bg-surface-light dark:bg-surface-dark 
+    text-on-background-light dark:text-on-background-dark
+    scrollbar 
+    scrollbar-track-surface-light dark:scrollbar-track-surface-dark
+    scrollbar-thumb-surface-variant-light dark:scrollbar-thumb-surface-variant-dark;
+}
+
+* {
+  @apply transition-colors duration-150;
+}
+
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  @apply bg-primary-light dark:bg-primary-dark opacity-75;
+
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+}
+
+.icon {
+  position: relative;
+  top: 2px;
+}

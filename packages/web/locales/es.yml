@@ -1,0 +1,18 @@
+button.back: Atrás
+button.home: Inicio
+button.toggle_dark: Alternar modo oscuro
+button.toggle_langs: Change languages
+button.submit: Submit
+not-found: No Encontrado
+
+route.settings: Configuración
+
+menu.home: Inicio
+menu.languages: Idiomas
+menu.invites: Invitaciones
+menu.users: Usuarios
+menu.settings: Configuración
+menu.about: Sobre Hanas
+
+locales.en: 'Inglés'
+locales.es: 'Español'

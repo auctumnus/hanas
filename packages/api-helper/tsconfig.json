@@ -1,0 +1,15 @@
+{
+  "exclude": ["dist/**/*"],
+  "compilerOptions": {
+    "target": "ES5",
+    "declaration": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "removeComments": false,
+    "esModuleInterop": true,
+
+    "strict": true,
+
+    "outDir": "./dist/types"
+  }
+}

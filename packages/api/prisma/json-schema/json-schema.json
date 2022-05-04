@@ -1,0 +1,419 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kratosID": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": ["string", "null"]
+        },
+        "description": {
+          "type": ["string", "null"]
+        },
+        "gender": {
+          "type": ["string", "null"]
+        },
+        "pronouns": {
+          "type": ["string", "null"]
+        },
+        "profilePicture": {
+          "type": ["string", "null"]
+        },
+        "banner": {
+          "type": ["string", "null"]
+        },
+        "langPermissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LangPermission"
+          }
+        },
+        "sentInvites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LangInvite"
+          }
+        },
+        "receivedInvites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LangInvite"
+          }
+        },
+        "createdLangs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Lang"
+          }
+        },
+        "lastUpdatedLangs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Lang"
+          }
+        },
+        "createdLangPermissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LangPermission"
+          }
+        },
+        "lastUpdatedLangPermissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LangPermission"
+          }
+        },
+        "createdWords": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Word"
+          }
+        },
+        "lastUpdatedWords": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Word"
+          }
+        },
+        "createdWordClasses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WordClass"
+          }
+        },
+        "lastUpdatedWordClasses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WordClass"
+          }
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Lang": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": ["string", "null"]
+        },
+        "invites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LangInvite"
+          }
+        },
+        "langPermissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LangPermission"
+          }
+        },
+        "createdBy": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/User"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastUpdatedBy": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/User"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "wordClasses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WordClass"
+          }
+        },
+        "words": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Word"
+          }
+        }
+      }
+    },
+    "LangPermission": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "lang": {
+          "$ref": "#/definitions/Lang"
+        },
+        "owner": {
+          "type": "boolean",
+          "default": false
+        },
+        "changePermissions": {
+          "type": "boolean",
+          "default": false
+        },
+        "changeId": {
+          "type": "boolean",
+          "default": false
+        },
+        "changeInfo": {
+          "type": "boolean",
+          "default": false
+        },
+        "changeWords": {
+          "type": "boolean",
+          "default": false
+        },
+        "createdBy": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/User"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastUpdatedBy": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/User"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "LangInvite": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "sender": {
+          "$ref": "#/definitions/User"
+        },
+        "receiver": {
+          "$ref": "#/definitions/User"
+        },
+        "lang": {
+          "$ref": "#/definitions/Lang"
+        },
+        "owner": {
+          "type": "boolean",
+          "default": false
+        },
+        "changePermissions": {
+          "type": "boolean",
+          "default": false
+        },
+        "changeId": {
+          "type": "boolean",
+          "default": false
+        },
+        "changeInfo": {
+          "type": "boolean",
+          "default": false
+        },
+        "changeWords": {
+          "type": "boolean",
+          "default": false
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "accepted": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        }
+      }
+    },
+    "WordClass": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "lang": {
+          "$ref": "#/definitions/Lang"
+        },
+        "name": {
+          "type": "string"
+        },
+        "abbreviation": {
+          "type": "string"
+        },
+        "createdBy": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/User"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastUpdatedBy": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/User"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "words": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Word"
+          }
+        }
+      }
+    },
+    "Word": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "word": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "ipa": {
+          "type": ["string", "null"]
+        },
+        "notes": {
+          "type": ["string", "null"]
+        },
+        "lang": {
+          "$ref": "#/definitions/Lang"
+        },
+        "wordClasses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WordClass"
+          }
+        },
+        "createdBy": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/User"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastUpdatedBy": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/User"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "user": {
+      "$ref": "#/definitions/User"
+    },
+    "lang": {
+      "$ref": "#/definitions/Lang"
+    },
+    "langPermission": {
+      "$ref": "#/definitions/LangPermission"
+    },
+    "langInvite": {
+      "$ref": "#/definitions/LangInvite"
+    },
+    "wordClass": {
+      "$ref": "#/definitions/WordClass"
+    },
+    "word": {
+      "$ref": "#/definitions/Word"
+    }
+  }
+}
