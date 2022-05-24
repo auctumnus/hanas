@@ -45,7 +45,8 @@ Hanas is made of a few different services:
 - and [Kratos][kratos].
 
 The frontend is _technically_ optional, but in practice you'll want to run a
-frontend of some sort. The announcements and events servers are
+frontend of some sort. The announcements and events servers are entirely optional,
+but can provide a better experience for the frontend.
 
 #### Database
 
