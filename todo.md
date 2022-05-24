@@ -7,7 +7,7 @@
 
 ## API Helper
 
-- autogenerate models
+- create routes, more kratos handling
 
 ## Frontend
 
