@@ -1,4 +1,4 @@
-import { auth } from 'backend-shared'
+import { auth } from '@hanas-app/backend-shared'
 
 export const {
   authenticated,

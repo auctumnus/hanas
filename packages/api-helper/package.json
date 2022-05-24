@@ -1,5 +1,5 @@
 {
-  "name": "api-helper",
+  "name": "@hanas-app/api-helper",
   "version": "1.0.0",
   "description": "API wrapper for Hanas",
   "keywords": [
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@types/node-fetch": "^2.6.1",
-    "docs-generator": "workspace:*",
+    "@hanas-app/docs-generator": "workspace:*",
     "esbuild": "^0.14.10",
     "rollup": "^2.62.0",
     "rollup-plugin-dts": "^4.1.0",

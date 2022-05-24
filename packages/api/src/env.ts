@@ -1,4 +1,4 @@
-import { env } from 'backend-shared'
+import { env } from '@hanas-app/backend-shared'
 
 export const {
   ANNOUNCEMENTS_API_KEY,

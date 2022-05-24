@@ -1,5 +1,5 @@
 {
-  "name": "backend-shared",
+  "name": "@hanas-app/backend-shared",
   "version": "1.0.0",
   "description": "Shared backend code",
   "keywords": [
