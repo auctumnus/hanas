@@ -1,11 +1,26 @@
-# Hanas
-
-[![Better than CWS][better-than-cws-badge]][better-than-cws-link]
+<h1 align="center">
+   <a href="https://hanas.app">
+      <img
+           width="400px"
+           src="https://raw.githubusercontent.com/auctumnus/hanas/main/assets/logo-with-text.svg"
+      >
+   </a>
+   
+   [![Better than CWS][better-than-cws-badge]][better-than-cws-link]
+   [![Join our Discord][discord-badge]][discord-link]
+   
+</h1>
 
 Hanas is a conlanging tool and community, primarily inspired by the work of
 [ConWorkShop][cws]. The backend is built using [Express][express] and
 [Prisma][prisma]. It is frontend-agnostic, but the official frontend is a webapp
 built using [Vue 3][vue].
+
+## Use & Connect
+
+Hanas doesn't have an official instance (yet!). In the meantime, you can contribute code here,
+and discuss the project [in our discord][discord-link]! (For the privacy enthusiasts:
+eventually an IRC might be set up or something? Sorry, Discord's easy to use.)
 
 ## Running
 
@@ -92,6 +107,9 @@ and
 I trust anyone running a Hanas instance should have no issues following either
 part of the license.
 
+[logo-link]: https://raw.githubusercontent.com/auctumnus/hanas/main/assets/logo-with-text.svg
+[discord-badge]: https://img.shields.io/discord/924860049048883251?style=flat-square
+[discord-link]: https://discord.gg/a9TtsC9MtF
 [cws]: https://conworkshop.com
 [better-than-cws-badge]: https://img.shields.io/badge/better%20than-cws-blue?style=flat-square
 [better-than-cws-link]: https://www.youtube.com/watch?v=xmkifWcTXiI
