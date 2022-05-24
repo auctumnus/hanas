@@ -13,14 +13,19 @@ export type WrapperBody = FetchBody & {
   params?: Record<string, string>
 }
 
-export type HanasError<Status = number, Message = string> = Status extends never
+export type HanasError<
+  ErrorInfo extends { status: number; message: string } = {
+    status: number
+    message: string
+  }
+> = ErrorInfo['status'] extends never
   ? never
   : {
       error: true
       data: {
-        status: Status
-        message: Message
-        issues: Status extends 400 ? { message: string }[] : never
+        status: ErrorInfo['status']
+        message: ErrorInfo['message']
+        issues: ErrorInfo['status'] extends 400 ? { message: string }[] : never
       }
     }
 
@@ -36,8 +41,10 @@ export type HanasError<Status = number, Message = string> = Status extends never
  */
 export const w = async <
   ResponseType = any,
-  ErrorStatus = number,
-  ErrorMessage = string
+  ErrorInfo extends { status: number; message: string } = {
+    status: number
+    message: string
+  }
 >(
   url: FetchUrl,
   opts: WrapperBody = {}
@@ -60,7 +67,7 @@ export const w = async <
   if (!res.ok) {
     try {
       const error = await res.json()
-      return error as HanasError<ErrorStatus, ErrorMessage>
+      return error as HanasError<ErrorInfo>
     } catch (e) {
       console.error(await res.text())
       throw res
@@ -82,8 +89,10 @@ export const makeAuthedWrapper = (client: HanasClient) => {
    */
   const wrapped = <
     ResponseType = any,
-    ErrorStatus = number,
-    ErrorMessage = string
+    ErrorInfo extends { status: number; message: string } = {
+      status: number
+      message: string
+    }
   >(
     path: string,
     opts: WrapperBody = {}
@@ -95,7 +104,10 @@ export const makeAuthedWrapper = (client: HanasClient) => {
       ;(opts.headers as Record<string, string>)['X-Session-Token'] =
         client.options.token
     }
-    return w(new URL(path, client.options.hanasURL), opts)
+    return w<ResponseType, ErrorInfo>(
+      new URL(path, client.options.hanasURL),
+      opts
+    )
   }
   return wrapped
 }

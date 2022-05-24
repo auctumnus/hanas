@@ -6,12 +6,17 @@ import { user } from './handlers/user'
  * The class through which requests can be made.
  */
 export class HanasClient {
+  #authed = false
+
+  fetch: ReturnType<typeof makeAuthedWrapper>
+
   /**
    * Create a Hanas client.
    * @param options
    */
   constructor(public options: HanasClientOptions) {
     this.options = parseOptions(options)
+    this.fetch = makeAuthedWrapper(this)
   }
 
   /**
