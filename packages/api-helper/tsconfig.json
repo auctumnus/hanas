@@ -1,12 +1,14 @@
 {
   "exclude": ["dist/**/*"],
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES6",
     "declaration": true,
     "noEmit": false,
     "emitDeclarationOnly": true,
     "removeComments": false,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
 
     "strict": true,
 
