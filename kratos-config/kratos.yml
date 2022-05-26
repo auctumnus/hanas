@@ -30,7 +30,7 @@ selfservice:
               method:
                 POST
                 # CHANGEME but it's just the port here, probably.
-              url: http://172.17.0.1:1337/hooks/kratos/before_registration
+              url: http://hanas-api:1337/hooks/kratos/before_registration
               body: file:///etc/config/kratos/before_registration.jsonnet
               auth:
                 type: api_key
@@ -45,7 +45,7 @@ selfservice:
               method:
                 POST
                 # CHANGEME but it's just the port here, probably.
-              url: http://172.17.0.1:1337/hooks/kratos/after_registration
+              url: http://hanas-api:1337/hooks/kratos/after_registration
               body: file:///etc/config/kratos/after_registration.jsonnet
               auth:
                 type: api_key

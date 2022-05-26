@@ -17,6 +17,9 @@ version: '3.7'
 # I am not responsible for anything that should result from this dockerfile
 # being run either customized or non-customized. がんばれ！
 
+volumes:
+  pg-data: {}
+
 services:
   # Postgres database
   database:
@@ -29,7 +32,7 @@ services:
       # This is a mortal sin.
       POSTGRES_HOST_AUTH_METHOD: trust # CHANGEME
     volumes:
-      - './pg-data:/var/lib/postgresql/data'
+      - 'pg-data:/var/lib/postgresql/data'
       - type: bind
         source: ./init-pg.sh
         target: /docker-entrypoint-initdb.d/init-pg.sh
@@ -79,9 +82,11 @@ services:
   #    dockerfile: "./Dockerfile"
 
   # Hanas
-  #hanas-api:
-  #  build:
-  #    context: "."
-  #    dockerfile: "./Dockerfile"
-  #  environment:
-  #    DATABASE_URL: postgres://hanas:runn1ngout0fsynonym5@database:5432/hanas # CHANGEME
+  hanas-api:
+    ports:
+      - '1337:1337'
+    build:
+      context: '.'
+      dockerfile: './Dockerfile'
+    environment:
+      DATABASE_URL: postgres://hanas:runn1ngout0fsynonym5@database:5432/hanas # CHANGEME
