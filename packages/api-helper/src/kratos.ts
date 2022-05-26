@@ -190,18 +190,28 @@ export const login = async (
   })
 }
 
-export const whoami = (endpoint: string | URL, token?: string) => {
-  return f({
+/**
+ * Sends a whoami request to Kratos.
+ * @param endpoint
+ * @param token
+ * @returns Information about the currently logged-in user.
+ */
+export const whoami = (endpoint: string | URL, token?: string) =>
+  f({
     endpoint,
     path: '/sessions/whoami',
     token,
   })
-}
 
-export const logout = async (endpoint: string | URL, token?: string) => {
-  return f({
+/**
+ * Logs the user out of Kratos.
+ * @param endpoint
+ * @param token
+ * @returns
+ */
+export const logout = async (endpoint: string | URL, token?: string) =>
+  f({
     endpoint,
     path: '/self-service/logout',
     token,
   })
-}

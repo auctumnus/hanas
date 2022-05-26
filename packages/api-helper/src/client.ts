@@ -63,6 +63,10 @@ export class HanasClient {
     return whoami(this.options.kratosURL, this.options.token)
   }
 
+  /**
+   * Log the current user out of Hanas.
+   * @returns
+   */
   public logout() {
     if (!this.#authed) {
       console.error('trying to log out when not logged in')
@@ -73,10 +77,17 @@ export class HanasClient {
     return logout(this.options.kratosURL, this.options.token)
   }
 
+  /**
+   * Whether or not this client is logged in.
+   */
   get isLoggedIn() {
     return this.#authed
   }
 
+  /**
+   * Gets the user who is logged in through this client.
+   * @returns Information about the logged-in user.
+   */
   public async currentUser() {
     const whoami = await this.whoami()
     // @ts-ignore
@@ -85,6 +96,9 @@ export class HanasClient {
     return this.users.get(username) as Promise<User>
   }
 
+  /**
+   * User endpoints.
+   */
   get users() {
     return user(this)
   }
