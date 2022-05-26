@@ -1,5 +1,5 @@
-import { parse, Model } from 'docs-generator'
-import { Property, StringProperty } from 'docs-generator/src/types'
+import { parse, Model } from '@hanas/docs-generator'
+import { Property, StringProperty } from '@hanas/docs-generator/src/types'
 import { readFileSync } from 'fs'
 import { writeFile } from 'fs/promises'
 
@@ -42,8 +42,8 @@ const makeProperty = (p: Property) =>
   '\n     */\n' +
   `    ${p.name}${p.optional ? '?' : ''}: ${týpe(p)}\n    `
 
-const makeInterface = (model: Model) =>
-  `export interface ${model.name} {
+const makeClass = (model: Model) =>
+  `export class ${model.name} {
     ${Object.values(model.properties).map(makeProperty).join('')}
 }`
 
@@ -56,7 +56,7 @@ const index =
 const generateModels = async () =>
   Promise.all([
     ...Object.values(models)
-      .map((model) => ({ name: model.name, content: makeInterface(model) }))
+      .map((model) => ({ name: model.name, content: makeClass(model) }))
       .map(({ name, content }) =>
         writeFile(`./src/models/${name}.ts`, content)
       ),
