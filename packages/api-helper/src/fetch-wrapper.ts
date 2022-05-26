@@ -69,8 +69,12 @@ export const w = async <
       const error = await res.json()
       return error as HanasError<ErrorInfo>
     } catch (e) {
-      console.error(await res.text())
-      throw res
+      if (e instanceof Error && e.message.includes('invalid json')) {
+        throw new Error('Response was not JSON.')
+      } else {
+        console.error(await res.text())
+        throw res
+      }
     }
   }
   return res.json() as Promise<ResponseType>
@@ -111,3 +115,69 @@ export const makeAuthedWrapper = (client: HanasClient) => {
   }
   return wrapped
 }
+
+/**
+ * Paginated container for data.
+ */
+export interface PaginatedResponse<T> {
+  data: T[]
+  cursor: {
+    next: string | null
+    previous: string | null
+  }
+}
+
+/**
+ * Arguments for pagination.
+ * Interface rather than simple parameters in prep for possible filtering / etc
+ */
+interface PaginationArgs {
+  take?: number
+  cursor?: string
+}
+
+export const makePaginator =
+  (client: HanasClient) =>
+  async <
+    DataType,
+    ErrorInfo extends { status: number; message: string } = {
+      status: number
+      message: string
+    }
+  >(
+    path: string,
+    { take, cursor }: PaginationArgs = {}
+  ) => {
+    const w = makeAuthedWrapper(client)
+
+    const firstPage = await w<PaginatedResponse<DataType>, ErrorInfo>(path, {
+      params: {
+        take: take ? take + '' : '10',
+        cursor: cursor || '',
+      },
+    })
+
+    if ('error' in firstPage) {
+      return firstPage as HanasError<ErrorInfo>
+    } else {
+      const { data, cursor } = firstPage as PaginatedResponse<DataType>
+
+      return {
+        data,
+        next: cursor.next
+          ? () =>
+              makePaginator(client)<DataType, ErrorInfo>(path, {
+                take,
+                cursor: cursor.next!,
+              })
+          : undefined,
+        previous: cursor.previous
+          ? () =>
+              makePaginator(client)<DataType, ErrorInfo>(path, {
+                take,
+                cursor: cursor.previous!,
+              })
+          : undefined,
+      }
+    }
+  }
