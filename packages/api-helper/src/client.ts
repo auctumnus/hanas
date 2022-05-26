@@ -1,7 +1,7 @@
 import { HanasClientOptions, parseOptions } from './options'
 import { login, logout, register, whoami } from './kratos'
 import { user } from './handlers/user'
-import { makeAuthedWrapper } from './fetch-wrapper'
+import { makeAuthedWrapper, makePaginator } from './fetch-wrapper'
 import { User } from './models'
 
 /**
@@ -11,6 +11,7 @@ export class HanasClient {
   #authed = false
 
   fetch: ReturnType<typeof makeAuthedWrapper>
+  paginatedFetch: ReturnType<typeof makePaginator>
 
   /**
    * Create a Hanas client.
@@ -19,6 +20,7 @@ export class HanasClient {
   constructor(public options: HanasClientOptions) {
     this.options = parseOptions(options)
     this.fetch = makeAuthedWrapper(this)
+    this.paginatedFetch = makePaginator(this)
   }
 
   /**

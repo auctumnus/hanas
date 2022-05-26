@@ -1,4 +1,18 @@
-export interface User {
+import { HanasClient } from '../client'
+
+export interface UserResponseData {
+  username: string
+  displayName?: string
+  description?: string
+  gender?: string
+  pronouns?: string
+  profilePicture?: string
+  banner?: string
+  created: string
+  updated: string
+}
+
+export class User {
   /**
    * The username for this user.
    *
@@ -65,4 +79,16 @@ export interface User {
    * When this user was last updated.
    */
   updated: Date
+
+  constructor(d: UserResponseData) {
+    this.username = d.username
+    this.displayName = d.displayName
+    this.description = d.description
+    this.gender = d.gender
+    this.pronouns = d.pronouns
+    this.profilePicture = d.profilePicture
+    this.banner = d.banner
+    this.created = new Date(d.created)
+    this.updated = new Date(d.updated)
+  }
 }

@@ -1,6 +1,6 @@
 import { HanasClient } from '../client'
 import { AuthErrors, BadRequestError } from '../error-types'
-import { User } from '../models'
+import { User, UserResponseData } from '../models'
 
 type UpdateUserDto = Partial<
   Omit<User, 'created' | 'updated' | 'profilePicture' | 'banner'>
@@ -12,7 +12,12 @@ export const user = (client: HanasClient) => ({
    * @returns Paginated response of all users.
    */
   all() {
-    //return paginated(client)<User, never, never>('/users')
+    return client
+      .paginatedFetch<UserResponseData, never>('/users')
+      .then((v) => ({
+        ...v,
+        data: v.data.map((d) => new User(d)),
+      }))
   },
 
   /**
@@ -24,7 +29,7 @@ export const user = (client: HanasClient) => ({
     return client.fetch<
       User,
       { status: 404; message: 'No user was found with that username.' }
-    >(`/user/${username}`)
+    >(`/users/${username}`)
   },
 
   /**
@@ -35,7 +40,7 @@ export const user = (client: HanasClient) => ({
    */
   update(username: string, data: UpdateUserDto) {
     return client.fetch<User, BadRequestError | AuthErrors>(
-      `/user/${username}`,
+      `/users/${username}`,
       {
         body: JSON.stringify(data),
       }
@@ -48,6 +53,6 @@ export const user = (client: HanasClient) => ({
    * @returns Nothing.
    */
   delete(username: string) {
-    return client.fetch<undefined>(`/user/${username}`)
+    return client.fetch<undefined>(`/users/${username}`)
   },
 })
