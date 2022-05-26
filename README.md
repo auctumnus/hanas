@@ -8,6 +8,7 @@
    
    [![Better than CWS][better-than-cws-badge]][better-than-cws-link]
    [![Join our Discord][discord-badge]][discord-link]
+   [![Docs for the Hanas api][docs-badge]][docs-link]
    
 </h1>
 
@@ -111,6 +112,8 @@ part of the license.
 [logo-link]: https://raw.githubusercontent.com/auctumnus/hanas/main/assets/logo-with-text.svg
 [discord-badge]: https://img.shields.io/discord/924860049048883251?style=flat-square
 [discord-link]: https://discord.gg/a9TtsC9MtF
+[docs-badge]: https://img.shields.io/badge/docs-for%20hanas-89bfcd?style=flat-square
+[docs-link]: https://docs.hanas.app
 [cws]: https://conworkshop.com
 [better-than-cws-badge]: https://img.shields.io/badge/better%20than-cws-blue?style=flat-square
 [better-than-cws-link]: https://www.youtube.com/watch?v=xmkifWcTXiI
