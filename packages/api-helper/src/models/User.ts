@@ -1,4 +1,6 @@
 import { HanasClient } from '../client'
+import { HanasError, PaginationArgs } from '../fetch-wrapper'
+import { Lang, LangResponseData } from './Lang'
 
 export interface UserResponseData {
   username: string
@@ -10,6 +12,11 @@ export interface UserResponseData {
   banner?: string
   created: string
   updated: string
+}
+
+type NoLangsByUser = {
+  status: 404
+  message: 'No language was found by that username.'
 }
 
 export class User {
@@ -79,6 +86,31 @@ export class User {
    * When this user was last updated.
    */
   updated: Date
+
+  langs(
+    client: HanasClient,
+    paginationArgs: PaginationArgs,
+    owner: boolean = false
+  ) {
+    return client
+      .paginatedFetch<LangResponseData, NoLangsByUser>(
+        `/users/${this.username}/langs`,
+        {
+          params: { owner: owner + '' },
+          ...paginationArgs,
+        }
+      )
+      .then((v) => {
+        if ('error' in v) {
+          return v as HanasError<NoLangsByUser>
+        } else {
+          return {
+            ...v,
+            data: v.data.map((d) => new Lang(d)),
+          }
+        }
+      })
+  }
 
   constructor(d: UserResponseData) {
     this.username = d.username

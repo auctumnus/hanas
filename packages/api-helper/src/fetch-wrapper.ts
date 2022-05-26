@@ -131,9 +131,10 @@ export interface PaginatedResponse<T> {
  * Arguments for pagination.
  * Interface rather than simple parameters in prep for possible filtering / etc
  */
-interface PaginationArgs {
+export interface PaginationArgs {
   take?: number
   cursor?: string
+  params?: Record<string, string>
 }
 
 export const makePaginator =
@@ -146,7 +147,7 @@ export const makePaginator =
     }
   >(
     path: string,
-    { take, cursor }: PaginationArgs = {}
+    { take, cursor, params }: PaginationArgs = {}
   ) => {
     const w = makeAuthedWrapper(client)
 
@@ -154,6 +155,7 @@ export const makePaginator =
       params: {
         take: take ? take + '' : '10',
         cursor: cursor || '',
+        ...params,
       },
     })
 
