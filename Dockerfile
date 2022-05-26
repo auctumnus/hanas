@@ -33,5 +33,3 @@ RUN pnpm run build
 
 ### Run
 CMD [ "pnpm", "start" ]
-
-### 
