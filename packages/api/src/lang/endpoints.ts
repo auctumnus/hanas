@@ -8,6 +8,7 @@ import { CreateLangDto, UpdateLangDto } from './dto'
 import { options } from '../options'
 import { z } from 'zod'
 import { UpdateLangPermissionDto } from '../lang-permissions/dto'
+import { serialize as serializeUser } from '../user/serialize'
 
 type UpdateLangDtoType = z.infer<typeof UpdateLangDto>
 type UpdateLangPermissionDtoType = z.infer<typeof UpdateLangPermissionDto>
@@ -140,18 +141,63 @@ export const langRouter = Router()
       })
       if (!lang) {
         next(err(404, 'No language was found by that code.'))
+        return undefined
       }
 
       const perms = await prisma.langPermission.findFirst({
         where: { user: { username }, lang: { code } },
       })
 
-      if (!perms.owner) {
+      if (!perms || !perms.owner) {
         next(err(403, 'You must own the language to delete it.'))
       } else {
         prisma.lang.delete({ where: { code } })
         res.status(204).send('')
       }
+    } catch (e) {
+      next(err(500, e))
+    }
+  })
+
+  .get('/:code/owner', async (req, res, next) => {
+    const code = req.params.code
+    try {
+      const ownerPerms = await prisma.langPermission.findFirst({
+        where: { owner: true, lang: { code } },
+        include: { user: true },
+      })
+      if (!ownerPerms) {
+        next(
+          err(
+            404,
+            "Couldn't find the owner's permissions for this language. (Please report this!)"
+          )
+        )
+        return undefined
+      }
+      res.status(200).json(serializeUser(ownerPerms.user))
+    } catch (e) {
+      next(err(500, e))
+    }
+  })
+
+  .get('/:code/collaborators', async (req, res, next) => {
+    const code = req.params.code
+    try {
+      const perms = await prisma.langPermission.findMany({
+        ...getPaginationVars(req),
+        where: { lang: { code } },
+        include: { user: true },
+      })
+
+      res.status(200).json(
+        serialize(
+          paginate(
+            req,
+            perms.map((perm) => perm.user)
+          )
+        )
+      )
     } catch (e) {
       next(err(500, e))
     }

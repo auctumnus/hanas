@@ -112,15 +112,43 @@ export const userRouter = Router()
 
   .options('/:username/langs', options('OPTIONS, GET'))
 
-  .get('/:username/langs', async (req, res, next) => {
-    const owner = !!req.query.owner
+  .get('/:username/collaborated-langs', async (req, res, next) => {
     const username = req.params.username
 
     try {
       const result = await prisma.langPermission.findMany({
         where: {
           user: { username },
-          owner,
+        },
+        include: {
+          user: true,
+          lang: true,
+        },
+        ...getPaginationVars(req),
+      })
+
+      if (result) {
+        const { data, cursor } = paginate(req, result)
+
+        res
+          .status(200)
+          .json({ cursor, data: data.map((p) => serializeLang(p.lang)) })
+      } else {
+        next(err(404, 'No languages were found by that username.'))
+      }
+    } catch (e) {
+      next(err(500, e))
+    }
+  })
+
+  .get('/:username/owned-langs', async (req, res, next) => {
+    const username = req.params.username
+
+    try {
+      const result = await prisma.langPermission.findMany({
+        where: {
+          user: { username },
+          owner: true,
         },
         include: {
           user: true,
