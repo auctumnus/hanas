@@ -89,7 +89,7 @@ export class User {
 
   langs(
     client: HanasClient,
-    paginationArgs: PaginationArgs,
+    paginationArgs: PaginationArgs = {},
     owner: boolean = false
   ) {
     return client
@@ -100,16 +100,10 @@ export class User {
           ...paginationArgs,
         }
       )
-      .then((v) => {
-        if ('error' in v) {
-          return v as HanasError<NoLangsByUser>
-        } else {
-          return {
-            ...v,
-            data: v.data.map((d) => new Lang(d)),
-          }
-        }
-      })
+      .then((v) => ({
+        ...v,
+        data: v.data.map((d) => new Lang(d)),
+      }))
   }
 
   constructor(d: UserResponseData) {

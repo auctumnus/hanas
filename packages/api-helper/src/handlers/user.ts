@@ -14,10 +14,7 @@ export const user = (client: HanasClient) => ({
   all() {
     return client
       .paginatedFetch<UserResponseData, never>('/users')
-      .then((v) => ({
-        ...v,
-        data: v.data.map((d) => new User(d)),
-      }))
+      .then((v) => ({ ...v, data: v.data.map((d) => new User(d)) }))
   },
 
   /**
@@ -26,10 +23,12 @@ export const user = (client: HanasClient) => ({
    * @returns The data of the user.
    */
   get(username: string) {
-    return client.fetch<
-      User,
-      { status: 404; message: 'No user was found with that username.' }
-    >(`/users/${username}`)
+    return client
+      .fetch<
+        UserResponseData,
+        { status: 404; message: 'No user was found with that username.' }
+      >(`/users/${username}`)
+      .then((d) => new User(d))
   },
 
   /**
@@ -39,20 +38,22 @@ export const user = (client: HanasClient) => ({
    * @returns The updated user.
    */
   update(username: string, data: UpdateUserDto) {
-    return client.fetch<User, BadRequestError | AuthErrors>(
-      `/users/${username}`,
-      {
-        body: JSON.stringify(data),
-      }
-    )
+    return client
+      .fetch<UserResponseData, BadRequestError | AuthErrors>(
+        `/users/${username}`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify(data),
+        }
+      )
+      .then((d) => new User(d))
   },
 
   /**
-   * Deletes a user. You must be logged in as this user to update them.
-   * @param username The username of the user to update.
-   * @returns Nothing.
+   * Deletes a user. You must be logged in as this user to delete them.
+   * @param username The username of the user to delete.
    */
-  delete(username: string) {
-    return client.fetch<undefined>(`/users/${username}`)
+  async delete(username: string) {
+    await client.fetch(`/users/${username}`, { method: 'DELETE' })
   },
 })
