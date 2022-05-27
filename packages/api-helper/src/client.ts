@@ -99,6 +99,20 @@ export class HanasClient {
   }
 
   /**
+   * Ping the Hanas server.
+   * @returns Basic information about the Hanas instance.
+   */
+  public ping() {
+    return this.fetch<
+      { error: false; data: { version: string; timestamp: string } },
+      never
+    >('/').then(({ error, data }) => ({
+      error,
+      data: { version: data.version, timestamp: new Date(data.timestamp) },
+    }))
+  }
+
+  /**
    * User endpoints.
    */
   get users() {
