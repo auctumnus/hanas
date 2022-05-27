@@ -130,3 +130,29 @@ export const langRouter = Router()
       next(err(500, e))
     }
   })
+
+  .delete('/:code', async (req, res, next) => {
+    const { username } = getUser(req)
+    const code = req.params.code
+    try {
+      const lang = await prisma.lang.findUnique({
+        where: { code },
+      })
+      if (!lang) {
+        next(err(404, 'No language was found by that code.'))
+      }
+
+      const perms = await prisma.langPermission.findFirst({
+        where: { user: { username }, lang: { code } },
+      })
+
+      if (!perms.owner) {
+        next(err(403, 'You must own the language to delete it.'))
+      } else {
+        prisma.lang.delete({ where: { code } })
+        res.status(204).send('')
+      }
+    } catch (e) {
+      next(err(500, e))
+    }
+  })
