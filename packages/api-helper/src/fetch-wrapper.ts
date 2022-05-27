@@ -58,7 +58,6 @@ export const w = async <
       'Content-Type': 'application/json',
       Accepts: 'application/json',
     },
-    body: opts.body ? JSON.stringify(opts.body) : undefined,
   }
 
   const res = await fetch(
@@ -108,8 +107,8 @@ export const makeAuthedWrapper = (client: HanasClient) => {
       opts.headers = {}
     }
     if (client.options.token) {
-      ;(opts.headers as Record<string, string>)['X-Session-Token'] =
-        client.options.token
+      ;(opts.headers as Record<string, string>)['Authorization'] =
+        'Bearer ' + client.options.token
     }
     return w<ResponseType, ErrorInfo>(
       new URL(path, client.options.hanasURL),
