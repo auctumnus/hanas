@@ -28,9 +28,10 @@ export const permissionsRouter = Router()
         return undefined
       }
 
-      const result = await prisma.langPermission.findMany(
-        getPaginationVars(req)
-      )
+      const result = await prisma.langPermission.findMany({
+        ...getPaginationVars(req),
+        where: { lang: { code } },
+      })
       res.status(200).json(serialize(paginate(req, result)))
     } catch (e) {
       next(err(500, e))
