@@ -24,7 +24,9 @@ export type HanasError<
       error: true
       data: {
         status: ErrorInfo['status']
-        message: ErrorInfo['message']
+        message: ErrorInfo['status'] extends 400
+          ? 'Input validation error; see issues for details'
+          : ErrorInfo['message']
         issues: ErrorInfo['status'] extends 400 ? { message: string }[] : never
       }
     }
@@ -65,9 +67,9 @@ export const w = async <
   )
 
   if (!res.ok) {
+    let error
     try {
-      const error = await res.json()
-      return error as HanasError<ErrorInfo>
+      error = await res.json()
     } catch (e) {
       if (e instanceof Error && e.message.includes('invalid json')) {
         throw new Error('Response was not JSON.')
@@ -76,6 +78,7 @@ export const w = async <
         throw res
       }
     }
+    throw error as HanasError<ErrorInfo>
   }
   return res.json() as Promise<ResponseType>
 }
@@ -160,7 +163,7 @@ export const makePaginator =
     })
 
     if ('error' in firstPage) {
-      return firstPage as HanasError<ErrorInfo>
+      return firstPage
     } else {
       const { data, cursor } = firstPage as PaginatedResponse<DataType>
 
