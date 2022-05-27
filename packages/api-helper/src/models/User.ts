@@ -87,26 +87,44 @@ export class User {
    */
   updated: Date
 
-  langs(
-    client: HanasClient,
-    paginationArgs: PaginationArgs = {},
-    owner: boolean = false
-  ) {
-    return client
+  #client: HanasClient
+
+  /**
+   * Retrieve information about the languages this user collaborates
+   * in - that is, has permissions to.
+   * @param paginationArgs Arguments to pass to the paginator.
+   * @returns Paginated response of collaborated languages.
+   */
+  collaboratedLangs(paginationArgs: PaginationArgs = {}) {
+    return this.#client
       .paginatedFetch<LangResponseData, NoLangsByUser>(
-        `/users/${this.username}/langs`,
-        {
-          params: { owner: owner + '' },
-          ...paginationArgs,
-        }
+        `/users/${this.username}/collaborated-langs`,
+        paginationArgs
       )
       .then((v) => ({
         ...v,
-        data: v.data.map((d) => new Lang(d)),
+        data: v.data.map((d) => new Lang(this.#client, d)),
       }))
   }
 
-  constructor(d: UserResponseData) {
+  /**
+   * Retrieve information about the languages this user owns
+   * @param paginationArgs Arguments to pass to the paginator.
+   * @returns Paginated response of languages owned by this user.
+   */
+  ownedLangs(paginationArgs: PaginationArgs = {}) {
+    return this.#client
+      .paginatedFetch<LangResponseData, NoLangsByUser>(
+        `/users/${this.username}/owned-langs`,
+        paginationArgs
+      )
+      .then((v) => ({
+        ...v,
+        data: v.data.map((d) => new Lang(this.#client, d)),
+      }))
+  }
+
+  constructor(client: HanasClient, d: UserResponseData) {
     this.username = d.username
     this.displayName = d.displayName
     this.description = d.description
@@ -116,5 +134,6 @@ export class User {
     this.banner = d.banner
     this.created = new Date(d.created)
     this.updated = new Date(d.updated)
+    this.#client = client
   }
 }

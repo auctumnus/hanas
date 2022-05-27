@@ -14,7 +14,7 @@ export const user = (client: HanasClient) => ({
   all() {
     return client
       .paginatedFetch<UserResponseData, never>('/users')
-      .then((v) => ({ ...v, data: v.data.map((d) => new User(d)) }))
+      .then((v) => ({ ...v, data: v.data.map((d) => new User(client, d)) }))
   },
 
   /**
@@ -28,7 +28,7 @@ export const user = (client: HanasClient) => ({
         UserResponseData,
         { status: 404; message: 'No user was found with that username.' }
       >(`/users/${username}`)
-      .then((d) => new User(d))
+      .then((d) => new User(client, d))
   },
 
   /**
@@ -46,7 +46,7 @@ export const user = (client: HanasClient) => ({
           body: JSON.stringify(data),
         }
       )
-      .then((d) => new User(d))
+      .then((d) => new User(client, d))
   },
 
   /**

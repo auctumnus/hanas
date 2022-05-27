@@ -1,3 +1,7 @@
+import { HanasClient } from '../client'
+import { PaginationArgs } from '../fetch-wrapper'
+import { User, UserResponseData } from './User'
+
 export interface LangResponseData {
   code: string
   name: string
@@ -36,11 +40,43 @@ export class Lang {
    */
   updated: Date
 
-  constructor(d: LangResponseData) {
+  #client: HanasClient
+
+  /**
+   * Retrieve the owner of this language.
+   * @returns Information about the owner of this language.
+   */
+  async owner() {
+    return new User(
+      this.#client,
+      await this.#client.fetch<UserResponseData>(`/langs/${this.code}/owner`)
+    )
+  }
+
+  /**
+   * Retrieve information about users who collaborate to this language -
+   * that is, that have permissions to the language.
+   * @param paginationArgs Arguments for the paginator.
+   * @returns Paginated response of users who have collaborated to this language.
+   */
+  async collaborators(paginationArgs: PaginationArgs = {}) {
+    return this.#client
+      .paginatedFetch<UserResponseData>(
+        `/langs/${this.code}/collaborators`,
+        paginationArgs
+      )
+      .then((v) => ({
+        ...v,
+        data: v.data.map((d) => new User(this.#client, d)),
+      }))
+  }
+
+  constructor(client: HanasClient, d: LangResponseData) {
     this.code = d.code
     this.name = d.name
     this.description = d.description
     this.updated = new Date(d.updated)
     this.created = new Date(d.created)
+    this.#client = client
   }
 }
