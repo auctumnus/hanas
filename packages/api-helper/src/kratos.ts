@@ -61,10 +61,15 @@ interface RegistrationFailedError {
         value: string
         required: boolean
         disabled: boolean
+      }
+      messages: {
+        id: number
+        text: string
+        type: string
+        context: {}
       }[]
-      messages: string[]
       meta: string[]
-    }
+    }[]
     messages: {
       id: number
       text: string
@@ -139,9 +144,20 @@ export const register = async (
     })
   } catch (e) {
     const error = e as RegistrationFailedError
-    if (error.ui.messages[0].id === 4000007) {
+    // password is too common (lol, thx kratos)
+    if (
+      error.ui.nodes
+        .filter((node) => node.attributes.name === 'password')[0]
+        .messages.some((m) => m.id === 4000005)
+    ) {
+      throw new Error(
+        'The password can not be used because the password has been found in data breaches and must no longer be used.'
+      )
+    }
+    // user exists under these traits
+    else if (error.ui.messages && error.ui.messages[0].id === 4000007) {
       throw new Error('A user with the same email or username already exists.')
-    } else if (error.ui.messages.length) {
+    } else if (error.ui.messages && error.ui.messages.length) {
       throw new Error(error.ui.messages[0].text)
     } else {
       console.error(e)
