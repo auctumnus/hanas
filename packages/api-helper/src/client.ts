@@ -3,6 +3,7 @@ import { login, logout, register, whoami } from './kratos'
 import { user } from './handlers/user'
 import { makeAuthedWrapper, makePaginator } from './fetch-wrapper'
 import { User } from './models'
+import { lang } from './handlers/lang'
 
 /**
  * The class through which requests can be made.
@@ -46,7 +47,7 @@ export class HanasClient {
       password
     )
 
-    if (typeof window !== 'undefined') {
+    if (typeof window === 'undefined') {
       this.options.token = session_token
     }
 
@@ -117,5 +118,12 @@ export class HanasClient {
    */
   get users() {
     return user(this)
+  }
+
+  /**
+   * Language endpoints.
+   */
+  get langs() {
+    return lang(this)
   }
 }
