@@ -9,7 +9,7 @@ import dts from 'rollup-plugin-dts'
  */
 
 export default {
-  input: 'dist/types/src/index.d.ts',
+  input: 'dist/types/index.d.ts',
   output: { file: 'dist/hanas-api-helper.d.ts', format: 'es' },
   plugins: [dts()],
 }

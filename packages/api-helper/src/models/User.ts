@@ -87,7 +87,7 @@ export class User {
    */
   updated: Date
 
-  #client: HanasClient
+  #client?: HanasClient
 
   /**
    * Retrieve information about the languages this user collaborates
@@ -96,15 +96,13 @@ export class User {
    * @returns Paginated response of collaborated languages.
    */
   collaboratedLangs(paginationArgs: PaginationArgs = {}) {
-    return this.#client
-      .paginatedFetch<LangResponseData, NoLangsByUser>(
-        `/users/${this.username}/collaborated-langs`,
-        paginationArgs
-      )
-      .then((v) => ({
-        ...v,
-        data: v.data.map((d) => new Lang(this.#client, d)),
-      }))
+    return this.#client!.paginatedFetch<LangResponseData, NoLangsByUser>(
+      `/users/${this.username}/collaborated-langs`,
+      paginationArgs
+    ).then((v) => ({
+      ...v,
+      data: v.data.map((d) => new Lang(this.#client!, d)),
+    }))
   }
 
   /**
@@ -113,15 +111,13 @@ export class User {
    * @returns Paginated response of languages owned by this user.
    */
   ownedLangs(paginationArgs: PaginationArgs = {}) {
-    return this.#client
-      .paginatedFetch<LangResponseData, NoLangsByUser>(
-        `/users/${this.username}/owned-langs`,
-        paginationArgs
-      )
-      .then((v) => ({
-        ...v,
-        data: v.data.map((d) => new Lang(this.#client, d)),
-      }))
+    return this.#client!.paginatedFetch<LangResponseData, NoLangsByUser>(
+      `/users/${this.username}/owned-langs`,
+      paginationArgs
+    ).then((v) => ({
+      ...v,
+      data: v.data.map((d) => new Lang(this.#client!, d)),
+    }))
   }
 
   constructor(client: HanasClient, d: UserResponseData) {

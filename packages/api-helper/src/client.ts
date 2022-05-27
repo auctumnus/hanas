@@ -89,14 +89,27 @@ export class HanasClient {
 
   /**
    * Gets the user who is logged in through this client.
+   * Will also check if the user is logged in without the
+   * client knowing (e.g. in a browser with cookies).
    * @returns Information about the logged-in user.
    */
   public async currentUser() {
-    const whoami = await this.whoami()
-    // @ts-ignore
-    const username: string = whoami.identity.traits.username
+    try {
+      const whoami = await this.whoami()
+      // @ts-ignore
+      const username: string = whoami.identity.traits.username
 
-    return this.users.get(username) as Promise<User>
+      const user = await this.users.get(username)
+      if (!this.#authed && user) {
+        this.#authed = true
+      }
+      return user
+    } catch (e) {
+      // @ts-ignore
+      if ('error' in e && e.error.code === 401) {
+        return null
+      }
+    }
   }
 
   /**

@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { User } from '@hanas-app/api-helper'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 import { useI18n } from 'petite-vue-i18n'
-import { useUserStore } from '~/stores/user'
 const { t } = useI18n()
 
-const user = useUserStore()
+defineProps<{
+  user: User
+}>()
 </script>
 
 <template>

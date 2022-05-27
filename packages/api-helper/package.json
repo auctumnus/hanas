@@ -25,7 +25,7 @@
   "typings": "./dist/hanas-api-helper.d.ts",
   "scripts": {
     "size": "size-limit",
-    "types": "rollup -c types.rollup.config.js",
+    "types": "tsc && rollup -c types.rollup.config.js",
     "build": "rollup -c && npm run types && npm run size",
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-models": "ts-node generate-models.ts"

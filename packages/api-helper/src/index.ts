@@ -4,5 +4,6 @@
  * @packageDocumentation
  */
 
+export * from './models'
 export { HanasClient } from './client'
 export * from './kratos'

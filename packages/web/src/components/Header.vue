@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useI18n } from 'petite-vue-i18n'
+import { useUserStore } from '~/stores/user'
 
 const { t } = useI18n()
+
+const { user } = useUserStore()
 
 defineEmits<{
   (event: 'menu-closed'): void
@@ -18,8 +21,9 @@ defineEmits<{
       @menu-opened="$emit('menu-opened')"
     />
     <h1 class="text-xl text-on-surface-light dark:text-on-surface-dark">
-      {{ $route.meta.title ? t($route.meta.title) : 'Hanas' }}
+      {{ $route.meta.title ? t($route.meta.title as string) : 'Hanas' }}
     </h1>
-    <UserMenu />
+    <UserMenu v-if="user !== null" :user="user" />
+    <HButton @click="" kind="text" content="Log In" v-else />
   </header>
 </template>

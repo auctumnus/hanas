@@ -138,6 +138,14 @@ export default defineConfig({
     fs: {
       strict: true,
     },
+    cors: {
+      origin: [
+        'http://localhost:1337',
+        'http://localhost:4433',
+        'http://localhost:3333',
+      ],
+      credentials: true,
+    },
   },
 
   // https://github.com/antfu/vite-ssg
