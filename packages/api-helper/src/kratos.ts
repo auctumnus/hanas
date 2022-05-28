@@ -108,6 +108,8 @@ const f = async <BodyType = any>({
     else return (await r.json()) as BodyType
   })
 
+const kind = typeof window === undefined ? 'api' : 'browser'
+
 /**
  * Registers a user with Hanas.
  * @param endpoint The Kratos endpoint.
@@ -122,7 +124,7 @@ export const register = async (
   username: string,
   password: string
 ) => {
-  const api = await f({ endpoint, path: '/self-service/registration/api' })
+  const api = await f({ endpoint, path: `/self-service/registration/${kind}` })
   if (!api || !api.id || typeof api.id !== 'string') {
     throw new Error(
       "Couldn't register; the Kratos response object was malformed. " +
@@ -185,7 +187,7 @@ export const login = async (
   username: string,
   password: string
 ) => {
-  const api = await f({ endpoint, path: '/self-service/login/api' })
+  const api = await f({ endpoint, path: `/self-service/login/${kind}` })
 
   if (!api || !api.id || typeof api.id !== 'string') {
     throw new Error(
