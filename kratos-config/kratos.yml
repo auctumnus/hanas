@@ -21,7 +21,6 @@ selfservice:
   default_browser_return_url: http://127.0.0.1:4455
   flows:
     registration:
-      # TODO: Why the fuck is this not getting called
       before: # This hook is just to make sure the Hanas server is there before
         # we go ahead with registering a user.
         hooks:
@@ -71,8 +70,26 @@ identity:
 
 serve:
   public:
-    base_url: http://127.0.0.1:4433/
+    base_url: http://127.0.0.1:4444
+    port: 4444
     cors:
       enabled: true
+      allowed_origins:
+        - 'http://localhost:1337'
+        - 'http://localhost:3333'
+      allowed_methods:
+        - POST
+        - GET
+        - PUT
+        - PATCH
+        - DELETE
+      allowed_headers:
+        - Authorization
+        - Cookie
+        - Content-Type
+        - Accepts
+      exposed_headers:
+        - Content-Type
+        - Set-Cookie
   admin:
     base_url: http://kratos:4434/

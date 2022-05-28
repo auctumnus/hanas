@@ -58,6 +58,7 @@ export const w = async <
       'Content-Type': 'application/json',
       Accepts: 'application/json',
     },
+    credentials: 'include',
   }
 
   const res = await fetch(

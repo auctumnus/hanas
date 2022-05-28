@@ -65,7 +65,7 @@ services:
     image: oryd/kratos:v0.7.4-alpha.1
     restart: unless-stopped
     ports:
-      - '4433:4433'
+      - '4444:4444'
       - '4434:4434' # CHANGEME
     depends_on:
       - database
@@ -77,6 +77,16 @@ services:
         source: ./kratos-config
         target: /etc/config/kratos
     command: -c /etc/config/kratos/kratos.yml serve
+
+  # I hate CORS. Proxies Kratos requests
+  nginx:
+    ports:
+      - '4433:4433'
+    depends_on:
+      - kratos
+    build:
+      context: '.'
+      dockerfile: 'cors-proxy.Dockerfile'
 
   # Mailslurper - holds mail from Kratos. CHANGEME !
   mailslurper:
