@@ -320,6 +320,19 @@ route "/users" {
     }
 
     route "/langs" {
+      GET {
+        response {
+          status 200
+          paginated
+          content {
+            includes "Lang"
+          }
+        }
+        response {
+          status 404
+          err "No languages were found by that username."
+        }
+      }
     }
   }
 }

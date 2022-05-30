@@ -1,27 +1,38 @@
 <script setup lang="ts">
+import { set } from '@vueuse/core'
+import { ref } from 'vue'
+import { client } from '~/hanas-api'
+
 const props = defineProps<{
-  username: string | undefined
-  size: 'sm' | 'md' | 'lg' | undefined
-  src: string | undefined
+  username?: string
+  size?: 'sm' | 'md' | 'lg'
+  src?: string
 }>()
 
-if ((!props.username && !props.src) || (props.username && props.src)) {
+if (props.username && props.src)
   console.error('must only specify one of username or src')
-}
 
 const getPfpSrc = () => {
   if (window !== undefined) {
     /* TODO: replace this with actual logic */
     return (
-      new URL(`users/${props.username}/profilePicture`, window.location.href) +
-      ''
+      new URL(
+        `users/${props.username}/profilePicture`,
+        client.options.hanasURL
+      ) + ''
     )
   } else {
     return ''
   }
 }
 
-const source = props.src ? props.src : getPfpSrc()
+const source = ref(props.src ? props.src : getPfpSrc())
+
+const pfpErrored = ref(false)
+
+const onError = () => {
+  set(pfpErrored, true)
+}
 </script>
 
 <template>
@@ -30,6 +41,7 @@ const source = props.src ? props.src : getPfpSrc()
     :aria-label="username"
     :title="username"
   >
-    <img class="rounded-full h-8 w-8" :src="source" />
+    <mdi-account class="rounded-full h-8 w-8" v-if="pfpErrored" />
+    <img class="rounded-full h-8 w-8" :src="source" @error="onError()" v-else />
   </div>
 </template>

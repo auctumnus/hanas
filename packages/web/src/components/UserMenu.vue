@@ -1,20 +1,27 @@
 <script setup lang="ts">
-import { User } from '@hanas-app/api-helper'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { client } from '~/hanas-api'
 
 import { useI18n } from 'petite-vue-i18n'
+import { useUserStore } from '~/stores/user'
+import { storeToRefs } from 'pinia'
 const { t } = useI18n()
 
-defineProps<{
-  user: User
-}>()
+const userStore = useUserStore()
+
+const { user } = storeToRefs(userStore)
+
+const logout = () => {
+  client.logout()
+  userStore.user = null
+}
 </script>
 
 <template>
   <Menu>
     <MenuButton>
       <ProfilePicture
-        :src="user.profilePicture"
+        :src="user!.profilePicture"
         size="md"
         aria-label="Open user menu"
       />
@@ -33,12 +40,15 @@ defineProps<{
         <h1
           class="h-16 flex flex-row items-center justify-end select-none px-4 py-2"
         >
-          {{ t('greeting') }},&nbsp;<b>{{ user.displayName }}</b
-          >! <ProfilePicture :src="user.profilePicture" size="md" aria-hidden />
+          {{ t('greeting') }},&nbsp;<b>{{
+            user!.displayName || user!.username
+          }}</b
+          >!
+          <ProfilePicture :src="user!.profilePicture" size="md" aria-hidden />
         </h1>
         <MenuItem v-slot="{ active }">
           <router-link
-            :to="`/users/${user.username}`"
+            :to="`/users/${user!.username}`"
             class="interactable-bg-surface-light dark:interactable-bg-surface-dark flex flex-row items-center px-3 py-3 gap-3 h-12"
             :class="{
               '!bg-on-surface-light/12 !dark:bg-on-surface-dark/12': active,
@@ -49,7 +59,7 @@ defineProps<{
         </MenuItem>
         <MenuItem v-slot="{ active }">
           <button
-            @click="console.log('logged out')"
+            @click="logout()"
             class="interactable-bg-surface-light dark:interactable-bg-surface-dark flex flex-row items-center px-3 py-3 gap-3 h-12 w-full font-normal"
             :class="{
               '!bg-on-surface-light/12 !dark:bg-on-surface-dark/12': active,

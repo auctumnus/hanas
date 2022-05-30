@@ -20,11 +20,13 @@ importers:
       '@prisma/client': ^3.8.1
       '@tsconfig/node16': ^1.0.2
       '@types/cookie-parser': ^1.4.2
+      '@types/cors': ^2.8.12
       '@types/dotenv-defaults': ^2.0.1
       '@types/express': ^4.17.13
       '@types/node': '17'
       chalk: '4'
       cookie-parser: ^1.4.6
+      cors: ^2.8.5
       dotenv-defaults: '3'
       env-var: ^7.1.1
       express: ^4.17.1
@@ -43,6 +45,7 @@ importers:
       '@prisma/client': 3.14.0_prisma@3.14.0
       chalk: 4.1.2
       cookie-parser: 1.4.6
+      cors: 2.8.5
       dotenv-defaults: 3.0.2
       env-var: 7.1.1
       express: 4.18.1
@@ -53,6 +56,7 @@ importers:
     devDependencies:
       '@tsconfig/node16': 1.0.2
       '@types/cookie-parser': 1.4.3
+      '@types/cors': 2.8.12
       '@types/dotenv-defaults': 2.0.1
       '@types/express': 4.17.13
       '@types/node': 17.0.25
@@ -2277,6 +2281,10 @@ packages:
       '@types/express': 4.17.13
     dev: true
 
+  /@types/cors/2.8.12:
+    resolution: {integrity: sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==}
+    dev: true
+
   /@types/cross-spawn/6.0.2:
     resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
     dependencies:
@@ -3801,7 +3809,6 @@ packages:
     dependencies:
       object-assign: 4.1.1
       vary: 1.1.2
-    dev: true
 
   /crc-32/1.2.2:
     resolution: {integrity: sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==}
@@ -6989,7 +6996,6 @@ packages:
   /object-assign/4.1.1:
     resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /object-inspect/1.12.2:
     resolution: {integrity: sha512-z+cPxW0QGUp0mcqcsgQyLVRDoXFQbXOwBaqyF7VIgI4TWNQsDHrBpUQslRmIfAoYWdYzs6UlKJtB2XJpTaNSpQ==}

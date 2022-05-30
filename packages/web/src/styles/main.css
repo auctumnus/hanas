@@ -50,3 +50,15 @@ body,
   position: relative;
   top: 2px;
 }
+
+.link {
+  @apply text-primary-light dark:text-primary-dark;
+}
+
+.link:hover {
+  @apply underline-current underline;
+}
+
+.link:visited {
+  @apply text-secondary-light dark:text-secondary-dark;
+}

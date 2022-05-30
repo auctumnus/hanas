@@ -21,21 +21,23 @@
   },
   "license": "NVPD",
   "dependencies": {
+    "@hanas-app/backend-shared": "workspace:*",
     "@prisma/client": "^3.8.1",
     "chalk": "4",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv-defaults": "3",
     "env-var": "^7.1.1",
     "express": "^4.17.1",
     "glob": "^7.2.0",
     "got": "^11.8.3",
     "helmet": "^4.6.0",
-    "zod": "^3.11.6",
-    "@hanas-app/backend-shared": "workspace:*"
+    "zod": "^3.11.6"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.2",
     "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
     "@types/dotenv-defaults": "^2.0.1",
     "@types/express": "^4.17.13",
     "@types/node": "17",

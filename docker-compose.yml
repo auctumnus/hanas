@@ -80,13 +80,15 @@ services:
 
   # I hate CORS. Proxies Kratos requests
   nginx:
+    image: nginx
     ports:
       - '4433:4433'
     depends_on:
       - kratos
-    build:
-      context: '.'
-      dockerfile: 'cors-proxy.Dockerfile'
+    volumes:
+      - type: bind
+        source: ./cors-proxy.nginx.conf
+        target: /etc/nginx/nginx.conf
 
   # Mailslurper - holds mail from Kratos. CHANGEME !
   mailslurper:

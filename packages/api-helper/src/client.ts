@@ -77,6 +77,8 @@ export class HanasClient {
 
     delete this.options.token
 
+    this.#authed = false
+
     return logout(this.options.kratosURL, this.options.token)
   }
 
@@ -108,6 +110,8 @@ export class HanasClient {
       // @ts-ignore
       if ('error' in e && e.error.code === 401) {
         return null
+      } else {
+        throw e
       }
     }
   }

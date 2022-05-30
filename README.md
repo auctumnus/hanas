@@ -23,6 +23,15 @@ Hanas doesn't have an official instance (yet!). In the meantime, you can contrib
 and discuss the project [in our discord][discord-link]! (For the privacy enthusiasts:
 eventually an IRC might be set up or something? Sorry, Discord's easy to use.)
 
+## Contributing
+
+There's a lot of work to be done! If you:
+
+- know a non-English language: help translate! See `packages/web/TRANSLATE.md`.
+- know Typescript, Vue, HTML, or CSS: contribute code! See `HACKING.md` in this folder.
+
+Note that contributions will also be placed under the same license as the rest of the project.
+
 ## Running
 
 1. Grep through the project for `CHANGEME`. There are a few places where

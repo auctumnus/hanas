@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { useI18n } from 'petite-vue-i18n'
+import { storeToRefs } from 'pinia'
+import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '~/stores/user'
 
-const { t } = useI18n()
+const { t } = useI18n({ useScope: 'global' })
 
-const { user } = useUserStore()
+const userStore = useUserStore()
+
+const { user } = storeToRefs(userStore)
+
+const route = useRoute()
+const router = useRouter()
 
 defineEmits<{
   (event: 'menu-closed'): void
@@ -21,9 +28,16 @@ defineEmits<{
       @menu-opened="$emit('menu-opened')"
     />
     <h1 class="text-xl text-on-surface-light dark:text-on-surface-dark">
-      {{ $route.meta.title ? t($route.meta.title as string) : 'Hanas' }}
+      {{ route.meta.title ? t(route.meta.title as string) : 'Hanas' }}
     </h1>
-    <UserMenu v-if="user !== null" :user="user" />
-    <HButton @click="" kind="text" content="Log In" v-else />
+    <HButton
+      @click="router.push('sign-in')"
+      kind="outline"
+      :content="t('button.login')"
+      class="absolute right-4 top-3"
+      v-if="user === null"
+    />
+    <div class="w-12" v-if="user === null">&nbsp;</div>
+    <UserMenu v-else />
   </header>
 </template>

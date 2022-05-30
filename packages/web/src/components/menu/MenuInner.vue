@@ -2,7 +2,7 @@
 import { useI18n } from 'petite-vue-i18n'
 
 import { computed } from 'vue'
-import { isLarge, isMedium } from '~/composables/device-size'
+import { isLarge, isMedium, isHuge } from '~/composables/device-size'
 
 const { t } = useI18n()
 
@@ -28,7 +28,8 @@ const isRail = computed(
     :class="{
       'w-0 pt-16': !railable && !isMenuOpen,
       'rail-menu w-20 pt-16': railable && !isMenuOpen,
-      'w-3/12': isLarge,
+      'w-2/12': isHuge,
+      'w-3/12': isLarge && !isHuge,
       'w-7/12': isMedium && isMenuOpen,
       'w-9/12': isMenuOpen,
     }"

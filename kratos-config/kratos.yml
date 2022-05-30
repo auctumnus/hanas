@@ -20,6 +20,8 @@ courier:
 selfservice:
   default_browser_return_url: http://127.0.0.1:4455
   flows:
+    login:
+      ui_url: http://localhost:3333
     registration:
       before: # This hook is just to make sure the Hanas server is there before
         # we go ahead with registering a user.

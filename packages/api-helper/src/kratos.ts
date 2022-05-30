@@ -43,7 +43,22 @@ interface RegistrationResponse {
   identity: KratosSession['identity'] // @kratos devs why
 }
 
-interface RegistrationFailedError {
+export interface ThrownKratosError extends Error {
+  id: number
+  text: string
+  type: string
+  context: any
+  isKratosError: true
+}
+
+export const isKratosError = (e: unknown): e is ThrownKratosError => {
+  return (
+    // @ts-ignore
+    Object.prototype.hasOwnProperty.call(e, 'isKratosError') && e.isKratosError
+  )
+}
+
+interface KratosErrorResponse {
   id: string
   type: string
   expires_at: string
@@ -87,6 +102,7 @@ interface fetchWrapperArgs {
   path: string
   body?: any
   token?: string
+  method?: string
 }
 
 const f = async <BodyType = any>({
@@ -94,19 +110,40 @@ const f = async <BodyType = any>({
   path,
   body,
   token,
+  method,
 }: fetchWrapperArgs) =>
   await fetch(new URL(path, endpoint) + '', {
     headers: {
       'Content-Type': j,
-      Accepts: j,
+      Accept: j,
       'X-Session-Token': token ? token : '',
     },
-    method: body ? 'POST' : 'GET',
+    credentials: 'include',
+    method: method ? method : body ? 'POST' : 'GET',
     body: JSON.stringify(body),
   }).then(async (r) => {
-    if (!r.ok) throw await r.json()
+    if (r.status === 204) return {} as BodyType
+    else if (!r.ok) throw await r.json()
     else return (await r.json()) as BodyType
   })
+
+const throwKratosError = (e: unknown) => {
+  const err = e as KratosErrorResponse
+  if ('ui' in err && 'messages' in err.ui && err.ui.messages.length) {
+    const message = err.ui.messages[0]
+    const { id, type, text, context } = message
+    const error = new Error(text) as ThrownKratosError
+    error.id = id
+    error.type = type
+    error.message = text
+    error.text = text
+    error.context = context
+    error.isKratosError = true
+    throw error
+  } else {
+    throw e
+  }
+}
 
 const kind = typeof window === undefined ? 'api' : 'browser'
 
@@ -145,31 +182,14 @@ export const register = async (
       },
     })
   } catch (e) {
-    const error = e as RegistrationFailedError
-    // password is too common (lol, thx kratos)
-    if (
-      error.ui.nodes
-        .filter((node) => node.attributes.name === 'password')[0]
-        .messages.some((m) => m.id === 4000005)
-    ) {
-      throw new Error(
-        'The password can not be used because the password has been found in data breaches and must no longer be used.'
-      )
-    }
-    // user exists under these traits
-    else if (error.ui.messages && error.ui.messages[0].id === 4000007) {
-      throw new Error('A user with the same email or username already exists.')
-    } else if (error.ui.messages && error.ui.messages.length) {
-      throw new Error(error.ui.messages[0].text)
-    } else {
-      console.error(e)
-      throw new Error(
-        "Couldn't register; the Kratos response object was malformed. " +
-          'The response received should be logged above.'
-      )
-    }
+    return throwKratosError(e)
   }
 }
+
+const getCSRF = (o: unknown) =>
+  (o as KratosErrorResponse).ui.nodes.filter(
+    (n) => n.attributes.name === 'csrf_token'
+  )[0].attributes.value as string
 
 /**
  * Logs the user into Hanas.
@@ -177,6 +197,7 @@ export const register = async (
  * @param endpoint The Kratos endpoint.
  * @param username
  * @param password
+ * @throws {@see ThrownKratosError} on any error that Kratos sends a UI message for.
  * @returns The response object. This includes user information, as well as
  * the session token. If you're in the browser, **DO NOT** store the session
  * token, as the browser can already handle the cookie from Kratos and will
@@ -197,15 +218,21 @@ export const login = async (
   }
   const { id } = api
 
-  return f<LoginResponse>({
-    endpoint,
-    path: `/self-service/login?flow=${id}`,
-    body: {
-      password_identifier: username,
-      password,
-      method: 'password',
-    },
-  })
+  const csrf = getCSRF(api)
+  try {
+    return await f<LoginResponse>({
+      endpoint,
+      path: `/self-service/login?flow=${id}`,
+      body: {
+        password_identifier: username,
+        password,
+        method: 'password',
+        csrf_token: csrf,
+      },
+    })
+  } catch (e) {
+    return throwKratosError(e)
+  }
 }
 
 /**
@@ -227,9 +254,28 @@ export const whoami = (endpoint: string | URL, token?: string) =>
  * @param token
  * @returns
  */
-export const logout = async (endpoint: string | URL, token?: string) =>
-  f({
-    endpoint,
-    path: '/self-service/logout',
-    token,
-  })
+export const logout = async (endpoint: string | URL, token?: string) => {
+  if (kind === 'api') {
+    if (!token) {
+      throw new Error(
+        'For non-browser clients, a token must be passed to logout.'
+      )
+    }
+    return f({
+      endpoint,
+      path: `/self-service/logout/api?session_token=${token}`,
+      method: 'DELETE',
+    })
+  } else {
+    const { logout_url } = await f<{
+      logout_url: string
+    }>({
+      endpoint,
+      path: `/self-service/logout/browser`,
+    })
+
+    const logoutToken = new URL(logout_url).searchParams.get('token')
+
+    return f({ endpoint, path: `/self-service/logout?token=${logoutToken}` })
+  }
+}

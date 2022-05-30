@@ -22,12 +22,16 @@ const setLocale = (value: string) => {
 
 <template>
   <main>
-    <b class="font-bold">{{ t('intro.note') }}</b>
-    {{ t('intro.settings_are') }}
-    <span class="underline underline-current">{{ t('intro.local_only') }}</span>
-    {{ t('intro.and_will') }}
-    <span class="underline underline-current">{{ t('intro.not') }}</span>
-    {{ t('intro.persist') }}
+    <p>
+      <b class="font-bold">{{ t('intro.note') }}</b>
+      {{ t('intro.settings_are') }}
+      <span class="underline underline-current">{{
+        t('intro.local_only')
+      }}</span>
+      {{ t('intro.and_will') }}
+      <span class="underline underline-current">{{ t('intro.not') }}</span>
+      {{ t('intro.persist') }}
+    </p>
 
     <section class="flex flex-col gap-1 mt-1" :class="{ 'w-9/12': isHuge }">
       <h2 class="text-lg font-semibold mt-4">

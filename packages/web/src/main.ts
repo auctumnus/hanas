@@ -30,7 +30,7 @@ export const createApp = ViteSSG(App, { routes }, async (ctx) => {
   const user = await client.currentUser()
   if (user) {
     console.log('logged in!')
-    userStore.user = user
+    userStore.replaceUser(user)
   } else {
     console.log('not logged in')
   }

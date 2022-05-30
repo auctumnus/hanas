@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { refDefault } from '@vueuse/core'
+import { computed, ref } from 'vue'
 
 /*
 TODO: bc of a lack of elevation semantics, the elevated button is barely readable. can we
@@ -8,9 +9,12 @@ fix this, ideally in material language, extra-materially if needed?
 
 const props = defineProps<{
   kind: 'elevated' | 'filled' | 'filled tonal' | 'outline' | 'text'
-  disabled: boolean | undefined
+  disabled?: boolean
   content: string
+  label?: string
 }>()
+
+const _label = refDefault(ref(props.label), props.content)
 
 const colorClasses = computed(() => {
   if (
@@ -53,7 +57,7 @@ const colorClasses = computed(() => {
     } else {
       return `
             border border-outline-light dark:border-outline-dark
-            text-primary-light dark:primary-dark
+            text-primary-light dark:text-primary-dark
 
             bg-primary-light dark:bg-primary-dark !bg-opacity-0
             
@@ -87,13 +91,13 @@ const colorClasses = computed(() => {
 <template>
   <button
     class="common-button flex flex-row justify-center items-center rounded-3xl h-10 whitespace-nowrap px-6 gap-1 font-medium"
-    :aria-label="content"
-    :title="content"
+    :aria-label="_label"
+    :title="_label"
     :class="colorClasses"
     :disabled="disabled"
   >
     <slot />
-    <span class="align-middle">{{ content }}</span>
+    <span class="align-middle" v-if="content">{{ content }}</span>
   </button>
 </template>
 

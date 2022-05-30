@@ -4,6 +4,7 @@ button.home: Home
 button.toggle_dark: Toggle dark mode
 button.toggle_langs: Change languages
 button.submit: Submit
+button.login: Sign in
 intro:
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route
@@ -13,6 +14,7 @@ intro:
 not-found: Not found
 
 route.settings: Settings
+route.forgot_password: Forgot password
 
 menu.home: Home
 menu.languages: Languages

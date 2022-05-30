@@ -3,9 +3,11 @@ button.home: Inicio
 button.toggle_dark: Alternar modo oscuro
 button.toggle_langs: Change languages
 button.submit: Submit
+button.login: Iniciar sesión
 not-found: No Encontrado
 
 route.settings: Configuración
+route.forgot_password: Olvidaste tu contraseña
 
 menu.home: Inicio
 menu.languages: Idiomas

@@ -6,6 +6,7 @@ import { hooks } from './hooks'
 import { version } from '../package.json'
 import { STATUS_CODES } from 'http'
 import { ZodError } from 'zod'
+import cors from 'cors'
 
 import { userRouter } from './user'
 import { langRouter } from './lang'
@@ -45,6 +46,12 @@ const errorHandler: ErrorRequestHandler = (err, _, res, next) => {
   }
 }
 
+const corsHandler = cors({
+  origin: 'http://localhost:3333',
+  credentials: true,
+  preflightContinue: true,
+})
+
 /**
  * Creates a Hanas server.
  * @returns A Hanas server instance.
@@ -56,6 +63,9 @@ export const makeServer = () =>
       res.set('X-Clacks-Overhead', 'GNU Terry Pratchett')
       next()
     })
+    .use(corsHandler)
+    // @ts-ignore
+    .options('*', corsHandler)
     .use(helmet())
     .use(express.json())
     .use(cookieParser())
