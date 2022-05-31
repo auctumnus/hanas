@@ -23,6 +23,7 @@ importers:
       '@types/cors': ^2.8.12
       '@types/dotenv-defaults': ^2.0.1
       '@types/express': ^4.17.13
+      '@types/express-fileupload': ^1.2.2
       '@types/node': '17'
       chalk: '4'
       cookie-parser: ^1.4.6
@@ -30,6 +31,7 @@ importers:
       dotenv-defaults: '3'
       env-var: ^7.1.1
       express: ^4.17.1
+      express-fileupload: ^1.4.0
       glob: ^7.2.0
       got: ^11.8.3
       helmet: ^4.6.0
@@ -37,7 +39,7 @@ importers:
       prisma-json-schema-generator: ^1.6.0
       reflect-metadata: ^0.1.13
       ts-node: ^10.4.0
-      ts-node-dev: ^1.1.8
+      ts-node-dev: '2'
       typescript: ^4.5.4
       zod: ^3.11.6
     dependencies:
@@ -49,6 +51,7 @@ importers:
       dotenv-defaults: 3.0.2
       env-var: 7.1.1
       express: 4.18.1
+      express-fileupload: 1.4.0
       glob: 7.2.0
       got: 11.8.5
       helmet: 4.6.0
@@ -59,12 +62,13 @@ importers:
       '@types/cors': 2.8.12
       '@types/dotenv-defaults': 2.0.1
       '@types/express': 4.17.13
+      '@types/express-fileupload': 1.2.2
       '@types/node': 17.0.25
       prisma: 3.14.0
       prisma-json-schema-generator: 1.8.0
       reflect-metadata: 0.1.13
       ts-node: 10.8.0_pihzuxx6bvrq6ianukvvtiilmq
-      ts-node-dev: 1.1.8_typescript@4.7.2
+      ts-node-dev: 2.0.0_pihzuxx6bvrq6ianukvvtiilmq
       typescript: 4.7.2
 
   packages/api-helper:
@@ -2251,6 +2255,12 @@ packages:
       '@types/connect': 3.4.35
       '@types/node': 17.0.25
 
+  /@types/busboy/0.3.2:
+    resolution: {integrity: sha512-iEvdm9Z9KdSs/ozuh1Z7ZsXrOl8F4M/CLMXPZHr3QuJ4d6Bjn+HBMC5EMKpwpAo8oi8iK9GZfFoHaIMrrZgwVw==}
+    dependencies:
+      '@types/node': 17.0.25
+    dev: true
+
   /@types/cacheable-request/6.0.2:
     resolution: {integrity: sha512-B3xVo+dlKM6nnKTcmm5ZtY/OL8bOAOd2Olee9M1zft65ox50OzjEHW91sDiU9j6cvW8Ejg1/Qkf4xd2kugApUA==}
     dependencies:
@@ -2304,6 +2314,13 @@ packages:
 
   /@types/estree/0.0.39:
     resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
+    dev: true
+
+  /@types/express-fileupload/1.2.2:
+    resolution: {integrity: sha512-sWU1EVFfLsdAginKVrkwTRbRPnbn7dawxEFEBgaRDcpNFCUuksZtASaAKEhqwEIg6fSdeTyI6dIUGl3thhrypg==}
+    dependencies:
+      '@types/busboy': 0.3.2
+      '@types/express': 4.17.13
     dev: true
 
   /@types/express-serve-static-core/4.17.28:
@@ -3357,6 +3374,13 @@ packages:
     resolution: {integrity: sha1-y5T662HIaWRR2zZTThQi+U8K7og=}
     dev: true
 
+  /busboy/1.6.0:
+    resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
+    engines: {node: '>=10.16.0'}
+    dependencies:
+      streamsearch: 1.1.0
+    dev: false
+
   /bytes-iec/3.1.1:
     resolution: {integrity: sha512-fey6+4jDK7TFtFg/klGSvNKJctyU7n2aQdnM+CO0ruLPbqqMOM8Tio0Pc+deqUeVKX1tL5DQep1zQ7+37aTAsA==}
     engines: {node: '>= 0.8'}
@@ -4239,7 +4263,7 @@ packages:
     dev: true
 
   /dynamic-dedupe/0.3.0:
-    resolution: {integrity: sha1-BuRMIj9eTpTXjvnbI6ZRXOL5YqE=}
+    resolution: {integrity: sha512-ssuANeD+z97meYOqd50e04Ze5qp4bPqo8cCkI4TRjZkzAUgIDTrXV1R8QCdINpiI+hw14+rYazvTRdQrz0/rFQ==}
     dependencies:
       xtend: 4.0.2
     dev: true
@@ -5014,6 +5038,13 @@ packages:
     dependencies:
       pify: 2.3.0
     dev: true
+
+  /express-fileupload/1.4.0:
+    resolution: {integrity: sha512-RjzLCHxkv3umDeZKeFeMg8w7qe0V09w3B7oGZprr/oO2H/ISCgNzuqzn7gV3HRWb37GjRk429CCpSLS2KNTqMQ==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      busboy: 1.6.0
+    dev: false
 
   /express-ws/5.0.2_express@4.18.1:
     resolution: {integrity: sha512-0uvmuk61O9HXgLhGl3QhNSEtRsQevtmbL94/eILaliEADZBHZOQUAiHFrGPrgsjikohyrmSG5g+sCfASTt0lkQ==}
@@ -8269,6 +8300,11 @@ packages:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
 
+  /streamsearch/1.1.0:
+    resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
+    engines: {node: '>=10.0.0'}
+    dev: false
+
   /string-argv/0.3.1:
     resolution: {integrity: sha512-a1uQGz7IyVy9YwhqjZIZu1c8JO8dNIe20xBmSS6qu9kv++k3JGzCVmprbNN5Kn+BgzD5E7YYwg1CcjuJMRNsvg==}
     engines: {node: '>=0.6.19'}
@@ -8642,6 +8678,34 @@ packages:
       ts-node: 9.1.1_typescript@4.7.2
       tsconfig: 7.0.0
       typescript: 4.7.2
+    dev: true
+
+  /ts-node-dev/2.0.0_pihzuxx6bvrq6ianukvvtiilmq:
+    resolution: {integrity: sha512-ywMrhCfH6M75yftYvrvNarLEY+SUXtUvU8/0Z6llrHQVBx12GiFk5sStF8UdfE/yfzk9IAq7O5EEbTQsxlBI8w==}
+    engines: {node: '>=0.8.0'}
+    hasBin: true
+    peerDependencies:
+      node-notifier: '*'
+      typescript: '*'
+    peerDependenciesMeta:
+      node-notifier:
+        optional: true
+    dependencies:
+      chokidar: 3.5.3
+      dynamic-dedupe: 0.3.0
+      minimist: 1.2.6
+      mkdirp: 1.0.4
+      resolve: 1.22.0
+      rimraf: 2.7.1
+      source-map-support: 0.5.21
+      tree-kill: 1.2.2
+      ts-node: 10.8.0_pihzuxx6bvrq6ianukvvtiilmq
+      tsconfig: 7.0.0
+      typescript: 4.7.2
+    transitivePeerDependencies:
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
     dev: true
 
   /ts-node/10.8.0_4vcxniz6c2zf6q742nqxy3egzi:
