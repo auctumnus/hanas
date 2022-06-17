@@ -7,6 +7,7 @@ const { t } = useI18n()
 <template>
   <main>
     {{ t('description') }}
+    <div class="skeleton h-12 w-12"></div>
   </main>
 </template>
 

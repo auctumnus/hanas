@@ -49,6 +49,8 @@ Hanas is made of a few different services:
 
 - the database
 - the backend
+- storage backend
+- [Thumbor][thumbor]
 - the frontend (optional)
 - the announcements server (optional)
 - the events server (optional)
@@ -56,7 +58,8 @@ Hanas is made of a few different services:
 
 The frontend is _technically_ optional, but in practice you'll want to run a
 frontend of some sort. The announcements and events servers are entirely optional,
-but can provide a better experience for the frontend.
+but can provide a better experience for the frontend. The storage backend needs to
+be an S3-compatible one.
 
 #### Database
 
@@ -132,3 +135,5 @@ part of the license.
 [nvpl]: https://thufie.lain.haus/NPL.html
 [kratos]: https://ory.sh/kratos
 [postgres]: https://www.postgresql.org
+[image-resizer]: https://docs.aws.amazon.com/solutions/latest/serverless-image-handler/welcome.html
+[thumbor]: https://github.com/thumbor/thumbor

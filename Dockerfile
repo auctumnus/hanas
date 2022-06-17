@@ -11,6 +11,9 @@ FROM base AS deps
 
 # this should include everything we need to copy over
 COPY pnpm-lock.yaml ./
+COPY packages/api/package.json packages/api/packages.json
+COPY packages/backend-shared/package.json packages/backend-shared/package.json
+
 RUN pnpm fetch --prod
 
 COPY package.json pnpm-workspace.yaml ./

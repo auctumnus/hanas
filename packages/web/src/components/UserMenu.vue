@@ -20,11 +20,7 @@ const logout = () => {
 <template>
   <Menu>
     <MenuButton>
-      <ProfilePicture
-        :src="user!.profilePicture"
-        size="md"
-        aria-label="Open user menu"
-      />
+      <ProfilePicture :src="user?.profilePicture" aria-label="Open user menu" />
     </MenuButton>
     <transition
       enter-active-class="transition duration-100 ease-out"
@@ -44,7 +40,7 @@ const logout = () => {
             user!.displayName || user!.username
           }}</b
           >!
-          <ProfilePicture :src="user!.profilePicture" size="md" aria-hidden />
+          <ProfilePicture :src="user?.profilePicture" aria-hidden />
         </h1>
         <MenuItem v-slot="{ active }">
           <router-link

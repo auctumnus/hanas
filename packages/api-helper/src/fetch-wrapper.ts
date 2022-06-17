@@ -54,11 +54,16 @@ export const w = async <
   const options: FetchBody = {
     ...opts,
     headers: {
-      ...opts.headers,
       'Content-Type': 'application/json',
       Accepts: 'application/json',
+      ...opts.headers,
     },
     credentials: 'include',
+  }
+
+  if (options.body instanceof FormData) {
+    // @ts-ignore
+    delete options.headers['Content-Type']
   }
 
   const res = await fetch(

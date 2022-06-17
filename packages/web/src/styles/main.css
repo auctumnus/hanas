@@ -62,3 +62,46 @@ body,
 .link:visited {
   @apply text-secondary-light dark:text-secondary-dark;
 }
+
+.dark .skeleton {
+  background: hsla(0, 0%, 100%, 0.12);
+}
+
+.skeleton {
+  background: rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  position: relative;
+}
+
+.dark .skeleton::after {
+  background: linear-gradient(
+    90deg,
+    hsla(0, 0%, 100%, 0),
+    hsla(0, 0%, 100%, 0.05),
+    hsla(0, 0%, 100%, 0)
+  );
+}
+
+.skeleton::after {
+  animation: loading 1.5s infinite;
+  background: linear-gradient(
+    90deg,
+    hsla(0, 0%, 100%, 0),
+    hsla(0, 0%, 100%, 0.3),
+    hsla(0, 0%, 100%, 0)
+  );
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateX(-100%);
+  z-index: 1;
+}
+
+@keyframes loading {
+  100% {
+    transform: translateX(100%);
+  }
+}

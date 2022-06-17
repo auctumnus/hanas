@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, Ref } from '@vue/reactivity'
 import { get, set } from '@vueuse/core'
-import { ref, useSlots } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps<{
   name: string

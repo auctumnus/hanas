@@ -15,6 +15,7 @@ not-found: Not found
 
 route.settings: Settings
 route.forgot_password: Forgot password
+route.edit_profile: Edit profile
 
 menu.home: Home
 menu.languages: Languages

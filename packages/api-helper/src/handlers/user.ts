@@ -1,6 +1,7 @@
 import { HanasClient } from '../client'
 import { AuthErrors, BadRequestError } from '../error-types'
 import { User, UserResponseData } from '../models'
+import 'formdata-polyfill'
 
 type UpdateUserDto = Partial<
   Omit<User, 'created' | 'updated' | 'profilePicture' | 'banner'>
@@ -32,28 +33,76 @@ export const user = (client: HanasClient) => ({
   },
 
   /**
-   * Updates a user. You must be logged in as this user to update them.
-   * @param username The username of the user to update.
+   * Updates the information for your user.
    * @param data The data to update this user with.
+   * @param username If you already have your current username, prevents sending
+   * another request to find it.
    * @returns The updated user.
    */
-  update(username: string, data: UpdateUserDto) {
+  async update(data: UpdateUserDto, username?: string) {
+    const u = username || (await client.currentUser())?.username
+    if (!u) {
+      throw new Error("Can't update your information if not logged in.")
+    }
     return client
-      .fetch<UserResponseData, BadRequestError | AuthErrors>(
-        `/users/${username}`,
-        {
-          method: 'PATCH',
-          body: JSON.stringify(data),
-        }
-      )
+      .fetch<UserResponseData, BadRequestError | AuthErrors>(`/users/${u}`, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+      })
       .then((d) => new User(client, d))
   },
 
   /**
-   * Deletes a user. You must be logged in as this user to delete them.
-   * @param username The username of the user to delete.
+   * Deletes your account.
+   * @param username If you already have your current username, prevents sending
+   * another request to find it.
    */
-  async delete(username: string) {
-    await client.fetch(`/users/${username}`, { method: 'DELETE' })
+  async delete(username?: string) {
+    const u = username || (await client.currentUser())?.username
+    if (!u) {
+      throw new Error("Can't update your information if not logged in.")
+    }
+    await client.fetch(`/users/${u}`, { method: 'DELETE' })
+  },
+
+  /**
+   * Update your profile picture.
+   * @param username If you already have your current username, prevents sending
+   * another request to find it.
+   */
+  async uploadProfilePicture(file: Blob, username?: string) {
+    const u = username || (await client.currentUser())?.username
+    if (!u) {
+      throw new Error("Can't update your information if not logged in.")
+    }
+
+    const body = new FormData()
+    body.append('profilePicture', file)
+
+    console.log(file.size)
+
+    return await client.fetch(`/users/${u}/profile-picture`, {
+      method: 'PUT',
+      body,
+      headers: {
+        'Content-Type': `multipart/form-data; ${file.type}`,
+        'Content-Length': file.size + '',
+      },
+    })
+  },
+  /**
+   * Removes your profile picture.
+   * @param username If you already have your current username, prevents sending
+   * another request to find it.
+   */
+  async deleteProfilePicture(username?: string) {
+    const u = username || (await client.currentUser())?.username
+    if (!u) {
+      throw new Error("Can't update your information if not logged in.")
+    }
+
+    return await client.fetch(`/users/${u}/profile-picture`, {
+      method: 'DELETE',
+    })
   },
 })

@@ -82,3 +82,12 @@ export const ENABLE_ANNOUNCEMENTS = env
 export const ANNOUNCEMENTS_URL = env.get('ANNOUNCEMENTS_URL').asUrlString()
 export const ANNOUNCEMENTS_PORT = getPort(ANNOUNCEMENTS_URL)
 export const ANNOUNCEMENTS_API_KEY = env.get('ANNOUNCEMENTS_API_KEY').asString()
+
+export const STORAGE_ACCESS_KEY_ID = env.get('STORAGE_ACCESS_KEY_ID').asString()
+export const STORAGE_SECRET_ACCESS_KEY = env
+  .get('STORAGE_SECRET_ACCESS_KEY')
+  .asString()
+export const STORAGE_ENDPOINT = env.get('STORAGE_ENDPOINT').asString()
+export const STORAGE_BUCKET_NAME = env.get('STORAGE_BUCKET_NAME').asString()
+export const STORAGE_PUBLIC_URL = env.get('STORAGE_PUBLIC_URL').asString()
+export const STORAGE_PORT = env.get('STORAGE_PORT').asPortNumber()
