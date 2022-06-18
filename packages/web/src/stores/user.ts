@@ -2,10 +2,12 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { User } from '@hanas-app/api-helper'
 
 export const useUserStore = defineStore('user', {
-  state: () => ({} as User | {}),
+  state: () => ({
+    user: null as User | null,
+  }),
   actions: {
     replaceUser(user: User | null) {
-      this.$state = user ? user : {}
+      this.user = user
     },
   },
 })

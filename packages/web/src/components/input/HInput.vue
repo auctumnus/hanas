@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { computed, Ref } from '@vue/reactivity'
 import { get, set } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, Ref, computed } from 'vue'
 
 const props = defineProps<{
   name: string
