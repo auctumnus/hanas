@@ -12,10 +12,9 @@ const props = defineProps<{
   src?: string
 }>()
 
-const s = computed(() => props.src || '')
-
 const source = ref('')
 
+// All code paths should set the source ref above.
 const changePfp = async (newSrc?: string, oldSrc?: string) => {
   if (newSrc) {
     set(source, newSrc)
@@ -35,6 +34,7 @@ const changePfp = async (newSrc?: string, oldSrc?: string) => {
   }
 }
 
+const s = computed(() => props.src || '')
 watch(s, changePfp)
 onMounted(() => changePfp(props.src, ''))
 </script>
