@@ -7,12 +7,12 @@ const props = defineProps<{
   type: 'outlined' | 'filled'
   inputType?: string
   label: string
-  helper?: string
   disabled?: boolean
   maxLength?: number
   minLength?: number
   hasError?: boolean
   hasIcon?: boolean
+  hasHelper?: boolean
 
   modelValue: string
 }>()
@@ -97,17 +97,17 @@ const input: Ref<HTMLInputElement | null> = ref(null)
         <slot name="appended" />
       </span>
     </div>
-    <span
+    <div
       class="px-4 pt-1 text-sm transition-colors"
       :class="{
         'text-on-surface-variant-light dark:text-on-surface-variant-dark':
           !hasError,
         'text-error-light dark:text-error-dark': hasError,
       }"
-      v-if="helper"
+      v-if="hasHelper"
     >
-      {{ helper }}
-    </span>
+      <slot name="helper" />
+    </div>
   </div>
 </template>
 

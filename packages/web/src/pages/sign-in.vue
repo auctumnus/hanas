@@ -101,12 +101,15 @@ const login = async () => {
         :has-error="showErrorOnUsername"
         @input="clearUsernameError()"
         :min-length="1"
-        :helper="usernameHelper ? t(usernameHelper) : ''"
+        :has-helper="!!usernameHelper"
       >
         <template #prepended>
           <mdi-account class="w-6 h-6" />
         </template>
         <template #appended> &nbsp; </template>
+        <template #helper>{{
+          usernameHelper ? t(usernameHelper) : ''
+        }}</template>
       </HInput>
 
       <HInput
@@ -120,6 +123,7 @@ const login = async () => {
         @input="clearPasswordError()"
         :min-length="1"
         :helper="passwordHelper ? t(passwordHelper) : ''"
+        :has-helper="!!passwordHelper"
       >
         <template #prepended>
           <mdi-key class="w-6 h-6" />
@@ -135,6 +139,9 @@ const login = async () => {
             <mdi-eye class="w-6 h-6 cursor-pointer" v-else />
           </button>
         </template>
+        <template #helper>{{
+          passwordHelper ? t(passwordHelper) : ''
+        }}</template>
       </HInput>
 
       <router-link to="forgot-password" class="link">

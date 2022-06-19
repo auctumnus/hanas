@@ -147,6 +147,11 @@ const throwKratosError = (e: unknown) => {
 
 const kind = typeof window === undefined ? 'api' : 'browser'
 
+const getCSRF = (o: unknown) =>
+  (o as KratosErrorResponse).ui.nodes.filter(
+    (n) => n.attributes.name === 'csrf_token'
+  )[0].attributes.value as string
+
 /**
  * Registers a user with Hanas.
  * @param endpoint The Kratos endpoint.
@@ -169,6 +174,8 @@ export const register = async (
     )
   }
 
+  const csrf = getCSRF(api)
+
   const { id } = api
   try {
     return await f<RegistrationResponse>({
@@ -179,17 +186,13 @@ export const register = async (
         'traits.username': username,
         password,
         method: 'password',
+        csrf_token: csrf,
       },
     })
   } catch (e) {
     return throwKratosError(e)
   }
 }
-
-const getCSRF = (o: unknown) =>
-  (o as KratosErrorResponse).ui.nodes.filter(
-    (n) => n.attributes.name === 'csrf_token'
-  )[0].attributes.value as string
 
 /**
  * Logs the user into Hanas.
