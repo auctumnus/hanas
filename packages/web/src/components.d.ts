@@ -29,6 +29,8 @@ declare module 'vue' {
     MdiKey: typeof import('~icons/mdi/key')['default']
     MdiMailboxUpOutline: typeof import('~icons/mdi/mailbox-up-outline')['default']
     MdiMenu: typeof import('~icons/mdi/menu')['default']
+    MdiPencil: typeof import('~icons/mdi/pencil')['default']
+    MdiUpload: typeof import('~icons/mdi/upload')['default']
     MenuInner: typeof import('./components/menu/MenuInner.vue')['default']
     Modal: typeof import('./components/Modal.vue')['default']
     PopupMenu: typeof import('./components/PopupMenu.vue')['default']

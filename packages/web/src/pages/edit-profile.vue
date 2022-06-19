@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { get, set } from '@vueuse/core'
+import { profile } from 'console'
 import { useI18n } from 'petite-vue-i18n'
 import { storeToRefs } from 'pinia'
 import { onMounted, Ref, ref, toRefs } from 'vue'
@@ -11,15 +12,7 @@ const { t } = useI18n()
 
 const userStore = useUserStore()
 
-const user = storeToRefs(userStore)
-
-// @ts-ignore
-console.log(user)
-
-// @ts-ignore
-const { profilePicture } = toRefs(user.user) as {
-  profilePicture: Ref<string | null>
-}
+const { user } = storeToRefs(userStore)
 
 onMounted(() => {
   if (!user) {
@@ -44,10 +37,10 @@ const submitPfp = async (file: File | null) => {
   set(pfpIsUploading, true)
   const { url } = await client.users.uploadProfilePicture(
     file,
-    get(user.user)!.username
+    get(user)!.username
   )
   set(pfpIsUploading, false)
-  set(profilePicture, url as string)
+  user.value!.profilePicture = url
 }
 
 const remove = () => {
@@ -60,7 +53,13 @@ const pfpIsUploading = ref(false)
 <template>
   <main>
     <div class="flex flex-row">
-      <ProfilePicture class="h-32 w-32" :src="user?.profilePicture" ref="pfp" />
+      <ProfilePicture
+        class="h-32 w-32"
+        :src="user?.profilePicture"
+        :username="user?.username"
+        :display-name="t('profile_picture')"
+        ref="pfp"
+      />
       <div class="flex flex-col justify-center gap-2">
         <input
           type="file"
@@ -102,6 +101,8 @@ const pfpIsUploading = ref(false)
         @change="profilePicture = pfpInput?.files?.[0] || null"
         ref="pfpInput"
       />-->
+      {{ user?.displayName }}
+      <ProfilePicture :username="user?.username" />
     </label>
   </main>
 </template>
@@ -113,14 +114,16 @@ const pfpIsUploading = ref(false)
     "button.pfp_upload_full": "Upload a profile picture",
     "button.pfp_remove": "Remove",
     "button.pfp_remove_full": "Remove your profile picture",
-    "uploading": "Uploading..."
+    "uploading": "Uploading...",
+    "profile_picture": "Your profile picture"
   },
   "es": {
     "button.pfp_upload": "Subir",
     "button.pfp_upload_full": "Subir un foto de perfil",
     "button.pfp_remove": "Quitar",
     "button.pfp_remove_full": "Quitar tu foto de perfil",
-    "uploading": "Subiendo..."
+    "uploading": "Subiendo...",
+    "profile_picture": "Tu foto de perfil"
   }
 }
 </i18n>

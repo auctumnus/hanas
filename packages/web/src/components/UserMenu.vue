@@ -20,7 +20,11 @@ const logout = () => {
 <template>
   <Menu>
     <MenuButton>
-      <ProfilePicture :src="user?.profilePicture" aria-label="Open user menu" />
+      <ProfilePicture
+        :src="user?.profilePicture"
+        :username="user?.username"
+        aria-label="Open user menu"
+      />
     </MenuButton>
     <transition
       enter-active-class="transition duration-100 ease-out"
