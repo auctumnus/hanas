@@ -28,7 +28,12 @@ export const UpdateUserDto = z
       .transform(clean),
 
     // is this like reasonable. i hope it is
-    description: z.string().max(1000),
+    description: z
+      .string()
+      .refine(cleanedLength(1, 100), {
+        message: 'Description must be under 1000 characters.',
+      })
+      .transform(clean),
 
     // lol. lmao
     gender: z.string().regex(/^([a-fA-F0-9]{3}){1,2}$/), // hex color

@@ -7,6 +7,11 @@ import { useRouter } from 'vue-router'
 import { client } from '~/hanas-api'
 import { useUserStore } from '~/stores/user'
 import { isHuge } from '../composables/device-size'
+import {
+  getUsernameValidityIssue,
+  getIsValidUsername,
+  getIsValidEmail,
+} from '~/userInfoValidity'
 
 const { t } = useI18n()
 const username = ref('')
@@ -57,45 +62,15 @@ const clearErrors = () =>
 
 const userStore = useUserStore()
 
-// https://html.spec.whatwg.org/multipage/input.html#email-state-(type=email)
-// "This requirement is a willful violation of RFC 5322"; thus, this isn't technically
-// applicable to _all_ emails, so don't prevent a user from submitting it anyway
-// just useful for
-const emailRegex =
-  /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-const isValidEmail = computed(() =>
-  get(email) ? emailRegex.test(get(email)) : true
-)
+const isValidEmail = computed(() => getIsValidEmail(get(email)))
 
-const usernameRegex = /^([a-z0-9](-|_)?)+[a-z0-9]$/
-const isValidUsername = computed(() => {
-  const u = get(username)
-  if (!u) {
-    return true
-  } else if (u.length < 2 || u.length > 30) {
-    return false
-  } else {
-    return usernameRegex.test(u)
-  }
-})
-const usernameValidityIssue = computed(() => {
-  const u = get(username)
-  if (u.length < 2) {
-    return 'username_too_short'
-  } else if (u.length > 30) {
-    return 'username_too_long'
-  } else if (/__|_-|-_|--/.test(u)) {
-    return 'username_consecutive_hyphens'
-  } else if (/[A-Z]/.test(u)) {
-    return 'username_uppercase'
-  } else if (/[ -,\.\/:-@\[-^`{-~}]/.test(u)) {
-    return 'username_punctuation'
-  } else if (/^_|_$|-$|$-/.test(u)) {
-    return 'username_affixed_hyphens'
-  } else {
-    return 'username_invalid'
-  }
-})
+const isValidUsername = computed(() => getIsValidUsername(get(username)))
+// There isn't a typing issue here, but rather an error about this being
+// unused when it isn't unused.
+// @ts-ignore
+const usernameValidityIssue = computed(() =>
+  getUsernameValidityIssue(get(username))
+)
 
 const signup = async () => {
   if (!get(username)) {
@@ -146,6 +121,8 @@ const signup = async () => {
         v-model="username"
         :has-error="errors.username.showError || !isValidUsername"
         :has-helper="errors.username.showError || !isValidUsername"
+        :min-length="2"
+        :max-length="30"
       >
         <template #prepended>
           <mdi-account class="w-6 h-6" />

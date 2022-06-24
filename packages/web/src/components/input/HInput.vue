@@ -30,6 +30,26 @@ const blur = () => {
 }
 
 const input: Ref<HTMLInputElement | null> = ref(null)
+
+const clean = (s: string) => s.trim().split(/\s+/).join(' ')
+
+const cleanedLength = (min: number, max: number) => (s: string) => {
+  const len = clean(s).length
+  return len > min && len < max
+}
+
+const contentLength = computed(() => clean(get(props.modelValue)).length)
+
+const hasValidLength = computed(() =>
+  props.maxLength || props.minLength
+    ? cleanedLength(
+        props.minLength || 0,
+        props.maxLength || Number.POSITIVE_INFINITY
+      )(props.modelValue)
+    : true
+)
+
+const _error = computed(() => props.hasError || !hasValidLength)
 </script>
 
 <template>
@@ -47,8 +67,8 @@ const input: Ref<HTMLInputElement | null> = ref(null)
           'interactable-bg-surface-variant-light dark:interactable-bg-surface-variant-dark':
             !disabled && type === 'filled',
           'shadow-outline-light dark:shadow-outline-dark focus:shadow-primary-light dark:focus:shadow-primary-dark':
-            !hasError,
-          'shadow-error-light dark:shadow-error-dark': hasError,
+            !_error,
+          'shadow-error-light dark:shadow-error-dark': _error,
           [`bg-on-surface-light/12 dark:bg-on-surface-dark/12
             pointer-events-none`]: disabled,
           'py-4': !isActive,
@@ -59,7 +79,7 @@ const input: Ref<HTMLInputElement | null> = ref(null)
         :value="modelValue"
         @focus="focus"
         @blur="blur"
-        @input="$emit('update:modelValue', $event?.target?.value)"
+        @input="$emit('update:modelValue', clean($event?.target?.value))"
         :type="inputType || ''"
         :disabled="disabled"
         :minlength="minLength"
@@ -69,8 +89,8 @@ const input: Ref<HTMLInputElement | null> = ref(null)
       <label
         class="absolute left-0 px-4 right-auto cursor-text transition-all truncate"
         :class="{
-          'text-primary-light dark:text-primary-dark': isFocused && !hasError,
-          'text-error-light dark:text-error-dark': hasError,
+          'text-primary-light dark:text-primary-dark': isFocused && !_error,
+          'text-error-light dark:text-error-dark': _error,
           'label-active': isActive,
           'py-4': !isActive,
           'pl-14': !!$slots.prepended,
@@ -82,7 +102,7 @@ const input: Ref<HTMLInputElement | null> = ref(null)
       </label>
       <span
         class="absolute left-4 h-14 flex flex-col justify-center cursor-text transition-colors"
-        :class="{ 'text-error-light dark:text-error-dark': hasError }"
+        :class="{ 'text-error-light dark:text-error-dark': _error }"
         v-if="!!$slots.prepended"
         @click="input!.focus()"
       >
@@ -90,7 +110,7 @@ const input: Ref<HTMLInputElement | null> = ref(null)
       </span>
       <span
         class="absolute right-4 h-14 flex flex-col justify-center cursor-text transition-colors"
-        :class="{ 'text-error-light dark:text-error-dark': hasError }"
+        :class="{ 'text-error-light dark:text-error-dark': _error }"
         v-if="!!$slots.appended"
         @click="input!.focus()"
       >
@@ -101,8 +121,8 @@ const input: Ref<HTMLInputElement | null> = ref(null)
       class="px-4 pt-1 text-sm transition-colors"
       :class="{
         'text-on-surface-variant-light dark:text-on-surface-variant-dark':
-          !hasError,
-        'text-error-light dark:text-error-dark': hasError,
+          !_error,
+        'text-error-light dark:text-error-dark': _error,
       }"
       v-if="hasHelper"
     >

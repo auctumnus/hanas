@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import { User } from '@hanas-app/api-helper'
-import { get, refDefault, set } from '@vueuse/core'
-import { computed, onMounted, ref, watch } from 'vue'
+import { get, set } from '@vueuse/core'
+import { computed, onMounted, Ref, ref, watch } from 'vue'
 import { client } from '~/hanas-api'
 
-const missingPfp = (name: string) => 'https://ui-avatars.com/api/?name=' + name
+const img: Ref<HTMLImageElement | null> = ref(null)
+const missingPfp = (name: string, color?: string) =>
+  'https://ui-avatars.com/api/' +
+  '?name=' +
+  name +
+  '?size=' +
+  get(img)?.clientWidth +
+  color
+    ? '?color=' + color
+    : ''
 
 const props = defineProps<{
   username?: string
@@ -45,6 +53,6 @@ onMounted(() => changePfp(props.src, ''))
     :aria-label="displayName || username"
     :title="displayName || username"
   >
-    <img class="rounded-full skeleton h-3/4 w-3/4" :src="source" />
+    <img class="rounded-full skeleton h-3/4 w-3/4" :src="source" ref="img" />
   </div>
 </template>
