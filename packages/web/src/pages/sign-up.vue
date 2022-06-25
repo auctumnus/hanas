@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { isKratosError } from '@hanas-app/api-helper'
-import { get, set, useToggle, throttledWatch } from '@vueuse/core'
+import {
+  get,
+  set,
+  useToggle,
+  throttledWatch,
+  debouncedWatch,
+} from '@vueuse/core'
 import { useI18n } from 'petite-vue-i18n'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -76,11 +82,14 @@ const usernameValidityIssue = computed(() =>
 const checkingUsernameTaken = ref(false)
 const isUsernameTaken = ref(false)
 
-throttledWatch(
+debouncedWatch(
   username,
   async (username) => {
     if (!username) {
       set(isUsernameTaken, false)
+      return
+    }
+    if (!get(isValidUsername)) {
       return
     }
     set(checkingUsernameTaken, true)
@@ -93,7 +102,7 @@ throttledWatch(
     }
     setTimeout(() => set(checkingUsernameTaken, false), 100)
   },
-  { throttle: 500 }
+  { debounce: 300 }
 )
 
 const signup = async () => {
