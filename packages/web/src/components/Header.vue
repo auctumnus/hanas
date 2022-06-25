@@ -31,7 +31,7 @@ defineEmits<{
       {{ route.meta.title ? t(route.meta.title as string) : 'Hanas' }}
     </h1>
     <HButton
-      @click="router.push('sign-in')"
+      @click="router.push('/sign-in')"
       kind="outline"
       :content="t('button.login')"
       class="absolute right-4 top-3"
