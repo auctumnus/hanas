@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { isKratosError } from '@hanas-app/api-helper'
-import { get, set, useToggle } from '@vueuse/core'
+import { get, set, useToggle, throttledWatch } from '@vueuse/core'
 import { useI18n } from 'petite-vue-i18n'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -12,6 +12,7 @@ import {
   getIsValidUsername,
   getIsValidEmail,
 } from '~/userInfoValidity'
+import { throttle } from 'cypress/types/lodash'
 
 const { t } = useI18n()
 const username = ref('')
@@ -72,6 +73,29 @@ const usernameValidityIssue = computed(() =>
   getUsernameValidityIssue(get(username))
 )
 
+const checkingUsernameTaken = ref(false)
+const isUsernameTaken = ref(false)
+
+throttledWatch(
+  username,
+  async (username) => {
+    if (!username) {
+      set(isUsernameTaken, false)
+      return
+    }
+    set(checkingUsernameTaken, true)
+    try {
+      await client.users.get(username)
+      // if no 404, username is taken
+      set(isUsernameTaken, true)
+    } catch (e) {
+      set(isUsernameTaken, false)
+    }
+    setTimeout(() => set(checkingUsernameTaken, false), 100)
+  },
+  { throttle: 500 }
+)
+
 const signup = async () => {
   if (!get(username)) {
     setError('username', 'missing_username')
@@ -119,20 +143,36 @@ const signup = async () => {
         @input="clearError('username')"
         :label="t('username')"
         v-model="username"
-        :has-error="errors.username.showError || !isValidUsername"
-        :has-helper="errors.username.showError || !isValidUsername"
+        :has-error="
+          errors.username.showError || !isValidUsername || isUsernameTaken
+        "
+        :has-helper="
+          errors.username.showError ||
+          !isValidUsername ||
+          isUsernameTaken ||
+          checkingUsernameTaken
+        "
         :min-length="2"
         :max-length="30"
       >
         <template #prepended>
           <mdi-account class="w-6 h-6" />
         </template>
-        <template #appended> &nbsp; </template>
+        <template #appended v-if="checkingUsernameTaken">
+          <Spinner />
+        </template>
+        <template #appended v-else> &nbsp; </template>
         <template #helper v-if="errors.username.showError">
           {{ t(errors.username.errorMessage) }}
         </template>
         <template #helper v-else-if="!isValidUsername">
           {{ t(usernameValidityIssue) }}
+        </template>
+        <template #helper v-else-if="isUsernameTaken">
+          {{ t('username_taken') }}
+        </template>
+        <template #helper v-else-if="checkingUsernameTaken">
+          {{ t('checking_username_taken') }}
         </template>
       </HInput>
 
@@ -232,7 +272,10 @@ const signup = async () => {
         "username_too_long": "Username must be under 30 characters.",
         "username_too_short": "Username must be at least 2 characters.",
         "username_uppercase": "Username must be lowercase.",
-        "username_affixed_hyphens": "Username can't have underscores or hyphens at the start or end."
+        "username_affixed_hyphens": "Username can't have underscores or hyphens at the start or end.",
+
+        "username_taken": "This username is not available.",
+        "checking_username_taken": "Checking if the username is available..."
     },
     "es": {
         "login_text": "¿Ya tienes una cuenta?",
