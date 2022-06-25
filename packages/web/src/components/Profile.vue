@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { client } from '~/hanas-api'
 import { useUserStore } from '~/stores/user'
+import { get } from '@vueuse/core'
 
 const props = defineProps<{
   username: string
@@ -10,9 +11,13 @@ const props = defineProps<{
 
 const user = await client.users.get(props.username)
 
-const { user: loggedInUser } = storeToRefs(useUserStore())
+const userStore = useUserStore()
 
-const editProfileDialogOpen = ref(false)
+const { user: loggedInUser } = storeToRefs(userStore)
+
+const viewingOwnProfile = computed(
+  () => get(loggedInUser)?.username === user.username
+)
 </script>
 
 <template>
@@ -51,7 +56,7 @@ const editProfileDialogOpen = ref(false)
       <span class="flex-1 flex flex-row justify-end pt-4">
         <HButton
           kind="outline"
-          v-if="loggedInUser!.username === user.username"
+          v-if="viewingOwnProfile"
           content="Edit profile"
           as="router-link"
           href="/edit-profile"
