@@ -44,7 +44,11 @@ const logout = () => {
             user!.displayName || user!.username
           }}</b
           >!
-          <ProfilePicture :src="user?.profilePicture" aria-hidden />
+          <ProfilePicture
+            :src="user?.profilePicture"
+            :username="user?.username"
+            aria-hidden
+          />
         </h1>
         <MenuItem v-slot="{ active }">
           <router-link

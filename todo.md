@@ -11,7 +11,11 @@
 
 ## Frontend
 
-- scrollbar dark mode
+- edit profile could be better
+  - color picker for gender
+  - autocomplete on pronouns
+    - ^ average liberal's first thoughts on a profile
+  - idk it all doesnt taste that nice imo
 
 ## Announcement server
 

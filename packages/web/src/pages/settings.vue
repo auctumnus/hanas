@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { set } from '@vueuse/core'
 import { useI18n } from 'petite-vue-i18n'
-import { isDark, toggleDark } from '~/composables/dark'
 import { isSmall, isHuge } from '~/composables/device-size'
 import {
   Listbox,
@@ -9,6 +8,7 @@ import {
   ListboxOptions,
   ListboxOption,
 } from '@headlessui/vue'
+import { useSettingsStore } from '~/stores/settings'
 
 const { t } = useI18n()
 
@@ -17,6 +17,13 @@ const { availableLocales, locale } = useI18n({ useScope: 'global' })
 const setLocale = (value: string) => {
   set(locale, value)
   localStorage.setItem('locale', value)
+}
+
+const settings = useSettingsStore()
+
+const setTheme = (value: 'auto' | 'light' | 'dark') => {
+  settings.themeIsAuto = value === 'auto'
+  settings.theme = value
 }
 </script>
 
@@ -40,19 +47,63 @@ const setLocale = (value: string) => {
 
       <label class="ml-1 mb-4 flex flex-row justify-between">
         <div class="flex flex-col">
-          <span class="font-medium">{{ t('appearance.dark-theme') }}</span>
+          <span class="font-medium">{{ t('appearance.theme') }}</span>
           <span
             class="text-sm text-on-surface-variant-light dark:text-on-surface-variant-dark"
           >
-            {{ t('appearance.dark-theme.description') }}
+            {{ t('appearance.theme.description') }}
           </span>
         </div>
-        <input
-          class="accent-primary-light dark:accent-primary-dark"
-          type="checkbox"
-          v-model="isDark"
-          @click="() => toggleDark()"
-        />
+        <Listbox @update:model-value="setTheme">
+          <div class="w-40">
+            <ListboxButton
+              class="font-normal w-full flex flex-row justify-between px-3 py-2 rounded border-outline-light dark:border-outline-dark border"
+            >
+              <span>{{
+                t(
+                  settings.themeIsAuto
+                    ? 'themes.auto'
+                    : `themes.${settings.theme}`
+                )
+              }}</span>
+              <mdi-chevron-down class="pt-1" aria-hidden="true" />
+            </ListboxButton>
+            <transition
+              enter-active-class="transition duration-100 ease-out"
+              enter-from-class="transform scale-95 opacity-0"
+              enter-to-class="transform scale-100 opacity-100"
+              leave-active-class="transition duration-75 ease-in"
+              leave-from-class="transform scale-100 opacity-100"
+              leave-to-class="transform scale-95 opacity-0"
+            >
+              <ListboxOptions
+                class="absolute mt-1 w-40 z-10 overflow-auto rounded-md shadow-md shadow-gray-400 dark:shadow-dark-900 list-none pl-0 bg-surface-light dark:bg-surface-dark"
+                :class="{
+                  'text-sm': isSmall,
+                }"
+              >
+                <ListboxOption
+                  v-slot="{ active }"
+                  v-for="theme of ['auto', 'light', 'dark']"
+                  :value="theme"
+                >
+                  <div
+                    class="flex flex-row items-center interactable-bg-surface-light dark:interactable-bg-surface-dark px-3 py-2 h-12"
+                    :class="{
+                      'font-semibold':
+                        (!settings.themeIsAuto && theme === settings.theme) ||
+                        (settings.themeIsAuto && theme === 'auto'),
+                      '!bg-on-surface-light/12 !dark:bg-on-surface-dark/12':
+                        active,
+                    }"
+                  >
+                    {{ t(`themes.${theme}`) }}
+                  </div>
+                </ListboxOption>
+              </ListboxOptions>
+            </transition>
+          </div>
+        </Listbox>
       </label>
 
       <label class="ml-1 mb-4 flex flex-row justify-between">
@@ -67,8 +118,10 @@ const setLocale = (value: string) => {
 
         <Listbox @update:model-value="setLocale">
           <div class="w-40">
-            <ListboxButton class="font-normal w-full">
-              {{ t(`locales.${locale}`) }} ({{ locale }})
+            <ListboxButton
+              class="font-normal w-full flex flex-row justify-between px-3 py-2 rounded border-outline-light dark:border-outline-dark border"
+            >
+              <span>{{ t(`locales.${locale}`) }} ({{ locale }})</span>
               <mdi-chevron-down class="pt-1" aria-hidden="true" />
             </ListboxButton>
             <transition
@@ -80,7 +133,7 @@ const setLocale = (value: string) => {
               leave-to-class="transform scale-95 opacity-0"
             >
               <ListboxOptions
-                class="absolute mt-1 w-40 overflow-auto rounded-md shadow-md shadow-gray-400 dark:shadow-dark-900 list-none pl-0"
+                class="absolute mt-1 w-40 z-10 overflow-auto rounded-md shadow-md shadow-gray-400 dark:shadow-dark-900 list-none pl-0 bg-surface-light dark:bg-surface-dark"
                 :class="{
                   'text-sm': isSmall,
                 }"
@@ -121,14 +174,18 @@ const setLocale = (value: string) => {
         "intro.persist": "persist between browsers.",
 
         "appearance": "Appearance",
-        "appearance.dark-theme": "Dark mode",
-        "appearance.dark-theme.description": "Toggle between the light and dark mode",
+        "appearance.theme": "Theme",
+        "appearance.theme.description": "Toggle between the light and dark mode",
         "appearance.locale": "Display language",
         "appearance.locale.description": "Change the language Hanas is displayed in",
         "appearance.locale.select": "Choose a language",
 
         "locales.en": "English",
-        "locales.es": "Spanish"
+        "locales.es": "Spanish",
+
+        "themes.auto": "Follow system",
+        "themes.light": "Light",
+        "themes.dark": "Dark"
     },
     "es": {
         "intro.note": "Nota:",
@@ -139,8 +196,8 @@ const setLocale = (value: string) => {
         "intro.persist": "va persistir entre navegadores.",
 
         "appearance": "Mostrar",
-        "appearance.dark-theme": "Modo oscuro",
-        "appearance.dark-theme.description": "Alternar entre el modo claro y el modo oscuro",
+        "appearance.theme": "Modo",
+        "appearance.theme.description": "Alternar entre el modo claro y el modo oscuro",
         "appearance.locale": "Idioma de visualización",
         "appearance.locale.description": "Seleccionar la idioma en que Hanas es presentado",
         "appearance.locale.select": "Seleccionar una idioma",

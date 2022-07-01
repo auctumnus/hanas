@@ -15,6 +15,8 @@ import './styles/main.css'
 import 'virtual:windi-utilities.css'
 // windicss devtools support (dev only)
 import 'virtual:windi-devtools'
+import { useSettingsStore } from './stores/settings'
+import { Ref, watch } from 'vue'
 
 const routes = setupLayouts(generatedRoutes)
 
@@ -34,4 +36,10 @@ export const createApp = ViteSSG(App, { routes }, async (ctx) => {
   } else {
     console.log('not logged in')
   }
+
+  // set theme
+  const settings = useSettingsStore()
+  /*watch(settings.theme as unknown as Ref<string>, (theme) => {
+    console.log(theme)
+  })*/
 })

@@ -5,14 +5,9 @@ import { client } from '~/hanas-api'
 
 const img: Ref<HTMLImageElement | null> = ref(null)
 const missingPfp = (name: string, color?: string) =>
-  'https://ui-avatars.com/api/' +
-  '?name=' +
-  name +
-  '?size=' +
-  get(img)?.clientWidth +
-  color
-    ? '?color=' + color
-    : ''
+  `https://ui-avatars.com/api/?name=${name}?size=${get(img)?.clientWidth}${
+    color ? `?color=${color}` : ''
+  }`
 
 const props = defineProps<{
   username?: string
@@ -27,17 +22,17 @@ const changePfp = async (newSrc?: string, oldSrc?: string) => {
   if (newSrc) {
     set(source, newSrc)
   } else {
-    if (!props.username) throw new Error('no username or src given!')
+    //if (!props.username) throw new Error('no username or src given!')
     try {
       const { profilePicture, displayName, username } = await client.users.get(
-        props.username
+        props.username || ''
       )
       if (profilePicture) {
         set(source, profilePicture)
       }
       set(source, missingPfp(displayName || username))
     } catch (e) {
-      set(source, missingPfp(props.username))
+      set(source, missingPfp(props.username || ''))
     }
   }
 }

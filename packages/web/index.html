@@ -42,10 +42,21 @@
           window.matchMedia &&
           window.matchMedia('(prefers-color-scheme: dark)').matches
         const setting = localStorage.getItem('vueuse-color-scheme') || 'auto'
-        if (setting === 'dark' || (prefersDark && setting !== 'light'))
+        if (setting === 'dark' || (prefersDark && setting !== 'light')) {
+          console.log('making dark true')
           document.documentElement.classList.toggle('dark', true)
+        }
       })()
     </script>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        body,
+        html {
+          background-color: #1a1c1e;
+          color: rgb(225, 226, 229);
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="app">

@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { isKratosError } from '@hanas-app/api-helper'
-import {
-  get,
-  set,
-  useToggle,
-  throttledWatch,
-  debouncedWatch,
-} from '@vueuse/core'
+import { get, set, useToggle, debouncedWatch } from '@vueuse/core'
 import { useI18n } from 'petite-vue-i18n'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -18,7 +12,6 @@ import {
   getIsValidUsername,
   getIsValidEmail,
 } from '~/userInfoValidity'
-import { throttle } from 'cypress/types/lodash'
 
 const { t } = useI18n()
 const username = ref('')

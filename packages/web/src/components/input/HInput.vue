@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { get, set } from '@vueuse/core'
-import { ref, Ref, computed } from 'vue'
+import { ref, Ref, computed, onMounted } from 'vue'
 
 const props = defineProps<{
   name: string
@@ -12,25 +12,36 @@ const props = defineProps<{
   minLength?: number
   hasError?: boolean
   hasIcon?: boolean
-  hasHelper?: boolean
+  multiline?: boolean
+  rows?: number
 
   modelValue: string
 }>()
 
+const emit = defineEmits<{
+  (e: 'update:modelValue', modelValue: string): any
+  (e: 'focus', ev: FocusEvent): any
+  (e: 'blur', ev: FocusEvent): any
+}>()
+
+/* Focus stuff */
 const isFocused = ref(false)
 
 const isActive = computed(() => get(isFocused) || props.modelValue)
 
-const focus = () => {
+const focus = (e: FocusEvent) => {
   set(isFocused, true)
+  emit('focus', e)
 }
 
-const blur = () => {
+const blur = (e: FocusEvent) => {
   set(isFocused, false)
+  emit('blur', e)
 }
 
-const input: Ref<HTMLInputElement | null> = ref(null)
+const _rows = props.rows || 3
 
+/* Error state and length checks */
 const clean = (s: string) => s.trim().split(/\s+/).join(' ')
 
 const cleanedLength = (min: number, max: number) => (s: string) => {
@@ -50,6 +61,38 @@ const hasValidLength = computed(() =>
 )
 
 const _error = computed(() => props.hasError || !hasValidLength)
+
+const input: Ref<HTMLInputElement | null> = ref(null)
+
+const updateRows = () => {
+  if (props.multiline) {
+    const i = get(input)!
+    i.style.height = '0'
+    const height = i.scrollHeight
+
+    const fontSize = window
+      .getComputedStyle(i)
+      .getPropertyValue('font-size')
+      .match(/\d+/)
+    if (!fontSize) return undefined
+
+    i.style.height = Math.max(height, _rows * +fontSize[0]) + 7 + 'px'
+  }
+}
+
+const onInput = () => {
+  emit('update:modelValue', clean(get(input)?.value || ''))
+  updateRows()
+}
+
+onMounted(() => {
+  updateRows()
+  if (window && window.onresize) {
+    // im tired
+    // @ts-ignore
+    window.onresize(() => updateRows())
+  }
+})
 </script>
 
 <template>
@@ -59,10 +102,11 @@ const _error = computed(() => props.hasError || !hasValidLength)
     }"
   >
     <div class="relative flex flex-1">
-      <input
+      <component
+        :is="multiline ? 'textarea' : 'input'"
         :name="name"
         :id="name"
-        class="w-full flex flex-col transition-all duration-300 px-4 h-14 rounded-t-md outline-none"
+        class="w-full flex flex-col transition duration-300 px-4 h-14 rounded-t-md outline-none"
         :class="{
           'interactable-bg-surface-variant-light dark:interactable-bg-surface-variant-dark':
             !disabled && type === 'filled',
@@ -79,7 +123,7 @@ const _error = computed(() => props.hasError || !hasValidLength)
         :value="modelValue"
         @focus="focus"
         @blur="blur"
-        @input="$emit('update:modelValue', clean($event?.target?.value))"
+        @input="onInput"
         :type="inputType || ''"
         :disabled="disabled"
         :minlength="minLength"
@@ -118,24 +162,33 @@ const _error = computed(() => props.hasError || !hasValidLength)
       </span>
     </div>
     <div
-      class="px-4 pt-1 text-sm transition-colors"
+      class="px-4 pt-1 text-sm transition-colors flex flex-row justify-between"
       :class="{
         'text-on-surface-variant-light dark:text-on-surface-variant-dark':
           !_error,
         'text-error-light dark:text-error-dark': _error,
       }"
-      v-if="hasHelper"
+      v-if="!!$slots.helper || maxLength"
     >
-      <slot name="helper" />
+      <span><slot name="helper" /></span>
+      <span class="tabular-nums" v-if="maxLength">
+        {{ contentLength }}/{{ maxLength }}
+      </span>
     </div>
   </div>
 </template>
 
 <style scoped>
-input {
+textarea {
+  font-family: inherit;
+  resize: none;
+}
+input,
+textarea {
   box-shadow: inset 0 -1px var(--tw-shadow-color);
 }
-input:focus {
+input:focus,
+textarea:focus {
   box-shadow: inset 0 -2px var(--tw-shadow-color);
 }
 .label-active {
