@@ -12,10 +12,10 @@
    
 </h1>
 
-Hanas is a conlanging tool and community, primarily inspired by the work of
-[ConWorkShop][cws]. The backend is built using [Express][express] and
-[Prisma][prisma]. It is frontend-agnostic, but the official frontend is a webapp
-built using [Vue 3][vue].
+Hanas (ʜᴀʜ-nəs, -nahs [/ˈhɑ.nəs/][ipa-eng], [/ˈhɑ.nɑs/][ipa-eng]; like Japanese [話す][hanasu]) is a conlanging tool
+and community, primarily inspired by the work of [ConWorkShop][cws].
+The backend is built using [Express][express] and [Prisma][prisma]. It is frontend-agnostic,
+but the official frontend is a webapp built using [Vue 3][vue].
 
 ## Use & Connect
 
@@ -121,6 +121,8 @@ and
 I trust anyone running a Hanas instance should have no issues following either
 part of the license.
 
+[ipa-eng]: https://en.wikipedia.org/wiki/Help:IPA/English
+[hanasu]: https://en.wiktionary.org/wiki/%E8%A9%B1%E3%81%99#Japanese
 [logo-link]: https://raw.githubusercontent.com/auctumnus/hanas/main/assets/logo-with-text.svg
 [discord-badge]: https://img.shields.io/discord/924860049048883251?style=flat-square
 [discord-link]: https://discord.gg/a9TtsC9MtF
