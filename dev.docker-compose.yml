@@ -1,0 +1,116 @@
+version: '3.7'
+
+# Dev setup, do not run in prod
+
+volumes:
+  pg-data: {}
+  minio-data: {}
+
+services:
+  # Postgres database
+  database:
+    image: postgres:14-alpine
+    restart: on-failure
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - 'pg-data:/var/lib/postgresql/data'
+      - type: bind
+        source: ./init-pg.sh
+        target: /docker-entrypoint-initdb.d/init-pg.sh
+
+  # === Kratos === #
+
+  # Sets up the database for Kratos
+  kratos-migrate:
+    image: oryd/kratos:v0.7.4-alpha.1
+    depends_on:
+      - database
+    volumes:
+      - type: bind
+        source: ./kratos-config
+        target: /etc/config/kratos
+    environment:
+      DSN: postgres://kratos:v3ry1nsecur3@database:5432/kratos
+    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
+
+  # Kratos itself, for auth
+  kratos:
+    image: oryd/kratos:v0.7.4-alpha.1
+    restart: unless-stopped
+    ports:
+      - '4444:4444'
+      - '4434:4434'
+    depends_on:
+      - database
+      - kratos-migrate
+      - mail
+    environment:
+      DSN: postgres://kratos:v3ry1nsecur3@database:5432/kratos
+      SELFSERVICE_FLOWS_REGISTRATION_BEFORE_HOOKS_0_CONFIG_URL: http://host.docker.internal:1337/hooks/kratos/before_registration
+      SELFSERVICE_FLOWS_REGISTRATION_AFTER_HOOKS_0_CONFIG_URL: http://host.docker.internal:1337/hooks/kratos/after_registration
+    volumes:
+      - type: bind
+        source: ./kratos-config
+        target: /etc/config/kratos
+    command: -c /etc/config/kratos/kratos.yml serve --dev
+
+  # I hate CORS. Proxies Kratos requests
+  kratos-proxy:
+    image: nginx
+    ports:
+      - '4433:4433'
+    depends_on:
+      - kratos
+    volumes:
+      - type: bind
+        source: ./cors-proxy.nginx.conf
+        target: /etc/nginx/nginx.conf
+
+  # Mailslurper - holds mail from Kratos.
+  mail:
+    image: oryd/mailslurper:smtps-latest
+    ports:
+      - '4436:4436'
+      - '4437:4437'
+
+  # === Hanas ===
+
+  # Migrate database to use Prisma defs
+  hanas-migrate:
+    build:
+      context: '.'
+      dockerfile: './prisma.Dockerfile'
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://hanas:runn1ngout0fsynonym5@database:5432/hanas
+
+  # Minio storage engine
+  minio:
+    image: 'minio/minio'
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      MINIO_HOST: http://localhost:9000
+      MINIO_ROOT_USER: minio-root-user
+      MINIO_ROOT_PASSWORD: insecure
+      MINIO_SCHEME: http
+    volumes:
+      - 'minio-data:/data'
+    command: server /data --console-address localhost:9001
+
+  minio-setup:
+    image: 'minio/mc'
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add minio http://minio:9000 minio-root-user insecure;
+      /usr/bin/mc mb minio/hanas;
+      /usr/bin/mc policy set download minio/hanas;
+      exit 0;
+      "
