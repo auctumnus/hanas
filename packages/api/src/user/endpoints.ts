@@ -300,9 +300,117 @@ export const userRouter = Router()
             data: { profilePicture: null },
           }),
         ])
-        res.status(200).send('')
+        res.status(200).json(emptySuccess)
       } catch (e) {
         next(err(500, e))
       }
     }
   )
+
+  .get('/:username/banner', async (req, res, next) => {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { username: req.params.username },
+      })
+
+      if (user) {
+        if (user.banner) {
+          res.redirect(user.banner)
+        } else {
+          next(err(404, 'No banner set for this user.'))
+        }
+      } else {
+        next(err(404, 'No user was found by that username.'))
+      }
+    } catch (e) {
+      next(err(500, e))
+    }
+  })
+
+  .put(
+    '/:username/banner',
+    authenticated,
+    fileUpload({
+      limits: { fileSize: 5 * 1024 * 1024 /* 5mb */ },
+    }),
+    async (req, res, next) => {
+      const { username } = getUser(req)
+
+      console.log(req.files)
+
+      if (username !== req.params.username) {
+        next(
+          err(403, "You do not have permission to edit another user's banner.")
+        )
+        return undefined
+      } else if (Array.isArray(req.files?.banner)) {
+        next(err(400, 'Only upload one file for this field.'))
+        return undefined
+      } else if (req.files?.banner.truncated) {
+        next(
+          err(
+            400,
+            `File is above the limit of ${PROFILE_PICTURE_MAX_SIZE} bytes.`
+          )
+        )
+        return undefined
+      } else if (!req.files || !req.files.banner) {
+        next(err(400, 'Must upload an image to the `banner` field.'))
+        return undefined
+      } else if (!isSupportedImageType(req.files.banner.mimetype)) {
+        next(err(400, 'Unsupported mimetype.'))
+        return undefined
+      }
+
+      try {
+        const user = await prisma.user.findUnique({ where: { username } })
+
+        const file = req.files.banner
+        const md5prefix = file.md5.slice(0, 8)
+        const fileName = `banner-${username}-${md5prefix}.${getExtension(
+          file.mimetype
+        )}`
+        const url = new URL(`hanas/${fileName}`, STORAGE_PUBLIC_URL) + ''
+
+        await Promise.all([
+          user!.banner
+            ? removeFile(getFilename(new URL(user!.banner)))
+            : undefined,
+          uploadFile(fileName, file.data),
+          prisma.user.update({
+            where: { username },
+            data: { banner: url },
+          }),
+        ])
+
+        res.status(201).json({ url })
+      } catch (e) {
+        next(err(500, e))
+      }
+    }
+  )
+
+  .delete('/:username/banner', authenticated, async (req, res, next) => {
+    const { username } = getUser(req)
+    if (username !== req.params.username) {
+      next(
+        err(403, "You do not have permission to edit another user's banner.")
+      )
+      return undefined
+    }
+    try {
+      const user = await prisma.user.findUnique({ where: { username } })
+      await Promise.all([
+        user!.banner
+          ? removeFile(getFilename(new URL(user!.banner)))
+          : undefined,
+        prisma.user.update({
+          where: { username },
+          data: { banner: null },
+        }),
+      ])
+      res.status(200).json(emptySuccess)
+    } catch (e) {
+      next(err(500, e))
+    }
+  })
