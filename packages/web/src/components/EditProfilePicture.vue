@@ -6,6 +6,19 @@ import { ref, Ref } from 'vue'
 import { client } from '~/hanas-api'
 import { useUserStore } from '~/stores/user'
 
+const emit = defineEmits<{
+  (
+    e: 'error',
+    error: Extract<
+      Awaited<
+        | ReturnType<typeof client.users.uploadProfilePicture>
+        | ReturnType<typeof client.users.deleteProfilePicture>
+      >,
+      Error
+    >
+  ): any
+}>()
+
 const { t } = useI18n()
 
 const userStore = useUserStore()
@@ -17,33 +30,39 @@ const pfpInput: Ref<HTMLInputElement | null> = ref(null)
 
 const upload = () => {
   get(pfpInput)?.click()
-
-  /*const pfp = get(profilePicture)
-  if (!pfp) return undefined
-  client.users.uploadProfilePicture(pfp, get(user)!.username)*/
 }
 
 const submitPfp = async (file: File | null) => {
   if (!file) return undefined
   set(pfpIsUploading, true)
-  const { url } = await client.users.uploadProfilePicture(
+
+  const response = await client.users.uploadProfilePicture(
     file,
     get(user)!.username
   )
-  set(pfpIsUploading, false)
-  user.value!.profilePicture = url
+  if (response instanceof Error) {
+    emit('error', response)
+  } else {
+    const { url } = response
+    set(pfpIsUploading, false)
+    user.value!.profilePicture = url
+  }
 }
 
-const remove = () => {
-  client.users.deleteProfilePicture(get(user)!.username)
-  user.value!.profilePicture = ''
+const remove = async () => {
+  const response = await client.users.deleteProfilePicture(get(user)!.username)
+  if (response instanceof Error) {
+    emit('error', response)
+  } else {
+    user.value!.profilePicture = ''
+  }
 }
 </script>
 
 <template>
   <div class="flex flex-row">
     <ProfilePicture
-      class="h-32 w-32"
+      class="!h-32 !w-32"
       :src="user?.profilePicture"
       :username="user?.username"
       :display-name="t('profile_picture')"

@@ -65,9 +65,7 @@ export const user = (client: HanasClient) => ({
    */
   async delete(username?: string) {
     const u = username || (await client.currentUser())?.username
-    if (!u) {
-      throw new Error("Can't update your information if not logged in.")
-    }
+
     await client.fetch('/users/' + u, { method: 'DELETE' })
   },
 
@@ -78,23 +76,33 @@ export const user = (client: HanasClient) => ({
    */
   async uploadProfilePicture(file: Blob, username?: string) {
     const u = username || (await client.currentUser())?.username
-    if (!u) {
-      throw new Error("Can't update your information if not logged in.")
-    }
 
     const body = new FormData()
     body.append('profilePicture', file)
 
     console.log(file.size)
 
-    return await client.fetch(`/users/${u}/profile-picture`, {
-      method: 'PUT',
-      body,
-      headers: {
-        'Content-Type': `multipart/form-data; ${file.type}`,
-        'Content-Length': file.size + '',
-      },
-    })
+    type UploadProfilePictureError =
+      | {
+          status: 403
+          message: "You do not have permission to edit another user's profile picture."
+        }
+      | { status: 400; message: 'File is above the limit of N bytes.' }
+      | { status: 400; message: 'Unsupported mimetype.' }
+
+    return await client
+      .fetch<{ url: string }, UploadProfilePictureError>(
+        `/users/${u}/profile-picture`,
+        {
+          method: 'PUT',
+          body,
+          headers: {
+            'Content-Type': `multipart/form-data; ${file.type}`,
+            'Content-Length': file.size + '',
+          },
+        }
+      )
+      .then((d) => (isOk(d) ? d.data : err<UploadProfilePictureError>(d)))
   },
   /**
    * Removes your profile picture.
@@ -103,12 +111,84 @@ export const user = (client: HanasClient) => ({
    */
   async deleteProfilePicture(username?: string) {
     const u = username || (await client.currentUser())?.username
-    if (!u) {
-      throw new Error("Can't update your information if not logged in.")
-    }
 
-    return await client.fetch(`/users/${u}/profile-picture`, {
-      method: 'DELETE',
-    })
+    return await client
+      .fetch<
+        never,
+        {
+          status: 403
+          message: "You do not have permission to edit another user's profile picture."
+        }
+      >(`/users/${u}/profile-picture`, {
+        method: 'DELETE',
+      })
+      .then((d) =>
+        isOk(d)
+          ? undefined
+          : err<{
+              status: 403
+              message: "You do not have permission to edit another user's profile picture."
+            }>(d)
+      )
+  },
+
+  /**
+   * Update your profile's banner image.
+   * @param username If you already have your current username, prevents sending
+   * another request to find it.
+   */
+  async uploadBanner(file: Blob, username?: string) {
+    const u = username || (await client.currentUser())?.username
+
+    const body = new FormData()
+    body.append('banner', file)
+
+    console.log(file.size)
+
+    type UploadBannerError =
+      | {
+          status: 403
+          message: "You do not have permission to edit another user's banner."
+        }
+      | { status: 400; message: 'File is above the limit of N bytes.' }
+      | { status: 400; message: 'Unsupported mimetype.' }
+
+    return await client
+      .fetch<{ url: string }, UploadBannerError>(`/users/${u}/banner`, {
+        method: 'PUT',
+        body,
+        headers: {
+          'Content-Type': `multipart/form-data; ${file.type}`,
+          'Content-Length': file.size + '',
+        },
+      })
+      .then((d) => (isOk(d) ? d.data : err<UploadBannerError>(d)))
+  },
+  /**
+   * Removes your profile's banner image.
+   * @param username If you already have your current username, prevents sending
+   * another request to find it.
+   */
+  async deleteBanner(username?: string) {
+    const u = username || (await client.currentUser())?.username
+
+    return await client
+      .fetch<
+        never,
+        {
+          status: 403
+          message: "You do not have permission to edit another user's banner."
+        }
+      >(`/users/${u}/banner`, {
+        method: 'DELETE',
+      })
+      .then((d) =>
+        isOk(d)
+          ? undefined
+          : err<{
+              status: 403
+              message: "You do not have permission to edit another user's banner."
+            }>(d)
+      )
   },
 })
