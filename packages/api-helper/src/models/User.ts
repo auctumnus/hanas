@@ -1,5 +1,11 @@
 import { HanasClient } from '../client'
-import { HanasError, PaginationArgs } from '../fetch-wrapper'
+import {
+  err,
+  HanasError,
+  isOk,
+  PaginatedResponseWithHelper,
+  PaginationArgs,
+} from '../fetch-wrapper'
 import { Lang, LangResponseData } from './Lang'
 
 export interface UserResponseData {
@@ -95,14 +101,14 @@ export class User {
    * @param paginationArgs Arguments to pass to the paginator.
    * @returns Paginated response of collaborated languages.
    */
-  collaboratedLangs(paginationArgs: PaginationArgs = {}) {
-    return this.#client!.paginatedFetch<LangResponseData, NoLangsByUser>(
+  collaboratedLangs(
+    paginationArgs: PaginationArgs = {}
+  ): Promise<PaginatedResponseWithHelper<Lang, never>> {
+    return this.#client!.paginatedFetch<LangResponseData, never, Lang>(
       `/users/${this.username}/collaborated-langs`,
-      paginationArgs
-    ).then((v) => ({
-      ...v,
-      data: v.data.map((d) => new Lang(this.#client!, d)),
-    }))
+      paginationArgs,
+      (d) => new Lang(this.#client!, d)
+    )
   }
 
   /**
@@ -110,17 +116,20 @@ export class User {
    * @param paginationArgs Arguments to pass to the paginator.
    * @returns Paginated response of languages owned by this user.
    */
-  ownedLangs(paginationArgs: PaginationArgs = {}) {
-    return this.#client!.paginatedFetch<LangResponseData, NoLangsByUser>(
+  ownedLangs(
+    paginationArgs: PaginationArgs = {}
+  ): Promise<PaginatedResponseWithHelper<Lang, never>> {
+    return this.#client!.paginatedFetch<LangResponseData, never, Lang>(
       `/users/${this.username}/owned-langs`,
-      paginationArgs
-    ).then((v) => ({
-      ...v,
-      data: v.data.map((d) => new Lang(this.#client!, d)),
-    }))
+      paginationArgs,
+      (d) => new Lang(this.#client!, d)
+    )
   }
 
   constructor(client: HanasClient, d: UserResponseData) {
+    if (!d) {
+      throw new Error('null user')
+    }
     this.username = d.username
     this.displayName = d.displayName
     this.description = d.description

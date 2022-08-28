@@ -9,6 +9,10 @@ import { options } from '../options'
 import { z } from 'zod'
 import { UpdateLangPermissionDto } from '../lang-permissions/dto'
 import { serialize as serializeUser } from '../user/serialize'
+import { langNotFound } from './errors'
+import { wordsRouter } from '../word'
+import { wordClassRouter } from '../word-class'
+import { emptySuccess } from '../emptySuccess'
 
 type UpdateLangDtoType = z.infer<typeof UpdateLangDto>
 type UpdateLangPermissionDtoType = z.infer<typeof UpdateLangPermissionDto>
@@ -46,6 +50,10 @@ const checkCanEdit = async (
 
 export const langRouter = Router()
   .options('/', options('OPTIONS, GET, POST'))
+
+  .use(wordsRouter)
+
+  .use(wordClassRouter)
 
   .get('/', async (req, res, next) => {
     try {
@@ -92,21 +100,21 @@ export const langRouter = Router()
       if (result) {
         res.status(200).json(serialize(result))
       } else {
-        next(err(404, 'No language was found by that code.'))
+        next(langNotFound)
       }
     } catch (e) {
       next(err(500, e))
     }
   })
 
-  .patch('/:code', async (req, res, next) => {
+  .patch('/:code', authenticated, async (req, res, next) => {
     const { username } = getUser(req)
     const code = req.params.code
     try {
       const data = UpdateLangDto.parse(req.body)
       const lang = await prisma.lang.findUnique({ where: { code } })
       if (!lang) {
-        next(err(404, 'No language was found by that code.'))
+        next(langNotFound)
         return undefined
       }
       if (!checkCanEdit(username!, code, data)) {
@@ -132,15 +140,16 @@ export const langRouter = Router()
     }
   })
 
-  .delete('/:code', async (req, res, next) => {
+  .delete('/:code', authenticated, async (req, res, next) => {
     const { username } = getUser(req)
     const code = req.params.code
     try {
+      console.log(username)
       const lang = await prisma.lang.findUnique({
         where: { code },
       })
       if (!lang) {
-        next(err(404, 'No language was found by that code.'))
+        next(langNotFound)
         return undefined
       }
 
@@ -148,11 +157,13 @@ export const langRouter = Router()
         where: { user: { username }, lang: { code } },
       })
 
+      console.log(perms)
+
       if (!perms || !perms.owner) {
         next(err(403, 'You must own the language to delete it.'))
       } else {
         prisma.lang.delete({ where: { code } })
-        res.status(204).send('')
+        res.status(200).send(emptySuccess)
       }
     } catch (e) {
       next(err(500, e))

@@ -26,7 +26,8 @@
   "scripts": {
     "size": "size-limit",
     "types": "tsc && rollup -c types.rollup.config.js",
-    "build": "rollup -c && npm run types && npm run size",
+    "build": "rollup -c && npm run types && npm run size && npm run build:polyfill",
+    "build:polyfill": "esbuild src/undici-polyfill.ts --platform=node --target=node12 --outfile=dist/undici-polyfill.js --format=cjs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-models": "ts-node generate-models.ts"
   },
@@ -34,8 +35,8 @@
     "@hanas-app/docs-generator": "workspace:*",
     "@types/node-fetch": "^2.6.1",
     "esbuild": "^0.14.10",
-    "formdata-polyfill": "^4.0.10",
     "rollup": "^2.62.0",
+    "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-dts": "^4.1.0",
     "rollup-plugin-esbuild": "^4.8.2",
     "rollup-plugin-filesize": "^9.1.1",
@@ -44,10 +45,8 @@
   },
   "dependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
-    "isomorphic-unfetch": "^3.1.0",
-    "ky": "^0.28.7",
     "merge-options": "^3.0.4",
-    "redaxios": "^0.4.1"
+    "undici": "^5.10.0"
   },
   "size-limit": [
     {

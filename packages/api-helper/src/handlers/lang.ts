@@ -1,13 +1,19 @@
 import { HanasClient } from '../client'
 import { AuthErrors, BadRequestError } from '../error-types'
+import { err, HanasError, isOk } from '../fetch-wrapper'
 import { Lang, LangResponseData } from '../models'
 
 type CreateLangDto = Omit<LangResponseData, 'created' | 'updated'>
 type UpdateLangDto = Partial<CreateLangDto>
+type LangCodeExists = {
+  status: 400
+  message: 'A lang with that code already exists.'
+}
 
-type LangCreateErrors =
-  | { status: 400; message: 'zod error' }
-  | { status: 400; message: 'A lang with that code already exists.' }
+type LangNotFound = {
+  status: 404
+  message: 'No language was found by that code.'
+}
 
 export const lang = (client: HanasClient) => ({
   /**
@@ -27,11 +33,15 @@ export const lang = (client: HanasClient) => ({
    */
   create(data: CreateLangDto) {
     return client
-      .fetch<LangResponseData, LangCreateErrors>('/langs', {
+      .fetch<LangResponseData, LangCodeExists | BadRequestError>('/langs', {
         method: 'POST',
         body: JSON.stringify(data),
       })
-      .then((d) => new Lang(client, d))
+      .then((d) =>
+        isOk(d)
+          ? new Lang(client, d.data)
+          : err<LangCodeExists | BadRequestError>(d)
+      )
   },
 
   /**
@@ -41,11 +51,8 @@ export const lang = (client: HanasClient) => ({
    */
   get(code: string) {
     return client
-      .fetch<
-        LangResponseData,
-        { status: 404; message: 'No language was found by that code.' }
-      >(`/langs/${code}`)
-      .then((d) => new Lang(client, d))
+      .fetch<LangResponseData, LangNotFound>(`/langs/${code}`)
+      .then((d) => (isOk(d) ? new Lang(client, d.data) : err<LangNotFound>(d)))
   },
 
   /**
@@ -68,14 +75,27 @@ export const lang = (client: HanasClient) => ({
         method: 'PATCH',
         body: JSON.stringify(data),
       })
-      .then((d) => new Lang(client, d))
+      .then((d) =>
+        isOk(d)
+          ? new Lang(client, d.data)
+          : err<
+              | BadRequestError
+              | AuthErrors
+              | {
+                  status: 403
+                  message: 'You do not have permission to make this edit.'
+                }
+            >(d)
+      )
   },
 
   /**
    * Delete a language.
    * @param code The code of the language to delete.
    */
-  async delete(code: string) {
-    await client.fetch(`/langs/${code}`, { method: 'DELETE' })
+  delete(code: string) {
+    return client.fetch<never, AuthErrors>(`/langs/${code}`, {
+      method: 'DELETE',
+    })
   },
 })

@@ -1,8 +1,7 @@
 /**
  * The Kratos API helper is huge and sucks. This provides common use-case
  * functionality for the Hanas API helper.
- */
-import 'isomorphic-unfetch'
+ **/
 
 interface KratosSession {
   id: string
@@ -141,11 +140,12 @@ const throwKratosError = (e: unknown) => {
     error.isKratosError = true
     throw error
   } else {
-    throw e
+    console.error(e)
+    throw new Error('error in kratos, see error above')
   }
 }
 
-const kind = typeof window === undefined ? 'api' : 'browser'
+const kind = typeof window === 'undefined' ? 'api' : 'browser'
 
 const getCSRF = (o: unknown) =>
   (o as KratosErrorResponse).ui.nodes.filter(
@@ -166,7 +166,10 @@ export const register = async (
   username: string,
   password: string
 ) => {
-  const api = await f({ endpoint, path: `/self-service/registration/${kind}` })
+  const api = await f({
+    endpoint,
+    path: `/self-service/registration/${kind}`,
+  })
   if (!api || !api.id || typeof api.id !== 'string') {
     throw new Error(
       "Couldn't register; the Kratos response object was malformed. " +
@@ -186,7 +189,7 @@ export const register = async (
         'traits.username': username,
         password,
         method: 'password',
-        csrf_token: csrf,
+        //csrf_token: csrf,
       },
     })
   } catch (e) {
@@ -211,7 +214,10 @@ export const login = async (
   username: string,
   password: string
 ) => {
-  const api = await f({ endpoint, path: `/self-service/login/${kind}` })
+  const api = await f({
+    endpoint,
+    path: `/self-service/login/${kind}`,
+  })
 
   if (!api || !api.id || typeof api.id !== 'string') {
     throw new Error(
@@ -222,6 +228,7 @@ export const login = async (
   const { id } = api
 
   const csrf = getCSRF(api)
+
   try {
     return await f<LoginResponse>({
       endpoint,
@@ -279,6 +286,9 @@ export const logout = async (endpoint: string | URL, token?: string) => {
 
     const logoutToken = new URL(logout_url).searchParams.get('token')
 
-    return f({ endpoint, path: `/self-service/logout?token=${logoutToken}` })
+    return f({
+      endpoint,
+      path: `/self-service/logout?token=${logoutToken}`,
+    }).then((r) => r.body)
   }
 }

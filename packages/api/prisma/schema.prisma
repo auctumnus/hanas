@@ -26,7 +26,7 @@ model User {
   /// The display name of this user - if you're displaying users, you should use
   /// this rather than the username if it's present.
   /// @example Alice Iwakura
-  displayName String? @unique
+  displayName String?
   /// A short description of the user.
   /// @example I love languages!
   description String?

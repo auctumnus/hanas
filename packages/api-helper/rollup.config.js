@@ -1,5 +1,6 @@
 import esbuild from 'rollup-plugin-esbuild'
 import fileSize from 'rollup-plugin-filesize'
+import analyze from 'rollup-plugin-analyzer'
 
 export default ['cjs', 'esm', 'umd'].map((format) => ({
   input: 'src/index.ts',
@@ -10,5 +11,9 @@ export default ['cjs', 'esm', 'umd'].map((format) => ({
     // don't seem to indicate that this is the case.
     format: format === 'esm' ? 'es' : format,
   },
-  plugins: [esbuild({ minify: true }), fileSize()],
+  plugins: [
+    esbuild({ minify: true }),
+    fileSize(),
+    analyze({ summaryOnly: true }),
+  ],
 }))

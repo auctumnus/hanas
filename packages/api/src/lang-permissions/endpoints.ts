@@ -9,6 +9,7 @@ import { UpdateLangPermissionDto } from './dto'
 import { LangPermission } from '@prisma/client'
 import { checkCanAssign, checkPerms } from '.'
 import { EMPTY_PERMS } from '../invite/endpoints'
+import { emptySuccess } from '../emptySuccess'
 
 export const permissionsRouter = Router()
   .options('/:code/perms', options('OPTIONS, GET'))
@@ -68,7 +69,7 @@ export const permissionsRouter = Router()
         }
         if (ourPerms && theirUsername === ourUsername) {
           await prisma.langPermission.delete({ where: { id: ourPerms.id } })
-          res.status(200).send()
+          res.status(200).json(emptySuccess)
           return
         }
 
@@ -90,6 +91,8 @@ export const permissionsRouter = Router()
         if (checkCanAssign(ourPerms, theirPerms, EMPTY_PERMS, next)) {
           await prisma.langPermission.delete({ where: { id: theirPerms.id } })
         }
+
+        res.status(200).json(emptySuccess)
       } catch (e) {
         next(err(500, e))
       }

@@ -1,11 +1,16 @@
 import { HanasClient } from '../client'
 import { AuthErrors, BadRequestError } from '../error-types'
 import { User, UserResponseData } from '../models'
-import 'formdata-polyfill'
+import { err, isOk } from '../fetch-wrapper'
 
 type UpdateUserDto = Partial<
   Omit<User, 'created' | 'updated' | 'profilePicture' | 'banner'>
 >
+
+type UserNotFound = {
+  status: 404
+  message: 'No user was found with that username.'
+}
 
 export const user = (client: HanasClient) => ({
   /**
@@ -25,11 +30,8 @@ export const user = (client: HanasClient) => ({
    */
   get(username: string) {
     return client
-      .fetch<
-        UserResponseData,
-        { status: 404; message: 'No user was found with that username.' }
-      >(`/users/${username}`)
-      .then((d) => new User(client, d))
+      .fetch<UserResponseData, UserNotFound>('/users/' + username)
+      .then((d) => (isOk(d) ? new User(client, d.data) : err<UserNotFound>(d)))
   },
 
   /**
@@ -45,11 +47,15 @@ export const user = (client: HanasClient) => ({
       throw new Error("Can't update your information if not logged in.")
     }
     return client
-      .fetch<UserResponseData, BadRequestError | AuthErrors>(`/users/${u}`, {
+      .fetch<UserResponseData, BadRequestError | AuthErrors>('/users/' + u, {
         method: 'PATCH',
         body: JSON.stringify(data),
       })
-      .then((d) => new User(client, d))
+      .then((d) =>
+        isOk(d)
+          ? new User(client, d.data)
+          : err<BadRequestError | AuthErrors>(d)
+      )
   },
 
   /**
@@ -62,7 +68,7 @@ export const user = (client: HanasClient) => ({
     if (!u) {
       throw new Error("Can't update your information if not logged in.")
     }
-    await client.fetch(`/users/${u}`, { method: 'DELETE' })
+    await client.fetch('/users/' + u, { method: 'DELETE' })
   },
 
   /**

@@ -1,7 +1,3 @@
-// Fetch polyfill. This is pretty small - in total about 600 bytes mingzipped.
-// TODO: Is it possible to opt-out of this if you only target browsers with
-// fetch?
-import 'isomorphic-unfetch'
 import { HanasClient } from './client'
 
 type FetchUrl = Parameters<typeof fetch>[0] | URL
@@ -13,7 +9,7 @@ export type WrapperBody = FetchBody & {
   params?: Record<string, string>
 }
 
-export type HanasError<
+export type HanasErrorResponse<
   ErrorInfo extends { status: number; message: string } = {
     status: number
     message: string
@@ -31,18 +27,82 @@ export type HanasError<
       }
     }
 
+export class HanasError<
+  ErrorInfo extends { status: number; message: string } = {
+    status: number
+    message: string
+  }
+> extends Error {
+  message: ErrorInfo['message']
+  status: ErrorInfo['status']
+  issues: ErrorInfo['status'] extends 400 ? { message: string }[] : never
+  constructor({ data }: HanasErrorResponse<ErrorInfo>) {
+    super(data.message)
+    this.message = data.message
+    this.status = data.status
+    this.issues = data.issues
+  }
+}
+
+export const err = <E extends { status: number; message: string }>(
+  e: HanasErrorResponse<E>
+) => new HanasError<E>(e)
+
+export type HanasSuccess<DataType = any> = {
+  data: DataType
+  error: false
+}
+
+export type HanasResponse<
+  T,
+  E extends { status: number; message: string } = {
+    status: number
+    message: string
+  }
+> = HanasErrorResponse<E> | HanasSuccess<T>
+
+/**
+ * Determines whether the response is an error or not.
+ * @param res The response to check.
+ * @returns True if the response is not an error.
+ */
+export const isOk = <
+  T,
+  E extends { status: number; message: string } = {
+    status: number
+    message: string
+  }
+>(
+  res: HanasResponse<T, E>
+): res is HanasSuccess<T> => !res.error
+
+/**
+ * Determines whether the response is an error or not.
+ * @param res The response to check.
+ * @returns True if the response is an error.
+ */
+export const isErr = <
+  T,
+  E extends { status: number; message: string } = {
+    status: number
+    message: string
+  }
+>(
+  res: HanasResponse<T, E>
+): res is HanasErrorResponse<E> => res.error
+
 /**
  * Simple fetch wrapper.
- * @typeparam ResponseType The type to cast the response to. If not given, defaults to any.
+ * @typeparam DataType The type to cast the response to. If not given, defaults to any.
  * @typeparam ErrorStatus The statuses that can be returned in errors.
  * @typeparam ErrorMessage The messages that can be returned in errors.
  * @param url The full URL to send the request to.
  * @param opts Options for the request.
- * @returns The request, parsed to an object.
- * @throws If the request doesn't have `ok` set to true, throws an error.
+ * @returns The response, parsed to an object.
+ * @throws If the response cannot be parsed as JSON, throws an error.
  */
 export const w = async <
-  ResponseType = any,
+  DataType = any,
   ErrorInfo extends { status: number; message: string } = {
     status: number
     message: string
@@ -50,7 +110,7 @@ export const w = async <
 >(
   url: FetchUrl,
   opts: WrapperBody = {}
-) => {
+): Promise<HanasResponse<DataType, ErrorInfo>> => {
   const options: FetchBody = {
     ...opts,
     headers: {
@@ -71,21 +131,26 @@ export const w = async <
     options
   )
 
+  // Handle errors.
   if (!res.ok) {
     let error
+    // Try to parse the error response as JSON. If we can't, throw an error,
+    // and try to include the response body if possible.
     try {
       error = await res.json()
     } catch (e) {
       if (e instanceof Error && e.message.includes('invalid json')) {
+        console.error(res)
         throw new Error('Response was not JSON.')
       } else {
         console.error(await res.text())
         throw res
       }
     }
-    throw error as HanasError<ErrorInfo>
+    return error as HanasErrorResponse<ErrorInfo>
   }
-  return res.json() as Promise<ResponseType>
+
+  return res.json() as Promise<HanasSuccess<DataType>>
 }
 
 /**
@@ -133,6 +198,7 @@ export interface PaginatedResponse<T> {
     next: string | null
     previous: string | null
   }
+  error: false
 }
 
 /**
@@ -145,21 +211,53 @@ export interface PaginationArgs {
   params?: Record<string, string>
 }
 
+/**
+ * A paginated response with helpers for retrieving the next and previous pages.
+ */
+export type PaginatedResponseWithHelper<
+  T,
+  E extends { status: number; message: string } = {
+    status: number
+    message: string
+  }
+> =
+  | {
+      data: T[]
+      next?: () => Promise<PaginatedResponseWithHelper<T, E>>
+      previous?: () => Promise<PaginatedResponseWithHelper<T, E>>
+      error: false
+    }
+  | HanasErrorResponse<E>
+
+/**
+ * Creates a wrapper for pagination.
+ * @param client The client to get auth and instance information from.
+ */
 export const makePaginator =
   (client: HanasClient) =>
+  /**
+   * Perform a paginated request.
+   * @param path The endpoint to send the request to.
+   * @param args The arguments for pagination.
+   * @returns A paginated response, or an error.
+   */
   async <
     DataType,
     ErrorInfo extends { status: number; message: string } = {
       status: number
       message: string
-    }
+    },
+    WrappedType = DataType
   >(
     path: string,
-    { take, cursor, params }: PaginationArgs = {}
-  ) => {
+    { take, cursor, params }: PaginationArgs = {},
+    wrap?: (data: DataType) => WrappedType
+  ): Promise<PaginatedResponseWithHelper<WrappedType, ErrorInfo>> => {
     const w = makeAuthedWrapper(client)
 
-    const firstPage = await w<PaginatedResponse<DataType>, ErrorInfo>(path, {
+    // We can throw away type information here since we need to overwrite it
+    // with the paginated response type.
+    const firstPage = await w(path, {
       params: {
         take: take ? take + '' : '10',
         cursor: cursor || '',
@@ -167,27 +265,44 @@ export const makePaginator =
       },
     })
 
-    if ('error' in firstPage) {
-      return firstPage
-    } else {
-      const { data, cursor } = firstPage as PaginatedResponse<DataType>
+    const response = firstPage as unknown as
+      | PaginatedResponse<DataType>
+      | HanasErrorResponse<ErrorInfo>
 
-      return {
-        data,
-        next: cursor.next
-          ? () =>
-              makePaginator(client)<DataType, ErrorInfo>(path, {
+    if (isErr(response)) {
+      return response
+    }
+
+    const { data, cursor: c } = response
+
+    // TODO: I would really like to remove this, but it would probably mean
+    // making the type signature way more evil.
+    wrap = wrap ? wrap : (d) => d as unknown as WrappedType
+
+    return {
+      data: data.map(wrap),
+      next: c.next
+        ? () =>
+            makePaginator(client)<DataType, ErrorInfo, WrappedType>(
+              path,
+              {
                 take,
-                cursor: cursor.next!,
-              })
-          : undefined,
-        previous: cursor.previous
-          ? () =>
-              makePaginator(client)<DataType, ErrorInfo>(path, {
+                cursor: c.next!,
+              },
+              wrap
+            )
+        : undefined,
+      previous: c.previous
+        ? () =>
+            makePaginator(client)<DataType, ErrorInfo, WrappedType>(
+              path,
+              {
                 take,
-                cursor: cursor.previous!,
-              })
-          : undefined,
-      }
+                cursor: c.previous!,
+              },
+              wrap
+            )
+        : undefined,
+      error: false,
     }
   }

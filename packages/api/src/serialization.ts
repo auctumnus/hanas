@@ -10,10 +10,21 @@ export const serializeFactory =
     if ('cursor' in d) {
       const { data, cursor } = d
       return {
-        data: data.map(clean),
+        data: data.map(clean).map((v) => {
+          if ('data' in v) {
+            // @ts-ignore
+            return v.data as K
+          } else {
+            return v
+          }
+        }),
         cursor,
+        error: false,
       }
     } else {
-      return clean(d)
+      return {
+        data: clean(d),
+        error: false,
+      }
     }
   }

@@ -1,5 +1,5 @@
 import { HanasClient } from '../client'
-import { PaginationArgs } from '../fetch-wrapper'
+import { err, isOk, PaginationArgs } from '../fetch-wrapper'
 import { User, UserResponseData } from './User'
 
 export interface LangResponseData {
@@ -47,10 +47,18 @@ export class Lang {
    * @returns Information about the owner of this language.
    */
   async owner() {
-    return new User(
-      this.#client,
-      await this.#client.fetch<UserResponseData>(`/langs/${this.code}/owner`)
+    type OwnerNotFound = {
+      status: 404
+      message: "Couldn't find the owner's permissions for this language. (Please report this!)"
+    }
+    const response = await this.#client.fetch<UserResponseData, OwnerNotFound>(
+      `/langs/${this.code}/owner`
     )
+    if (isOk(response)) {
+      return new User(this.#client, response.data)
+    } else {
+      return err<OwnerNotFound>(response)
+    }
   }
 
   /**
@@ -61,7 +69,7 @@ export class Lang {
    */
   async collaborators(paginationArgs: PaginationArgs = {}) {
     return this.#client
-      .paginatedFetch<UserResponseData>(
+      .paginatedFetch<UserResponseData, never>(
         `/langs/${this.code}/collaborators`,
         paginationArgs
       )
@@ -72,6 +80,9 @@ export class Lang {
   }
 
   constructor(client: HanasClient, d: LangResponseData) {
+    if (!d) {
+      throw new Error('null lang')
+    }
     this.code = d.code
     this.name = d.name
     this.description = d.description

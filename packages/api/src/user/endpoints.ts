@@ -16,6 +16,7 @@ import {
 } from '../storage'
 import { STORAGE_PUBLIC_URL } from '../env'
 import { nanoid } from 'nanoid'
+import { emptySuccess } from '../emptySuccess'
 
 const PROFILE_PICTURE_MAX_SIZE = 5242880
 
@@ -120,7 +121,7 @@ export const userRouter = Router()
       )
       await prisma.user.delete({ where: { username } })
       await deleteUser(kratosID!)
-      res.status(204).send('')
+      res.status(200).json(emptySuccess)
     } catch (e) {
       next(err(500, e))
     }
@@ -136,22 +137,20 @@ export const userRouter = Router()
         where: {
           user: { username },
         },
-        include: {
-          user: true,
+        select: {
           lang: true,
         },
         ...getPaginationVars(req),
       })
 
-      if (result) {
-        const { data, cursor } = paginate(req, result)
-
-        res
-          .status(200)
-          .json({ cursor, data: data.map((p) => serializeLang(p.lang)) })
-      } else {
-        next(err(404, 'No languages were found by that username.'))
-      }
+      res.status(200).json(
+        serializeLang(
+          paginate(
+            req,
+            result.map((r) => r.lang)
+          )
+        )
+      )
     } catch (e) {
       next(err(500, e))
     }
@@ -166,22 +165,20 @@ export const userRouter = Router()
           user: { username },
           owner: true,
         },
-        include: {
-          user: true,
+        select: {
           lang: true,
         },
         ...getPaginationVars(req),
       })
 
-      if (result) {
-        const { data, cursor } = paginate(req, result)
-
-        res
-          .status(200)
-          .json({ cursor, data: data.map((p) => serializeLang(p.lang)) })
-      } else {
-        next(err(404, 'No languages were found by that username.'))
-      }
+      res.status(200).json(
+        serializeLang(
+          paginate(
+            req,
+            result.map((r) => r.lang)
+          )
+        )
+      )
     } catch (e) {
       next(err(500, e))
     }

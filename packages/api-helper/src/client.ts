@@ -1,7 +1,7 @@
 import { HanasClientOptions, parseOptions } from './options'
 import { login, logout, register, whoami } from './kratos'
 import { user } from './handlers/user'
-import { makeAuthedWrapper, makePaginator } from './fetch-wrapper'
+import { isErr, makeAuthedWrapper, makePaginator } from './fetch-wrapper'
 import { User } from './models'
 import { lang } from './handlers/lang'
 
@@ -60,7 +60,7 @@ export class HanasClient {
    */
   private whoami() {
     if (!this.#authed) {
-      console.error('trying to get current user when not logged in')
+      console.log('trying to get current user when not logged in')
     }
 
     return whoami(this.options.kratosURL, this.options.token)
@@ -72,7 +72,7 @@ export class HanasClient {
    */
   public logout() {
     if (!this.#authed) {
-      console.error('trying to log out when not logged in')
+      console.log('trying to log out when not logged in')
     }
 
     delete this.options.token
@@ -105,6 +105,10 @@ export class HanasClient {
       if (!this.#authed && user) {
         this.#authed = true
       }
+      if (user instanceof Error) {
+        return null
+      }
+
       return user
     } catch (e) {
       // @ts-ignore
@@ -121,13 +125,12 @@ export class HanasClient {
    * @returns Basic information about the Hanas instance.
    */
   public ping() {
-    return this.fetch<
-      { error: false; data: { version: string; timestamp: string } },
-      never
-    >('/').then(({ error, data }) => ({
-      error,
-      data: { version: data.version, timestamp: new Date(data.timestamp) },
-    }))
+    return this.fetch<{ version: string; timestamp: string }, never>('/').then(
+      ({ error, data }) => ({
+        error,
+        data: { version: data.version, timestamp: new Date(data.timestamp) },
+      })
+    )
   }
 
   /**
