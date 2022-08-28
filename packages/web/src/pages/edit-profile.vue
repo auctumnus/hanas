@@ -14,6 +14,8 @@ import {
 
 const { t } = useI18n()
 
+const router = useRouter()
+
 const userStore = useUserStore()
 
 const { user } = storeToRefs(userStore)
@@ -141,7 +143,16 @@ onMounted(() => {
 
 const isSubmitting = ref(false)
 
+const error = ref('')
+
+const onError = (e: any) => {
+  console.error(e)
+  set(isSubmitting, false)
+  set(error, e.message as string)
+}
+
 const updateUser = async () => {
+  console.log('updateUser')
   const currentUsername = get(user)!.username
   const username = get(usernameRef)
   const displayName = get(displayNameRef)
@@ -168,13 +179,15 @@ const updateUser = async () => {
     updateInfo.gender = gender
   }
 
-  try {
-    set(isSubmitting, true)
-    const newUser = await client.users.update(updateInfo, currentUsername)
-    console.log(newUser)
+  set(error, '')
+
+  set(isSubmitting, true)
+  const newUser = await client.users.update(updateInfo, currentUsername)
+  if (newUser instanceof Error) {
+    onError(newUser)
+  } else {
+    router.back()
     userStore.replaceUser(newUser)
-  } catch (e) {
-    console.error(e)
   }
   set(isSubmitting, false)
 }
@@ -182,9 +195,10 @@ const updateUser = async () => {
 
 <template>
   <main>
-    <EditProfilePicture />
+    <EditProfileBanner @error="onError" />
+    <EditProfilePicture @error="onError" />
 
-    <form @submit.prevent="updateUser()" class="flex flex-col gap-4 mt-4">
+    <form @submit.prevent="() => {}" class="flex flex-col gap-4 mt-4">
       <div class="flex flex-row gap-4 w-full">
         <HInput
           type="filled"
@@ -264,15 +278,30 @@ const updateUser = async () => {
         </template>
       </HInput>
 
-      <HButton
-        class="transition-all w-40"
-        kind="filled"
-        :disabled="isSubmitting"
-        :content="isSubmitting ? '' : t('save')"
-        :label="isSubmitting ? 'Loading' : ''"
-      >
-        <Spinner v-if="isSubmitting" />
-      </HButton>
+      <span v-if="error">{{ error }}</span>
+      <div class="flex flex-row gap-4">
+        <HButton
+          class="transition-all w-40"
+          kind="filled tonal"
+          :disabled="isSubmitting"
+          :content="t('cancel')"
+          @click.stop="router.back()"
+        >
+          <mdi-close />
+        </HButton>
+
+        <HButton
+          class="transition-all w-40"
+          kind="filled"
+          :disabled="isSubmitting"
+          :content="isSubmitting ? '' : t('save')"
+          :label="isSubmitting ? 'Loading' : ''"
+          @click="updateUser()"
+        >
+          <Spinner v-if="isSubmitting" />
+          <mdi-check v-else />
+        </HButton>
+      </div>
     </form>
   </main>
 </template>
@@ -306,7 +335,8 @@ const updateUser = async () => {
       "pronouns_too_long": "Pronouns must be under 15 characters.",
       "pronouns_too_short": "Pronouns must be at least 2 characters.",
 
-      "save": "Save"
+      "save": "Save",
+      "cancel": "Cancel"
   },
   "es": {
 

@@ -1,86 +1,16 @@
-<script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { ref, computed } from 'vue'
-import { client } from '~/hanas-api'
-import { useUserStore } from '~/stores/user'
-import { get } from '@vueuse/core'
+<script setup lang="ts"></script>
 
-const props = defineProps<{
-  username: string
-}>()
+<template></template>
 
-const user = await client.users.get(props.username)
-
-const userStore = useUserStore()
-
-const { user: loggedInUser } = storeToRefs(userStore)
-
-const viewingOwnProfile = computed(
-  () => get(loggedInUser)?.username === user.username
-)
-</script>
-
-<template>
-  <div class="banner w-full h-[200px]"></div>
-
-  <div class="relative w-full px-4 flex flex-col gap-2">
-    <div class="flex flex-row w-full">
-      <div
-        class="absolute h-30 w-30 -top-15 left-4 rounded-full bg-surface-light dark:bg-surface-dark flex justify-center items-center pfp-container"
-      >
-        <ProfilePicture
-          :username="user.username"
-          class="u-photo h-9/10 w-9/10"
-        />
-      </div>
-      <div class="flex flex-column items-center gap-1 pt-20">
-        <span class="font-bold text-lg p-name fn" v-if="user.displayName">{{
-          user.displayName
-        }}</span>
-        <h1
-          :class="{
-            'font-bold text-lg': !user.displayName,
-            'text-on-surface-variant-light dark:text-on-surface-variant-dark':
-              user.displayName,
-          }"
-        >
-          @<span
-            class="p-nickname nickname"
-            :class="{ 'p-name fn': !user.displayName }"
-          >
-            {{ user.username }}
-          </span>
-        </h1>
-      </div>
-
-      <span class="flex-1 flex flex-row justify-end pt-4">
-        <HButton
-          kind="outline"
-          v-if="viewingOwnProfile"
-          content="Edit profile"
-          as="router-link"
-          href="/edit-profile"
-        >
-          <mdi-pencil></mdi-pencil>
-        </HButton>
-      </span>
-    </div>
-    <p class="max-w-[60ch]">
-      this is an example description Et facilis recusandae aut officiis.
-      Occaecati mollitia impedit ut doloribus. Quia non repellat ratione
-      ratione. Dolorem aliquam dolores voluptatum ut tempora magni veritatis.
-      Consequuntur perferendis quasi commodi assumenda. Commodi officiis
-      voluptas nemo officiis dolorem molestiae. Suscipit et aliquam dolorem sed.
-      Maiores numquam fuga est sapiente et sit voluptate molestiae. this is an
-      example description Et facilis recusandae aut officiis. Occaecati mollitia
-      impedit ut doloribus. Quia non repellat ratione ratione. Dolorem aliquam
-      dolores voluptatum ut tempora magni veritatis. Consequuntur perferendis
-      quasi commodi assumenda. Commodi officiis voluptas nemo officiis dolorem
-      molestiae. Suscipit et aliquam dolorem sed. Maiores numquam fuga est
-      sapiente et sit voluptate molestiae.
-    </p>
-  </div>
-</template>
+<i18n>
+{
+  "en": {
+    "missing_description": "This user likes having an air of mystery about themselves.",
+    "missing_description_on_own_profile": "You haven't set a description. Edit your profile to tell the world about yourself!",
+    "edit_profile": "Edit profile"
+  }
+}
+</i18n>
 
 <style>
 .banner {

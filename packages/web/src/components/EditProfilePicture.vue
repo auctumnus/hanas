@@ -44,9 +44,9 @@ const submitPfp = async (file: File | null) => {
     emit('error', response)
   } else {
     const { url } = response
-    set(pfpIsUploading, false)
     user.value!.profilePicture = url
   }
+  set(pfpIsUploading, false)
 }
 
 const remove = async () => {
