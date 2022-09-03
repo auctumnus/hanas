@@ -15,6 +15,7 @@ import { useI18n } from 'petite-vue-i18n'
 import { Lang, User } from '@hanas-app/api-helper'
 import { useRoute } from 'vue-router'
 import { size, isSmall, isLarge, isMedium } from '~/composables/device-size'
+import { fallbackBannerLink } from '../../fallbackImages'
 
 const { t } = useI18n()
 
@@ -70,6 +71,15 @@ const bannerHeight = computed(() => get(bannerWidth) / 3.65)
 const pfpContainer: Ref<HTMLDivElement | null> = ref(null)
 
 const pfpSize = computed(() => get(bannerWidth) * (256 / 990))
+
+const bannerLink = computed(() => {
+  const banner = get(user)?.banner
+  if (banner) {
+    return `url("${banner}")`
+  } else {
+    return `url("${fallbackBannerLink}")`
+  }
+})
 </script>
 
 <template>
@@ -79,10 +89,14 @@ const pfpSize = computed(() => get(bannerWidth) * (256 / 990))
       'ml-0': isSmall,
     }"
   >
-    <div v-if="user">
+    <div v-if="user" class="">
       <div
         class="banner w-full"
-        :style="{ height: bannerHeight + 'px' }"
+        :style="{
+          height: bannerHeight + 'px',
+          'background-image': bannerLink,
+          'background-size': user.banner ? 'cover' : '',
+        }"
         ref="banner"
       ></div>
 
@@ -207,42 +221,22 @@ const pfpSize = computed(() => get(bannerWidth) * (256 / 990))
 
         <!-- langs -->
         <div class="flex flex-1 flex-col">
-          <TabGroup>
-            <TabList class="flex flex-row gap-2 text-lg w-full">
-              <Tab v-slot="{ selected }" as="template">
-                <button
-                  class="flex-1 flex flex-row justify-center gap-2 items-center border-b-2 border-transparent px-5 py-3 interactable-bg-surface-light dark:interactable-bg-surface-dark"
-                  :class="{
-                    'border-primary-light dark:border-primary-dark': selected,
-                  }"
-                >
-                  <mdi-account-star
-                    class="relative top-[1px] min-w-5 min-h-5"
-                  />
-                  <span class="inline align-bottom">Owned languages</span>
-                </button>
-              </Tab>
-              <Tab v-slot="{ selected }" as="template">
-                <button
-                  class="flex-1 flex flex-row justify-center gap-2 items-center border-b-2 border-transparent px-5 py-3 interactable-bg-surface-light dark:interactable-bg-surface-dark"
-                  :class="{
-                    'border-primary-light dark:border-primary-dark': selected,
-                  }"
-                >
-                  <mdi-account-group
-                    class="relative top-[1px] min-w-5 min-h-5"
-                  />
-                  <span class="inline align-bottom"
-                    >Collaborated languages</span
-                  >
-                </button>
-              </Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel> hi {{ size }} </TabPanel>
-              <TabPanel> hey </TabPanel>
-            </TabPanels>
-          </TabGroup>
+          <HTabbed>
+            <template #tab-button-icon-1><mdi-account-star /></template>
+            <template #tab-button-text-1>Owned</template>
+
+            <template #tab-button-icon-2><mdi-account-group /></template>
+            <template #tab-button-text-2>Collaborated</template>
+
+            <template #tab-button-icon-3><mdi-heart /></template>
+            <template #tab-button-text-3>Liked</template>
+
+            <template #tab-content-1> hi {{ size }} 1 </template>
+
+            <template #tab-content-2> hi {{ size }} 2 </template>
+
+            <template #tab-content-3> hi {{ size }} 3 </template>
+          </HTabbed>
         </div>
       </div>
     </div>
@@ -262,8 +256,6 @@ const pfpSize = computed(() => get(bannerWidth) * (256 / 990))
 <style>
 .banner {
   background-color: #3b3f44;
-  background-image: url('https://pbs.twimg.com/profile_banners/1274705620214710273/1592749498/1500x500');
-  background-size: cover;
 }
 .pfp-container img {
   @apply h-full w-full;

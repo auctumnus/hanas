@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 import { ref, Ref } from 'vue'
 import { client } from '~/hanas-api'
 import { useUserStore } from '~/stores/user'
+import { fallbackBannerLink } from '../fallbackImages'
 
 const emit = defineEmits<{
   (
@@ -41,7 +42,7 @@ const submitBanner = async (file: File | null) => {
     emit('error', response)
   } else {
     const { url } = response
-    user.value!.profilePicture = url
+    user.value!.banner = url
   }
   set(bannerIsUploading, false)
 }
@@ -51,14 +52,22 @@ const remove = async () => {
   if (response instanceof Error) {
     emit('error', response)
   } else {
-    user.value!.profilePicture = ''
+    user.value!.banner = ''
   }
 }
 </script>
 
 <template>
   <div class="flex flex-row">
-    <img class="h-32" :src="user?.banner" />
+    <div
+      class="banner w-32 h-[35px]"
+      :style="{
+        'background-image': `url('${
+          user?.banner ? user.banner : fallbackBannerLink
+        }')`,
+      }"
+      ref="banner"
+    ></div>
     <div class="flex flex-col justify-center gap-2">
       <input
         type="file"
@@ -114,3 +123,10 @@ const remove = async () => {
   }
 }
 </i18n>
+
+<style>
+.banner {
+  background-color: #3b3f44;
+  background-size: cover;
+}
+</style>

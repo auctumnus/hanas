@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { get, set } from '@vueuse/core'
-import { ref, Ref, computed, onMounted } from 'vue'
+import { ref, Ref, computed, onMounted, onUpdated } from 'vue'
 
 const props = defineProps<{
   name: string
@@ -92,6 +92,10 @@ onMounted(() => {
     // @ts-ignore
     window.onresize(() => updateRows())
   }
+})
+
+onUpdated(() => {
+  updateRows()
 })
 </script>
 

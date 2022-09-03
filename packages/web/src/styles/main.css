@@ -109,3 +109,7 @@ body,
     transform: translateX(100%);
   }
 }
+
+textarea > fieldtext {
+  @apply bg-surface-light dark:bg-surface-dark;
+}

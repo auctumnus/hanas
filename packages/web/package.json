@@ -3,7 +3,7 @@
   "license": "NVPD",
   "scripts": {
     "build": "vite-ssg build",
-    "dev": "vite --port 3333 --open --host",
+    "dev": "vite --port 3333 --open --host 0.0.0.0",
     "lint": "eslint \"**/*.{vue,ts,js}\"",
     "preview": "vite preview",
     "preview-https": "serve dist",
@@ -15,8 +15,8 @@
   "dependencies": {
     "@hanas-app/api-helper": "^1.0.0",
     "@headlessui/vue": "^1.6.0",
-    "@vueuse/components": "^8.3.1",
-    "@vueuse/core": "^7.7.1",
+    "@vueuse/components": "^8.9.0",
+    "@vueuse/core": "8",
     "@vueuse/head": "^0.7.6",
     "nprogress": "^0.2.0",
     "petite-vue-i18n": "^9.2.0-beta.34",
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.3",
+    "@iconify-json/icons8": "^1.1.2",
     "@iconify-json/mdi": "^1.1.9",
     "@intlify/vite-plugin-vue-i18n": "^3.4.0",
     "@types/markdown-it-link-attributes": "^3.0.1",
