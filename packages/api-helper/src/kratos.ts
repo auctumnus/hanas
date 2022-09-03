@@ -189,7 +189,7 @@ export const register = async (
         'traits.username': username,
         password,
         method: 'password',
-        //csrf_token: csrf,
+        csrf_token: csrf,
       },
     })
   } catch (e) {
