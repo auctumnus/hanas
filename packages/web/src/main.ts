@@ -17,8 +17,17 @@ import 'virtual:windi-utilities.css'
 import 'virtual:windi-devtools'
 import { useSettingsStore } from './stores/settings'
 import { Ref, watch } from 'vue'
+import { RouterOptions } from 'vue-router'
 
-const routes = setupLayouts(generatedRoutes)
+const routes: RouterOptions['routes'] = [
+  ...setupLayouts(generatedRoutes),
+  {
+    path: '/:username(@.+)',
+    redirect: (to) => ({
+      path: `/users/${(to.params.username as string).substring(1)}`,
+    }),
+  },
+]
 
 // https://github.com/antfu/vite-ssg
 // @ts-ignore
