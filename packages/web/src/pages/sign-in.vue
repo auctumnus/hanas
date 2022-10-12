@@ -102,6 +102,7 @@ const login = async () => {
         @input="clearUsernameError()"
         :min-length="1"
         :has-helper="!!usernameHelper"
+        autocomplete="email"
       >
         <template #prepended>
           <mdi-account class="w-6 h-6" />
@@ -124,6 +125,7 @@ const login = async () => {
         :min-length="1"
         :helper="passwordHelper ? t(passwordHelper) : ''"
         :has-helper="!!passwordHelper"
+        autocomplete="current-password"
       >
         <template #prepended>
           <mdi-key class="w-6 h-6" />

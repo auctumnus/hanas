@@ -15,6 +15,8 @@ const props = defineProps<{
   multiline?: boolean
   rows?: number
 
+  autocomplete?: string
+
   modelValue: string
 }>()
 
@@ -133,6 +135,7 @@ onUpdated(() => {
         :minlength="minLength"
         :maxlength="maxLength"
         ref="input"
+        :autocomplete="autocomplete"
       />
       <label
         class="absolute left-0 px-4 right-auto cursor-text transition-all truncate"

@@ -86,13 +86,10 @@ debouncedWatch(
       return
     }
     set(checkingUsernameTaken, true)
-    try {
-      await client.users.get(username)
-      // if no 404, username is taken
-      set(isUsernameTaken, true)
-    } catch (e) {
-      set(isUsernameTaken, false)
-    }
+
+    const existingUser = await client.users.get(username)
+    set(isUsernameTaken, !(existingUser instanceof Error))
+
     setTimeout(() => set(checkingUsernameTaken, false), 100)
   },
   { debounce: 300 }
@@ -122,6 +119,7 @@ const signup = async () => {
     set(isSubmitting, false)
     router.back()
   } catch (e) {
+    set(isSubmitting, false)
     console.error(e)
     set(overallError, e + '')
     if (isKratosError(e)) {
@@ -156,6 +154,7 @@ const signup = async () => {
         "
         :min-length="2"
         :max-length="30"
+        autocomplete="username"
       >
         <template #prepended>
           <mdi-account class="w-6 h-6" />
@@ -188,6 +187,7 @@ const signup = async () => {
         v-model="email"
         :has-error="errors.email.showError || !isValidEmail"
         :has-helper="errors.email.showError || !isValidEmail"
+        autocomplete="email"
       >
         <template #prepended>
           <mdi-at class="w-6 h-6" />
@@ -211,6 +211,7 @@ const signup = async () => {
         v-model="password"
         has-helper
         :has-error="errors.password.showError"
+        autocomplete="new-password"
       >
         <template #prepended>
           <mdi-key class="w-6 h-6" />
