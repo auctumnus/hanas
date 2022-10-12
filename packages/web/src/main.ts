@@ -36,14 +36,17 @@ export const createApp = ViteSSG(App, { routes }, async (ctx) => {
   Object.values(import.meta.globEager('./modules/*.ts')).map((i) =>
     i.install?.(ctx)
   )
-  // try to log in the client
-  const userStore = useUserStore()
-  const user = await client.currentUser()
-  if (user) {
-    console.log('logged in!')
-    userStore.replaceUser(user)
-  } else {
-    console.log('not logged in')
+  if (ctx.isClient) {
+    // try to log in the client
+    const userStore = useUserStore()
+
+    const user = await client.currentUser()
+    if (user) {
+      console.log('logged in!')
+      userStore.replaceUser(user)
+    } else {
+      console.log('not logged in')
+    }
   }
 
   // set theme

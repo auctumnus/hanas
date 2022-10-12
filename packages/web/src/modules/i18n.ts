@@ -14,10 +14,12 @@ const messages = Object.fromEntries(
   )
 )
 
-const locale =
-  localStorage.getItem('locale') || navigator.language.split('-')[0] || 'en'
+export const install: UserModule = ({ isClient, app }) => {
+  const locale =
+    (isClient
+      ? localStorage.getItem('locale') || navigator.language.split('-')[0]
+      : false) || 'en'
 
-export const install: UserModule = ({ app }) => {
   const i18n = createI18n({
     legacy: false,
     locale,
