@@ -216,9 +216,18 @@
 You should either submit an API key with authenticated requests in the
 <code>X-Session-Token</code> header, or in a cookie set by logging in with Kratos.
 Authenticated operations are marked with a badge icon.</p>
+<p>Responses are contained in a wrapper of the form:</p>
+<pre><code>{
+  error: false,
+  data: {
+    ...
+  }
+}
+</code></pre>
 <p>Pagination in Hanas is done using a cursor with a prefix. On any paginated
 endpoint, the response will look like this:</p>
 <pre><code>{
+  error: false,
   data: [
     { ... },
     { ... },
@@ -405,8 +414,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     pronouns: <span class="string">"she/her"</span>,
     profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
     banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
-    created: <span class="string">"2021-09-27T20:27:47.803Z"</span>,
-    updated: <span class="string">"2021-09-27T20:05:27.466Z"</span>
+    created: <span class="string">"2021-09-27T22:07:22.757Z"</span>,
+    updated: <span class="string">"2021-09-27T00:23:03.327Z"</span>
 }</code></pre>
 
     </details>
@@ -494,8 +503,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     code: <span class="string">"elv"</span>,
     name: <span class="string">"Elvish"</span>,
     description: <span class="string">"A language spoken by elves in my conworld!"</span>,
-    created: <span class="string">"2021-09-27T00:36:35.800Z"</span>,
-    updated: <span class="string">"2021-09-27T13:22:24.520Z"</span>
+    created: <span class="string">"2021-09-27T06:34:23.434Z"</span>,
+    updated: <span class="string">"2021-09-27T11:52:08.318Z"</span>
 }</code></pre>
 
     </details>
@@ -614,8 +623,8 @@ information of the language, including the name and description.</p>
       
 <pre class="example"><code><span class="example-text">Example</span>
 {
-    created: <span class="string">"2021-09-27T23:53:53.449Z"</span>,
-    updated: <span class="string">"2021-09-27T19:14:31.563Z"</span>,
+    created: <span class="string">"2021-09-27T07:24:28.385Z"</span>,
+    updated: <span class="string">"2021-09-27T05:03:46.349Z"</span>,
     owner: <span class="boolean">false</span>,
     changePermissions: <span class="boolean">false</span>,
     changeId: <span class="boolean">false</span>,
@@ -752,8 +761,8 @@ information of the language, including the name and description.</p>
 <pre class="example"><code><span class="example-text">Example</span>
 {
     active: <span class="boolean">false</span>,
-    created: <span class="string">"2021-09-27T09:26:20.005Z"</span>,
-    accepted: <span class="string">"2021-09-27T01:41:11.680Z"</span>,
+    created: <span class="string">"2021-09-27T03:20:56.822Z"</span>,
+    accepted: <span class="string">"2021-09-27T14:07:04.901Z"</span>,
     owner: <span class="boolean">false</span>,
     changePermissions: <span class="boolean">false</span>,
     changeId: <span class="boolean">false</span>,
@@ -832,8 +841,8 @@ characters long.</p>
 {
     name: <span class="string">""</span>,
     abbreviation: <span class="string">""</span>,
-    created: <span class="string">"2021-09-27T06:47:37.567Z"</span>,
-    updated: <span class="string">"2021-09-27T22:41:52.229Z"</span>
+    created: <span class="string">"2021-09-27T18:34:41.014Z"</span>,
+    updated: <span class="string">"2021-09-27T23:26:31.414Z"</span>
 }</code></pre>
 
     </details>
@@ -938,8 +947,8 @@ currently manual.</p>
     definition: <span class="string">""</span>,
     ipa: <span class="string">""</span>,
     notes: <span class="string">""</span>,
-    created: <span class="string">"2021-09-27T05:51:38.977Z"</span>,
-    updated: <span class="string">"2021-09-27T16:39:11.285Z"</span>
+    created: <span class="string">"2021-09-27T12:27:29.491Z"</span>,
+    updated: <span class="string">"2021-09-27T03:34:06.931Z"</span>
 }</code></pre>
 
     </details>
@@ -1214,8 +1223,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     pronouns: <span class="string">"she/her"</span>,
     profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
     banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
-    created: <span class="string">"2021-09-27T03:54:03.615Z"</span>,
-    updated: <span class="string">"2021-09-27T07:15:48.522Z"</span>
+    created: <span class="string">"2021-09-27T05:58:21.984Z"</span>,
+    updated: <span class="string">"2021-09-27T06:33:55.525Z"</span>
 }</code></pre>
 
                   
@@ -1343,8 +1352,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     code: <span class="string">"elv"</span>,
     name: <span class="string">"Elvish"</span>,
     description: <span class="string">"A language spoken by elves in my conworld!"</span>,
-    created: <span class="string">"2021-09-27T19:59:55.952Z"</span>,
-    updated: <span class="string">"2021-09-27T23:30:02.760Z"</span>
+    created: <span class="string">"2021-09-27T17:56:52.842Z"</span>,
+    updated: <span class="string">"2021-09-27T12:31:14.021Z"</span>
 }</code></pre>
 
                   
@@ -1513,8 +1522,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     code: <span class="string">"elv"</span>,
     name: <span class="string">"Elvish"</span>,
     description: <span class="string">"A language spoken by elves in my conworld!"</span>,
-    created: <span class="string">"2021-09-27T07:11:00.261Z"</span>,
-    updated: <span class="string">"2021-09-27T22:54:29.705Z"</span>
+    created: <span class="string">"2021-09-27T03:17:59.521Z"</span>,
+    updated: <span class="string">"2021-09-27T17:13:29.765Z"</span>
 }</code></pre>
 
                   
@@ -1812,8 +1821,8 @@ information of the language, including the name and description.</p>
 <pre class="example"><code><span class="example-text">Example</span>
 {
     active: <span class="boolean">false</span>,
-    created: <span class="string">"2021-09-27T08:04:07.009Z"</span>,
-    accepted: <span class="string">"2021-09-27T13:35:17.170Z"</span>,
+    created: <span class="string">"2021-09-27T12:41:47.128Z"</span>,
+    accepted: <span class="string">"2021-09-27T06:24:44.230Z"</span>,
     owner: <span class="boolean">false</span>,
     changePermissions: <span class="boolean">false</span>,
     changeId: <span class="boolean">false</span>,
@@ -1954,8 +1963,8 @@ information of the language, including the name and description.</p>
 <pre class="example"><code><span class="example-text">Example</span>
 {
     active: <span class="boolean">false</span>,
-    created: <span class="string">"2021-09-27T12:48:39.231Z"</span>,
-    accepted: <span class="string">"2021-09-27T21:03:24.448Z"</span>,
+    created: <span class="string">"2021-09-27T09:57:42.657Z"</span>,
+    accepted: <span class="string">"2021-09-27T15:12:14.424Z"</span>,
     owner: <span class="boolean">false</span>,
     changePermissions: <span class="boolean">false</span>,
     changeId: <span class="boolean">false</span>,
@@ -2179,8 +2188,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     pronouns: <span class="string">"she/her"</span>,
     profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
     banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
-    created: <span class="string">"2021-09-27T05:30:05.798Z"</span>,
-    updated: <span class="string">"2021-09-27T12:21:12.055Z"</span>
+    created: <span class="string">"2021-09-27T16:47:20.417Z"</span>,
+    updated: <span class="string">"2021-09-27T04:43:21.285Z"</span>
 }</code></pre>
 
                   
@@ -2487,8 +2496,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     pronouns: <span class="string">"she/her"</span>,
     profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
     banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
-    created: <span class="string">"2021-09-27T00:07:12.274Z"</span>,
-    updated: <span class="string">"2021-09-27T05:47:11.888Z"</span>
+    created: <span class="string">"2021-09-27T19:07:15.511Z"</span>,
+    updated: <span class="string">"2021-09-27T12:12:22.900Z"</span>
 }</code></pre>
 
                   
@@ -2609,13 +2618,151 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
       <summary>
         <header>
           <h2><a href="#route-users-username-langs"><code>/users<wbr>/<span class="param">:username</span><wbr>/langs</code></a></h2>
-          
+          <a href="#route-users-username-langs-get" class="verb-chip GET">GET</a>
           <a onclick="copyLink(this)" class="anchor" href="#route-users-username-langs"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
   <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
 </svg></a>
         </header>
       </summary>
       
+  <section class="operation">
+    <details>
+      <summary>
+        <h3 id=route-users-username-langs-get>
+          <a href="#route-users-username-langs-get" class="verb-chip GET">GET</a>
+          
+          <code>/users<wbr>/<span class="param">:username</span><wbr>/langs</code>
+          <a onclick="copyLink(this)" class="anchor" href="#route-users-username-langs-get"><svg title="Copy link" alt="Copy link" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+</svg></a>
+        </h3>
+      </summary>
+      
+      
+      
+        <details>
+          <summary>
+            <h4>Response 200</h4>
+            
+<svg class="paginated" title="This request is paginated." alt="This request is paginated." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
+  <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
+</svg>
+
+            
+          </summary>
+          
+                  
+  <div class="property">
+    <div class="property-header">
+      <code>code</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (<code>/[a-z]/</code>, between 3 and 5 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Language code, primary identifier for languages.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>name</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (between 2 and 30 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>Name of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>description</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (up to 2500 characters)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>A short description of the language.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>created</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was created.</p>
+</p>
+    </div>
+  </div>
+  
+  <div class="property">
+    <div class="property-header">
+      <code>updated</code>
+      <span class="property-type">
+        <span class="property-type-name type-string">string</span>
+        <span class="property-type-specifics"> (datetime)</span>
+      </span>
+    </div>
+    <div class="property-description">
+      <p><p>When this language was last updated.</p>
+</p>
+    </div>
+  </div>
+  
+                  
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    code: <span class="string">"elv"</span>,
+    name: <span class="string">"Elvish"</span>,
+    description: <span class="string">"A language spoken by elves in my conworld!"</span>,
+    created: <span class="string">"2021-09-27T00:22:24.966Z"</span>,
+    updated: <span class="string">"2021-09-27T20:15:53.016Z"</span>
+}</code></pre>
+
+                  
+        </details>
+        
+
+        <details>
+          <summary>
+            <h4>Response 404</h4>
+            
+            
+<svg class="error" title="This response is an error." alt="This response is an error." xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+
+          </summary>
+          
+<pre class="example"><code><span class="example-text">Example</span>
+{
+    error: <span class="boolean">true</span>,
+    data: {
+        status: <span class="number">404</span>,
+        message: <span class="string">"No languages were found by that username."</span>
+    }
+}
+</code></pre>
+                
+        </details>
+        
+    </details>
+  </section>
+  
     </details>
   </section>
   
@@ -2730,8 +2877,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     code: <span class="string">"elv"</span>,
     name: <span class="string">"Elvish"</span>,
     description: <span class="string">"A language spoken by elves in my conworld!"</span>,
-    created: <span class="string">"2021-09-27T04:39:21.642Z"</span>,
-    updated: <span class="string">"2021-09-27T01:43:19.575Z"</span>
+    created: <span class="string">"2021-09-27T05:44:58.395Z"</span>,
+    updated: <span class="string">"2021-09-27T03:45:44.956Z"</span>
 }</code></pre>
 
                   
@@ -2859,8 +3006,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     code: <span class="string">"elv"</span>,
     name: <span class="string">"Elvish"</span>,
     description: <span class="string">"A language spoken by elves in my conworld!"</span>,
-    created: <span class="string">"2021-09-27T15:15:36.812Z"</span>,
-    updated: <span class="string">"2021-09-27T22:12:15.644Z"</span>
+    created: <span class="string">"2021-09-27T02:16:04.414Z"</span>,
+    updated: <span class="string">"2021-09-27T12:50:20.976Z"</span>
 }</code></pre>
 
           </details>
@@ -2950,8 +3097,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     code: <span class="string">"elv"</span>,
     name: <span class="string">"Elvish"</span>,
     description: <span class="string">"A language spoken by elves in my conworld!"</span>,
-    created: <span class="string">"2021-09-27T21:28:44.472Z"</span>,
-    updated: <span class="string">"2021-09-27T12:53:20.497Z"</span>
+    created: <span class="string">"2021-09-27T09:15:26.146Z"</span>,
+    updated: <span class="string">"2021-09-27T17:47:29.434Z"</span>
 }</code></pre>
 
                   
@@ -3172,8 +3319,8 @@ information of the language, including the name and description.</p>
                   
 <pre class="example"><code><span class="example-text">Example</span>
 {
-    created: <span class="string">"2021-09-27T07:54:41.405Z"</span>,
-    updated: <span class="string">"2021-09-27T21:28:06.317Z"</span>,
+    created: <span class="string">"2021-09-27T15:30:57.336Z"</span>,
+    updated: <span class="string">"2021-09-27T14:38:28.672Z"</span>,
     owner: <span class="boolean">false</span>,
     changePermissions: <span class="boolean">false</span>,
     changeId: <span class="boolean">false</span>,
@@ -3409,8 +3556,8 @@ information of the language, including the name and description.</p>
             
 <pre class="example"><code><span class="example-text">Example</span>
 {
-    created: <span class="string">"2021-09-27T09:59:29.260Z"</span>,
-    updated: <span class="string">"2021-09-27T03:22:11.343Z"</span>,
+    created: <span class="string">"2021-09-27T13:56:35.551Z"</span>,
+    updated: <span class="string">"2021-09-27T01:46:19.851Z"</span>,
     owner: <span class="boolean">false</span>,
     changePermissions: <span class="boolean">false</span>,
     changeId: <span class="boolean">false</span>,
@@ -3536,8 +3683,8 @@ information of the language, including the name and description.</p>
                   
 <pre class="example"><code><span class="example-text">Example</span>
 {
-    created: <span class="string">"2021-09-27T02:52:31.266Z"</span>,
-    updated: <span class="string">"2021-09-27T23:26:35.586Z"</span>,
+    created: <span class="string">"2021-09-27T20:00:53.935Z"</span>,
+    updated: <span class="string">"2021-09-27T12:25:15.807Z"</span>,
     owner: <span class="boolean">false</span>,
     changePermissions: <span class="boolean">false</span>,
     changeId: <span class="boolean">false</span>,
@@ -3837,8 +3984,8 @@ information of the language, including the name and description.</p>
 <pre class="example"><code><span class="example-text">Example</span>
 {
     active: <span class="boolean">false</span>,
-    created: <span class="string">"2021-09-27T05:48:32.237Z"</span>,
-    accepted: <span class="string">"2021-09-27T20:17:16.049Z"</span>,
+    created: <span class="string">"2021-09-27T22:41:08.321Z"</span>,
+    accepted: <span class="string">"2021-09-27T04:45:59.902Z"</span>,
     owner: <span class="boolean">false</span>,
     changePermissions: <span class="boolean">false</span>,
     changeId: <span class="boolean">false</span>,
@@ -4267,8 +4414,8 @@ information of the language, including the name and description.</p>
 <pre class="example"><code><span class="example-text">Example</span>
 {
     active: <span class="boolean">false</span>,
-    created: <span class="string">"2021-09-27T14:21:51.539Z"</span>,
-    accepted: <span class="string">"2021-09-27T03:22:21.805Z"</span>,
+    created: <span class="string">"2021-09-27T04:26:35.931Z"</span>,
+    accepted: <span class="string">"2021-09-27T22:31:09.285Z"</span>,
     owner: <span class="boolean">false</span>,
     changePermissions: <span class="boolean">false</span>,
     changeId: <span class="boolean">false</span>,
@@ -4568,8 +4715,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     pronouns: <span class="string">"she/her"</span>,
     profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
     banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
-    created: <span class="string">"2021-09-27T14:33:04.815Z"</span>,
-    updated: <span class="string">"2021-09-27T06:49:06.130Z"</span>
+    created: <span class="string">"2021-09-27T19:25:17.449Z"</span>,
+    updated: <span class="string">"2021-09-27T20:55:53.867Z"</span>
 }</code></pre>
 
                   
@@ -4888,8 +5035,8 @@ enough for something like &quot;she/they/it&quot; or whatever.</p>
     pronouns: <span class="string">"she/her"</span>,
     profilePicture: <span class="string">"https://cdn.hanas.app/users/pfp/alice.png"</span>,
     banner: <span class="string">"https://cdn.hanas.app/users/banner/alice.png"</span>,
-    created: <span class="string">"2021-09-27T01:03:10.044Z"</span>,
-    updated: <span class="string">"2021-09-27T13:10:45.877Z"</span>
+    created: <span class="string">"2021-09-27T02:19:20.304Z"</span>,
+    updated: <span class="string">"2021-09-27T03:54:13.215Z"</span>
 }</code></pre>
 
                   
