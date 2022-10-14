@@ -37,6 +37,9 @@ Note that contributions will also be placed under the same license as the rest o
 1. Grep through the project for `CHANGEME`. There are a few places where
    the default configuration has default passwords and such, and these need to be
    changed.
+1. Double check what `localhost` really is for you. On WSL installs, you might
+   need to grep `host.docker.internal` and change it to `localhost`, or vice
+   versa - I haven't done enough hunting to figure out what's going on with that.
 
 ### Using Docker (the easy way)
 
