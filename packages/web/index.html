@@ -49,6 +49,7 @@
       })()
     </script>
     <style>
+      body, html { margin: 0px }
       @media (prefers-color-scheme: dark) {
         body,
         html {
@@ -60,21 +61,71 @@
   </head>
   <body>
     <div id="app">
-      <span
+      <div
         style="
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
           align-items: center;
+          justify-content: center;
           text-align: center;
           font-family: system-ui;
+          font-size: larger;
           width: 100vw;
           height: 100vh;
+          line-height: 1.5;
         "
       >
-        loading...<br />
-        (if this loads forever, the page is either broken, or you have
-        javascript disabled)
-      </span>
+        <img
+          style="width: 5rem; height: 5rem; margin-bottom: 2.5rem"
+          src="/logo-no-text.svg"
+          alt="Hanas logo"
+        >
+        <div class="jsonly" style="margin-bottom: 2rem;">
+          <style>
+            @media(prefers-reduced-motion) {
+              div#loading-bar { display: none; }
+              span#loading-text { display: inline !important; }
+            }
+            @keyframes setup-loading {
+              from { transform: translate(-1rem) }
+              to { transform: translate(3rem) }
+            }
+            div#loading-bar {
+              height: 0.5rem;
+              width: 3rem;
+              border-radius: 1rem;
+              overflow: hidden;
+              background-color: #e7e0ec;
+            }
+            @media (prefers-color-scheme: dark) {
+              div#loading-bar {
+                background-color: #49454f;
+              }
+            }
+            div#loading-bar > div {
+              height: 100%;
+              width: 1rem;
+              border-radius: 1rem;
+              animation-duration: 1s;
+              animation-timing-function: ease-in-out;
+              animation-name: setup-loading;
+              animation-iteration-count: infinite;
+              background-color: #81a1c1;
+            }
+          </style>
+          <div id="loading-bar" aria-label="loading...">
+            <div>&nbsp;</div>
+          </div>
+          <span id="loading-text" style="display: none;">loading...</span>
+        </div>
+        <!--<noscript>
+          Sorry, but you need to enable Javascript to use Hanas.<br/>
+          If you want to be able to use Hanas without JS, the
+          <a href="https://github.com/auctumnus/hanas">API</a> is
+          fully-featured and works great from any environment :-)
+          <style>.jsonly { display: none }</style>
+        </noscript>-->
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
