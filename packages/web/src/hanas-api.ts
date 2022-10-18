@@ -1,7 +1,12 @@
 import { HanasClient } from '@hanas-app/api-helper'
 
-const hanasURL = import.meta.env.HANAS_URL || 'http://localhost:1337'
-const kratosURL = import.meta.env.HANAS_URL || 'http://localhost:4433'
+const on = (port: number) =>
+  window
+    ? `${window.location.protocol}//${window.location.hostname}:${port}`
+    : `http://localhost:${port}`
+
+const hanasURL = import.meta.env.HANAS_URL || on(1337)
+const kratosURL = import.meta.env.KRATOS_URL || on(4433)
 
 export const client = new HanasClient({ hanasURL, kratosURL })
 
