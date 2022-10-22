@@ -17,7 +17,7 @@
     "@headlessui/vue": "^1.6.0",
     "@vueuse/components": "^8.9.0",
     "@vueuse/core": "8",
-    "@vueuse/head": "^0.7.6",
+    "@vueuse/head": "^0.8.0",
     "nprogress": "^0.2.0",
     "petite-vue-i18n": "^9.2.0-beta.34",
     "pinia": "^2.0.13",
