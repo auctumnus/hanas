@@ -16,35 +16,28 @@ import { Lang, User } from '@hanas-app/api-helper'
 import { useRoute } from 'vue-router'
 import { size, isSmall, isLarge, isMedium } from '~/composables/device-size'
 import { fallbackBannerLink } from '../../fallbackImages'
+import { useHead } from '@vueuse/head'
 
 const { t } = useI18n()
-
-const hadError = ref(false)
-
-const user: Ref<User | null> = ref(null)
-
 const route = useRoute()
 
+/* Page state */
+const hadError = ref(false)
 const loading = ref(true)
+const resolved = ref(false)
 
+/* User info */
+const user: Ref<User | null> = ref(null)
 const userStore = useUserStore()
-
 const { user: loggedInUser } = storeToRefs(userStore)
-
 const viewingOwnProfile = computed(
   () =>
     get(loggedInUser)?.username === get(user)?.username && get(user)?.username
 )
-const resolved = ref(false)
 
+/* Language information */
 const ownedLangsList: Ref<Lang[]> = ref([])
 const collaboratedLangsList: Ref<Lang[]> = ref([])
-
-const langsContainer: Ref<HTMLDivElement | null> = ref(null)
-
-useInfiniteScroll(langsContainer, () => {
-  // load more langs
-})
 
 onMounted(async () => {
   const u = await client.users.get(route.params.username as string)
@@ -60,18 +53,16 @@ onMounted(async () => {
 
   const ownedLangs = await u.ownedLangs()
   const collaboratedLangs = await u.collaboratedLangs()
+  console.log(ownedLangs)
+  if (!(ownedLangs instanceof Error)) {
+    ownedLangsList.value.push(...ownedLangs.data)
+  }
 })
 
+/* Banner and profile picture information */
 const banner: Ref<HTMLDivElement | null> = ref(null)
-
 const { width: bannerWidth } = useElementSize(banner)
-
 const bannerHeight = computed(() => get(bannerWidth) / 3.65)
-
-const pfpContainer: Ref<HTMLDivElement | null> = ref(null)
-
-const pfpSize = computed(() => get(bannerWidth) * (256 / 990))
-
 const bannerLink = computed(() => {
   const banner = get(user)?.banner
   if (banner) {
@@ -79,6 +70,49 @@ const bannerLink = computed(() => {
   } else {
     return `url("${fallbackBannerLink}")`
   }
+})
+
+const pfpContainer: Ref<HTMLDivElement | null> = ref(null)
+const pfpSize = computed(() => get(bannerWidth) * (256 / 990))
+
+/* Meta / head */
+const pageTitle = computed(() => {
+  const u = get(user)
+  if (u) {
+    if (u.displayName) {
+      return `${u.displayName} (@${u.username}) | Hanas`
+    } else {
+      return `@${u.username} | Hanas`
+    }
+  } else {
+    return 'View profile | Hanas'
+  }
+})
+
+const meta = (userProp: keyof User, ogProp: string) =>
+  computed(() =>
+    get(user)?.[userProp]
+      ? {
+          property: ogProp,
+          content: get(user)?.[userProp],
+        }
+      : undefined
+  )
+useHead({
+  meta: [
+    {
+      property: 'og:type',
+      content: 'profile',
+    },
+    {
+      property: 'og:title',
+      content: pageTitle,
+    },
+    meta('profilePicture', 'og:image'),
+    meta('gender', 'profile:gender'),
+    meta('username', 'profile:username'),
+  ],
+  title: pageTitle,
 })
 </script>
 
@@ -101,7 +135,10 @@ const bannerLink = computed(() => {
       ></div>
 
       <div class="flex" :class="{ 'flex-row': isLarge, 'flex-col': !isLarge }">
-        <div class="relative min-w-70 px-4 flex flex-col pb-4">
+        <div
+          class="relative min-w-70 px-4 flex flex-col pb-4"
+          :class="{ 'max-w-1/3': isLarge }"
+        >
           <!-- pfp -->
           <div
             ref="pfpContainer"
@@ -144,7 +181,7 @@ const bannerLink = computed(() => {
 
           <!-- description -->
           <p
-            class="break-words"
+            class="break-words max-w-[60ch]"
             :class="{
               'text-on-surface-variant-light dark:text-on-surface-variant-dark italic':
                 viewingOwnProfile && !user.description,
@@ -159,10 +196,9 @@ const bannerLink = computed(() => {
             }}
           </p>
           <!-- edit profile button -->
-          <span class="flex flex-row pt-4">
+          <span v-if="viewingOwnProfile" class="flex flex-row pt-4">
             <HButton
               kind="outline"
-              v-if="viewingOwnProfile"
               :content="t('edit_profile')"
               as="router-link"
               href="/edit-profile"
@@ -214,7 +250,10 @@ const bannerLink = computed(() => {
                   title="Account created"
                 ></mdi-calendar>
               </dt>
-              <dd>Joined {{ user.created.toLocaleDateString() }}</dd>
+              <dd>
+                {{ t('join_date') }}
+                {{ user.created.toLocaleDateString() }}
+              </dd>
             </div>
           </dl>
         </div>
@@ -223,19 +262,31 @@ const bannerLink = computed(() => {
         <div class="flex flex-1 flex-col">
           <HTabbed>
             <template #tab-button-icon-1><mdi-account-star /></template>
-            <template #tab-button-text-1>Owned</template>
+            <template #tab-button-text-1>
+              {{ t('owned_languages') }}
+            </template>
 
             <template #tab-button-icon-2><mdi-account-group /></template>
-            <template #tab-button-text-2>Collaborated</template>
+            <template #tab-button-text-2>
+              {{ t('collaborated_languages') }}
+            </template>
 
             <template #tab-button-icon-3><mdi-heart /></template>
-            <template #tab-button-text-3>Liked</template>
+            <template #tab-button-text-3>
+              {{ t('liked_languages') }}
+            </template>
 
-            <template #tab-content-1> hi {{ size }} 1 </template>
+            <template #tab-content-1>
+              <LangDetails
+                v-for="lang of ownedLangsList"
+                :key="lang.code"
+                :lang="lang"
+              />
+            </template>
 
             <template #tab-content-2> hi {{ size }} 2 </template>
 
-            <template #tab-content-3> hi {{ size }} 3 </template>
+            <template #tab-content-3>{{ t('coming_soon') }}</template>
           </HTabbed>
         </div>
       </div>
@@ -248,7 +299,12 @@ const bannerLink = computed(() => {
   "en": {
     "missing_description": "This user likes having an air of mystery about themselves.",
     "missing_description_on_own_profile": "You haven't set a description. Edit your profile to tell the world about yourself!",
-    "edit_profile": "Edit profile"
+    "edit_profile": "Edit profile",
+    "owned_languages": "Owned",
+    "collaborated_languages": "Collaborated",
+    "liked_languages": "Liked",
+    "join_date": "Joined",
+    "coming_soon": "Coming soon!"
   }
 }
 </i18n>
