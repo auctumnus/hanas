@@ -16,10 +16,10 @@ const menuOpened = () => {
 <template>
   <Header @menu-closed="menuClosed" @menu-opened="menuOpened" />
   <router-view
-    class="view px-4 mt-16 mx-9 rounded-tl-lg flex flex-col max-w-990px"
+    class="view mt-16 rounded-tl-lg flex flex-col max-w-990px"
     :class="{
-      'items-center': isSmall,
-      'ml-20': isMedium,
+      'items-center mx-7': isSmall,
+      'ml-20 px-4 mx-9': isMedium,
       'ml-3/12': isLarge && !isHuge,
       'ml-2/12': isHuge,
     }"
