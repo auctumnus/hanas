@@ -47,7 +47,9 @@ const errorHandler: ErrorRequestHandler = (err, _, res, next) => {
 }
 
 const corsHandler = cors({
-  origin: 'http://localhost:3333',
+  origin: (origin, callback) => {
+    callback(null, true)
+  },
   credentials: true,
   preflightContinue: true,
 })
