@@ -235,7 +235,7 @@ useHead({
               </dt>
               <dd class="!inline-flex flex-row items-center">
                 <span
-                  class="border-current border rounded-full w-4 h-4 inline-block top-[2px] relative"
+                  class="border-current border rounded-full w-4 h-4 inline-block mr-1"
                   :style="{ 'background-color': `#${user.gender}` }"
                   >&nbsp;</span
                 >
