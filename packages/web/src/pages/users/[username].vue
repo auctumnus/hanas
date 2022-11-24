@@ -184,7 +184,7 @@ useHead({
             class="break-words max-w-[60ch]"
             :class="{
               'text-on-surface-variant-light dark:text-on-surface-variant-dark italic':
-                viewingOwnProfile && !user.description,
+                !user.description,
             }"
           >
             {{
