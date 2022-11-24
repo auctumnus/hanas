@@ -92,6 +92,8 @@ const isActive = computed(() => {
 /* kind of a hack but w/e */
 .menu-item-icon-slot > svg.icon {
   @apply h-6 w-6;
+  position: relative;
+  top: 1px;
 }
 .menu-item-icon-slot-notification > svg.icon {
   @apply relative top-5px;

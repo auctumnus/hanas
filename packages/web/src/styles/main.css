@@ -50,11 +50,6 @@ body,
   height: 2px;
 }
 
-.icon {
-  position: relative;
-  top: 2px;
-}
-
 .link {
   @apply text-primary-light dark:text-primary-dark;
 }
