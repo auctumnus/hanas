@@ -116,7 +116,7 @@ const colorClasses = computed(() => {
   <component
     :is="_as"
     :to="props.href"
-    class="common-button flex flex-row justify-center items-center rounded-3xl h-10 whitespace-nowrap px-6 gap-1 font-medium"
+    class="align-middle common-button flex flex-row justify-center items-center rounded-3xl h-10 whitespace-nowrap px-6 gap-1 font-medium"
     :aria-label="_label"
     :title="_label"
     :class="colorClasses"
@@ -133,7 +133,8 @@ button.common-button span {
   top: -1px;
 }
 
-button.common-button svg.icon {
+button.common-button svg.icon,
+a.common-button svg.icon {
   top: 1px;
 }
 </style>
