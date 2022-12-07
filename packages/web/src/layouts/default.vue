@@ -18,7 +18,7 @@ const menuOpened = () => {
   <router-view
     class="view mt-16 rounded-tl-lg flex flex-col max-w-990px"
     :class="{
-      'items-center mx-7': isSmall,
+      'items-center mx-4': isSmall,
       'ml-20 px-4 mx-9': isMedium,
       'ml-3/12': isLarge && !isHuge,
       'ml-2/12': isHuge,
