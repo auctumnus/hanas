@@ -202,7 +202,6 @@ useHead({
               :content="t('edit_profile')"
               as="router-link"
               href="/edit-profile"
-              disabled
             >
               <mdi-pencil></mdi-pencil>
             </HButton>
