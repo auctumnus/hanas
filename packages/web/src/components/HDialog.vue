@@ -81,16 +81,16 @@ const emit = defineEmits<{
 }
 
 .icon-container {
-  @apply text-secondary-light dark:text-secondary-dark flex flex-row justify-center;
+  @apply text-secondary flex flex-row justify-center;
 }
 .panel {
-  @apply min-w-280px max-w-560px bg-surface-light dark:bg-surface-dark z-50 rounded-3xl p-7 shadow-lg;
+  @apply min-w-280px max-w-560px bg-surface z-50 rounded-3xl p-7 shadow-lg;
 }
 .dialog-container {
   @apply fixed top-0 left-0 flex justify-center items-center w-screen h-screen;
 }
 .interactive-container {
-  @apply border-b border-t border-outline-light dark:border-outline-dark py-4 mb-6 text-on-surface-variant;
+  @apply border-b border-t border-outline py-4 mb-6 text-on-surface-variant;
 }
 .description-container {
   @apply pb-6 text-on-surface-variant;

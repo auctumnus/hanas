@@ -3,6 +3,8 @@ import { useI18n } from 'petite-vue-i18n'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '~/stores/user'
+import HButton from '~/components/input/HButton.vue'
+import HMenuButton from './menu/HMenuButton.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -21,13 +23,13 @@ defineEmits<{
 
 <template>
   <header
-    class="fixed z-5 top-0 left-0 flex row justify-between items-center px-4 py-2 h-16 w-full bg-surface-light dark:bg-surface-dark"
+    class="fixed z-5 top-0 left-0 flex row justify-between items-center px-4 py-2 h-16 w-full bg-surface"
   >
     <HMenuButton
       @menu-closed="$emit('menu-closed')"
       @menu-opened="$emit('menu-opened')"
     />
-    <h1 class="text-xl text-on-surface-light dark:text-on-surface-dark">
+    <h1 class="text-xl text-on-surface">
       {{ route.meta.title ? t(route.meta.title as string) : 'Hanas' }}
     </h1>
     <HButton

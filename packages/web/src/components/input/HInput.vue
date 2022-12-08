@@ -114,11 +114,10 @@ onUpdated(() => {
         :id="name"
         class="w-full flex flex-col transition duration-300 px-4 h-14 rounded-t-md outline-none"
         :class="{
-          'interactable-bg-surface-variant-light dark:interactable-bg-surface-variant-dark':
-            !disabled && type === 'filled',
-          'shadow-outline-light dark:shadow-outline-dark focus:shadow-primary-light dark:focus:shadow-primary-dark':
+          'interactable-bg-surface-variant': !disabled && type === 'filled',
+          'shadow-outline focus:shadow-primary-light dark:focus:shadow-primary-dark':
             !_error,
-          'shadow-error-light dark:shadow-error-dark': _error,
+          'shadow-error': _error,
           [`bg-on-surface-light/12 dark:bg-on-surface-dark/12
             pointer-events-none`]: disabled,
           'py-4': !isActive,
@@ -140,8 +139,8 @@ onUpdated(() => {
       <label
         class="absolute left-0 px-4 right-auto cursor-text transition-all truncate"
         :class="{
-          'text-primary-light dark:text-primary-dark': isFocused && !_error,
-          'text-error-light dark:text-error-dark': _error,
+          'text-primary': isFocused && !_error,
+          'text-error': _error,
           'label-active': isActive,
           'py-4': !isActive,
           'pl-14': !!$slots.prepended,
@@ -153,7 +152,7 @@ onUpdated(() => {
       </label>
       <span
         class="absolute left-4 h-14 flex flex-col justify-center cursor-text transition-colors"
-        :class="{ 'text-error-light dark:text-error-dark': _error }"
+        :class="{ 'text-error': _error }"
         v-if="!!$slots.prepended"
         @click="input!.focus()"
       >
@@ -161,7 +160,7 @@ onUpdated(() => {
       </span>
       <span
         class="absolute right-4 h-14 flex flex-col justify-center cursor-text transition-colors"
-        :class="{ 'text-error-light dark:text-error-dark': _error }"
+        :class="{ 'text-error': _error }"
         v-if="!!$slots.appended"
         @click="input!.focus()"
       >
@@ -172,7 +171,7 @@ onUpdated(() => {
       class="px-4 pt-1 text-sm transition-colors flex flex-row justify-between"
       :class="{
         'text-on-surface-variant': !_error,
-        'text-error-light dark:text-error-dark': _error,
+        'text-error': _error,
       }"
       v-if="!!$slots.helper || maxLength"
     >

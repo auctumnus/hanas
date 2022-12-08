@@ -23,8 +23,8 @@ html,
 body,
 #app {
   @apply min-h-full m-0 p-0 
-    bg-surface-light dark:bg-surface-dark 
-    text-on-background-light dark:text-on-background-dark
+    bg-surface 
+    text-on-background
     scrollbar 
     scrollbar-track-surface-light dark:scrollbar-track-surface-dark
     scrollbar-thumb-surface-variant-light dark:scrollbar-thumb-surface-variant-dark;
@@ -39,7 +39,7 @@ body,
 }
 
 #nprogress .bar {
-  @apply bg-primary-light dark:bg-primary-dark opacity-75;
+  @apply bg-primary opacity-75;
 
   position: fixed;
   z-index: 1031;
@@ -51,7 +51,7 @@ body,
 }
 
 .link {
-  @apply text-primary-light dark:text-primary-dark;
+  @apply text-primary;
 }
 
 .link:hover {
@@ -59,7 +59,7 @@ body,
 }
 
 .link:visited {
-  @apply text-secondary-light dark:text-secondary-dark;
+  @apply text-secondary;
 }
 
 .dark .skeleton {
@@ -106,5 +106,5 @@ body,
 }
 
 textarea > fieldtext {
-  @apply bg-surface-light dark:bg-surface-dark;
+  @apply bg-surface;
 }

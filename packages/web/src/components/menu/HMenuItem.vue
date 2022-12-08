@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from '@vue/reactivity'
+import { set } from '@vueuse/core'
+import { computed, watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -29,9 +30,12 @@ const props = defineProps({
   },
 })
 
-const isActive = computed(() => {
-  return props.destination === route.path
-})
+const isActive = ref(props.destination === route.path)
+
+watch(
+  () => route.path,
+  (p) => set(isActive, props.destination === p)
+)
 </script>
 
 <template>
@@ -44,16 +48,9 @@ const isActive = computed(() => {
       'flex-col justify-center pr-4': isRail,
       'w-14': isRail && !railIncludeName,
       'flex-row pr-6': !isRail,
-
-      [`
-                text-on-surface-variant
-                interactable-bg-surface-light dark:interactable-bg-surface-dark
-            `]: !isActive,
-      [`
-                interactable-bg-secondary-container-light dark:interactable-bg-secondary-container-dark
-                text-on-secondary-container-light dark:text-on-secondary-container-dark
-                
-            `]: isActive,
+      'text-on-surface-variant interactable-bg-surface': !isActive,
+      'interactable-bg-secondary-container text-on-secondary-container':
+        isActive,
     }"
   >
     <span
@@ -63,7 +60,7 @@ const isActive = computed(() => {
       <slot></slot>
       <div
         v-if="notificationIcon"
-        class="relative bg-error-light dark:bg-error-dark w-6px h-6px -top-24px left-22px rounded-full"
+        class="relative bg-error w-6px h-6px -top-24px left-22px rounded-full"
       >
         &nbsp;
       </div>
@@ -89,7 +86,6 @@ const isActive = computed(() => {
 </template>
 
 <style>
-/* kind of a hack but w/e */
 .menu-item-icon-slot > svg.icon {
   @apply h-6 w-6;
   position: relative;

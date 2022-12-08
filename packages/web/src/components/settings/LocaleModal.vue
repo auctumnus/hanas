@@ -2,8 +2,15 @@
 import { get, set } from '@vueuse/core'
 import { useI18n } from 'petite-vue-i18n'
 import { ref } from 'vue'
+import HDialog from '../HDialog.vue'
+import HButton from '../input/HButton.vue'
 
-const props = defineProps<{
+const nativeNames = {
+  en: 'English',
+  es: 'Español',
+}
+
+defineProps<{
   open: boolean
 }>()
 
@@ -25,6 +32,16 @@ const confirm_ = () => {
   setLocale(get(selectedLocale))
   emit('dismissed')
 }
+
+const formatLocale = (l: string) => {
+  const translated = t(`locales.${l}`)
+  const nativeName = nativeNames?.[l]
+  if (!nativeName || nativeName === translated) {
+    return translated
+  } else {
+    return `${translated} (${nativeName})`
+  }
+}
 </script>
 
 <template>
@@ -34,11 +51,16 @@ const confirm_ = () => {
       {{ t('appearance.locale') }}
     </template>
     <template #description>
-      {{ t('appearance.locale.description') }}
+      {{ t('appearance.locale.select') }}
     </template>
     <template #interactive>
-      <div class="flex flex-col gap-1 max-h-300px overflow-auto">
-        <label v-for="l in availableLocales" class="flex flex-row gap-2">
+      <div
+        class="flex flex-col gap-4 max-h-300px overflow-auto text-lg leading-tight"
+      >
+        <label
+          v-for="l in availableLocales"
+          class="flex flex-row items-center gap-4 px-4"
+        >
           <input
             type="radio"
             name="locale"
@@ -47,7 +69,7 @@ const confirm_ = () => {
             :checked="locale === l"
             v-model="selectedLocale"
           />
-          <span>{{ t('locales.' + l) }}</span>
+          <span>{{ formatLocale(l) }}</span>
         </label>
       </div>
     </template>
@@ -62,7 +84,6 @@ const confirm_ = () => {
 {
   "en": {
     "appearance.locale": "Display language",
-    "appearance.locale.description": "Change the language Hanas is displayed in",
     "appearance.locale.select": "Choose a language",
 
     "locales.en": "English",
@@ -70,8 +91,7 @@ const confirm_ = () => {
   },
   "es": {
     "appearance.locale": "Idioma de visualización",
-    "appearance.locale.description": "Seleccionar la idioma en que Hanas es presentado",
-    "appearance.locale.select": "Seleccionar una idioma",
+    "appearance.locale.select": "Selecciona una idioma",
 
     "locales.en": "Inglés",
     "locales.es": "Español"

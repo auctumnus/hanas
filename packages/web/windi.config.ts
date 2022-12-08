@@ -143,6 +143,32 @@ const makeInteractableContainers = (variant: string) =>
     ].flat()
   )
 
+const makeInteractableColors = (variant: string) =>
+  Object.fromEntries(
+    ['primary', 'secondary', 'tertiary', 'error']
+      .map((containerType) =>
+        (
+          [
+            ['hover', hover],
+            ['focus', focus],
+            ['press', press],
+          ] as const
+        ).map(([stateName, stateFn]) => [
+          `${containerType}-${stateName}-${variant}`,
+          stateFn(`${containerType}-${variant}`),
+        ])
+      )
+      .flat()
+  )
+
+// Make a light/dark variant shortcut
+const sc = (className: string) => ({
+  [className]: `${className}-light dark:${className}-dark`,
+})
+
+const shortcuts = (classNames: string[]) =>
+  classNames.reduce((acc, val) => ({ ...acc, ...sc(val) }), {})
+
 export default defineConfig({
   darkMode: 'class',
   // https://windicss.org/posts/v30.html#attributify-mode
@@ -158,10 +184,47 @@ export default defineConfig({
       })
     ),
   ],
+  shortcuts: {
+    ...shortcuts([
+      'border-outline',
+      'border-primary-container',
+      'border-on-surface',
+      'border-on-surface-variant',
+
+      'text-primary',
+      'text-secondary',
+      'text-error',
+      'text-on-primary',
+      'text-on-secondary',
+      'text-on-secondary-container',
+      'text-on-surface',
+      'text-on-surface-variant',
+      'text-on-background',
+
+      'bg-surface',
+      'bg-surface-variant',
+      'bg-primary',
+      'bg-primary-container',
+      'bg-outline',
+      'bg-error',
+      'bg-on-primary',
+      'bg-on-surface-variant',
+
+      'interactable-bg-surface',
+      'interactable-bg-primary',
+      'interactable-bg-secondary-container',
+      'text-on-secondary-container',
+
+      'shadow-outline',
+      'shadow-error',
+    ]),
+  },
   theme: {
     extend: {
       colors: {
         ...mdColors,
+        ...makeInteractableColors('light'),
+        ...makeInteractableColors('dark'),
       },
       typography: {
         DEFAULT: {

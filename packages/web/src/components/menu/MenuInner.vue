@@ -24,7 +24,7 @@ const isRail = computed(
   <nav
     id="menu"
     role="menu"
-    class="flex flex-col fixed left-0 z-10 rounded-r-lg bg-surface-light dark:bg-surface-dark overflow-y-auto top-0 h-full"
+    class="flex flex-col fixed left-0 z-10 rounded-r-lg bg-surface overflow-y-auto top-0 h-full"
     :class="{
       'w-0 pt-16': !railable && !isMenuOpen,
       'rail-menu w-20 pt-16': railable && !isMenuOpen,

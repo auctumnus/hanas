@@ -35,7 +35,7 @@ const logout = () => {
       leave-to-class="transform scale-95 opacity-0"
     >
       <MenuItems
-        class="z-15 rounded-bl-lg absolute right-0 top-0 origin-top-right w-56 shadow-lg bg-surface-light dark:bg-surface-dark"
+        class="z-15 rounded-bl-lg absolute right-0 top-0 origin-top-right w-56 shadow-lg bg-surface"
       >
         <h1
           class="h-16 flex flex-row items-center justify-end select-none px-4 py-2"
@@ -53,7 +53,7 @@ const logout = () => {
         <MenuItem v-slot="{ active }">
           <router-link
             :to="`/users/${user!.username}`"
-            class="interactable-bg-surface-light dark:interactable-bg-surface-dark flex flex-row items-center px-3 py-3 gap-3 h-12"
+            class="interactable-bg-surface flex flex-row items-center px-3 py-3 gap-3 h-12"
             :class="{
               '!bg-on-surface-light/12 !dark:bg-on-surface-dark/12': active,
             }"
@@ -64,7 +64,7 @@ const logout = () => {
         <MenuItem v-slot="{ active }">
           <button
             @click="logout()"
-            class="interactable-bg-surface-light dark:interactable-bg-surface-dark flex flex-row items-center px-3 py-3 gap-3 h-12 w-full font-normal rounded-bl-lg"
+            class="interactable-bg-surface flex flex-row items-center px-3 py-3 gap-3 h-12 w-full font-normal rounded-bl-lg"
             :class="{
               '!bg-on-surface-light/12 !dark:bg-on-surface-dark/12': active,
             }"

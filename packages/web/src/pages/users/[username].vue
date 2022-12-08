@@ -17,6 +17,8 @@ import { useRoute } from 'vue-router'
 import { size, isSmall, isLarge, isMedium } from '~/composables/device-size'
 import { fallbackBannerLink } from '../../fallbackImages'
 import { useHead } from '@vueuse/head'
+import HButton from '~/components/input/HButton.vue'
+import HTabbed from '~/components/HTabbed.vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -142,7 +144,7 @@ useHead({
           <!-- pfp -->
           <div
             ref="pfpContainer"
-            class="absolute -top-28 rounded-full bg-surface-light dark:bg-surface-dark flex justify-center items-center pfp-container"
+            class="absolute -top-28 rounded-full bg-surface flex justify-center items-center pfp-container"
             :style="{
               height: pfpSize + 'px',
               width: pfpSize + 'px',
@@ -200,6 +202,7 @@ useHead({
               :content="t('edit_profile')"
               as="router-link"
               href="/edit-profile"
+              disabled
             >
               <mdi-pencil></mdi-pencil>
             </HButton>

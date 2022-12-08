@@ -22,7 +22,10 @@ const _as = refDefault(ref(props.as), 'button')
 
 const slots = useSlots()
 
-const iconPadding = computed(() => (!!slots.default ? 'pl-4' : ''))
+const iconPadding = !!slots.default ? 'pl-4' : ''
+
+const opacityStates =
+  '!hover:bg-opacity-8 !focus:bg-opacity-12 !active:bg-opacity-12'
 
 const colorClasses = computed(() => {
   if (
@@ -31,82 +34,29 @@ const colorClasses = computed(() => {
       props.kind === 'filled tonal' ||
       props.kind === 'elevated')
   ) {
-    return (
-      `
-            bg-on-surface-light/12 dark:bg-on-surface-dark/12
+    return `bg-on-surface-light/12 dark:bg-on-surface-dark/12
             text-on-surface-light/38 dark:text-on-surface-dark/38
-            pointer-events-none
-        ` + get(iconPadding)
-    )
+            pointer-events-none`
   } else if (props.kind === 'elevated') {
-    return (
-      `
-            interactable-bg-surface-light dark:interactable-bg-surface-dark
-
-            text-primary-light dark:text-primary-dark
-
-            shadow-sm shadow-gray-400 dark:shadow-dark-900
-        ` + get(iconPadding)
-    )
+    return 'interactable-bg-surface text-primary shadow-sm shadow-gray-400 dark:shadow-dark-900'
   } else if (props.kind === 'filled') {
-    return (
-      `
-            interactable-bg-primary-light dark:interactable-bg-primary-dark
-            text-on-primary-light dark:text-on-primary-dark
-        ` + get(iconPadding)
-    )
+    return 'interactable-bg-primary text-on-primary'
   } else if (props.kind === 'filled tonal') {
-    return (
-      `
-            interactable-bg-secondary-container-light dark:interactable-bg-secondary-container-dark
-            text-on-secondary-container-light dark:text-on-secondary-container-dark
-        ` + get(iconPadding)
-    )
+    return 'interactable-bg-secondary-container text-on-secondary-container'
   } else if (props.kind === 'outline') {
     if (props.disabled) {
-      return (
-        `
-                border border-on-surface-light/12 dark:border-on-surface-dark/12
-                text-on-surface-light/38 dark:text-on-surface-dark/38
+      return `border border-on-surface-light/12 dark:border-on-surface-dark/12
+              text-on-surface-light/38 dark:text-on-surface-dark/38
 
-                pointer-events-none
-            ` + get(iconPadding)
-      )
+              pointer-events-none`
     } else {
-      return (
-        `
-            border border-outline-light dark:border-outline-dark
-            text-primary-light dark:text-primary-dark
-
-            bg-primary-light dark:bg-primary-dark !bg-opacity-0
-            
-            !hover:bg-opacity-8
-            !focus:bg-opacity-12
-            !active:bg-opacity-12
-        ` + get(iconPadding)
-      )
+      return `border border-outline !bg-opacity-0 text-primary bg-primary ${opacityStates}`
     }
   } else if (props.kind === 'text') {
     if (props.disabled) {
-      return (
-        `
-                text-on-surface-light/38 dark:text-on-surface-dark/38
-
-                pointer-events-none
-            ` + get(iconPadding)
-      )
+      return 'text-on-surface-light/38 dark:text-on-surface-dark/38 pointer-events-none'
     } else {
-      return (
-        `
-            text-primary-light dark:primary-dark
-
-            bg-primary-light dark:bg-primary-dark !bg-opacity-0
-            
-            !hover:bg-opacity-8
-            !focus:bg-opacity-12
-            !active:bg-opacity-12
-        ` + get(iconPadding)
-      )
+      return `text-primary bg-primary !bg-opacity-0 ${opacityStates}`
     }
   }
 })
@@ -116,10 +66,10 @@ const colorClasses = computed(() => {
   <component
     :is="_as"
     :to="props.href"
-    class="align-middle common-button flex flex-row justify-center items-center rounded-3xl h-10 whitespace-nowrap px-6 gap-1 font-medium"
+    class="common-button"
     :aria-label="_label"
     :title="_label"
-    :class="colorClasses"
+    :class="[colorClasses, iconPadding]"
     :disabled="disabled"
   >
     <slot />
@@ -127,12 +77,13 @@ const colorClasses = computed(() => {
   </component>
 </template>
 
-<style>
-button.common-button span {
-  position: relative;
-  top: -1px;
+<style scoped>
+.common-button {
+  @apply align-middle flex flex-row justify-center items-center rounded-3xl h-10 whitespace-nowrap px-6 gap-1 font-medium;
 }
+</style>
 
+<style>
 button.common-button svg.icon,
 a.common-button svg.icon {
   top: 1px;

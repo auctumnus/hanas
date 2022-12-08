@@ -36,13 +36,13 @@ const n = Object.keys(useSlots())
   @apply flex flex-row w-full justify-center py-4;
 }
 .tab-button {
-  @apply flex flex-row justify-center gap-2 items-center h-10 px-4 border-outline-light dark:border-outline-dark border-y;
+  @apply flex flex-row justify-center gap-2 items-center h-10 px-4 border-outline border-y;
 }
 .tab-button-unselected {
-  @apply interactable-bg-surface-light dark:interactable-bg-surface-dark text-on-surface-light dark:text-on-surface-dark;
+  @apply interactable-bg-surface text-on-surface;
 }
 .tab-button-selected {
-  @apply interactable-bg-secondary-container-light dark:interactable-bg-secondary-container-dark text-on-secondary-container-light dark:text-on-secondary-container-dark;
+  @apply interactable-bg-secondary-container text-on-secondary-container;
 }
 .tab-button:first-child {
   @apply border rounded-l-full;
