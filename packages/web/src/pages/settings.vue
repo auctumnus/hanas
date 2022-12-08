@@ -1,17 +1,6 @@
 <script setup lang="ts">
-import { get, set } from '@vueuse/core'
 import { useI18n } from 'petite-vue-i18n'
-import { isSmall, isHuge } from '~/composables/device-size'
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  DialogDescription,
-} from '@headlessui/vue'
+import { isHuge } from '~/composables/device-size'
 import { useSettingsStore } from '~/stores/settings'
 import { ref } from 'vue'
 
@@ -118,7 +107,7 @@ const localeModalOpen = ref(false)
 }
 
 .setting-description-text {
-  @apply text-sm text-on-surface-variant-light dark:text-on-surface-variant-dark;
+  @apply text-sm text-on-surface-variant;
 }
 </style>
 
@@ -156,7 +145,11 @@ const localeModalOpen = ref(false)
         "appearance.theme.description": "Alternar entre el modo claro y el modo oscuro",
 
         "appearance.locale": "Idioma de visualización",
-        "appearance.locale.description": "Seleccionar la idioma en que Hanas es presentado"
+        "appearance.locale.description": "Seleccionar la idioma en que Hanas es presentado",
+    
+        "themes.auto": "Seguir la sistema",
+        "themes.light": "Claro",
+        "themes.dark": "Oscuro"
     }
 }
 </i18n>

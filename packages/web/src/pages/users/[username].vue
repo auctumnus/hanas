@@ -166,8 +166,7 @@ useHead({
             <span
               :class="{
                 'font-bold text-xl': !user.displayName,
-                'text-on-surface-variant-light dark:text-on-surface-variant-dark font-light text-lg':
-                  user.displayName,
+                'text-on-surface-variant font-light text-lg': user.displayName,
               }"
             >
               @<span
@@ -183,8 +182,7 @@ useHead({
           <p
             class="break-words max-w-[60ch]"
             :class="{
-              'text-on-surface-variant-light dark:text-on-surface-variant-dark italic':
-                !user.description,
+              'text-on-surface-variant italic': !user.description,
             }"
           >
             {{
@@ -208,7 +206,7 @@ useHead({
           </span>
 
           <dl
-            class="pt-4 user-description text-on-surface-variant-light dark:text-on-surface-variant-dark flex"
+            class="pt-4 user-description text-on-surface-variant flex"
             :class="{
               'flex-row gap-4': size === 'medium',
               'flex-col': size !== 'medium',

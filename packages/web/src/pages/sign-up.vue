@@ -242,7 +242,7 @@ const signup = async () => {
       <HButton class="w-40" kind="filled" :content="t('signup')" />
 
       <hr
-        class="text-on-surface-variant-light dark:text-on-surface-variant-dark transition-all border mb-4 mt-6"
+        class="text-on-surface-variant transition-all border mb-4 mt-6"
         :class="{ 'w-1/3': isHuge, 'w-1/2': !isHuge }"
       />
 

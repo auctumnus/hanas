@@ -46,7 +46,7 @@ const isActive = computed(() => {
       'flex-row pr-6': !isRail,
 
       [`
-                text-on-surface-variant-light dark:text-on-surface-variant-dark
+                text-on-surface-variant
                 interactable-bg-surface-light dark:interactable-bg-surface-dark
             `]: !isActive,
       [`

@@ -171,8 +171,7 @@ onUpdated(() => {
     <div
       class="px-4 pt-1 text-sm transition-colors flex flex-row justify-between"
       :class="{
-        'text-on-surface-variant-light dark:text-on-surface-variant-dark':
-          !_error,
+        'text-on-surface-variant': !_error,
         'text-error-light dark:text-error-dark': _error,
       }"
       v-if="!!$slots.helper || maxLength"
