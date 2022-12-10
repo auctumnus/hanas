@@ -2,6 +2,7 @@
 import { useHead } from '@vueuse/head'
 import { useI18n } from 'petite-vue-i18n'
 import { useRoute } from 'vue-router'
+import Snackbar from './Snackbar.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -20,4 +21,5 @@ useHead({
 
 <template>
   <router-view />
+  <Snackbar />
 </template>
