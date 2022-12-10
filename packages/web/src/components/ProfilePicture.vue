@@ -13,6 +13,7 @@ const props = defineProps<{
   username?: string
   displayName?: string
   src?: string
+  disableLink?: boolean
 }>()
 
 const source = ref('')
@@ -22,17 +23,16 @@ const changePfp = async (newSrc?: string, oldSrc?: string) => {
   if (newSrc) {
     set(source, newSrc)
   } else {
-    //if (!props.username) throw new Error('no username or src given!')
-    try {
-      const { profilePicture, displayName, username } = await client.users.get(
-        props.username || ''
-      )
+    const user = await client.users.get(props.username || '')
+    if (user instanceof Error) {
+      set(source, missingPfp(props.username || ''))
+    } else {
+      const { profilePicture, displayName, username } = user
       if (profilePicture) {
         set(source, profilePicture)
+      } else {
+        set(source, missingPfp(displayName || username))
       }
-      set(source, missingPfp(displayName || username))
-    } catch (e) {
-      set(source, missingPfp(props.username || ''))
     }
   }
 }
@@ -43,11 +43,13 @@ onMounted(() => changePfp(props.src, ''))
 </script>
 
 <template>
-  <div
-    class="flex justify-center items-center h-12 w-12"
+  <component
+    :is="disableLink ? 'div' : 'router-link'"
+    class="block flex justify-center items-center h-12 w-12"
     :aria-label="displayName || username"
     :title="displayName || username"
+    :to="`/users/${username}`"
   >
     <img class="rounded-full skeleton h-3/4 w-3/4" :src="source" ref="img" />
-  </div>
+  </component>
 </template>

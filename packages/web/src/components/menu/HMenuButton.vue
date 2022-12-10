@@ -2,7 +2,7 @@
 import { set, useSwipe, whenever } from '@vueuse/core'
 import { useI18n } from 'petite-vue-i18n'
 import { onUnmounted, ref } from 'vue'
-import { isMedium, isLarge } from '~/composables/device-size'
+import { isMedium, isHuge } from '~/composables/device-size'
 
 const { t } = useI18n()
 
@@ -50,7 +50,7 @@ whenever(isSwiping, () => {
   <Transition name="fast-fade">
     <button
       :aria-expanded="false"
-      v-if="!isMenuOpen && !isLarge"
+      v-if="!isMenuOpen && !isHuge"
       class="h-12 w-12 inline-flex col justify-center items-center transition duration-150 z-11"
       @click="openMenu"
       :aria-label="t('menu.open')"
@@ -60,13 +60,13 @@ whenever(isSwiping, () => {
       <mdi-menu class="h-6 w-6" />
     </button>
   </Transition>
-  <div v-if="isLarge" class="h-12 w-12"></div>
+  <div v-if="isHuge" class="h-12 w-12"></div>
   <MenuInner
-    :is-menu-open="isMenuOpen && !isLarge"
+    :is-menu-open="isMenuOpen && !isHuge"
     :railable="isMedium"
     @close-menu="closeMenu"
   />
-  <Scrim :show="isMenuOpen && !isLarge" @dismissed="closeMenu" />
+  <Scrim :show="isMenuOpen && !isHuge" @dismissed="closeMenu" />
 </template>
 
 <style scoped>

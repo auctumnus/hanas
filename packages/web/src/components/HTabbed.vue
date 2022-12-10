@@ -2,6 +2,10 @@
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import { useSlots } from 'vue'
 
+defineProps<{
+  compress?: boolean
+}>()
+
 const n = Object.keys(useSlots())
   .map((s) => s.slice(-1))
   .map((s) => Number(s))
@@ -18,8 +22,11 @@ const n = Object.keys(useSlots())
           :class="[selected ? 'tab-button-selected' : 'tab-button-unselected']"
         >
           <mdi-check v-if="selected && $slots['tab-button-icon-' + i]" />
-          <slot v-else="!selected" :name="'tab-button-icon-' + i"></slot>
-          <slot :name="'tab-button-text-' + i"></slot>
+          <slot
+            v-if="compress || !selected"
+            :name="'tab-button-icon-' + i"
+          ></slot>
+          <slot v-if="!compress" :name="'tab-button-text-' + i"></slot>
         </button>
       </Tab>
     </TabList>
@@ -36,7 +43,7 @@ const n = Object.keys(useSlots())
   @apply flex flex-row w-full justify-center py-4;
 }
 .tab-button {
-  @apply flex flex-row justify-center gap-2 items-center h-10 px-4 border-outline border-y;
+  @apply flex flex-row justify-center gap-2 items-center h-10 px-4 border-outline border-y transition-colors duration-150;
 }
 .tab-button-unselected {
   @apply interactable-bg-surface text-on-surface;
@@ -51,7 +58,7 @@ const n = Object.keys(useSlots())
   @apply border rounded-r-full;
 }
 .tab-button > .icon {
-  @apply relative top-[1px] min-w-5 min-h-5;
+  @apply relative top-[-1px] min-w-5 min-h-5;
 }
 .tab-button > span {
   @apply inline align-bottom;

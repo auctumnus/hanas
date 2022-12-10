@@ -24,6 +24,7 @@ const logout = () => {
         :src="user?.profilePicture"
         :username="user?.username"
         aria-label="Open user menu"
+        disable-link
       />
     </MenuButton>
     <transition

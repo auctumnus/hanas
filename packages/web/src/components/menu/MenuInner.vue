@@ -16,7 +16,7 @@ defineEmits<{
 }>()
 
 const isRail = computed(
-  () => props.railable && !props.isMenuOpen && !isLarge.value
+  () => props.railable && !props.isMenuOpen && !isHuge.value
 )
 </script>
 
@@ -29,8 +29,7 @@ const isRail = computed(
       'w-0 pt-16': !railable && !isMenuOpen,
       'rail-menu w-20 pt-16': railable && !isMenuOpen,
       'w-2/12': isHuge,
-      'w-3/12': isLarge && !isHuge,
-      'w-7/12': isMedium && isMenuOpen,
+      'w-5/12': (isLarge || isMedium) && isMenuOpen,
       'w-9/12': isMenuOpen,
     }"
   >

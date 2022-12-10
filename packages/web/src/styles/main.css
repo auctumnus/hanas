@@ -108,3 +108,7 @@ body,
 textarea > fieldtext {
   @apply bg-surface;
 }
+
+.w-min-content {
+  width: min-content;
+}

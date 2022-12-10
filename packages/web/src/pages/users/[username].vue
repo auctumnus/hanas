@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import { storeToRefs } from 'pinia'
-import { ref, computed, onMounted, Ref } from 'vue'
+import { watch, ref, computed, onMounted, Ref } from 'vue'
 import { client } from '~/hanas-api'
 import { useUserStore } from '~/stores/user'
 import {
@@ -10,6 +10,7 @@ import {
   set,
   useElementSize,
   useInfiniteScroll,
+  useMediaQuery,
 } from '@vueuse/core'
 import { useI18n } from 'petite-vue-i18n'
 import { Lang, User } from '@hanas-app/api-helper'
@@ -19,6 +20,9 @@ import { fallbackBannerLink } from '../../fallbackImages'
 import { useHead } from '@vueuse/head'
 import HButton from '~/components/input/HButton.vue'
 import HTabbed from '~/components/HTabbed.vue'
+import LangDetails from '~/components/profile/LangDetails.vue'
+import UserDetails from '~/components/profile/UserDetails.vue'
+import ShareButton from '~/components/ShareButton.vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -41,7 +45,9 @@ const viewingOwnProfile = computed(
 const ownedLangsList: Ref<Lang[]> = ref([])
 const collaboratedLangsList: Ref<Lang[]> = ref([])
 
-onMounted(async () => {
+const loadUser = async () => {
+  set(ownedLangsList, [])
+  set(collaboratedLangsList, [])
   const u = await client.users.get(route.params.username as string)
 
   if (u instanceof Error) {
@@ -59,7 +65,11 @@ onMounted(async () => {
   if (!(ownedLangs instanceof Error)) {
     ownedLangsList.value.push(...ownedLangs.data)
   }
-})
+
+  if (!(collaboratedLangs instanceof Error)) {
+    collaboratedLangsList.value.push(...collaboratedLangs.data)
+  }
+}
 
 /* Banner and profile picture information */
 const banner: Ref<HTMLDivElement | null> = ref(null)
@@ -87,7 +97,7 @@ const pageTitle = computed(() => {
       return `@${u.username} | Hanas`
     }
   } else {
-    return 'View profile | Hanas'
+    return `${t('view_profile')} | Hanas`
   }
 })
 
@@ -116,6 +126,24 @@ useHead({
   ],
   title: pageTitle,
 })
+
+const compressSelector = useMediaQuery('(max-width: 400px)')
+
+const shareText = computed(() => {
+  const u = get(user)
+  if (u) {
+    if (u.displayName) {
+      return `${u.displayName} (@${u.username})`
+    } else {
+      return `@${u.username}`
+    }
+  } else {
+    return t('view_profile')
+  }
+})
+
+onMounted(loadUser)
+watch(() => route.path, loadUser)
 </script>
 
 <template>
@@ -125,7 +153,7 @@ useHead({
       'ml-0': isSmall,
     }"
   >
-    <div v-if="user" class="">
+    <div v-if="user" :class="{ 'w-screen': isSmall }">
       <div
         class="banner w-full"
         :style="{
@@ -155,6 +183,7 @@ useHead({
               :src="user.profilePicture"
               :username="user.username"
               class="u-photo h-9/10 w-9/10"
+              disable-link
             />
           </div>
           <!-- display name -->
@@ -195,72 +224,31 @@ useHead({
                 : t('missing_description')
             }}
           </p>
-          <!-- edit profile button -->
-          <span v-if="viewingOwnProfile" class="flex flex-row pt-4">
-            <HButton
-              kind="outline"
-              :content="t('edit_profile')"
-              as="router-link"
-              href="/edit-profile"
-            >
-              <mdi-pencil></mdi-pencil>
-            </HButton>
-          </span>
 
-          <dl
-            class="pt-4 user-description text-on-surface-variant flex"
-            :class="{
-              'flex-row gap-4': size === 'medium',
-              'flex-col': size !== 'medium',
-            }"
-          >
-            <div v-if="user.pronouns">
-              <dt>
-                <mdi-tag-heart
-                  aria-label="Pronouns"
-                  title="Pronouns"
-                ></mdi-tag-heart>
-              </dt>
-              <dd>
-                {{ user.pronouns }}
-              </dd>
-            </div>
+          <!-- user actions -->
+          <div class="flex flex-row pt-4">
+            <span v-if="viewingOwnProfile">
+              <HButton
+                kind="outline"
+                :content="t('edit_profile')"
+                as="router-link"
+                href="/edit-profile"
+              >
+                <mdi-pencil></mdi-pencil>
+              </HButton>
+            </span>
+            <ShareButton :text="shareText" />
+          </div>
 
-            <div v-if="user.gender">
-              <dt>
-                <icons8-gender
-                  aria-label="Gender"
-                  title="Gender"
-                ></icons8-gender>
-              </dt>
-              <dd class="!inline-flex flex-row items-center">
-                <span
-                  class="border-current border rounded-full w-4 h-4 inline-block mr-1"
-                  :style="{ 'background-color': `#${user.gender}` }"
-                  >&nbsp;</span
-                >
-                <span class="ml-1">(#{{ user.gender }})</span>
-              </dd>
-            </div>
-
-            <div>
-              <dt>
-                <mdi-calendar
-                  aria-label="Account created"
-                  title="Account created"
-                ></mdi-calendar>
-              </dt>
-              <dd>
-                {{ t('join_date') }}
-                {{ user.created.toLocaleDateString() }}
-              </dd>
-            </div>
-          </dl>
+          <UserDetails :user="user" />
         </div>
 
         <!-- langs -->
-        <div class="flex flex-1 flex-col">
-          <HTabbed>
+        <div
+          class="flex flex-1 flex-col lang-detail-container"
+          :class="{ 'max-w-2/3': isLarge }"
+        >
+          <HTabbed :compress="compressSelector">
             <template #tab-button-icon-1><mdi-account-star /></template>
             <template #tab-button-text-1>
               {{ t('owned_languages') }}
@@ -277,6 +265,9 @@ useHead({
             </template>
 
             <template #tab-content-1>
+              <h3 class="compressed-title" v-if="compressSelector">
+                {{ t('owned_languages.title') }}
+              </h3>
               <LangDetails
                 v-for="lang of ownedLangsList"
                 :key="lang.code"
@@ -284,9 +275,23 @@ useHead({
               />
             </template>
 
-            <template #tab-content-2> hi {{ size }} 2 </template>
+            <template #tab-content-2>
+              <h3 class="compressed-title" v-if="compressSelector">
+                {{ t('collaborated_languages.title') }}
+              </h3>
+              <LangDetails
+                v-for="lang of collaboratedLangsList"
+                :key="lang.code"
+                :lang="lang"
+              />
+            </template>
 
-            <template #tab-content-3>{{ t('coming_soon') }}</template>
+            <template #tab-content-3>
+              <h3 class="compressed-title" v-if="compressSelector">
+                {{ t('liked_languages.title') }}
+              </h3>
+              {{ t('coming_soon') }}
+            </template>
           </HTabbed>
         </div>
       </div>
@@ -297,37 +302,35 @@ useHead({
 <i18n>
 {
   "en": {
+    "view_profile": "View profile",
     "missing_description": "This user likes having an air of mystery about themselves.",
     "missing_description_on_own_profile": "You haven't set a description. Edit your profile to tell the world about yourself!",
     "edit_profile": "Edit profile",
+    "coming_soon": "Coming soon!",
+
     "owned_languages": "Owned",
     "collaborated_languages": "Collaborated",
     "liked_languages": "Liked",
-    "join_date": "Joined",
-    "coming_soon": "Coming soon!"
+
+    "owned_languages.title": "Owned languages",
+    "collaborated_languages.title": "Collaborated languages",
+    "liked_languags.title": "Liked languages"
   }
 }
 </i18n>
 
-<style>
+<style scoped>
+.compressed-title {
+  @apply text-2xl leading-tight mx-2 mb-2;
+}
+
 .banner {
   background-color: #3b3f44;
 }
+</style>
+
+<style>
 .pfp-container img {
   @apply h-full w-full;
-}
-.user-description > div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.user-description dt {
-  margin-right: 0.5rem;
-  height: 1.2rem;
-  width: 1.2rem;
-}
-.user-description dd {
-  display: inline;
-  vertical-align: middle;
 }
 </style>
