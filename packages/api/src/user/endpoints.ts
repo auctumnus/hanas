@@ -131,11 +131,13 @@ export const userRouter = Router()
 
   .get('/:username/collaborated-langs', async (req, res, next) => {
     const username = req.params.username
+    const includeOwned = req.query.includeOwned ? undefined : false
 
     try {
       const result = await prisma.langPermission.findMany({
         where: {
           user: { username },
+          owner: includeOwned,
         },
         select: {
           lang: true,

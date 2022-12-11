@@ -102,10 +102,13 @@ export class User {
    * @returns Paginated response of collaborated languages.
    */
   collaboratedLangs(
-    paginationArgs: PaginationArgs = {}
+    paginationArgs: PaginationArgs = {},
+    includeOwned?: boolean
   ): Promise<PaginatedResponseWithHelper<Lang, never>> {
     return this.#client!.paginatedFetch<LangResponseData, never, Lang>(
-      `/users/${this.username}/collaborated-langs`,
+      `/users/${this.username}/collaborated-langs${
+        includeOwned ? '?includeOwned=true' : ''
+      }`,
       paginationArgs,
       (d) => new Lang(this.#client!, d)
     )
