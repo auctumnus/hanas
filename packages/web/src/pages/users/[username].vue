@@ -178,6 +178,9 @@ useInfiniteScroll(
       loadingMoreCollaborated,
       loadingMoreLiked,
     ][activeTab]
+    if (get(loading)) {
+      return undefined
+    }
 
     const p = get(paginator)
 
