@@ -10,7 +10,7 @@ const lang = props.lang
 
 <template>
   <router-link :to="'/langs/' + lang.code" class="lang-details">
-    <LangFlag :lang="lang" class="h-6 mr-4" />
+    <LangFlag :lang="lang" class="mr-4" />
     <div class="flex flex-col overflow-hidden">
       <div class="flex flex-row items-center gap-2">
         <span class="text-lg">{{ lang.name }}</span>
@@ -22,7 +22,7 @@ const lang = props.lang
         {{ lang.description }}
       </span>
     </div>
-    <ContributorsSummary v-if="!isSmall" class="ml-4" :lang="lang" />
+    <ContributorsSummary v-if="!isSmall" class="ml-auto" :lang="lang" />
   </router-link>
 </template>
 
