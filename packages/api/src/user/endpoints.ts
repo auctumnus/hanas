@@ -270,7 +270,7 @@ export const userRouter = Router()
           }),
         ])
 
-        res.status(201).json({ url })
+        res.status(201).json({ error: false, data: { url } })
       } catch (e) {
         next(err(500, e))
       }
@@ -385,7 +385,7 @@ export const userRouter = Router()
           }),
         ])
 
-        res.status(201).json({ url })
+        res.status(201).json({ error: false, data: { url } })
       } catch (e) {
         next(err(500, e))
       }
