@@ -140,18 +140,19 @@ export const userRouter = Router()
           owner: includeOwned,
         },
         select: {
+          id: true,
           lang: true,
         },
         ...getPaginationVars(req),
       })
 
+      const paginated = paginate(req, result)
+
       res.status(200).json(
-        serializeLang(
-          paginate(
-            req,
-            result.map((r) => r.lang)
-          )
-        )
+        serializeLang({
+          ...paginated,
+          data: paginated.data.map((d) => d.lang),
+        })
       )
     } catch (e) {
       next(err(500, e))
@@ -162,24 +163,26 @@ export const userRouter = Router()
     const username = req.params.username
 
     try {
+      console.log(getPaginationVars(req))
       const result = await prisma.langPermission.findMany({
         where: {
           user: { username },
           owner: true,
         },
         select: {
+          id: true,
           lang: true,
         },
         ...getPaginationVars(req),
       })
 
+      const paginated = paginate(req, result)
+
       res.status(200).json(
-        serializeLang(
-          paginate(
-            req,
-            result.map((r) => r.lang)
-          )
-        )
+        serializeLang({
+          ...paginated,
+          data: paginated.data.map((d) => d.lang),
+        })
       )
     } catch (e) {
       next(err(500, e))

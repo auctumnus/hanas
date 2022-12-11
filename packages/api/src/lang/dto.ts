@@ -17,10 +17,11 @@ export const CreateLangDto = z.object({
 
   description: z
     .string()
-    .refine(cleanedLength(1, 2500), {
+    .refine(cleanedLength(0, 2500), {
       message: 'Description must be under 2500 characters.',
     })
-    .transform(clean),
+    .transform(clean)
+    .default(''),
 })
 
 export const UpdateLangDto = CreateLangDto.partial()

@@ -201,13 +201,13 @@ export const langRouter = Router()
         include: { user: true },
       })
 
+      const paginated = paginate(req, perms)
+
       res.status(200).json(
-        serialize(
-          paginate(
-            req,
-            perms.map((perm) => perm.user)
-          )
-        )
+        serializeUser({
+          ...paginated,
+          data: paginated.data.map((d) => d.user),
+        })
       )
     } catch (e) {
       next(err(500, e))
