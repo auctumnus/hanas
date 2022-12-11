@@ -92,8 +92,8 @@ const action = () => {
           :content="current.actionText"
           @click="action"
         />
-        <button @click="close_">
-          <mdi-close class="h-6 w-6 px-3" />
+        <button class="px-3 flex flex-row items-center" @click="close_">
+          <mdi-close class="h-6 w-6" />
         </button>
       </div>
     </Transition>

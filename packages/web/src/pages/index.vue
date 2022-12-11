@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'petite-vue-i18n'
+import HButton from '~/components/input/HButton.vue'
 
 const { t } = useI18n()
 </script>
@@ -8,6 +9,7 @@ const { t } = useI18n()
   <main>
     {{ t('description') }}
     <div class="skeleton h-12 w-12"></div>
+    <HButton kind="filled tonal" content="aaa" />
   </main>
 </template>
 
