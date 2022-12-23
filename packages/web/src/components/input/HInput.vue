@@ -17,7 +17,7 @@ const props = defineProps<{
 
   autocomplete?: string
 
-  modelValue: string
+  modelValue?: string
 }>()
 
 const emit = defineEmits<{
@@ -44,7 +44,7 @@ const blur = (e: FocusEvent) => {
 const _rows = props.rows || 3
 
 /* Error state and length checks */
-const clean = (s: string) => s.trim().split(/\s+/).join(' ')
+const clean = (s: string) => s?.trim().split(/\s+/).join(' ') || ''
 
 const cleanedLength = (min: number, max: number) => (s: string) => {
   const len = clean(s).length
