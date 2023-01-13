@@ -154,35 +154,19 @@ const onError = (e: any) => {
 const updateUser = async () => {
   console.log('updateUser')
   const currentUsername = get(user)!.username
-  const username = get(usernameRef)
-  const displayName = get(displayNameRef)
-  const description = get(descriptionRef)
-  const pronouns = get(pronounsRef)
-  const gender = get(genderRef)
-
-  const updateInfo = {} as Parameters<typeof client.users.update>[0]
-
-  // TODO: this is gross i hate it
-  if (username) {
-    updateInfo.username = username
-  }
-  if (displayName) {
-    updateInfo.displayName = displayName
-  }
-  if (description) {
-    updateInfo.description = description
-  }
-  if (pronouns) {
-    updateInfo.pronouns = pronouns
-  }
-  if (gender) {
-    updateInfo.gender = gender
-  }
+  const username = get(usernameRef) || undefined
+  const displayName = get(displayNameRef) || undefined
+  const description = get(descriptionRef) || undefined
+  const pronouns = get(pronounsRef) || undefined
+  const gender = get(genderRef) || undefined
 
   set(error, '')
 
   set(isSubmitting, true)
-  const newUser = await client.users.update(updateInfo, currentUsername)
+  const newUser = await client.users.update(
+    { username, displayName, description, pronouns, gender },
+    currentUsername
+  )
   if (newUser instanceof Error) {
     onError(newUser)
   } else {

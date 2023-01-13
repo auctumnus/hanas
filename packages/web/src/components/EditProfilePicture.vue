@@ -62,11 +62,12 @@ const remove = async () => {
 <template>
   <div class="flex flex-row">
     <ProfilePicture
-      class="!h-32 !w-32"
+      class="!h-32 !w-32 text-5xl"
       :src="user?.profilePicture"
       :username="user?.username"
       :display-name="t('profile_picture')"
       ref="pfp"
+      big
     />
     <div class="flex flex-col justify-center gap-2">
       <input

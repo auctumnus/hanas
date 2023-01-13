@@ -14,24 +14,53 @@ const props = defineProps<{
   displayName?: string
   src?: string
   disableLink?: boolean
+  big?: boolean
 }>()
 
 const source = ref('')
+const color = ref('dddddd')
+const textColor = computed(() => {
+  // Returns a dark or bright text color such that the text should be readable.
+  // Uses https://alienryderflex.com/hsp.html
+  const c = +`0x${get(color)}`
+  const r = c >> 16
+  const g = (c >> 8) & 255
+  const b = (c >> 8) & 255
+  const hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))
 
-// All code paths should set the source ref above.
+  if (hsp > 127.5) {
+    // bright text color
+    return '1A1C1E'
+  } else {
+    // dark text color
+    return 'FCFCFF'
+  }
+})
+const abbrev = props.src
+  ? ''
+  : (() => {
+      const split = props.username!.split(/\s/)
+      const first = split[0][0]
+      const last = split.length > 1 ? split[split.length - 1][0] : ''
+      return (first + last).toLocaleUpperCase()
+    })()
+const hasPfp = ref(!!props.src)
+
 const changePfp = async (newSrc?: string, oldSrc?: string) => {
   if (newSrc) {
     set(source, newSrc)
   } else {
     const user = await client.users.get(props.username || '')
     if (user instanceof Error) {
-      set(source, missingPfp(props.username || ''))
+      set(hasPfp, false)
     } else {
-      const { profilePicture, displayName, username } = user
+      const { profilePicture, gender } = user
+      set(color, gender)
       if (profilePicture) {
+        set(hasPfp, true)
         set(source, profilePicture)
       } else {
-        set(source, missingPfp(displayName || username))
+        set(hasPfp, false)
       }
     }
   }
@@ -50,6 +79,19 @@ onMounted(() => changePfp(props.src, ''))
     :title="displayName || username"
     :to="`/users/${username}`"
   >
-    <img class="rounded-full skeleton h-3/4 w-3/4" :src="source" ref="img" />
+    <img
+      class="rounded-full skeleton h-3/4 w-3/4"
+      :src="source"
+      ref="img"
+      v-if="hasPfp"
+    />
+    <div
+      class="rounded-full flex justify-center items-center select-none"
+      :class="[big ? 'h-full w-full' : 'h-3/4 w-3/4']"
+      :style="`background-color:#${color};color:#${textColor}`"
+      v-else
+    >
+      <span>{{ abbrev }}</span>
+    </div>
   </component>
 </template>

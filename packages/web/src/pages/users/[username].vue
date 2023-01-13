@@ -240,7 +240,8 @@ watch(() => route.path, loadUser)
             <ProfilePicture
               :src="user.profilePicture"
               :username="user.username"
-              class="u-photo h-9/10 w-9/10"
+              class="u-photo h-9/10 w-9/10 text-3xl md:text-4xl lg:text-5xl xl:text-7xl"
+              big
               disable-link
             />
           </div>
