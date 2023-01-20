@@ -30,7 +30,7 @@ export const UpdateUserDto = z
     // is this like reasonable. i hope it is
     description: z
       .string()
-      .refine(cleanedLength(1, 1000), {
+      .refine(cleanedLength(0, 1000), {
         message: 'Description must be under 1000 characters.',
       })
       .transform(clean),

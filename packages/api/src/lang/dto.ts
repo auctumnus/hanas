@@ -1,15 +1,12 @@
 import { z } from 'zod'
 import { clean, cleanedLength } from '../clean'
+import { username } from '../user/dto'
 
 export const CreateLangDto = z.object({
-  code: z
-    .string()
-    .min(3)
-    .max(5)
-    .regex(/^[a-z]+$/),
+  code: username,
   name: z
     .string()
-    .refine(cleanedLength(2, 30), {
+    .refine(cleanedLength(1, 30), {
       message:
         'Lang name must be between 2 and 30 characters after being cleaned.',
     })
