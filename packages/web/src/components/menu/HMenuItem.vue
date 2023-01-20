@@ -30,11 +30,20 @@ const props = defineProps({
   },
 })
 
-const isActive = ref(props.destination === route.path)
+const pathMatches = (path: string) => {
+  if (!props.destination) return false
+  else if (props.destination === '/' && path !== '/') return false
+  // if more overrides like this get added, move them to a helper obj
+  else if (props.destination === '/languages' && path === '/new-language')
+    return true
+  else return path.startsWith(props.destination)
+}
+
+const isActive = ref(pathMatches(route.path))
 
 watch(
   () => route.path,
-  (p) => set(isActive, props.destination === p)
+  (p) => set(isActive, pathMatches(p))
 )
 </script>
 
