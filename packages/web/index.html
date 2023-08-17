@@ -49,7 +49,10 @@
       })()
     </script>
     <style>
-      body, html { margin: 0px }
+      body,
+      html {
+        margin: 0px;
+      }
       @media (prefers-color-scheme: dark) {
         body,
         html {
@@ -79,16 +82,24 @@
           style="width: 5rem; height: 5rem; margin-bottom: 2.5rem"
           src="/logo-no-text.svg"
           alt="Hanas logo"
-        >
-        <div class="jsonly" style="margin-bottom: 2rem;">
+        />
+        <div class="jsonly" style="margin-bottom: 2rem">
           <style>
-            @media(prefers-reduced-motion) {
-              div#loading-bar { display: none; }
-              span#loading-text { display: inline !important; }
+            @media (prefers-reduced-motion) {
+              div#loading-bar {
+                display: none;
+              }
+              span#loading-text {
+                display: inline !important;
+              }
             }
             @keyframes setup-loading {
-              from { transform: translate(-1rem) }
-              to { transform: translate(3rem) }
+              from {
+                transform: translate(-1rem);
+              }
+              to {
+                transform: translate(3rem);
+              }
             }
             div#loading-bar {
               height: 0.5rem;
@@ -116,7 +127,7 @@
           <div id="loading-bar" aria-label="loading...">
             <div>&nbsp;</div>
           </div>
-          <span id="loading-text" style="display: none;">loading...</span>
+          <span id="loading-text" style="display: none">loading...</span>
         </div>
         <!--<noscript>
           Sorry, but you need to enable Javascript to use Hanas.<br/>
