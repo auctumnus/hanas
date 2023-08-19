@@ -78,7 +78,7 @@ serve:
       enabled: true
       allowed_origins:
         - 'http://localhost:1337'
-        - 'http://localhost:3333'
+        - 'http://localhost:5173'
       allowed_methods:
         - POST
         - GET

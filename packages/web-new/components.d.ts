@@ -7,14 +7,21 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AppearTransition: typeof import('./src/components/AppearTransition.vue')['default']
     Drawer: typeof import('./src/components/ui/navigation/Drawer.vue')['default']
     HomeButton: typeof import('./src/components/ui/navigation/HomeButton.vue')['default']
     InvitesButton: typeof import('./src/components/ui/navigation/InvitesButton.vue')['default']
     LanguagesButton: typeof import('./src/components/ui/navigation/LanguagesButton.vue')['default']
+    LanguageSelect: typeof import('./src/components/settings/LanguageSelect.vue')['default']
     MdiAccount: typeof import('~icons/mdi/account')['default']
+    MdiAccountCircle: typeof import('~icons/mdi/account-circle')['default']
+    MdiAccountCircleOutline: typeof import('~icons/mdi/account-circle-outline')['default']
     MdiAccountOutline: typeof import('~icons/mdi/account-outline')['default']
+    MdiAccountPlus: typeof import('~icons/mdi/account-plus')['default']
+    MdiAccountPlusOutline: typeof import('~icons/mdi/account-plus-outline')['default']
     MdiChat: typeof import('~icons/mdi/chat')['default']
     MdiChatOutline: typeof import('~icons/mdi/chat-outline')['default']
+    MdiChevronDown: typeof import('~icons/mdi/chevron-down')['default']
     MdiCog: typeof import('~icons/mdi/cog')['default']
     MdiCogOutline: typeof import('~icons/mdi/cog-outline')['default']
     MdiHome: typeof import('~icons/mdi/home')['default']
@@ -22,6 +29,9 @@ declare module 'vue' {
     MdiMailbox: typeof import('~icons/mdi/mailbox')['default']
     MdiMailboxOutline: typeof import('~icons/mdi/mailbox-outline')['default']
     MdiMenu: typeof import('~icons/mdi/menu')['default']
+    MdiSmallTriangleDown: typeof import('~icons/mdi/small-triangle-down')['default']
+    MdiTranslate: typeof import('~icons/mdi/translate')['default']
+    MdiTriangleSmallDown: typeof import('~icons/mdi/triangle-small-down')['default']
     Navigation: typeof import('./src/components/ui/Navigation.vue')['default']
     NavigationExtra: typeof import('./src/components/ui/navigation/NavigationExtra.vue')['default']
     NavigationInner: typeof import('./src/components/ui/navigation/NavigationInner.vue')['default']
@@ -30,6 +40,10 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SettingsButton: typeof import('./src/components/ui/navigation/SettingsButton.vue')['default']
+    SignInButton: typeof import('./src/components/ui/navigation/SignInButton.vue')['default']
+    SignUpButton: typeof import('./src/components/ui/navigation/SignUpButton.vue')['default']
+    SignUpPartOne: typeof import('./src/components/sign-up/SignUpPartOne.vue')['default']
+    SignUpPartTwo: typeof import('./src/components/sign-up/SignUpPartTwo.vue')['default']
     UsersButton: typeof import('./src/components/ui/navigation/UsersButton.vue')['default']
   }
 }

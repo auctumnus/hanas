@@ -1,9 +1,27 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border: 0;
+  margin: 0;
+}
+
+
 a {
   text-decoration: none;
+  color: var(--halcyon-primary);
+}
+
+input {
+  appearance: none;
 }
 
 button {
   border: none;
   background: none;
   cursor: pointer;
+}
+
+body {
+  font-size: 16px;
 }

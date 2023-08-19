@@ -8,6 +8,7 @@ import Icons from 'unplugin-icons/vite'
 import webfontDownload from 'vite-plugin-webfont-dl'
 import Components from 'unplugin-vue-components/vite'
 import IconsResolver from 'unplugin-icons/resolver'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 import theme from './theme.json'
 
@@ -29,11 +30,17 @@ export default defineConfig({
           enabledCollections: ['mdi']
         })
       ]
+    }),
+    VueI18nPlugin({
+      include: [fileURLToPath(new URL('./locales/**', import.meta.url))]
     })
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  server: {
+    cors: true,
+  },
 })
