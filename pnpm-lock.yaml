@@ -586,8 +586,8 @@ importers:
         specifier: ^10.3.0
         version: 10.3.0(vue@3.3.4)
       halcyon-vue:
-        specifier: 1.1.1
-        version: 1.1.1
+        specifier: 1.1.5
+        version: 1.1.5(@vueuse/components@10.3.0)(@vueuse/core@10.3.0)(vue@3.3.4)
       petite-vue-i18n:
         specifier: ^9.2.2
         version: 9.2.2(vue@3.3.4)
@@ -8194,8 +8194,12 @@ packages:
       - '@vue/composition-api'
     dev: false
 
-  /halcyon-vue@1.1.1:
-    resolution: {integrity: sha512-4j9tNeCIpIig5Eu6wwkNXD4Fn4ACsc8TYfSndlRSrW/uemXSlzBjbfbRBNEyJNlI538RfdpnZAS6eS8R7iozjA==}
+  /halcyon-vue@1.1.5(@vueuse/components@10.3.0)(@vueuse/core@10.3.0)(vue@3.3.4):
+    resolution: {integrity: sha512-A+3hxMcU5zZxauVrR0gWnWN/t2RZ87UHUhoTXqZwKXMpIuOdRwLDCuWe3b/nbXGRCvtCkBcNew+WF2gQr9ZnbQ==}
+    peerDependencies:
+      '@vueuse/components': ^10.2.0
+      '@vueuse/core': ^10.2.0
+      vue: ^3.2.47
     dependencies:
       '@floating-ui/vue': 1.0.2(vue@3.3.4)
       '@headlessui/vue': 1.7.15(vue@3.3.4)

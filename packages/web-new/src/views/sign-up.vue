@@ -1,11 +1,30 @@
 <script setup lang="ts">
 import { isCompact } from '@/size';
 import SignUpPartOne from '@/components/sign-up/SignUpPartOne.vue'
-import { ref } from 'vue';
+import SignUpPartTwo from '@/components/sign-up/SignUpPartTwo.vue'
+import { computed, ref } from 'vue';
 import AppearTransition from '@/components/AppearTransition.vue'
 import { HButton } from 'halcyon-vue';
+import { useRouter } from 'vue-router';
 
-const part = ref(2)
+const part = ref(1)
+
+const router = useRouter()
+
+const component = computed(() => {
+    switch(part.value) {
+        case 1: return SignUpPartOne
+        case 2: return SignUpPartTwo
+    }
+    return SignUpPartOne
+})
+
+const onDone = () => {
+  switch(part.value) {
+    case 1: part.value = 2; break
+    case 2: router.push('/'); break
+  }
+}
 </script>
 
 <template>
@@ -13,12 +32,12 @@ const part = ref(2)
         <appear-transition>
             <h1 class="display-small" v-if="!isCompact">Sign up</h1>
         </appear-transition>
-        <h-button content="one" @click="part = 1" kind="filled" />
-        <h-button content="two" @click="part = 2" kind="filled" />
+        <!--<h-button content="one" @click="part = 1" kind="filled" />
+        <h-button content="two" @click="part = 2" kind="filled" />-->
 
-        <sign-up-part-one v-if="part === 1" @done="part = 2" />
-        <sign-up-part-two v-if="part === 2" @done="$router.push('/')" />
-
+        <Transition name="fade" mode="out-in">
+            <component :is="component" @done="onDone" key="part" />
+        </Transition>
         
     </main>
 </template>

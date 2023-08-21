@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Navigation from './components/ui/Navigation.vue'
+import { HSnackbar } from 'halcyon-vue'
 import { isCompact } from '@/size'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router';
@@ -24,6 +25,7 @@ useHead({
       <component :is="Component" />
     </transition>
   </router-view>
+  <h-snackbar />
 </template>
 
 <style>

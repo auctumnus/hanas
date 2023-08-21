@@ -44,6 +44,8 @@ declare module 'vue' {
     SignUpButton: typeof import('./src/components/ui/navigation/SignUpButton.vue')['default']
     SignUpPartOne: typeof import('./src/components/sign-up/SignUpPartOne.vue')['default']
     SignUpPartTwo: typeof import('./src/components/sign-up/SignUpPartTwo.vue')['default']
+    TextField: typeof import('./src/components/TextField.vue')['default']
+    TextFieldGroup: typeof import('./src/components/TextFieldGroup.vue')['default']
     UsersButton: typeof import('./src/components/ui/navigation/UsersButton.vue')['default']
   }
 }
