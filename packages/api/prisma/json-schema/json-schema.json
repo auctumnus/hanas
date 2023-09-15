@@ -17,27 +17,45 @@
           "description": "Username; between 2 and 30 characters, and must match\nthe regex /^([a-z0-9](-|_)?)+[a-z0-9]$/.\n@example alice"
         },
         "displayName": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "The display name of this user - if you're displaying users, you should use\nthis rather than the username if it's present.\n@example Alice Iwakura"
         },
         "description": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "A short description of the user.\n@example I love languages!"
         },
         "gender": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Any hex color, given without the hash sign.\n@example eaa82e"
         },
         "pronouns": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Free text field. Intended to store pronouns in the format of\nnominative / accusative or nominative / accusative / possessive, but is\nnot required to be so since it's impossible to predict the ways in which\na user might want to format this.\n@example she / her"
         },
         "profilePicture": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Profile picture.\nCurrently unused."
         },
         "banner": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Top banner, similar to Twitter.\nCurrently unused."
         },
         "langPermissions": {
@@ -145,7 +163,10 @@
           "description": "Language name; any string between 2 and 30 characters.\n@example Elvish"
         },
         "description": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Description of the language.\n@example Elvish is spoken by the elves in my conworld!"
         },
         "invites": {
@@ -327,7 +348,10 @@
           "description": "When this invite was sent."
         },
         "accepted": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "format": "date-time",
           "description": "When this invite was accepted, if it has been."
         }
@@ -398,10 +422,16 @@
           "type": "string"
         },
         "ipa": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "notes": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "lang": {
           "$ref": "#/definitions/Lang"

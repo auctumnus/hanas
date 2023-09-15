@@ -1,7 +1,7 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { NextFunction } from 'express'
 import { ZodError } from 'zod'
 import { error } from '@hanas-app/backend-shared'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 
 export const { err } = error
 
