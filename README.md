@@ -1,3 +1,10 @@
+# Abandoned
+
+Sorry! This has been abandoned in favor of [Axismundi](https://github.com/auctumnus/axismundi).
+
+The old description follows.
+
+# Old description
 <h1 align="center">
    <a href="https://hanas.app">
       <img
