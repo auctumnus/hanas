@@ -22,7 +22,7 @@
     "petite-vue-i18n": "^9.2.0-beta.34",
     "pinia": "^2.0.13",
     "prism-theme-vars": "^0.2.2",
-    "vue": "^3.2.33",
+    "vue": "^3.5.21",
     "vue-demi": "^0.12.5",
     "vue-router": "^4.0.14"
   },
